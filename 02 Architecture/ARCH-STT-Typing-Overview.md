@@ -14,9 +14,9 @@ STT Typing เป็นระบบ Speech-to-Text Typing Assistant สำหร
 
 ## Composition / Runtime Entry Points
 
-```
-main.py                    ← Entry point (official)
-  └─ STT_auto_paste.py     ← Legacy runtime orchestrator (ยัง active)
+```text
+main.py                    ← Entry point (official, เรียก STT_auto_paste.main())
+  └─ STT_auto_paste.py     ← Runtime orchestrator (ยัง active, legacy root)
        ├─ app/audio/       ← Microphone capture + VAD
        ├─ app/recognition/ ← ASR (Whisper local / Google)
        ├─ app/commands/    ← Command routing + pipeline
@@ -54,7 +54,7 @@ Feedback → HUD (app/ui/ Tkinter / app/hud/ Future PySide6)
 | Commands | `app/commands/` | Command catalog, router, pipeline, executor, safety |
 | Paste | `app/paste/` | Clipboard management, text insertion |
 | Windows | `app/windows/` | Window focus detection and switching |
-| UI | `app/ui/` | Tkinter HUD (active production shell) |
+| UI | `app/ui/` | Tkinter HUD (current runtime) |
 | HUD | `app/hud/` | Future PySide6/QML sidecar (dev only) |
 | Orchestrators | `app/orchestrators/` | Partial extraction (paths, startup) |
 | Confirmation | `app/confirmation/` | Confirmation layer for risky actions |
@@ -89,14 +89,17 @@ Feedback → HUD (app/ui/ Tkinter / app/hud/ Future PySide6)
 |---------|------|-------|
 | Whisper small | Local | Default ASR (offline) |
 | Google Speech API | Cloud | Optional ASR backend |
-| PyAudio / sounddevice | Local | Mic capture |
+| PyAudio | Local | Mic capture |
 | pyautogui | Local | OS typing / automation |
-| pywinauto | Local | Window focus/control |
+| uiautomation | Local | Window focus/control |
 | PySide6 | Local | Future HUD (dev, not production) |
+| SpeechRecognition | Local | ASR abstraction layer |
+
+> **Evidence source**: `requirements.txt` at HEAD af10254. `sounddevice` และ `pywinauto` ไม่ได้อยู่ใน requirements.txt จริง — แก้จากข้อมูลเก่า
 
 ## Validation Strategy
 
-- **pytest** (~205+ tests) — unit + integration
+- **pytest** (~205+ tests documented at HEAD af10254) — unit + integration
 - **tools/smoke_test_commands.py** (44/44) — headless smoke harness
 - **tools/audit_context_budget.ps1** — context preflight gate
 - **windows-ui-review-runtime** — controlled UI capture harness
@@ -106,7 +109,7 @@ Feedback → HUD (app/ui/ Tkinter / app/hud/ Future PySide6)
 ## Known Limitations / Risks
 
 - **No active executable task** — งานถูกระงับรอ roadmap ใหม่
-- **Production Qt shell ไม่มี** — Tkinter ต้อง continue support
+- **Production Qt shell ยังไม่พร้อมใช้งาน** — Tkinter ต้อง continue support (current runtime)
 - **Real typing alpha** — flag-gated ยังต้อง Owner pilot evidence
 - **Worktree dirty** — `.serena/project.yml` modified
 - **ASR backend mode routing** — มี design แต่ยังไม่ได้ implement ครบ

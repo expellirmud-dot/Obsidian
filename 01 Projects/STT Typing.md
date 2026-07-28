@@ -1,6 +1,7 @@
 ---
 type: project
-status: active
+project_lifecycle: active
+execution_state: SUPERSEDED-PENDING-ROADMAP
 priority: medium
 project_path: D:\stt_typing
 repository: https://github.com/expellirmud-dot/stt_typing.git
@@ -41,10 +42,10 @@ last_reviewed: 2026-07-28
 - Windows Desktop เท่านั้น
 - ภาษาไทย (primary), รองรับอังกฤษ
 - ใช้ local Whisper model (small) เป็น default ASR
-- มี Google ASR backend เป็นทางเลือก
-- Tkinter runtime shell (production)
+- Google ASR backend (optional, built-in external integration)
+- Tkinter runtime shell (current runtime)
 - Future HUD (PySide6/QML) เป็น dev/sidecar
-- Command Pipeline (260 commands ใน catalog)
+- Command Pipeline (260 commands — documented at HEAD af10254)
 - Focus Guard สำหรับวางข้อความ
 - Confirmation Layer สำหรับคำสั่งเสี่ยง
 - Undo/Recovery
@@ -54,7 +55,7 @@ last_reviewed: 2026-07-28
 - ระบบปฏิบัติการอื่น (macOS/Linux)
 - การรับเสียง/พิมพ์จริงในโหมด automated โดยไม่มี Owner อยู่ (manual-safe)
 - Production Qt shell — ยังไม่มี (อยู่ระหว่างออกแบบ)
-- External ASR service integration ที่ต้องใช้ Internet public API
+- External ASR service integration (beyond built-in Google ASR backend) — ต้องใช้ Internet public API
 
 ## ตำแหน่งไฟล์จริง
 
@@ -73,21 +74,21 @@ VERIFIED_REPOSITORY_FACT — ตรวจสอบแล้ว 2026-07-28:
 - Git Status: 1 modified (.serena/project.yml), 4 untracked (.tasks/ proposals)
 - Active Task: TASK-STT-LEGACY-TK-CLEANUP-067 — SUPERSEDED-PENDING-ROADMAP (ไม่สามารถ execute ได้)
 - Blocker: STAGE_11_PRODUCTION_QT_ARCHITECTURE_INCOMPLETE
-- Shell: Tkinter (STTWindow, root.mainloop()) — active production
+- Shell: Tkinter (STTWindow, root.mainloop()) — current runtime
 - Future HUD: PySide6/QML — dev/sidecar, disable via STT_ENABLE_FUTURE_HUD=0
-- Python Runtime: D:\stt_typing\venv312\Scripts\python.exe
-- Test Suite: pytest (~205+ tests) + smoke test harness
+- Python Runtime: D:\\stt_typing\\venv312\\Scripts\\python.exe
+- Test Suite: pytest (~205+ tests documented at HEAD af10254) + smoke test harness (44/44)
 
 ## สิ่งที่ทำเสร็จแล้ว
 
 - Audio Capture / Fast Listening Core
 - VAD Segmentation with baseline proof
 - Correction dictionaries (common_terms, ai_workflow_terms, window_commands, app_commands)
-- Command catalog (260 commands)
-- CatalogCommandRouter (63 tests)
-- ActionDispatcher + FakeActionSink (55 tests)
-- TypingActionExecutor + MemoryTextInsertSink (51 tests)
-- CommandExecutionPipeline (70 tests)
+- Command catalog (260 commands — documented at HEAD af10254)
+- CatalogCommandRouter (63 tests — documented at HEAD af10254)
+- ActionDispatcher + FakeActionSink (55 tests — documented at HEAD af10254)
+- TypingActionExecutor + MemoryTextInsertSink (51 tests — documented at HEAD af10254)
+- CommandExecutionPipeline (70 tests — documented at HEAD af10254)
 - Pipeline runtime integration (default-off, flag-gated)
 - Safe typing live alpha (flag-gated, STT_REAL_TYPING_ENABLED=1)
 - Pipeline undo recovery alpha
@@ -127,13 +128,13 @@ VERIFIED_REPOSITORY_FACT — ตรวจสอบแล้ว 2026-07-28:
 
 ## การตัดสินใจสำคัญ
 
-- Tkinter ยังคงเป็น production shell — Qt production ยังไม่พร้อม
+- Tkinter ยังคงเป็น current runtime shell — Qt production ยังไม่พร้อม
 - Future HUD เป็น dev/sidecar ไม่ใช่ production Qt shell
-- Codex GPT-5.4/5.5 เป็น default Controller path
-- OpenCode CLI (DeepSeek) = default L1-2 worker, AGY CLI (Gemini) = L3+
-- .agents\skills = project skill source of truth
+- .agents\\skills = project skill source of truth
 - Project authority: Owner instruction > Task Packet > PROJECT_RULES.md > docs/LOOP_CONTRACT.md > context budget docs > routing docs > skills
 - CLI WORKER != SUBAGENT — ห้ามใช้ internal subagent แทน CLI Worker
+
+> **NEEDS_VERIFICATION**: Model routing (Codex GPT-5.4/5.5, OpenCode DeepSeek, AGY Gemini) เป็น deployment policy ที่เปลี่ยนง่าย ต้องอ้างอิงจาก source-of-truth ปัจจุบันก่อนนำไปใช้
 
 ## ปัญหาและความเสี่ยง
 
@@ -166,9 +167,9 @@ VERIFIED_REPOSITORY_FACT — ตรวจสอบแล้ว 2026-07-28:
 
 - Active Path: D:\stt_typing
 - Python: venv312\Scripts\python.exe
-- Shell: Tkinter production, Future HUD (PySide6/QML) sidecar
+- Shell: Tkinter (current runtime), Future HUD (PySide6/QML) sidecar
 - ASR: Whisper small local + Google ASR optional
-- Tools: opencode, gemini, agy (CLI workers); Codex GPT-5.4/5.5 (Controller)
+- Tools: opencode, gemini, agy (CLI workers — NEEDS_VERIFICATION: routing policy เปลี่ยนง่าย)
 - Serena/CodeGraph: project root = D:\stt_typing
 
 ### Active State
@@ -176,8 +177,8 @@ VERIFIED_REPOSITORY_FACT — ตรวจสอบแล้ว 2026-07-28:
 - Current Task: TASK-STT-LEGACY-TK-CLEANUP-067 → SUPERSEDED-PENDING-ROADMAP
 - Git HEAD: af10254774766425b735e63632eb9a11f9056002
 - Worktree: 1 modified + 4 untracked
-- Test baseline: ~205 pytest + 44 smoke
-- Next major goal: Production Qt shell completion
+- Test baseline: ~205 pytest + 44 smoke (documented at HEAD af10254)
+- Next major goal: Production Qt shell completion (STAGE 11 — roadmap, ยังไม่พร้อม)
 
 ### Safety
 
