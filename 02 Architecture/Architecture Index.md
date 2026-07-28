@@ -29,6 +29,6 @@ last_reviewed: 2026-07-28
 
 ## เอกสารในหมวดนี้
 
-ยังไม่มี — จะเพิ่มเมื่อมี Work Order ที่ตรวจ Repository truth แล้ว
+- [[ARCH-llm-agents-Overview]] — Bounded autonomous L2 worker architecture
 
 กลับไป [[Project Dashboard]]

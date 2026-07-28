@@ -19,7 +19,6 @@ last_reviewed: 2026-07-28
 
 โปรเจกต์ที่สถานะยังไม่ได้ตรวจสอบจาก Repository จริง:
 
-- [[llm-agents]] — needs-verification
 - [[STT Typing]] — needs-verification
 - [[AI Worker Harness]] — needs-verification
 - [[Adobe Stock Upload Assistant]] — needs-verification
@@ -28,7 +27,7 @@ last_reviewed: 2026-07-28
 
 | Project | Last Reviewed |
 | ------- | ------------- |
-| [[llm-agents]] | 2026-07-28 (สร้างหน้าเริ่มต้น ยังไม่ตรวจ repo) |
+| [[llm-agents]] | 2026-07-28 (WO-OBSIDIAN-004: Repository truth verified, HEAD 099e516) |
 | [[STT Typing]] | 2026-07-28 (สร้างหน้าเริ่มต้น ยังไม่ตรวจ repo) |
 | [[AI Worker Harness]] | 2026-07-28 (สร้างหน้าเริ่มต้น ยังไม่ตรวจ repo) |
 | [[Utility Disbursement App]] | 2026-07-28 (Owner ยืนยัน paused; path ใหม่ + .git ตรวจแล้ว) |

@@ -31,15 +31,15 @@ last_reviewed: 2026-07-28
 ## Current Work Order
 
 - [[CURRENT_WORK_ORDER]]
-- **CLOSED:** [[WO-OBSIDIAN-003-CREATE-PROJECT-CONTEXT-DISCOVERY]] — งานถัดไป: [[WO-OBSIDIAN-004-ONBOARD-LLM-AGENTS]]
+- **CLOSED:** [[WO-OBSIDIAN-004-ONBOARD-LLM-AGENTS]] — งานถัดไป: [[WO-OBSIDIAN-005-ONBOARD-STT-TYPING]] (PLANNED — NEXT)
 
 ## Planned Sequence
 
 | Order | Work Order | Purpose | Status |
 |---|---|---|---|
 | 003 | [[WO-OBSIDIAN-003-CREATE-PROJECT-CONTEXT-DISCOVERY]] | สร้างสกิลค้นหา authority และบริบทจาก Repository อื่น | CLOSED |
-| 004 | [[WO-OBSIDIAN-004-ONBOARD-LLM-AGENTS]] | ตรวจและบันทึกบริบท llm-agents | PLANNED |
-| 005 | [[WO-OBSIDIAN-005-ONBOARD-STT-TYPING]] | ตรวจและบันทึกบริบท STT Typing | PLANNED |
+| 004 | [[WO-OBSIDIAN-004-ONBOARD-LLM-AGENTS]] | ตรวจและบันทึกบริบท llm-agents | **CLOSED** |
+| 005 | [[WO-OBSIDIAN-005-ONBOARD-STT-TYPING]] | ตรวจและบันทึกบริบท STT Typing | PLANNED — NEXT |
 | 006 | [[WO-OBSIDIAN-006-ONBOARD-AI-WORKER-HARNESS]] | ตรวจและบันทึกบริบท AI Worker Harness | PLANNED |
 | 007 | [[WO-OBSIDIAN-007-ONBOARD-ADOBE-STOCK-UPLOAD]] | ตรวจและบันทึกบริบท Adobe Stock Upload Assistant | PLANNED |
 
@@ -47,6 +47,7 @@ last_reviewed: 2026-07-28
 
 ## Closed Work Orders
 
+- [[WO-OBSIDIAN-004-ONBOARD-LLM-AGENTS]] — CLOSED
 - [[WO-OBSIDIAN-003-CREATE-PROJECT-CONTEXT-DISCOVERY]] — CLOSED
 - [[WO-OBSIDIAN-002-INSTALL-PROJECT-READ-FIRST]] — CLOSED
 
