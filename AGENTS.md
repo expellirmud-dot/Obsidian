@@ -52,6 +52,18 @@ Serena และ CodeGraph เป็น `not_required`
 สำหรับงาน Source Code:
 Serena และ CodeGraph ต้องตรงกับ exact Git root ของ Source Repository
 
+## Mandatory Project Context Discovery
+
+งานสำรวจ Repository ภายนอก (เช่นการ onboard หรืออัปเดตบริบทโปรเจกต์เข้า Vault) ต้องใช้:
+
+`.agents/skills/project-context-discovery/SKILL.md`
+
+กฎบังคับ:
+
+1. Source Repository เป็น read-only เว้นแต่มี Work Order แยกอนุญาตอย่างชัดเจน
+2. การอัปเดต Vault ต้องแยกหลักฐานเป็น verified / owner-confirmed / inference / unknown ตาม Evidence Classification ของสกิล
+3. ห้ามเปลี่ยน `needs-verification` เป็น verified โดยไม่มีหลักฐานจากไฟล์จริงหรือ command output ในรอบนั้น
+
 ---
 
 # Seven Execution Rules

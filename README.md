@@ -43,6 +43,7 @@ Project-Knowledge-Vault
 - Work Order ใหม่ทั้งหมดต้องอยู่ใน `04 Work Orders`
 - `work-order/WO-OBSIDIAN-001.md` เป็น legacy historical location — เก็บไว้เพื่อรักษาประวัติ Git ไม่ย้าย ไม่แก้
 - Skill เริ่มงาน: `.agents/skills/project-read-first/SKILL.md` — ทุกงานต้องผ่าน READ_FIRST_PREFLIGHT ก่อนแก้ไฟล์
+- Skill สำรวจโปรเจกต์: `.agents/skills/project-context-discovery/SKILL.md` — ใช้ก่อน onboard หรืออัปเดตบริบทโปรเจกต์ภายนอกเข้า Vault (read-only ต่อ Source Repository; output ตาม `.agents/skills/project-context-discovery/references/PROJECT_CONTEXT_OUTPUT_CONTRACT.md`)
 
 ## วิธีเพิ่มโปรเจกต์ใหม่
 
