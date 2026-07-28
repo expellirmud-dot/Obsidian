@@ -52,7 +52,7 @@ last_reviewed: 2026-07-29
 
 - [[Project Index]]
 - [[Architecture Index]]
-- [[Decision Index]]
+- [[Decision Index]] — `03 Decisions/DEC-Vault-Staleness-and-Reverification-Policy.md`
 - [[Work Order Index]]
 - [[Lessons Learned Index]]
 - [[Prompt Index]]
