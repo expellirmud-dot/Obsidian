@@ -1,6 +1,6 @@
 ---
 type: index
-last_reviewed: 2026-07-28
+last_reviewed: 2026-07-29
 ---
 
 # Work Order Index
@@ -31,11 +31,7 @@ last_reviewed: 2026-07-28
 ## Current Work Order
 
 - [[CURRENT_WORK_ORDER]]
-- **CLOSED:** [[WO-OBSIDIAN-005-ONBOARD-STT-TYPING]]
-- **CLOSED:** [[WO-OBSIDIAN-006-ONBOARD-AI-WORKER-HARNESS]]
-- **CLOSED:** [[WO-OBSIDIAN-007-ONBOARD-ADOBE-STOCK-UPLOAD]]
-
-No remaining active Work Orders — all planned sequences COMPLETED
+- **PLANNED — NEXT:** [[WO-OBSIDIAN-008-ONBOARD-UTILITY-DISBURSEMENT-APP]]
 
 ## Planned Sequence
 
@@ -43,11 +39,15 @@ No remaining active Work Orders — all planned sequences COMPLETED
 |---|---|---|---|
 | 003 | [[WO-OBSIDIAN-003-CREATE-PROJECT-CONTEXT-DISCOVERY]] | สร้างสกิลค้นหา authority และบริบทจาก Repository อื่น | CLOSED |
 | 004 | [[WO-OBSIDIAN-004-ONBOARD-LLM-AGENTS]] | ตรวจและบันทึกบริบท llm-agents | CLOSED |
-| 005 | [[WO-OBSIDIAN-005-ONBOARD-STT-TYPING]] | ตรวจและบันทึกบริบท STT Typing | **CLOSED** |
-|| 006 | [[WO-OBSIDIAN-006-ONBOARD-AI-WORKER-HARNESS]] | ตรวจและบันทึกบริบท AI Worker Harness | **CLOSED** |
-|| 007 | [[WO-OBSIDIAN-007-ONBOARD-ADOBE-STOCK-UPLOAD]] | ตรวจและบันทึกบริบท Adobe Stock Upload Assistant | **CLOSED** |
+| 005 | [[WO-OBSIDIAN-005-ONBOARD-STT-TYPING]] | ตรวจและบันทึกบริบท STT Typing | CLOSED |
+| 006 | [[WO-OBSIDIAN-006-ONBOARD-AI-WORKER-HARNESS]] | ตรวจและบันทึกบริบท AI Worker Harness | CLOSED |
+| 007 | [[WO-OBSIDIAN-007-ONBOARD-ADOBE-STOCK-UPLOAD]] | ตรวจและบันทึกบริบท Adobe Stock Upload Assistant | CLOSED |
+| 008 | [[WO-OBSIDIAN-008-ONBOARD-UTILITY-DISBURSEMENT-APP]] | ตรวจและบันทึกบริบท Utility Disbursement App | PLANNED — NEXT |
+| 009 | [[WO-OBSIDIAN-009-VAULT-CONSISTENCY-AUDIT]] | ตรวจ schema, links, paths, evidence และ consistency ทั้ง Vault | PLANNED |
+| 010 | [[WO-OBSIDIAN-010-STALENESS-AND-REVERIFICATION-POLICY]] | กำหนด freshness/staleness และ re-verification policy | PLANNED |
+| 011 | [[WO-OBSIDIAN-011-PROJECT-RESUME-WORKFLOW]] | กำหนด workflow กลับมาทำงานแต่ละโปรเจกต์อย่างปลอดภัย | PLANNED |
 
-ลำดับนี้เป็น sequential gate — all CLOSED. รอ Owner กำหนด Work Order ถัดไป
+ลำดับนี้เป็น sequential gate: ห้ามเริ่ม Work Order ถัดไปก่อนงานก่อนหน้าปิด `CLOSED` และ Validation ผ่านครบ
 
 ## Closed Work Orders
 
