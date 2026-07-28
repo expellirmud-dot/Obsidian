@@ -129,4 +129,55 @@ REMAINING_WORKTREES:   (list)
 REMAINING_RISKS:       (notes)
 ```
 
-### Status: ⏳ PLANNED — Awaiting execution
+## Execution Verification
+
+### Pre-Flight Results
+
+| Check | agent-a | agent-b | agent-c | agent-d |
+|-------|:-------:|:-------:|:-------:|:-------:|
+| Ancestor of wave1-agent-integration | ✅ exit=0 | ✅ exit=0 | ✅ exit=0 | ✅ exit=0 |
+| Unique commits (branch side) | 0 | 0 | 0 | 0 |
+| Status | `scratch/` + `valid_fixtures.json` | ✅ clean | ✅ clean | ✅ clean |
+
+### Removal Commands & Exit Codes
+
+```bash
+# B, C, D — clean, no --force
+git worktree remove D:/llm-agents-worktrees/agent-b-path-policy    # exit=0
+git branch -d feature/agent-b-path-policy                          # exit=0
+git worktree remove D:/llm-agents-worktrees/agent-c-test-replay    # exit=0
+git branch -d feature/agent-c-test-replay                          # exit=0
+git worktree remove D:/llm-agents-worktrees/agent-d-runtime-ledger # exit=0
+git branch -d feature/agent-d-runtime-ledger                       # exit=0
+
+# A — disposable untracked (scratch/, valid_fixtures.json), --force
+git worktree remove --force D:/llm-agents-worktrees/agent-a-protocol  # exit=0
+git branch -d feature/agent-a-protocol                                 # exit=0
+
+# Prune
+git worktree prune  # exit=0
+```
+
+### Baseline Comparison
+
+| Check | BEFORE | AFTER | Match? |
+|-------|--------|-------|:------:|
+| git status | 36 entries | 36 entries | ✅ |
+| HEAD | 099e516 | 099e516 | ✅ |
+| git log -3 | 099e516, ed977c2, 20bdc46 | Same | ✅ |
+| Stash | empty | empty | ✅ |
+| Baseline branch | integration/wave1-foundation | integration/wave1-foundation | ✅ |
+
+## Final Report
+
+| Field | Value |
+|-------|-------|
+| **WORKTREES_REMOVED** | 4 — agent-a-protocol, agent-b-path-policy, agent-c-test-replay, agent-d-runtime-ledger |
+| **LOCAL_BRANCHES_REMOVED** | 4 — feature/agent-a-protocol, feature/agent-b-path-policy, feature/agent-c-test-replay, feature/agent-d-runtime-ledger |
+| **REMOTE_BRANCHES** | 0 (policy: no remote deletion) |
+| **ITEMS_SKIPPED** | 0 |
+| **BASELINE_MODIFIED** | **NO** — identical before/after |
+| **REMAINING_WORKTREES** | 3 — baseline, bar-wo-06-controller (KEEP_ACTIVE), wave1-agent-integration (PRESERVE) |
+| **REMAINING_RISKS** | None. All agent branches preserved as commits in integration/wave1-agent-integration. |
+
+### Status: ✅ CLOSED — WO-OBSIDIAN-016
