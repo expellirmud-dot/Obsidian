@@ -28,8 +28,21 @@ last_reviewed: 2026-07-28
 
 ตัวอย่าง: `WO-OBSIDIAN-001-Initial-Setup.md`
 
+## Current Work Order
+
+- [[CURRENT_WORK_ORDER]]
+- [[WO-OBSIDIAN-002-INSTALL-PROJECT-READ-FIRST]]
+
+## Closed Legacy Work Orders
+
+- `work-order/WO-OBSIDIAN-001.md` — COMPLETED
+  - เก็บไว้ที่เส้นทางเดิมเพื่อรักษาประวัติ Git
+  - Work Order ใหม่ทั้งหมดใช้ `04 Work Orders`
+
 ## เอกสารในหมวดนี้
 
-- Work Order ปัจจุบันของ Vault นี้: `work-order/WO-OBSIDIAN-001.md` (ที่ root ของ repo)
+- Current pointer: [[CURRENT_WORK_ORDER]]
+- Active: [[WO-OBSIDIAN-002-INSTALL-PROJECT-READ-FIRST]]
+- Legacy (COMPLETED): `work-order/WO-OBSIDIAN-001.md`
 
 กลับไป [[Project Dashboard]]

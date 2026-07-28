@@ -29,6 +29,29 @@ Vault ไม่ใช่แหล่งความจริงแทน Git rep
 6. เอกสารที่ถูกลิงก์ว่าเป็น Authority
 7. Current Work Order จาก Repository จริง เมื่อเข้าถึงได้
 
+## Mandatory Project Read-First
+
+ก่อนแก้ไขไฟล์ทุกงาน AI ต้องอ่านและปฏิบัติตาม:
+
+`.agents/skills/project-read-first/SKILL.md`
+
+ลำดับเริ่มงาน:
+
+1. อ่าน `AGENTS.md`
+2. โหลด `project-read-first`
+3. Resolve exact Git root
+4. อ่าน `04 Work Orders/CURRENT_WORK_ORDER.md`
+5. อ่าน Active Work Order
+6. ตรวจ Allowed Files และ Forbidden Actions
+7. ผลิต `READ_FIRST_PREFLIGHT`
+8. เริ่มแก้ไขได้เฉพาะเมื่อ `PREFLIGHT_DECISION: READY`
+
+สำหรับงาน Markdown-only ภายใน Vault:
+Serena และ CodeGraph เป็น `not_required`
+
+สำหรับงาน Source Code:
+Serena และ CodeGraph ต้องตรงกับ exact Git root ของ Source Repository
+
 ---
 
 # Seven Execution Rules

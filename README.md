@@ -25,16 +25,24 @@ Vault นี้เป็นคลังความรู้กลางสำ�
 Project-Knowledge-Vault
 ├── AGENTS.md                  กฎระดับ Vault — AI ต้องอ่านก่อนทำงาน
 ├── README.md                  ไฟล์นี้
+├── .agents                    Repository skills (.agents/skills/project-read-first/SKILL.md)
 ├── 00 Dashboard               ภาพรวมและทางเข้าหลัก
 ├── 01 Projects                หน้า Project Overview ของแต่ละโปรเจกต์
 ├── 02 Architecture            เอกสารสถาปัตยกรรม (ARCH-<Project>-<Topic>.md)
 ├── 03 Decisions               บันทึกการตัดสินใจ (ADR-<Project>-<Number>-<Title>.md)
-├── 04 Work Orders             สำเนา/ลิงก์ Work Order (WO-<Project>-<Number>-<Title>.md)
+├── 04 Work Orders             Work Order authority (CURRENT_WORK_ORDER.md + WO-*.md)
 ├── 05 Lessons Learned         บทเรียน (LESSON-<Project>-<Number>-<Title>.md)
 ├── 06 Prompts                 Prompt และ Templates
 ├── 07 Attachments             ไฟล์แนบ รูปภาพ
 └── 99 Archive                 เอกสารเก่าที่เลิกใช้ (เก็บหลักฐานเดิม ไม่ลบ)
 ```
+
+## Work Order Authority
+
+- Current Work Order pointer: `04 Work Orders/CURRENT_WORK_ORDER.md`
+- Work Order ใหม่ทั้งหมดต้องอยู่ใน `04 Work Orders`
+- `work-order/WO-OBSIDIAN-001.md` เป็น legacy historical location — เก็บไว้เพื่อรักษาประวัติ Git ไม่ย้าย ไม่แก้
+- Skill เริ่มงาน: `.agents/skills/project-read-first/SKILL.md` — ทุกงานต้องผ่าน READ_FIRST_PREFLIGHT ก่อนแก้ไฟล์
 
 ## วิธีเพิ่มโปรเจกต์ใหม่
 

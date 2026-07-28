@@ -5,7 +5,7 @@ last_reviewed: 2026-07-28
 
 # Project Dashboard
 
-## Active Projects
+## Projects in Vault
 
 - [[llm-agents]]
 - [[STT Typing]]
