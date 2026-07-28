@@ -30,5 +30,6 @@ last_reviewed: 2026-07-28
 ## เอกสารในหมวดนี้
 
 - [[ARCH-llm-agents-Overview]] — Bounded autonomous L2 worker architecture
+- [[ARCH-STT-Typing-Overview]] — Speech-to-Text typing assistant architecture
 
 กลับไป [[Project Dashboard]]

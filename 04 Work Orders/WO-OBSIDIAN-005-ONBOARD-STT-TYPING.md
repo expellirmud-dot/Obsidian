@@ -1,19 +1,19 @@
 # WORK ORDER — ONBOARD STT TYPING
 
-Work Order ID: WO-OBSIDIAN-005  
-Title: Onboard STT Typing into Project Knowledge Vault  
-Status: PLANNED  
-Task Classification: EXTERNAL_PROJECT_DISCOVERY_AND_VAULT_UPDATE  
-Risk Level: MEDIUM  
+Work Order ID: WO-OBSIDIAN-005
+Title: Onboard STT Typing into Project Knowledge Vault
+Status: COMPLETED
+Task Classification: EXTERNAL_PROJECT_DISCOVERY_AND_VAULT_UPDATE
+Risk Level: MEDIUM
 Execution Mode: One Repository, One Bounded Seam
 
-Owner: Toto  
-Vault Root: `D:\Obsidian\Project-Knowledge-Vault`  
+Owner: Toto
+Vault Root: `D:\Obsidian\Project-Knowledge-Vault`
 Source Repository: `D:\stt_typing`
 
-Depends On: WO-OBSIDIAN-004 CLOSED  
-Pull Authorization: YES — fast-forward only  
-Commit Authorization: YES — one Vault commit after validation  
+Depends On: WO-OBSIDIAN-004 CLOSED
+Pull Authorization: YES — fast-forward only
+Commit Authorization: YES — one Vault commit after validation
 Push Authorization: NO
 
 ---
