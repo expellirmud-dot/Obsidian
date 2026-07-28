@@ -2,7 +2,7 @@
 
 Work Order ID: WO-OBSIDIAN-010
 Title: Define Vault Staleness and Re-verification Policy
-Status: ACTIVE
+Status: CLOSED
 Task Classification: VAULT_POLICY_AND_GOVERNANCE
 Risk Level: LOW
 Execution Mode: One Policy Seam
