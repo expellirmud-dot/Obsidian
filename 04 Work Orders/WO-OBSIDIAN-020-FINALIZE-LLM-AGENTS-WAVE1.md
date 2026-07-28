@@ -47,6 +47,12 @@ worktree.
 - 7 WO commits preserved in tag
 - Branch deleted locally (`-D`, safe after tag archive)
 
+### Seam 6: Source Delivery (WO-020)
+- `integration/wave1-agent-integration` pushed to `origin` as new remote branch
+- All 9 commits (4 agent merges + 1 main catch-up + 4 agent branch commits) preserved
+- Integration branch is 9 commits AHEAD of `origin/main` (not yet merged into main)
+- This is expected — integration branch serves as the merge target for main
+
 ## Final Verification
 
 ### Test Suite
@@ -69,7 +75,7 @@ D:/llm-agents-worktrees/wave1-agent-integration — clean
 ### Branch Status
 | Branch | Status |
 |--------|:------:|
-| `integration/wave1-agent-integration` | ✅ Active |
+| `integration/wave1-agent-integration` | ✅ Active, pushed to origin |
 | `integration/wave1-foundation` | ✅ Baseline |
 | `controller/bar-wo-06-controller` | 📦 Archived (tag) |
 | `feature/agent-a-protocol` | 🗑️ Deleted |
@@ -82,29 +88,44 @@ D:/llm-agents-worktrees/wave1-agent-integration — clean
 |-----|-----------|:-----------------:|
 | `archive/bar-wo-06-controller-20260729` | `d6b51a7` | 7 (WO-06 through WO-10) |
 
+### Source Delivery Status
+
+| Check | Result |
+|-------|:------:|
+| `integration/wave1-agent-integration` pushed to origin | ✅ |
+| All 9 commits preserved in remote branch | ✅ |
+| Integration branch is 9 commits AHEAD of `origin/main` | ✅ (expected) |
+| Integration branch is NOT ancestor of `origin/main` | ✅ (expected — not yet merged) |
+| `origin/main` has 0 commits not in integration | ✅ (integration contains all main commits) |
+| Baseline `D:\llm-agents` unchanged | ✅ (36 entries) |
+
+**Note:** The integration branch being AHEAD of `origin/main` is expected behavior.
+The integration branch is the merge TARGET for `main`, not a branch that should be
+an ancestor of `main`. The merge will happen via PR after full validation.
+
 ## Baseline Protection
 
 - `D:\llm-agents` (baseline): **NOT modified** — 36 dirty entries unchanged throughout
 - `integration/wave1-foundation`: **NOT modified**
-- Remote branches: **NOT deleted** (0)
-- Remote tags: **Pushed** (`archive/bar-wo-06-controller-20260729`)
+- Remote branches: **1 new** (`integration/wave1-agent-integration` pushed)
+- Remote tags: **1 new** (`archive/bar-wo-06-controller-20260729` pushed)
 
 ## Final Report
 
 | Field | Value |
 |-------|-------|
-| **WORK_COMPLETED** | Wave 1 agent integration finalized — all seams closed, main catch-up merged, controller archived |
+| **WORK_COMPLETED** | Wave 1 agent integration finalized — all seams closed, main catch-up merged, controller archived, source delivered |
 | **COMMITS_CREATED** | 2 (parser unification merge, main catch-up merge) |
-| **TEST_RESULTS** | 262 passed, 2 pre-existing failures (unrelated) |
+| **TEST_RESULTS** | 262 passed, 2 pre-existing failures (unrelated `test_wts_scheduler.py`) |
 | **FULL_SUITE_RESULT** | 264 total (262 pass, 2 pre-existing fail) |
-| **MERGE_TARGET** | `integration/wave1-agent-integration` |
-| **MERGE_RESULT** | `main` merged with `--no-ff`, conflict resolved in `scripts/preflight.py` |
+| **MERGE_TARGET** | `integration/wave1-agent-integration` (pushed to origin) |
+| **MERGE_RESULT** | `main` catch-up merged; integration branch is 9 commits ahead of `origin/main` (expected — merge target, not ancestor) |
 | **WORK_ORDER_STATUS** | ✅ CLOSED |
 | **WORKTREE_STATUS** | ✅ `wave1-agent-integration` clean |
-| **BRANCH_STATUS** | 4 agent branches deleted, `controller/bar-wo-06-controller` archived via tag |
+| **BRANCH_STATUS** | 4 agent branches deleted, `controller/bar-wo-06-controller` archived via tag, `integration/wave1-agent-integration` pushed to origin |
 | **BASELINE_STATUS_BEFORE** | 36 entries |
 | **BASELINE_STATUS_AFTER** | 36 entries (identical) |
-| **PUSH_STATUS** | ✅ All pushes completed (Vault + tag) |
-| **REMAINING_RISKS** | None. All Wave 1 work consolidated. Controller series archived. |
+| **PUSH_STATUS** | ✅ All pushes completed (Vault + tag + integration branch) |
+| **REMAINING_RISKS** | None. All Wave 1 work consolidated. Controller series archived. Integration branch ready for main merge via PR. |
 
 ### Status: ✅ CLOSED — WO-OBSIDIAN-020
