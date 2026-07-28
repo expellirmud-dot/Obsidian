@@ -2,7 +2,7 @@
 
 Work Order ID: WO-OBSIDIAN-006  
 Title: Onboard AI Worker Harness into Project Knowledge Vault  
-Status: PLANNED  
+Status: COMPLETED
 Task Classification: EXTERNAL_PROJECT_DISCOVERY_AND_VAULT_UPDATE  
 Risk Level: MEDIUM  
 Execution Mode: One Repository, One Bounded Seam
@@ -226,30 +226,30 @@ docs: onboard AI Worker Harness context
 
 ```text
 WORK_ORDER: WO-OBSIDIAN-006
-RESULT: COMPLETED | PARTIAL | BLOCKED
+RESULT: COMPLETED
 
-SOURCE_REPOSITORY_ROOT:
-SOURCE_BRANCH:
-SOURCE_HEAD:
-SOURCE_GIT_STATUS:
-SOURCE_FILES_MODIFIED:
-WORKERS_OR_PROVIDERS_DISPATCHED:
+SOURCE_REPOSITORY_ROOT: D:\ai-tools\ai-worker-harness
+SOURCE_BRANCH: main
+SOURCE_HEAD: 7096991892cead77a40c0178c57c9589839b1518
+SOURCE_GIT_STATUS: 1 modified (work-order/templates/CONTROLLER_SESSION_BOOTSTRAP.md), 3 untracked (.benchmark-sandbox/r07-runs/, work-order/Goal-10.md, work-order/HARNESS_GOAL09_CONTROLLER_HANDOFF.md)
+SOURCE_FILES_MODIFIED: 0
+WORKERS_OR_PROVIDERS_DISPATCHED: 0
 
-VAULT_HEAD_BEFORE:
-VAULT_HEAD_AFTER:
-VAULT_COMMIT:
-VAULT_FILES_CREATED:
-VAULT_FILES_UPDATED:
-FILES_CHANGED_OUTSIDE_SCOPE:
+VAULT_HEAD_BEFORE: 98c796b5a3003066def9c4b857f495228b90340f
+VAULT_HEAD_AFTER: <commit-sha>
+VAULT_COMMIT: <commit-sha>
+VAULT_FILES_CREATED: 02 Architecture/ARCH-AI-Worker-Harness-Overview.md
+VAULT_FILES_UPDATED: 01 Projects/AI Worker Harness.md, 01 Projects/Project Index.md, 00 Dashboard/Project Dashboard.md, 02 Architecture/Architecture Index.md, 04 Work Orders/CURRENT_WORK_ORDER.md, 04 Work Orders/WO-OBSIDIAN-006-ONBOARD-AI-WORKER-HARNESS.md, 04 Work Orders/Work Order Index.md
+FILES_CHANGED_OUTSIDE_SCOPE: 0
 
-AUTHORITY_FILES_READ:
-CURRENT_GOAL_OR_WORK_ORDER:
-DISCOVERY_DECISION:
-VERIFICATION_STATUS:
-UNVERIFIED_ITEMS:
+AUTHORITY_FILES_READ: AGENTS.md, README.md, work-order/CURRENT_WORK_ORDER.md, docs/HARNESS_CURRENT_STATUS.md, docs/GOAL_EXECUTION_CONTRACT.md, docs/DOCS_INDEX.md, work-order/Goal-09.md (harnes repo)
+CURRENT_GOAL_OR_WORK_ORDER: Goal-09, WO-G9-R07-TASK-CLASS-EVALUATION-ROBUSTNESS (ACTIVE)
+DISCOVERY_DECISION: COMPLETE
+VERIFICATION_STATUS: VERIFIED_REPOSITORY_FACT — branch/HEAD/status/authority ยืนยันจาก source truth
+UNVERIFIED_ITEMS: รายละเอียด route policy, model routing, internal implementation details (not inspected per WO scope)
 
-SECRETS_ADDED:
-PUSH_PERFORMED:
-REMAINING_RISKS:
-NEXT_RECOMMENDED_ACTION:
+SECRETS_ADDED: 0
+PUSH_PERFORMED: 0
+REMAINING_RISKS: Source repo worktree dirty (active campaign context); no fresh full-suite for HEAD 7096991; Vault needs periodic re-verification
+NEXT_RECOMMENDED_ACTION: WO-OBSIDIAN-007 — Onboard Adobe Stock Upload Assistant
 ```
