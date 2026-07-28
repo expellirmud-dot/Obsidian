@@ -22,7 +22,6 @@ last_reviewed: 2026-07-28
 - [[llm-agents]] — needs-verification
 - [[STT Typing]] — needs-verification
 - [[AI Worker Harness]] — needs-verification
-- [[Utility Disbursement App]] — needs-verification (local path ไม่พบเมื่อ 2026-07-28)
 - [[Adobe Stock Upload Assistant]] — needs-verification
 
 ## Recently Reviewed
@@ -32,12 +31,12 @@ last_reviewed: 2026-07-28
 | [[llm-agents]] | 2026-07-28 (สร้างหน้าเริ่มต้น ยังไม่ตรวจ repo) |
 | [[STT Typing]] | 2026-07-28 (สร้างหน้าเริ่มต้น ยังไม่ตรวจ repo) |
 | [[AI Worker Harness]] | 2026-07-28 (สร้างหน้าเริ่มต้น ยังไม่ตรวจ repo) |
-| [[Utility Disbursement App]] | 2026-07-28 (สร้างหน้าเริ่มต้น ยังไม่ตรวจ repo) |
+| [[Utility Disbursement App]] | 2026-07-28 (Owner ยืนยัน paused; path ใหม่ + .git ตรวจแล้ว) |
 | [[Adobe Stock Upload Assistant]] | 2026-07-28 (สร้างหน้าเริ่มต้น ยังไม่ตรวจ repo) |
 
 ## Paused Projects
 
-ยังไม่กำหนด จนกว่าจะมีหลักฐานจาก Owner หรือ Repository
+- [[Utility Disbursement App]] — Owner ยืนยัน 2026-07-28 ว่าหยุดพัฒนาชั่วคราว ย้ายไปเก็บที่ `D:\project_backups\utility-disbursement-app`
 
 ## Completed Projects
 
