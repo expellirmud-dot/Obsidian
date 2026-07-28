@@ -178,3 +178,5 @@ EXECUTION_STATE:
 - [[Project Index]]
 - [[ARCH-Adobe-Stock-Upload-Overview]]
 - [[Work Order Index]]
+- [[Prompt Index]]
+- [[Project Resume Workflow]]

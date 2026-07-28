@@ -201,6 +201,9 @@ SUPPORTED_INFERENCE:
   - `docs/NEW_PROJECT_BRIEF.md`
   - `docs/legacy-memory/ROADMAP_CURRENT.md`
   - `.tasks/TASK-*/status.md`
+- [[Work Order Index]]
+- [[Prompt Index]]
+- [[Project Resume Workflow]]
 
 ## Resume Context
 

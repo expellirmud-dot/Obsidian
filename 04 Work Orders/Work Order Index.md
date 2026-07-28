@@ -26,7 +26,7 @@ last_reviewed: 2026-07-29
 
 ## Current Work Order
 - [[CURRENT_WORK_ORDER]]
-- **PLANNED — NEXT:** [[WO-OBSIDIAN-010-STALENESS-AND-REVERIFICATION-POLICY]]
+- **ACTIVE:** [[WO-OBSIDIAN-011-PROJECT-RESUME-WORKFLOW]]
 
 ## Planned Sequence
 
@@ -38,14 +38,17 @@ last_reviewed: 2026-07-29
 | 006 | [[WO-OBSIDIAN-006-ONBOARD-AI-WORKER-HARNESS]] | ตรวจและบันทึกบริบท AI Worker Harness | CLOSED |
 | 007 | [[WO-OBSIDIAN-007-ONBOARD-ADOBE-STOCK-UPLOAD]] | ตรวจและบันทึกบริบท Adobe Stock Upload Assistant | CLOSED |
 | 008 | [[WO-OBSIDIAN-008-ONBOARD-UTILITY-DISBURSEMENT-APP]] | ตรวจและบันทึกบริบท Utility Disbursement App | CLOSED |
-|| 009 | [[WO-OBSIDIAN-009-VAULT-CONSISTENCY-AUDIT]] | ตรวจ schema, links, paths, evidence และ consistency ทั้ง Vault | CLOSED |
-|| 010 | [[WO-OBSIDIAN-010-STALENESS-AND-REVERIFICATION-POLICY]] | กำหนด freshness/staleness และ re-verification policy | ACTIVE |
-|| 011 | [[WO-OBSIDIAN-011-PROJECT-RESUME-WORKFLOW]] | กำหนด workflow กลับมาทำงานแต่ละโปรเจกต์อย่างปลอดภัย | PLANNED — NEXT |
+| 009 | [[WO-OBSIDIAN-009-VAULT-CONSISTENCY-AUDIT]] | ตรวจ schema, links, paths, evidence และ consistency ทั้ง Vault | CLOSED |
+| 010 | [[WO-OBSIDIAN-010-STALENESS-AND-REVERIFICATION-POLICY]] | กำหนด freshness/staleness และ re-verification policy | CLOSED |
+| 011 | [[WO-OBSIDIAN-011-PROJECT-RESUME-WORKFLOW]] | กำหนด workflow กลับมาทำงานแต่ละโปรเจกต์อย่างปลอดภัย | ACTIVE |
 
 ลำดับนี้เป็น sequential gate: ห้ามเริ่ม Work Order ถัดไปก่อนงานก่อนหน้าปิด `CLOSED` และ Validation ผ่านครบ
 
 ## Closed Work Orders
 
+- [[WO-OBSIDIAN-011-PROJECT-RESUME-WORKFLOW]] — CLOSED
+- [[WO-OBSIDIAN-010-STALENESS-AND-REVERIFICATION-POLICY]] — CLOSED
+- [[WO-OBSIDIAN-009-VAULT-CONSISTENCY-AUDIT]] — CLOSED
 - [[WO-OBSIDIAN-008-ONBOARD-UTILITY-DISBURSEMENT-APP]] — CLOSED
 - [[WO-OBSIDIAN-007-ONBOARD-ADOBE-STOCK-UPLOAD]] — CLOSED
 - [[WO-OBSIDIAN-006-ONBOARD-AI-WORKER-HARNESS]] — CLOSED

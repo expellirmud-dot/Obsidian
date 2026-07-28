@@ -196,3 +196,5 @@ Goal-09 R07 live campaign (WO-G9-R07-TASK-CLASS-EVALUATION-ROBUSTNESS):
 - [[Project Index]]
 - [[ARCH-AI-Worker-Harness-Overview]]
 - [[Work Order Index]]
+- [[Prompt Index]]
+- [[Project Resume Workflow]]

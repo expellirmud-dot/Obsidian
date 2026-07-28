@@ -211,3 +211,5 @@ VERIFIED_REPOSITORY_FACT — ตรวจสอบแล้ว 2026-07-28:
 - [[Project Index]]
 - [[ARCH-STT-Typing-Overview]]
 - [[Work Order Index]]
+- [[Prompt Index]]
+- [[Project Resume Workflow]]

@@ -184,6 +184,8 @@ tests/                        → Canonical pytest suite
 - [[Project Index]]
 - [[ARCH-llm-agents-Overview]]
 - [[Work Order Index]]
+- [[Prompt Index]]
+- [[Project Resume Workflow]]
 
 ## Resume Context
 

@@ -55,5 +55,5 @@ last_reviewed: 2026-07-29
 - [[Decision Index]] — `03 Decisions/DEC-Vault-Staleness-and-Reverification-Policy.md`
 - [[Work Order Index]]
 - [[Lessons Learned Index]]
-- [[Prompt Index]]
+- [[Prompt Index]] — `05 Prompts/Prompt Index.md`
 - [[Archive Index]]
