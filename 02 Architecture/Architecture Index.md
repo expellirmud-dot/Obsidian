@@ -33,5 +33,6 @@ last_reviewed: 2026-07-28
 - [[ARCH-STT-Typing-Overview]] — Speech-to-Text typing assistant architecture
 - [[ARCH-AI-Worker-Harness-Overview]] — AI Worker Harness control plane architecture
 - [[ARCH-Adobe-Stock-Upload-Overview]] — Adobe Stock Upload Assistant workflow architecture
+- [[ARCH-Utility-Disbursement-App-Overview]] — Thai municipal utility disbursement app architecture
 
 กลับไป [[Project Dashboard]]

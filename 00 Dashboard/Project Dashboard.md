@@ -19,7 +19,7 @@ last_reviewed: 2026-07-28
 
 โปรเจกต์ที่สถานะยังไม่ได้ตรวจสอบจาก Repository จริง หรือตรวจสอบเพียงบางส่วน:
 
-- [[Utility Disbursement App]] — partially verified: Owner-confirmed paused; local path and Git repository confirmed; full repository-context onboarding not yet performed
+ไม่มี — ทั้งหมดผ่านการตรวจสอบแล้ว
 
 ## Recently Reviewed
 
@@ -28,7 +28,7 @@ last_reviewed: 2026-07-28
 | [[llm-agents]] | 2026-07-28 (WO-OBSIDIAN-004: Repository truth verified, HEAD 099e516) |
 | [[STT Typing]] | 2026-07-28 (WO-OBSIDIAN-005: Repository truth verified, HEAD af10254; status: active/superseded-pending-roadmap) |
 | [[AI Worker Harness]] | 2026-07-28 (WO-OBSIDIAN-006: Repository truth verified, HEAD 7096991; status: verified, Goal-09 R07 ACTIVE) |
-| [[Utility Disbursement App]] | 2026-07-28 (Owner ยืนยัน paused; path ใหม่ + .git ตรวจแล้ว) |
+| [[Utility Disbursement App]] | 2026-07-29 (WO-OBSIDIAN-008: Repository truth verified, HEAD 429cb91; status: paused/owner-confirmed) |
 | [[Adobe Stock Upload Assistant]] | 2026-07-28 (WO-OBSIDIAN-007: Repository truth verified, HEAD 0e5f9fc; status: verified, no active task) |
 
 ## Paused Projects
