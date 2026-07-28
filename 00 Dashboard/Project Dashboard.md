@@ -17,9 +17,9 @@ last_reviewed: 2026-07-28
 
 ## Needs Verification
 
-โปรเจกต์ที่สถานะยังไม่ได้ตรวจสอบจาก Repository จริง:
+โปรเจกต์ที่สถานะยังไม่ได้ตรวจสอบจาก Repository จริง หรือตรวจสอบเพียงบางส่วน:
 
-ไม่มี — โปรเจกต์ทั้งหมดใน Vault ผ่านการตรวจสอบแล้ว
+- [[Utility Disbursement App]] — partially verified: Owner-confirmed paused; local path and Git repository confirmed; full repository-context onboarding not yet performed
 
 ## Recently Reviewed
 

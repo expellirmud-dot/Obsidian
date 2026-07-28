@@ -66,11 +66,19 @@ VERIFIED_REPOSITORY_FACT — ตรวจสอบแล้ว 2026-07-28:
 - Branch: main
 - HEAD: 0e5f9fc53f58592ca9e5e3c37bb2b0ef1ced977a
 - Remote: none (local-only Git)
-- Git Status: 1 modified (.tasks/TASK-ADOBE-STOCK-SAFETY-TERMS-CORE-001/status.md — task marked completed), 3 untracked (.continue/, .serena/, .tasks/_proposed_next/)
-- Active Task: TASK-ADOBE-STOCK-SAFETY-TERMS-CORE-001 — STATUS: completed
-- No active executable task
-- Python: D:\adobe-stock-upload\_venv\Scripts\python.exe
-- Skill source: D:\adobe-stock-upload\ai\skills\read-first-adobe-stock\SKILL.md
+- Git Status: 1 modified (.tasks/TASK-ADOBE-STOCK-SAFETY-TERMS-CORE-001/status.md), 3 untracked (.continue/, .serena/, .tasks/_proposed_next/)
+
+WORKTREE_OBSERVED_FACT:
+- status.md ใน working tree ระบุ TASK-ADOBE-STOCK-SAFETY-TERMS-CORE-001 = completed
+- การเปลี่ยนแปลงนี้ยังไม่ถูก commit ใน HEAD `0e5f9fc`
+
+COMMITTED_HEAD_FACT:
+- .tasks/CURRENT_TASK.md ที่ HEAD ชี้ไปยัง TASK-ADOBE-STOCK-SAFETY-TERMS-CORE-001
+- ต้องตรวจสถานะ completed จาก HEAD โดยตรง (ไม่ใช่ working tree) เพื่อยืนยัน committed fact
+
+EXECUTION_STATE:
+- No active executable task according to current working-tree pointer
+- Needs confirmation after source worktree reconciliation
 
 ## สิ่งที่ทำเสร็จแล้ว
 

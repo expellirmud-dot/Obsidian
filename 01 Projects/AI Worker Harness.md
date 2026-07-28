@@ -76,7 +76,15 @@ VERIFIED_REPOSITORY_FACT — ตรวจสอบแล้ว 2026-07-28:
 - Full suite: no fresh result for current HEAD (historical: 962 passed at fd69aa1)
 - Goal-09 R07: ACTIVE — 10 task classes, sentinel batch TC-01+TC-07, route google-gemma-main
 - Goal-10: inactive — not part of current authority
-- Worktree state: dirty (active campaign context, not blocker for read-only discovery)
+
+VERIFIED_REPOSITORY_FACT:
+- Git Status: 1 modified (work-order/templates/CONTROLLER_SESSION_BOOTSTRAP.md), 3 untracked (.benchmark-sandbox/r07-runs/, work-order/Goal-10.md, work-order/HARNESS_GOAL09_CONTROLLER_HANDOFF.md)
+
+SUPPORTED_INFERENCE:
+- ไฟล์ที่ modified/untracked ดูเกี่ยวข้องกับ Goal-09/R07 campaign แต่ provenance ไม่ได้รับการยืนยันจาก repository fact
+
+EXECUTION_WARNING:
+- ต้อง reconcile provenance และ authority ของ dirty files ก่อนใช้เป็นฐานรันงานต่อ
 
 ## สิ่งที่ทำเสร็จแล้ว
 
