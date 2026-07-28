@@ -32,5 +32,6 @@ last_reviewed: 2026-07-28
 - [[ARCH-llm-agents-Overview]] — Bounded autonomous L2 worker architecture
 - [[ARCH-STT-Typing-Overview]] — Speech-to-Text typing assistant architecture
 - [[ARCH-AI-Worker-Harness-Overview]] — AI Worker Harness control plane architecture
+- [[ARCH-Adobe-Stock-Upload-Overview]] — Adobe Stock Upload Assistant workflow architecture
 
 กลับไป [[Project Dashboard]]

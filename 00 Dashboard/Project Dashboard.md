@@ -19,8 +19,7 @@ last_reviewed: 2026-07-28
 
 โปรเจกต์ที่สถานะยังไม่ได้ตรวจสอบจาก Repository จริง:
 
-- [[AI Worker Harness]] — needs-verification
-- [[Adobe Stock Upload Assistant]] — needs-verification
+ไม่มี — โปรเจกต์ทั้งหมดใน Vault ผ่านการตรวจสอบแล้ว
 
 ## Recently Reviewed
 
@@ -30,7 +29,7 @@ last_reviewed: 2026-07-28
 | [[STT Typing]] | 2026-07-28 (WO-OBSIDIAN-005: Repository truth verified, HEAD af10254; status: active/superseded-pending-roadmap) |
 | [[AI Worker Harness]] | 2026-07-28 (WO-OBSIDIAN-006: Repository truth verified, HEAD 7096991; status: verified, Goal-09 R07 ACTIVE) |
 | [[Utility Disbursement App]] | 2026-07-28 (Owner ยืนยัน paused; path ใหม่ + .git ตรวจแล้ว) |
-| [[Adobe Stock Upload Assistant]] | 2026-07-28 (สร้างหน้าเริ่มต้น ยังไม่ตรวจ repo) |
+| [[Adobe Stock Upload Assistant]] | 2026-07-28 (WO-OBSIDIAN-007: Repository truth verified, HEAD 0e5f9fc; status: verified, no active task) |
 
 ## Paused Projects
 

@@ -32,7 +32,10 @@ last_reviewed: 2026-07-28
 
 - [[CURRENT_WORK_ORDER]]
 - **CLOSED:** [[WO-OBSIDIAN-005-ONBOARD-STT-TYPING]]
-- **CLOSED:** [[WO-OBSIDIAN-006-ONBOARD-AI-WORKER-HARNESS]] — งานถัดไป: [[WO-OBSIDIAN-007-ONBOARD-ADOBE-STOCK-UPLOAD]] (PLANNED — NEXT)
+- **CLOSED:** [[WO-OBSIDIAN-006-ONBOARD-AI-WORKER-HARNESS]]
+- **CLOSED:** [[WO-OBSIDIAN-007-ONBOARD-ADOBE-STOCK-UPLOAD]]
+
+No remaining active Work Orders — all planned sequences COMPLETED
 
 ## Planned Sequence
 
@@ -42,14 +45,15 @@ last_reviewed: 2026-07-28
 | 004 | [[WO-OBSIDIAN-004-ONBOARD-LLM-AGENTS]] | ตรวจและบันทึกบริบท llm-agents | CLOSED |
 | 005 | [[WO-OBSIDIAN-005-ONBOARD-STT-TYPING]] | ตรวจและบันทึกบริบท STT Typing | **CLOSED** |
 || 006 | [[WO-OBSIDIAN-006-ONBOARD-AI-WORKER-HARNESS]] | ตรวจและบันทึกบริบท AI Worker Harness | **CLOSED** |
-|| 007 | [[WO-OBSIDIAN-007-ONBOARD-ADOBE-STOCK-UPLOAD]] | ตรวจและบันทึกบริบท Adobe Stock Upload Assistant | PLANNED — NEXT |
+|| 007 | [[WO-OBSIDIAN-007-ONBOARD-ADOBE-STOCK-UPLOAD]] | ตรวจและบันทึกบริบท Adobe Stock Upload Assistant | **CLOSED** |
 
-ลำดับนี้เป็น sequential gate: ห้ามเริ่มงานถัดไปก่อนงานก่อนหน้าปิด `CLOSED` และ Validation ผ่าน
+ลำดับนี้เป็น sequential gate — all CLOSED. รอ Owner กำหนด Work Order ถัดไป
 
 ## Closed Work Orders
 
-- [[WO-OBSIDIAN-005-ONBOARD-STT-TYPING]] — CLOSED
+- [[WO-OBSIDIAN-007-ONBOARD-ADOBE-STOCK-UPLOAD]] — CLOSED
 - [[WO-OBSIDIAN-006-ONBOARD-AI-WORKER-HARNESS]] — CLOSED
+- [[WO-OBSIDIAN-005-ONBOARD-STT-TYPING]] — CLOSED
 - [[WO-OBSIDIAN-004-ONBOARD-LLM-AGENTS]] — CLOSED
 - [[WO-OBSIDIAN-003-CREATE-PROJECT-CONTEXT-DISCOVERY]] — CLOSED
 - [[WO-OBSIDIAN-002-INSTALL-PROJECT-READ-FIRST]] — CLOSED
