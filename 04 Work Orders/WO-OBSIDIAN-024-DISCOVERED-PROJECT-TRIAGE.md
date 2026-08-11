@@ -7,10 +7,10 @@ Task Classification: Documentation / Repository Inventory / Knowledge Base Gover
 Execution Mode: Bounded Single Work Order
 Owner: Toto
 Target Vault: `D:\Obsidian\Project-Knowledge-Vault`
-Status: PLANNED
+Status: CLOSED
 
-> ใบงานนี้เป็น **draft PLANNED เท่านั้น** — ยังไม่ Activate และห้าม execute ในรอบที่สร้างไฟล์นี้
-> การ Activate + Execute ต้องรอ Owner สั่งแยกต่างหาก
+> ใบงานนี้ถูก Activate + Execute เรียบร้อยแล้ว (2026-08-11) — ดู §16 Closeout Status
+> การ Activate ได้รับ Owner authorization ชัดเจน
 
 ---
 
@@ -311,3 +311,61 @@ Suggested commit message (draft creation):
 Recommended next step หลัง WO-024 สำเร็จ:
 
 `Import Missing Projects` เฉพาะ repos ที่ผ่าน recommendation gate ก่อนเริ่มงาน `Live Project State / Project Wall Automation`
+
+---
+
+## 16. Closeout Status (updated 2026-08-11)
+
+- **Status:** CLOSED — committed (owner-authorized bounded commit; NO push)
+- **Preflight:** `PREFLIGHT_DECISION: READY` (VAULT_DOCUMENTATION)
+- **Execution mode:** READ-ONLY ต่อ 24 source repos — ไม่มีการแก้ไข source
+- **Triage evidence (real, this session):** `ls` root + README/AGENTS head + `git branch/HEAD/rev-list --count/remote get-url origin` (local `cd` + `git`; `git -C /d/...` ไม่ทำงานใน env)
+- **Reconcile:** sum(Triage Class) = 24, missing = 0 ✅
+
+### Triage Counts (§12)
+| Triage Class | Count |
+| ------------ | ----- |
+| project | 6 |
+| sandbox-experiment | 6 |
+| tooling-infrastructure | 6 |
+| duplicate-superseded-candidate | 1 |
+| backup-archive-candidate | 2 |
+| unknown | 3 |
+| **รวม** | **24** |
+
+### Onboarding Gate (§13)
+- **Automatically eligible (project + verified):** 6
+  - `AI-Workspace`, `lightroom-ai-exposure`, `citizen_portal`, `lumina-studio`, `TalkToClibord`, `thai_stt_app`
+- **Conditionally eligible (tooling-infrastructure + verified):** 6 — ต้อง Owner ยืนยันว่าเป็นโปรเจกต์อิสระที่ติดตามได้ (rule: `Tooling ≠ Project` ไม่ถูกบังคับ)
+  - `ai-tools-kit`, `computer-use-preview`, `gridgeist`, `mcp-agentic-framework`, `stt-openhands-batch-draft`, `codegraph`
+- **Not eligible without further evidence:** 12
+  - `sandbox-experiment` (6): `.sandbox/*` — fork ของ `D:\llm-agents`
+  - `backup-archive-candidate` (2): `Utility Automation2`, `utility_automation_v2`
+  - `duplicate-superseded-candidate` (1): `utility_automation_v2_light`
+  - `unknown` (3): `Automation`, `JAVIS_Nexus`, `office_council_keeper` (0 commits all branches)
+
+### Validation performed (§10)
+1. ✅ `git status --short` — only Allowed Files
+2. ✅ Diff confined to Allowed Files (Registry + pointer + WO-024)
+3. ✅ ครบ 24 discovered entries ถูกพิจารณา (grep count = 24)
+4. ✅ 5 imported projects ไม่ถูกจัดหมวดใหม่ (Import/Lifecycle/Verify คงเดิม)
+5. ✅ ทุก final Triage Class มี Triage Evidence (อธิบายไว้ใน Registry table)
+6. ✅ unknown 3 ตัว = `needs-verification`
+7. ✅ Triage Class ทุกค่าอยู่ใน taxonomy §5
+8. ✅ ไม่มี lifecycle เปลี่ยนจาก Triage Class เพียงอย่างเดียว (all DIS remain UNK lifecycle)
+9. ✅ ไม่มี secret/credential (remote URL ไม่มี token)
+10. ✅ source repositories unchanged (read-only)
+11. ✅ diff summary ก่อน commit
+
+### Evidence highlights
+- `.sandbox/01-06` (6): remote = `D:/llm-agents`, README "LLM Agents — Bounded Autonomous Worker", 264 commits → fork/benchmark ของ imported `llm-agents`
+- `codegraph`, `computer-use-preview`, `gridgeist`, `mcp-agentic-framework`: remote ชี้ third-party (colbymchenry, google-gemini, ohmiler, Piotr1215) → mirror/tooling
+- `utility_automation_v2_light`: remote ซ้ำ `expellirmud-dot/utility_automation_v2` → duplicate-superseded-candidate
+- `Automation`, `JAVIS_Nexus`, `office_council_keeper`: `git rev-list --all --count` = 0 → unverifiable → unknown
+
+### Source repositories changed
+None (READ-ONLY enforcement verified)
+
+### Recommended next WO
+`Import Missing Projects` — onboard 6 `project`+`verified` ที่ผ่าน gate; สำหรับ 6 `tooling-infrastructure` ให้ Owner ตัดสินว่าติดตามหรือไม่; sandbox/backup/duplicate/unknown คงไว้ใน Registry ไม่ onboard
+

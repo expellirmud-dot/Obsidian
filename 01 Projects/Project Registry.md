@@ -6,7 +6,7 @@ last_reviewed: 2026-08-11
 # Project Registry
 
 > Inventory กลางของโปรเจกต์ที่ Vault รู้จัก (canonical inventory)
-> สร้างโดย WO-OBSIDIAN-023 (2026-08-11)
+> สร้างโดย WO-OBSIDIAN-023 (2026-08-11); triage ต่อ 24 discovered โดย WO-OBSIDIAN-024 (2026-08-11)
 > Dashboard และ Project Index อ้างอิง Registry นี้เป็นแหล่งรายการหลัก
 > ห้ามถือว่ารายชื่อ Project Overview 5 รายการคือ inventory ทั้งหมดโดยปริยาย
 
@@ -28,76 +28,89 @@ last_reviewed: 2026-08-11
 
 | Verification State | Count |
 | ------------------ | ----- |
-| verified | 4 |
-| owner-confirmed | 1 |
-| needs-verification | 24 |
+| verified | 4 (imported) + 21 (discovered) = 25 |
+| owner-confirmed | 1 (imported) |
+| needs-verification | 3 (discovered: Automation, JAVIS_Nexus, office_council_keeper) |
 
-หมายเหตุสรุป:
-- `active` = 3 (llm-agents, STT Typing, AI Worker Harness — ประกาศใน prior WO)
-- `paused` = 1 (Utility Disbursement App — owner-confirmed)
-- `unknown` lifecycle = 25 (Adobe Stock ไม่ได้ประกาศ lifecycle ใน prior WO + 24 discovered)
-- `verified` = 4 (5 imported ยกเว้น Utility ที่เป็น owner-confirmed)
-- `needs-verification` = 24 discovered (พบว่าเป็น git repo แต่ purpose/lifecycle/ownership ยังไม่ตรวจ)
+## Triage Summary (WO-OBSIDIAN-024, 2026-08-11, read-only)
+
+24 discovered repos ถูก triage ตาม taxonomy ใน WO-024 §5:
+
+| Triage Class | Count | Evidence |
+| ------------ | ----- | -------- |
+| project | 6 | verified (owner GitHub repos, มี commit + remote เป็น expellirmud-dot/*) |
+| tooling-infrastructure | 6 | verified (framework/mirror/skill kit) |
+| sandbox-experiment | 6 | verified (fork ของ `D:\llm-agents`, remote = `D:/llm-agents`) |
+| backup-archive-candidate | 2 | verified (อยู่ใต้ `project_backups/`) |
+| duplicate-superseded-candidate | 1 | verified (อยู่ใต้ `project_backups/`, remote ซ้ำ `utility_automation_v2`) |
+| unknown | 3 | needs-verification (0 commits on all branches, ไม่มี remote/README) |
+| **รวม** | **24** | reconcile = 24, missing = 0 |
+
+**Post-Triage Onboarding Gate (WO-024 §13):**
+- Automatically eligible (onboard ได้พิจารณา): `project` + `verified` = 6 repos
+  - `AI-Workspace`, `lightroom-ai-exposure`, `citizen_portal`, `lumina-studio`, `TalkToClibord`, `thai_stt_app`
+- Conditionally eligible: `tooling-infrastructure` + `verified` = 6 repos — ต้อง Owner ยืนยันว่ามี lifecycle เป็นอิสระจึงติดตามได้
+- ไม่ผ่าน gate โดยอัตโนมัติ: `sandbox-experiment` (6), `backup-archive-candidate` (2), `duplicate-superseded-candidate` (1), `unknown` (3) = 12 repos
+- Triage Class ไม่กำหนด Lifecycle State (ห้าม infer)
 
 ## Legend
 
 - **Import**: `IMP` = imported · `DIS` = discovered-not-imported · `UNK` = unknown
 - **Lifecycle**: `ACT` = active · `PAU` = paused · `ARC` = archived · `UNK` = unknown
 - **Verify**: `VER` = verified · `OWC` = owner-confirmed · `NEE` = needs-verification
+- **Triage Class**: `PRJ` = project · `SBX` = sandbox-experiment · `TLG` = tooling-infrastructure · `BAK` = backup-archive-candidate · `DUP` = duplicate-superseded-candidate · `UNK` = unknown
 
 ## Registry Table
 
-| Project | Repository / Source Location | Import | Lifecycle | Verify | Last Verified | Project Note | Notes / Evidence |
-| ------- | ---------------------------- | ------ | --------- | ------ | ------------- | ------------ | ---------------- |
-| llm-agents | `D:\llm-agents` | IMP | ACT | VER | 2026-07-28 (WO-004 HEAD 099e516) | AI agent control/operations system | repo-exists verified 2026-08-11 (`git`); prior WO verification record |
-| STT Typing | `D:\stt_typing` | IMP | ACT | VER | 2026-07-28 (WO-005 HEAD af10254) | offline-first voice typing / command | repo-exists verified 2026-08-11 |
-| AI Worker Harness | `D:\ai-tools\ai-worker-harness` | IMP | ACT | VER | 2026-07-28 (WO-006 HEAD 7096991) | evidence-driven work-order control plane | repo-exists verified 2026-08-11 |
-| Utility Disbursement App | `D:\project_backups\utility-disbursement-app` | IMP | PAU | OWC | 2026-07-29 (WO-008 HEAD 429cb91) | utility bill disbursement process | owner-confirmed paused 2026-07-29; repo-exists 2026-08-11 |
-| Adobe Stock Upload Assistant | `D:\adobe-stock-upload` | IMP | UNK | VER | 2026-07-28 (WO-007 HEAD 0e5f9fc) | Adobe Stock metadata/upload prep | repo-exists verified 2026-08-11; lifecycle ไม่ได้ประกาศใน prior WO → UNK |
-| .sandbox/01-longcat | `D:\.sandbox\01-longcat` | DIS | UNK | NEE | 2026-08-11 (repo scan) | sandbox model repo (name-based) | git repo confirmed 2026-08-11; purpose/owner NEE |
-| .sandbox/02-deepseek-v4 | `D:\.sandbox\02-deepseek-v4` | DIS | UNK | NEE | 2026-08-11 (repo scan) | sandbox model repo (name-based) | git repo confirmed 2026-08-11; purpose/owner NEE |
-| .sandbox/03-nemotron-ultra | `D:\.sandbox\03-nemotron-ultra` | DIS | UNK | NEE | 2026-08-11 (repo scan) | sandbox model repo (name-based) | git repo confirmed 2026-08-11; purpose/owner NEE |
-| .sandbox/04-step-3.7 | `D:\.sandbox\04-step-3.7` | DIS | UNK | NEE | 2026-08-11 (repo scan) | sandbox model repo (name-based) | git repo confirmed 2026-08-11; purpose/owner NEE |
-| .sandbox/05-mimo-v2.5 | `D:\.sandbox\05-mimo-v2.5` | DIS | UNK | NEE | 2026-08-11 (repo scan) | sandbox model repo (name-based) | git repo confirmed 2026-08-11; purpose/owner NEE |
-| .sandbox/06-north-mini | `D:\.sandbox\06-north-mini` | DIS | UNK | NEE | 2026-08-11 (repo scan) | sandbox model repo (name-based) | git repo confirmed 2026-08-11; purpose/owner NEE |
-| ai-tools-kit | `D:\ai-tools\ai-tools-kit` | DIS | UNK | NEE | 2026-08-11 (repo scan) | AI tools kit (name-based) | git repo confirmed 2026-08-11; purpose/owner NEE |
-| AI-Workspace | `D:\ai-tools\AI-Workspace` | DIS | UNK | NEE | 2026-08-11 (repo scan) | AI workspace (name-based) | git repo confirmed 2026-08-11; purpose/owner NEE |
-| computer-use-preview | `D:\ai-tools\computer-use-preview` | DIS | UNK | NEE | 2026-08-11 (repo scan) | computer-use preview (name-based) | git repo confirmed 2026-08-11; purpose/owner NEE |
-| gridgeist | `D:\ai-tools\gridgeist` | DIS | UNK | NEE | 2026-08-11 (repo scan) | unknown (name-based) | git repo confirmed 2026-08-11; purpose/owner NEE |
-| lightroom-ai-exposure | `D:\ai-tools\lightroom-ai-exposure` | DIS | UNK | NEE | 2026-08-11 (repo scan) | Lightroom AI exposure (name-based) | git repo confirmed 2026-08-11; possible relation to LR workflow (inference) |
-| Automation | `D:\Automation` | DIS | UNK | NEE | 2026-08-11 (repo scan) | automation scripts (name-based) | git repo confirmed 2026-08-11; purpose/owner NEE |
-| citizen_portal | `D:\citizen_portal` | DIS | UNK | NEE | 2026-08-11 (repo scan) | citizen portal (name-based) | git repo confirmed 2026-08-11; purpose/owner NEE |
-| JAVIS_Nexus | `D:\JAVIS_Nexus` | DIS | UNK | NEE | 2026-08-11 (repo scan) | JAVIS Nexus (name-based) | git repo confirmed 2026-08-11; purpose/owner NEE |
-| lumina-studio | `D:\lumina-studio` | DIS | UNK | NEE | 2026-08-11 (repo scan) | lumina studio (name-based) | git repo confirmed 2026-08-11; possible relation to lumina-photo-harvest (inference) |
-| mcp-agentic-framework | `D:\mcp-agentic-framework` | DIS | UNK | NEE | 2026-08-11 (repo scan) | MCP agentic framework (name-based) | git repo confirmed 2026-08-11; purpose/owner NEE |
-| office_council_keeper | `D:\office_council_keeper` | DIS | UNK | NEE | 2026-08-11 (repo scan) | office council keeper (name-based) | git repo confirmed 2026-08-11; purpose/owner NEE |
-| Utility Automation2 | `D:\project_backups\Utility Automation2` | DIS | UNK | NEE | 2026-08-11 (repo scan) | utility automation backup (name-based) | git repo confirmed 2026-08-11; possible relation to Utility Disbursement App (inference) |
-| utility_automation_v2 | `D:\project_backups\utility_automation_v2` | DIS | UNK | NEE | 2026-08-11 (repo scan) | utility automation backup (name-based) | git repo confirmed 2026-08-11; possible relation to Utility Disbursement App (inference) |
-| utility_automation_v2_light | `D:\project_backups\utility_automation_v2_light` | DIS | UNK | NEE | 2026-08-11 (repo scan) | utility automation backup (name-based) | git repo confirmed 2026-08-11; possible relation to Utility Disbursement App (inference) |
-| stt-openhands-batch-draft | `D:\stt-openhands-batch-draft` | DIS | UNK | NEE | 2026-08-11 (repo scan) | STT OpenHands batch draft (name-based) | git repo confirmed 2026-08-11; possible relation to STT Typing (inference) |
-| TalkToClibord | `D:\TalkToClibord` | DIS | UNK | NEE | 2026-08-11 (repo scan) | clipboard tool (name-based) | git repo confirmed 2026-08-11; purpose/owner NEE |
-| thai_stt_app | `D:\thai_stt_app` | DIS | UNK | NEE | 2026-08-11 (repo scan) | Thai STT desktop app (name-based) | git repo confirmed 2026-08-11; possible relation to STT Typing (inference) |
-| codegraph | `D:\tools\codegraph` | DIS | UNK | NEE | 2026-08-11 (repo scan) | codegraph tooling repo (name-based) | git repo confirmed 2026-08-11; purpose/owner NEE |
+| Project | Repository / Source Location | Import | Lifecycle | Verify | Triage Class | Triage Evidence | Project Note | Notes / Evidence |
+| ------- | ---------------------------- | ------ | --------- | ------ | ------------ | --------------- | ------------ | ---------------- |
+| llm-agents | `D:\llm-agents` | IMP | ACT | VER | — (imported) | imported project (WO-023), outside triage scope | AI agent control/operations system | repo-exists verified 2026-08-11 |
+| STT Typing | `D:\stt_typing` | IMP | ACT | VER | — (imported) | imported project (WO-023), outside triage scope | offline-first voice typing / command | repo-exists verified 2026-08-11 |
+| AI Worker Harness | `D:\ai-tools\ai-worker-harness` | IMP | ACT | VER | — (imported) | imported project (WO-023), outside triage scope | evidence-driven work-order control plane | repo-exists verified 2026-08-11 |
+| Utility Disbursement App | `D:\project_backups\utility-disbursement-app` | IMP | PAU | OWC | — (imported) | imported project (WO-023), outside triage scope | utility bill disbursement process | owner-confirmed paused 2026-07-29 |
+| Adobe Stock Upload Assistant | `D:\adobe-stock-upload` | IMP | UNK | VER | — (imported) | imported project (WO-023), outside triage scope | Adobe Stock metadata/upload prep | repo verified; lifecycle ไม่ได้ประกาศใน prior WO → UNK |
+| .sandbox/01-longcat | `D:\.sandbox\01-longcat` | DIS | UNK | VER | SBX | fork ของ `D:\llm-agents` (remote=`D:/llm-agents`), README "LLM Agents — Bounded Autonomous Worker", 264 commits, branch `benchmark/run` | sandbox model repo | benchmark experiment — ไม่ใช่โปรเจกต์อิสระ |
+| .sandbox/02-deepseek-v4 | `D:\.sandbox\02-deepseek-v4` | DIS | UNK | VER | SBX | fork ของ `D:\llm-agents` (remote=`D:/llm-agents`), 264 commits, branch `benchmark/run` | sandbox model repo | benchmark experiment |
+| .sandbox/03-nemotron-ultra | `D:\.sandbox\03-nemotron-ultra` | DIS | UNK | VER | SBX | fork ของ `D:\llm-agents` (remote=`D:/llm-agents`), 264 commits, branch `benchmark/run` | sandbox model repo | benchmark experiment |
+| .sandbox/04-step-3.7 | `D:\.sandbox\04-step-3.7` | DIS | UNK | VER | SBX | fork ของ `D:\llm-agents` (remote=`D:/llm-agents`), 264 commits, branch `benchmark/run` | sandbox model repo | benchmark experiment |
+| .sandbox/05-mimo-v2.5 | `D:\.sandbox\05-mimo-v2.5` | DIS | UNK | VER | SBX | fork ของ `D:\llm-agents` (remote=`D:/llm-agents`), 264 commits, branch `benchmark/run` | sandbox model repo | benchmark experiment |
+| .sandbox/06-north-mini | `D:\.sandbox\06-north-mini` | DIS | UNK | VER | SBX | fork ของ `D:\llm-agents` (remote=`D:/llm-agents`), 264 commits, branch `benchmark/run` | sandbox model repo | benchmark experiment |
+| ai-tools-kit | `D:\ai-tools\ai-tools-kit` | DIS | UNK | VER | TLG | README "AI Tools Kit"; skills/scripts; 4 commits; ไม่มี remote | AI tools kit | tooling-infrastructure (owner kit) |
+| AI-Workspace | `D:\ai-tools\AI-Workspace` | DIS | UNK | VER | PRJ | README "Expellirmud AI-Workspace"; remote `expellirmud-dot/Expellirmud-AI-Workspace`; 47 commits | AI workspace | **project** (owner GitHub) — ผ่าน onboarding gate |
+| computer-use-preview | `D:\ai-tools\computer-use-preview` | DIS | UNK | VER | TLG | README "Computer Use Preview"; remote `google-gemini/computer-use-preview` (third-party); 25 commits | computer-use tool | tooling-infrastructure (third-party mirror) |
+| gridgeist | `D:\ai-tools\gridgeist` | DIS | UNK | VER | TLG | README "Gridgeist"; remote `ohmiler/gridgeist` (third-party); 22 commits | unknown tool | tooling-infrastructure (third-party mirror) |
+| lightroom-ai-exposure | `D:\ai-tools\lightroom-ai-exposure` | DIS | UNK | VER | PRJ | README "Lightroom AI Exposure Assist"; remote `expellirmud-dot/Lightroom-AI-Workflow-.git`; 96 commits | Lightroom AI exposure | **project** (owner GitHub) — อาจเกี่ยวข้องกับ LR workflow |
+| Automation | `D:\Automation` | DIS | UNK | NEE | UNK | 0 commits on all branches; ไม่มี remote; ไม่มี README (มี .rar + โค้ด) | automation scripts | หลักฐานไม่พอ — unverifiable |
+| citizen_portal | `D:\citizen_portal` | DIS | UNK | VER | PRJ | README Next.js; remote `expellirmud-dot/citizen-portal`; 37 commits; AGENTS.md/CLAUDE.md | citizen portal | **project** (owner GitHub) — ผ่าน onboarding gate |
+| JAVIS_Nexus | `D:\JAVIS_Nexus` | DIS | UNK | NEE | UNK | 0 commits on all branches; ไม่มี remote; ไม่มี README (มี async_engine.py ฯลฯ) | JAVIS Nexus | หลักฐานไม่พอ — unverifiable |
+| lumina-studio | `D:\lumina-studio` | DIS | UNK | VER | PRJ | README "LUMINA Studio"; remote `expellirmud-dot/LUMINA-Studio`; 93 commits | lumina studio | **project** (owner GitHub) — ผ่าน onboarding gate |
+| mcp-agentic-framework | `D:\mcp-agentic-framework` | DIS | UNK | VER | TLG | README "MCP Agentic Framework"; remote `Piotr1215/mcp-agentic-framework` (third-party); 38 commits | MCP agentic framework | tooling-infrastructure (third-party mirror) |
+| office_council_keeper | `D:\office_council_keeper` | DIS | UNK | NEE | UNK | 0 commits on all branches; ไม่มี remote; README หัวข้อ "AI Tools Kit" (คัดลอก); agents/skills | office council keeper | หลักฐานไม่พอ — unverifiable |
+| Utility Automation2 | `D:\project_backups\Utility Automation2` | DIS | UNK | VER | BAK | อยู่ใต้ `project_backups/`; README "Utility Automation V2"; remote `expellirmud-dot/utility_automation_v2`; 16 commits | utility automation backup | backup-archive-candidate |
+| utility_automation_v2 | `D:\project_backups\utility_automation_v2` | DIS | UNK | VER | BAK | อยู่ใต้ `project_backups/`; README "Utility Automation V2"; remote `expellirmud-dot/utility_automation_v2`; 144 commits | utility automation backup | backup-archive-candidate (canonical copy candidate) |
+| utility_automation_v2_light | `D:\project_backups\utility_automation_v2_light` | DIS | UNK | VER | DUP | อยู่ใต้ `project_backups/`; README "Utility Automation V2"; remote `expellirmud-dot/utility_automation_v2`; 172 commits | utility automation backup variant | duplicate-superseded-candidate (remote ซ้ำ) |
+| stt-openhands-batch-draft | `D:\stt-openhands-batch-draft` | DIS | UNK | VER | TLG | node project: `package.json` + `work-order/` + `templates`; 2 commits; ไม่มี remote | STT OpenHands batch draft | tooling-infrastructure (draft scaffold) — อาจเกี่ยวข้องกับ STT Typing |
+| TalkToClibord | `D:\TalkToClibord` | DIS | UNK | VER | PRJ | README "J.A.V.I.S"; remote `expellirmud-dot/TalkToClibord`; 41 commits | clipboard tool | **project** (owner GitHub) — ผ่าน onboarding gate |
+| thai_stt_app | `D:\thai_stt_app` | DIS | UNK | VER | PRJ | AGENTS.md + pyproject; remote `expellirmud-dot/thai_stt_app`; 71 commits | Thai STT desktop app | **project** (owner GitHub) — ผ่าน onboarding gate |
+| codegraph | `D:\tools\codegraph` | DIS | UNK | VER | TLG | README; remote `colbymchenry/codegraph` (third-party); 307 commits | codegraph tooling | tooling-infrastructure (third-party mirror) |
 
 ## Discovery Methodology & Limitations
 
 **Method (read-only, 2026-08-11):**
-- `find /d -maxdepth 3 -type d -name .git` → 31 git roots
-- `find /c/Users/Expellirmud -maxdepth 3 -type d -name .git` → 2 (`.agents`, `.codex/memories`) — เป็น tooling config ไม่ใช่โปรเจกต์
-- 5 imported repos ตรวจยืนยัน `.git` ครบ
+- `find /d -maxdepth 3 -type d -name .git` → 31 git roots (รวม Vault + D:\ root)
+- `find /c/Users/Expellirmud -maxdepth 3 -type d -name .git` → 2 (tooling config)
+- Triage evidence: read per-repo README/AGENTS, `ls` root, `git branch/HEAD/rev-list/remote` (local `cd` + `git`, ไม่ใช้ `git -C /d/...` ซึ่ง fail ใน env นี้)
 - ไม่มีการแก้ไข source repository ใดๆ
 
-**Excluded from inventory (not projects):**
-- `D:\` root `.git` — artifact ของดิสก์ root ไม่ใช่โปรเจกต์
-- `D:\Obsidian\Project-Knowledge-Vault` — คือ Vault/Registry host เอง
+**Excluded from inventory (not projects):** `D:\` root `.git`, `D:\Obsidian\Project-Knowledge-Vault` (Vault เอง)
 
 **Limitations:**
-- การสำรวจจำกัดที่พาธที่เมานท์อยู่ภายในเครื่อง (`D:\`, `C:\Users\Expellirmud`) ที่ความลึก ≤ 3 ระดับ
-- Repository ที่ฝังลึกกว่าหรือ remote ที่ยังไม่ได้ clone มาอยู่本地 ไม่อยู่ในขอบเขตนี้
-- Backup / fork / scratch repos อาจนับเกินหรือขาดได้
-- purpose / lifecycle / ownership ของ discovered repos ยัง **ไม่ได้ตรวจ** — ต้อง owner ยืนยันหรือ inspect source ก่อนระบุ lifecycle
-- ความสัมพันธ์ที่ใส่เครื่องหมาย "inference" คือการสันนิษฐานจากชื่อเท่านั้น ไม่ใช่ข้อพิสูจน์
+- การสำรวจจำกัดที่ `D:\`, `C:\Users\Expellirmud` ความลึก ≤ 3 ระดับ; repo ที่ฝังลึกกว่าหรือยังไม่ clone ไม่อยู่ในขอบเขต
+- `Automation`, `JAVIS_Nexus`, `office_council_keeper` มี 0 commits ทุก branch → จำแนก `unknown`/`needs-verification` ไม่สามารถสรุป purpose
+- ความสัมพันธ์ (เช่น `stt-openhands-batch-draft`→STT, `lightroom-ai-exposure`→LR) เป็น inference จากชื่อ/README ไม่ใช่ข้อพิสูจน์ lifecycle
+- sandbox 6 ตัว remote ชี้ `D:/llm-agents` (local path) → เป็น fork/benchmark ของ imported `llm-agents` ไม่ใช่โปรเจกต์ใหม่
+- `codegraph`, `computer-use-preview`, `gridgeist`, `mcp-agentic-framework` remote ชี้ third-party → เป็น mirror/tooling ไม่ใช่โปรเจกต์ของ Owner
 
 ## Recommended Next Step
 
- on-board `Import Missing Projects` ทีละโปรเจกต์ (เริ่มจาก discovered-not-imported) ก่อนเริ่มงาน `Live Project State / Project Wall Automation`
+ on-board `Import Missing Projects` — เริ่มจาก 6 `project`+`verified` ที่ผ่าน gate (AI-Workspace, lightroom-ai-exposure, citizen_portal, lumina-studio, TalkToClibord, thai_stt_app) ก่อนเริ่ม `Live Project State / Project Wall Automation`
