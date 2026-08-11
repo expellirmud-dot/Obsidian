@@ -14,8 +14,8 @@ last_reviewed: 2026-08-11
 
 | Import State | Count |
 | ------------ | ----- |
-| imported | 5 |
-| discovered-not-imported | 24 |
+| imported | 6 |
+| discovered-not-imported | 23 |
 | unknown | 0 |
 | **รวม repos ที่พบ** | **29** |
 
@@ -28,7 +28,7 @@ last_reviewed: 2026-08-11
 
 | Verification State | Count |
 | ------------------ | ----- |
-| verified | 4 (imported) + 21 (discovered) = 25 |
+| verified | 5 (imported) + 22 (discovered) = 27 |
 | owner-confirmed | 1 (imported) |
 | needs-verification | 3 (discovered: Automation, JAVIS_Nexus, office_council_keeper) |
 
@@ -47,8 +47,8 @@ last_reviewed: 2026-08-11
 | **รวม** | **24** | reconcile = 24, missing = 0 |
 
 **Post-Triage Onboarding Gate (WO-024 §13):**
-- Automatically eligible (onboard ได้พิจารณา): `project` + `verified` = 6 repos
-  - `AI-Workspace`, `lightroom-ai-exposure`, `citizen_portal`, `lumina-studio`, `TalkToClibord`, `thai_stt_app`
+- Automatically eligible (onboard ได้พิจารณา): `project` + `verified` = 5 repos (เหลือหลังจาก onboard `thai_stt_app`)
+  - `AI-Workspace`, `lightroom-ai-exposure`, `citizen_portal`, `lumina-studio`, `TalkToClibord`
 - Conditionally eligible: `tooling-infrastructure` + `verified` = 6 repos — ต้อง Owner ยืนยันว่ามี lifecycle เป็นอิสระจึงติดตามได้
 - ไม่ผ่าน gate โดยอัตโนมัติ: `sandbox-experiment` (6), `backup-archive-candidate` (2), `duplicate-superseded-candidate` (1), `unknown` (3) = 12 repos
 - Triage Class ไม่กำหนด Lifecycle State (ห้าม infer)
@@ -91,7 +91,7 @@ last_reviewed: 2026-08-11
 | utility_automation_v2_light | `D:\project_backups\utility_automation_v2_light` | DIS | UNK | VER | DUP | อยู่ใต้ `project_backups/`; README "Utility Automation V2"; remote `expellirmud-dot/utility_automation_v2`; 172 commits | utility automation backup variant | duplicate-superseded-candidate (remote ซ้ำ) |
 | stt-openhands-batch-draft | `D:\stt-openhands-batch-draft` | DIS | UNK | VER | TLG | node project: `package.json` + `work-order/` + `templates`; 2 commits; ไม่มี remote | STT OpenHands batch draft | tooling-infrastructure (draft scaffold) — อาจเกี่ยวข้องกับ STT Typing |
 | TalkToClibord | `D:\TalkToClibord` | DIS | UNK | VER | PRJ | README "J.A.V.I.S"; remote `expellirmud-dot/TalkToClibord`; 41 commits | clipboard tool | **project** (owner GitHub) — ผ่าน onboarding gate |
-| thai_stt_app | `D:\thai_stt_app` | DIS | UNK | VER | PRJ | AGENTS.md + pyproject; remote `expellirmud-dot/thai_stt_app`; 71 commits | Thai STT desktop app | **project** (owner GitHub) — ผ่าน onboarding gate |
+| thai_stt_app | `D:\thai_stt_app` | IMP | UNK | VER | PRJ | AGENTS.md + pyproject; remote `expellirmud-dot/thai_stt_app`; HEAD `be7bd07`, 71 commits; WO-Skill-Audit IN_PROGRESS (2026-08-11) | Thai STT desktop app | **project** (owner GitHub) — onboarded via WO-025 (2026-08-11); Lifecycle UNK (ห้าม infer) |
 | codegraph | `D:\tools\codegraph` | DIS | UNK | VER | TLG | README; remote `colbymchenry/codegraph` (third-party); 307 commits | codegraph tooling | tooling-infrastructure (third-party mirror) |
 
 ## Discovery Methodology & Limitations

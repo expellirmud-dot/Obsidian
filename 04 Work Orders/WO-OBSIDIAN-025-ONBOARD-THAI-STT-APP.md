@@ -7,10 +7,10 @@ Task Classification: Documentation / Project Onboarding / Knowledge Base Governa
 Execution Mode: Bounded Single Work Order
 Owner: Toto
 Target Vault: `D:\Obsidian\Project-Knowledge-Vault`
-Status: PLANNED
+Status: CLOSED
 
-> ใบงานนี้เป็น **draft PLANNED เท่านั้น** — ยังไม่ Activate และห้าม execute ในรอบที่สร้างไฟล์นี้
-> การ Activate + Execute ต้องรอ Owner สั่งแยกต่างหาก
+> ใบงานนี้ถูก Activate + Execute เรียบร้อยแล้ว (2026-08-11) — ดู §14 Closeout Status
+> การ Activate ได้รับ Owner authorization ชัดเจน
 
 ---
 
@@ -222,3 +222,55 @@ Suggested commit message (draft creation):
 - Evidence classification summary
 - Remaining risks / unknowns
 - Recommended next Work Order (onboard `lumina-studio`)
+
+---
+
+## 14. Closeout Status (updated 2026-08-11)
+
+- **Status:** CLOSED — committed (owner-authorized bounded commit; NO push)
+- **Preflight:** `PREFLIGHT_DECISION: READY` (VAULT_DOCUMENTATION)
+- **Source repo:** READ-ONLY — ไม่มีการแก้ไข `D:\thai_stt_app` (untracked `.hermes/` คงเดิม)
+
+### Source repo truth (fresh, 2026-08-11)
+- Path/root: `D:\thai_stt_app` (`git rev-parse --show-toplevel`)
+- Branch: `main`
+- HEAD: `be7bd07760cc6c426927a2aec9e0cbce8c2ddf60` (short `be7bd07`)
+- Commits: 71
+- Status: clean ยกเว้น untracked `.hermes/`
+- Remote: `https://github.com/expellirmud-dot/thai_stt_app.git`
+- Authority files (actual): `AGENTS.md`, `INDEX.md`, `WORK_ORDER.md`, `CHANGELOG.md`, `pyproject.toml`
+- Current work state: `WO-Skill-Audit` = IN_PROGRESS; `WO-UI-08E`, `WO-OCR-09D` = DRAFT
+
+### Files changed (Allowed Files only)
+- `01 Projects/thai_stt_app.md` (new — Project Overview)
+- `01 Projects/Project Registry.md` (DIS→IMP, evidence refresh)
+- `01 Projects/Project Index.md` (แถวใหม่)
+- `00 Dashboard/Project Dashboard.md` (ย้ายเข้า Imported Projects)
+- `04 Work Orders/CURRENT_WORK_ORDER.md` (pointer → WO-025 CLOSED)
+- `04 Work Orders/WO-OBSIDIAN-025-ONBOARD-THAI-STT-APP.md` (closeout)
+
+### Validation results (WO §10)
+1. ✅ exact source root resolved
+2. ✅ git status/branch/HEAD captured
+3. ✅ authority files identified from actual repo
+4. ✅ Project Overview มีครบทุกหัวข้อ AGENTS.md
+5. ✅ ไม่มี unsupported current-status claims (lifecycle = UNK, ไม่ infer)
+6. ✅ Registry import transition ถูกต้อง (DIS→IMP)
+7. ✅ Dashboard ไม่แสดง thai_stt_app ใน Discovered — Not Imported อีกต่อไป
+8. ✅ wikilinks ทั้งหมด resolve ([[thai_stt_app]], [[Project Registry]], [[Project Index]], [[Project Dashboard]])
+9. ✅ source repo unchanged
+10. ✅ diff เฉพาะ Allowed Files
+11. ✅ owner notes ยังคง untouched
+12. ✅ diff summary ก่อน commit
+
+### Evidence classification
+- verified: repo truth 2026-08-11 (structure, HEAD, status, authority files)
+- needs-verification: จำนวน test ที่แน่ชัด (INDEX.md ขัดแย้ง 276 vs 203); Windows desktop pixel-level visual sign-off ของ glass/OCR ยัง pending
+
+### Unresolved / needs-verification
+- `WO-UI-08E` (DRAFT), `WO-OCR-09D` (DRAFT) — รอ Owner ตัดสิน
+- Windows desktop runtime smoke test สำหรับ Capture/OCR — pending
+- Test count inconsistency ใน INDEX.md — ต้องนับจริงก่อนอ้างสถานะ
+
+### Recommended next Work Order
+`WO-OBSIDIAN-026 — Onboard lumina-studio` (ตามลำดับที่ Owner กำหนด)
