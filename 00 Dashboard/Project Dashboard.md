@@ -18,11 +18,12 @@ last_reviewed: 2026-08-11
 - [[thai_stt_app]]
 - [[lumina-studio]]
 - [[lightroom-ai-exposure]]
+- [[citizen_portal]]
 
 ## Discovered — Not Imported
 
-พบ **21 repositories** บนดิสก์ที่ยังไม่มี Project Overview ใน Vault (รายการเต็มใน [[Project Registry]])
-ตัวอย่าง: `citizen_portal`, `mcp-agentic-framework`, `JAVIS_Nexus`, `.sandbox/*`
+พบ **20 repositories** บนดิสก์ที่ยังไม่มี Project Overview ใน Vault (รายการเต็มใน [[Project Registry]])
+ตัวอย่าง: `AI-Workspace`, `TalkToClibord`, `mcp-agentic-framework`, `JAVIS_Nexus`, `.sandbox/*`
 
 > สถานะทั้งหมด = `needs-verification` — ต้อง on-board ทีละโปรเจกต์ก่อนระบุ lifecycle
 

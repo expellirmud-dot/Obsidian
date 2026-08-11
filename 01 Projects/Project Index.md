@@ -19,6 +19,7 @@ last_reviewed: 2026-07-29
 | [[thai_stt_app]] | Thai Speech-to-Text desktop app (Silero VAD + Groq Whisper + PySide6 UI + Desktop Capture/OCR) | `D:\thai_stt_app` | **verified** (onboarded WO-OBSIDIAN-025; HEAD be7bd07; WO-Skill-Audit IN_PROGRESS) | 2026-08-11 (WO-OBSIDIAN-025: Repository truth verified, HEAD be7bd07) |
 | [[lumina-studio]] | Premium photography landing page (Next.js + React + TS + Tailwind), Phase 1, deployed Vercel | `D:\lumina-studio` | **verified** (onboarded WO-OBSIDIAN-026; HEAD e98c9f6; status PASSED/READY FOR DEPLOY) | 2026-08-11 (WO-OBSIDIAN-026: Repository truth verified, HEAD e98c9f6) |
 | [[lightroom-ai-exposure]] | Windows-first Lightroom Classic exposure assistant (Python lr-ai-exposure, MVP adjusts only crs:Exposure2012, dry_run default) | `D:\ai-tools\lightroom-ai-exposure` | **verified** (onboarded WO-OBSIDIAN-027; HEAD 243c405; source stable/complete after WO-028) | 2026-08-11 (WO-OBSIDIAN-027: Repository truth verified, HEAD 243c405) |
+| [[citizen_portal]] | Online citizen-request management system for ด่านทับตะโก municipality (Next.js 16 + Prisma + Supabase + Auth.js), research prototype, MVP flows working | `D:\citizen_portal` | **verified** (onboarded WO-OBSIDIAN-028; HEAD f8ae9fb; research prototype, no active task) | 2026-08-11 (WO-OBSIDIAN-028: Repository truth verified, HEAD f8ae9fb) |
 
 หมายเหตุ: `Last Verified` ในแต่ละรอบขึ้นอยู่กับขอบเขตของ Work Order นั้น
 

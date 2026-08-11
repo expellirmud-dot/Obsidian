@@ -14,8 +14,8 @@ last_reviewed: 2026-08-11
 
 | Import State | Count |
 | ------------ | ----- |
-| imported | 8 |
-| discovered-not-imported | 21 |
+| imported | 9 |
+| discovered-not-imported | 20 |
 | unknown | 0 |
 | **รวม repos ที่พบ** | **29** |
 
@@ -28,7 +28,7 @@ last_reviewed: 2026-08-11
 
 | Verification State | Count |
 | ------------------ | ----- |
-| verified | 7 (imported) + 20 (discovered) = 27 |
+| verified | 8 (imported) + 19 (discovered) = 27 |
 | owner-confirmed | 1 (imported) |
 | needs-verification | 3 (discovered: Automation, JAVIS_Nexus, office_council_keeper) |
 
@@ -47,8 +47,8 @@ last_reviewed: 2026-08-11
 | **รวม** | **24** | reconcile = 24, missing = 0 |
 
 **Post-Triage Onboarding Gate (WO-024 §13):**
-- Automatically eligible (onboard ได้พิจารณา): `project` + `verified` = 3 repos (เหลือหลังจาก onboard `thai_stt_app`, `lumina-studio`, `lightroom-ai-exposure`)
-  - `AI-Workspace`, `citizen_portal`, `TalkToClibord`
+- Automatically eligible (onboard ได้พิจารณา): `project` + `verified` = 2 repos (เหลือหลังจาก onboard `thai_stt_app`, `lumina-studio`, `lightroom-ai-exposure`, `citizen_portal`)
+  - `AI-Workspace`, `TalkToClibord`
 - Conditionally eligible: `tooling-infrastructure` + `verified` = 6 repos — ต้อง Owner ยืนยันว่ามี lifecycle เป็นอิสระจึงติดตามได้
 - ไม่ผ่าน gate โดยอัตโนมัติ: `sandbox-experiment` (6), `backup-archive-candidate` (2), `duplicate-superseded-candidate` (1), `unknown` (3) = 12 repos
 - Triage Class ไม่กำหนด Lifecycle State (ห้าม infer)
@@ -81,7 +81,7 @@ last_reviewed: 2026-08-11
 | gridgeist | `D:\ai-tools\gridgeist` | DIS | UNK | VER | TLG | README "Gridgeist"; remote `ohmiler/gridgeist` (third-party); 22 commits | unknown tool | tooling-infrastructure (third-party mirror) |
 | lightroom-ai-exposure | `D:\ai-tools\lightroom-ai-exposure` | IMP | UNK | VER | PRJ | README "Lightroom AI Exposure Assist"; remote `expellirmud-dot/Lightroom-AI-Workflow-.git`; HEAD `243c405`, 96 commits; source STATUS NONE/no active WO (2026-08-11) | Lightroom AI exposure | **project** (owner GitHub) — onboarded via WO-027 (2026-08-11); Lifecycle UNK (ห้าม infer) |
 | Automation | `D:\Automation` | DIS | UNK | NEE | UNK | 0 commits on all branches; ไม่มี remote; ไม่มี README (มี .rar + โค้ด) | automation scripts | หลักฐานไม่พอ — unverifiable |
-| citizen_portal | `D:\citizen_portal` | DIS | UNK | VER | PRJ | README Next.js; remote `expellirmud-dot/citizen-portal`; 37 commits; AGENTS.md/CLAUDE.md | citizen portal | **project** (owner GitHub) — ผ่าน onboarding gate |
+| citizen_portal | `D:\citizen_portal` | IMP | UNK | VER | PRJ | PROJECT_RULES.md (Goal + MVP); remote `expellirmud-dot/citizen-portal`; HEAD `f8ae9fb`, 37 commits; Next.js16+Prisma+Supabase+Auth.js; research prototype | citizen portal | **project** (owner GitHub) — onboarded via WO-028 (2026-08-11); Lifecycle UNK (ห้าม infer) |
 | JAVIS_Nexus | `D:\JAVIS_Nexus` | DIS | UNK | NEE | UNK | 0 commits on all branches; ไม่มี remote; ไม่มี README (มี async_engine.py ฯลฯ) | JAVIS Nexus | หลักฐานไม่พอ — unverifiable |
 | lumina-studio | `D:\lumina-studio` | IMP | UNK | VER | PRJ | README "LUMINA Studio"; remote `expellirmud-dot/LUMINA-Studio`; HEAD `e98c9f6`, 93 commits; deployed Vercel, PASSED/READY (2026-08-11) | lumina studio | **project** (owner GitHub) — onboarded via WO-026 (2026-08-11); Lifecycle UNK (ห้าม infer) |
 | mcp-agentic-framework | `D:\mcp-agentic-framework` | DIS | UNK | VER | TLG | README "MCP Agentic Framework"; remote `Piotr1215/mcp-agentic-framework` (third-party); 38 commits | MCP agentic framework | tooling-infrastructure (third-party mirror) |
