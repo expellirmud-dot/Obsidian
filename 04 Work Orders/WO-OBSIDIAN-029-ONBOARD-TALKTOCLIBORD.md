@@ -7,10 +7,10 @@ Task Classification: Documentation / Project Onboarding / Knowledge Base Governa
 Execution Mode: Bounded Single Work Order
 Owner: Toto
 Target Vault: `D:\Obsidian\Project-Knowledge-Vault`
-Status: PLANNED
+Status: CLOSED
 
-> ใบงานนี้เป็น **draft PLANNED เท่านั้น** — ยังไม่ Activate และห้าม execute ในรอบที่สร้างไฟล์นี้
-> การ Activate + Execute ต้องรอ Owner สั่งแยกต่างหาก
+> ใบงานนี้ถูก Activate + Execute เรียบร้อยแล้ว (2026-08-11) — ดู §14 Closeout Status
+> การ Activate ได้รับ Owner authorization ชัดเจน
 
 ---
 
@@ -225,3 +225,59 @@ Suggested commit message (draft creation):
 - Evidence classification summary
 - Remaining risks / unknowns
 - Recommended next Work Order (onboard `AI-Workspace`)
+
+---
+
+## 14. Closeout Status (updated 2026-08-11)
+
+- **Status:** CLOSED — committed (owner-authorized bounded commit; NO push)
+- **Preflight:** `PREFLIGHT_DECISION: READY` (VAULT_DOCUMENTATION)
+- **Source repo:** READ-ONLY — ไม่มีการแก้ไข `D:\TalkToClibord` (pre-existing dirty tracked + untracked artifacts คงเดิม บันทึกเพื่อความโปร่งใส)
+
+### Source repo truth (fresh, 2026-08-11)
+- Path/root: `D:\TalkToClibord` (`git rev-parse --show-toplevel`)
+- Branch: `main`
+- HEAD: `40b565e6c1dc34c6efa3640d79e2ada9083e74b0` (short `40b565e`)
+- Commits: 41
+- Status: **pre-existing dirty tracked files** (`docs/requirements_coverage_audit.md`, `outbox_fixed.py`, `src/config/models.py`, `src/config/settings.py`, `src/core/red_file.py`, `src/core/vision_context_builder.py`, `src/core/vision_dependency_graph.py`, `src/core/vision_engine.py`, `src/core/vision_hand_service.py`, `src/core/vision_interface.py`, `src/core/vision_persistent_memory.py`) + untracked (`JAVIS.md`, `*.bat`, `*.spec`, `data/config/`, ฯลฯ) — not caused by this WO
+- Remote: `https://github.com/expellirmud-dot/TalkToClibord.git`
+- Authority files (actual): `README.md` (J.A.V.I.S overview + dependency/CI notes), `JAVIS.md` (project persistent memory — architecture + sprint status; untracked แต่เป็น primary project doc), `docs/*` (config_compatibility, optional_dependency_audit, requirements_coverage_audit, stabilization_baseline, ui_module_audit), `vision_config.py`, `src/` tree
+- Current work state: ไม่มี AGENTS.md / work-order pointer ใน source; `JAVIS.md` Sprint Status = "Test Sprint" (updated 2026-04-18); git log ล่าสุด = optional-dependency audit tasks (TASK O/P) + merge PR #21 (2026-05-13) → active development / test phase, ไม่มี active task tracker ชัดเจน
+
+### Files changed (Allowed Files only)
+- `01 Projects/TalkToClibord.md` (new — Project Overview)
+- `01 Projects/Project Registry.md` (DIS→IMP, evidence refresh, counts 10 imported / 19 discovered)
+- `01 Projects/Project Index.md` (แถวใหม่)
+- `00 Dashboard/Project Dashboard.md` (ย้ายเข้า Imported Projects)
+- `04 Work Orders/CURRENT_WORK_ORDER.md` (pointer → WO-029 CLOSED)
+- `04 Work Orders/WO-OBSIDIAN-029-ONBOARD-TALKTOCLIBORD.md` (closeout)
+
+### Validation results (WO §10)
+1. ✅ exact source root resolved (`D:\TalkToClibord`)
+2. ✅ git status/branch/HEAD captured (main, 40b565e, dirty pre-existing)
+3. ✅ authority files identified from actual repo (README + JAVIS.md + docs; ไม่ใช้เดาสันนิษฐาน)
+4. ✅ Project Overview มีครบทุกหัวข้อ AGENTS.md
+5. ✅ ไม่มี unsupported current-status claims (lifecycle = UNK, ไม่ infer; source ไม่มี active WO → ไม่อ้าง active task นอกเหนือจาก "Test Sprint" ที่อิงจาก JAVIS.md)
+6. ✅ Registry import transition ถูกต้อง (DIS→IMP)
+7. ✅ Dashboard ไม่แสดง TalkToClibord ใน Discovered — Not Imported อีกต่อไป
+8. ✅ wikilinks ทั้งหมด resolve ([[TalkToClibord]], [[Project Registry]], [[Project Index]], [[Project Dashboard]])
+9. ✅ source repo unchanged (READ-ONLY enforced; pre-existing dirty/untracked คงเดิม)
+10. ✅ diff เฉพาะ Allowed Files
+11. ✅ pre-existing CRLF artifacts (`STT Typing.md`, `Work Order Index.md`) ยังคง out-of-scope (ไม่ถูก stage)
+12. ✅ owner notes + canvas/base files ยังคง untouched
+13. ✅ diff summary ก่อน commit
+
+### Evidence classification
+- verified: repo truth 2026-08-11 (structure, HEAD, status, authority files, source work state)
+- needs-verification: ไม่มีประเด็นค้างในรอบนี้
+
+### Unresolved / needs-verification
+- Source ไม่มี AGENTS.md / work-order pointer → ไม่มี current-task authority ชัดเจน (สถานะสืบจาก JAVIS.md + git log)
+- `JAVIS.md` เป็น untracked file — เป็น primary project doc แต่ไม่เข้า version control (risk: หายหากไม่ backup) — บันทึกเพื่อเตือน
+- Source มี pre-existing dirty tracked files + หลาย untracked artifacts (`*.bat`, `*.spec`, `*.rar`, `backup/`, `buggy_file.py`) — บันทึก ไม่นำมาสรุปสถาปัตยกรรมหลัก (อาจมี debt/experimental)
+- หลาย `vision_interface*.py` variants — บ่งชี้การทดลอง/refactor ที่อาจยังไม่ merge (technical debt)
+- Row เดิมใน Registry เคยใส่ "clipboard tool" — แก้เป็น "J.A.V.I.S AI assistant desktop" ตาม evidence จริง
+- Lifecycle state เจตนาปล่อย `unknown` (ไม่ infer)
+
+### Recommended next Work Order
+`WO-OBSIDIAN-030 — Onboard AI-Workspace` (ตามลำดับที่ Owner กำหนด — โปรเจกต์สุดท้ายใน eligible gate)
