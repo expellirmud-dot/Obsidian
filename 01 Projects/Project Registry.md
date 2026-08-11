@@ -14,8 +14,8 @@ last_reviewed: 2026-08-11
 
 | Import State | Count |
 | ------------ | ----- |
-| imported | 10 |
-| discovered-not-imported | 19 |
+| imported | 11 |
+| discovered-not-imported | 18 |
 | unknown | 0 |
 | **รวม repos ที่พบ** | **29** |
 
@@ -28,7 +28,7 @@ last_reviewed: 2026-08-11
 
 | Verification State | Count |
 | ------------------ | ----- |
-| verified | 9 (imported) + 18 (discovered) = 27 |
+| verified | 10 (imported) + 17 (discovered) = 27 |
 | owner-confirmed | 1 (imported) |
 | needs-verification | 3 (discovered: Automation, JAVIS_Nexus, office_council_keeper) |
 
@@ -47,8 +47,7 @@ last_reviewed: 2026-08-11
 | **รวม** | **24** | reconcile = 24, missing = 0 |
 
 **Post-Triage Onboarding Gate (WO-024 §13):**
-- Automatically eligible (onboard ได้พิจารณา): `project` + `verified` = 1 repo (เหลือหลังจาก onboard `thai_stt_app`, `lumina-studio`, `lightroom-ai-exposure`, `citizen_portal`, `TalkToClibord`)
-  - `AI-Workspace`
+- Automatically eligible (onboard ได้พิจารณา): `project` + `verified` = 0 repos (onboard ครบแล้ว: `thai_stt_app`, `lumina-studio`, `lightroom-ai-exposure`, `citizen_portal`, `TalkToClibord`, `AI-Workspace`)
 - Conditionally eligible: `tooling-infrastructure` + `verified` = 6 repos — ต้อง Owner ยืนยันว่ามี lifecycle เป็นอิสระจึงติดตามได้
 - ไม่ผ่าน gate โดยอัตโนมัติ: `sandbox-experiment` (6), `backup-archive-candidate` (2), `duplicate-superseded-candidate` (1), `unknown` (3) = 12 repos
 - Triage Class ไม่กำหนด Lifecycle State (ห้าม infer)
@@ -76,7 +75,7 @@ last_reviewed: 2026-08-11
 | .sandbox/05-mimo-v2.5 | `D:\.sandbox\05-mimo-v2.5` | DIS | UNK | VER | SBX | fork ของ `D:\llm-agents` (remote=`D:/llm-agents`), 264 commits, branch `benchmark/run` | sandbox model repo | benchmark experiment |
 | .sandbox/06-north-mini | `D:\.sandbox\06-north-mini` | DIS | UNK | VER | SBX | fork ของ `D:\llm-agents` (remote=`D:/llm-agents`), 264 commits, branch `benchmark/run` | sandbox model repo | benchmark experiment |
 | ai-tools-kit | `D:\ai-tools\ai-tools-kit` | DIS | UNK | VER | TLG | README "AI Tools Kit"; skills/scripts; 4 commits; ไม่มี remote | AI tools kit | tooling-infrastructure (owner kit) |
-| AI-Workspace | `D:\ai-tools\AI-Workspace` | DIS | UNK | VER | PRJ | README "Expellirmud AI-Workspace"; remote `expellirmud-dot/Expellirmud-AI-Workspace`; 47 commits | AI workspace | **project** (owner GitHub) — ผ่าน onboarding gate |
+| AI-Workspace | `D:\ai-tools\AI-Workspace` | IMP | UNK | VER | PRJ | README "Expellirmud AI-Workspace"; remote `expellirmud-dot/Expellirmud-AI-Workspace`; HEAD `6934067`, 47 commits; system-level AI ops workspace (manual-safe), ai-ops-registry | AI workspace (orchestration) | **project** (owner GitHub) — onboarded via WO-030 (2026-08-11); Lifecycle UNK (ห้าม infer) |
 | computer-use-preview | `D:\ai-tools\computer-use-preview` | DIS | UNK | VER | TLG | README "Computer Use Preview"; remote `google-gemini/computer-use-preview` (third-party); 25 commits | computer-use tool | tooling-infrastructure (third-party mirror) |
 | gridgeist | `D:\ai-tools\gridgeist` | DIS | UNK | VER | TLG | README "Gridgeist"; remote `ohmiler/gridgeist` (third-party); 22 commits | unknown tool | tooling-infrastructure (third-party mirror) |
 | lightroom-ai-exposure | `D:\ai-tools\lightroom-ai-exposure` | IMP | UNK | VER | PRJ | README "Lightroom AI Exposure Assist"; remote `expellirmud-dot/Lightroom-AI-Workflow-.git`; HEAD `243c405`, 96 commits; source STATUS NONE/no active WO (2026-08-11) | Lightroom AI exposure | **project** (owner GitHub) — onboarded via WO-027 (2026-08-11); Lifecycle UNK (ห้าม infer) |

@@ -7,10 +7,11 @@ Task Classification: Documentation / Project Onboarding / Knowledge Base Governa
 Execution Mode: Bounded Single Work Order
 Owner: Toto
 Target Vault: `D:\Obsidian\Project-Knowledge-Vault`
-Status: PLANNED
+Status: CLOSED
 
-> ใบงานนี้เป็น **draft PLANNED เท่านั้น** — ยังไม่ Activate และห้าม execute ในรอบที่สร้างไฟล์นี้
-> การ Activate + Execute ต้องรอ Owner สั่งแยกต่างหาก
+> ใบงานนี้ถูก Activate + Execute เรียบร้อยแล้ว (2026-08-11) — ดู §14 Closeout Status
+> การ Activate ได้รับ Owner authorization ชัดเจน
+> หมายเหตุ: คำสั่งระบุ source `D:\AI-Workspace` ไม่มีจริง — resolved จริงคือ `D:\ai-tools\AI-Workspace` (ตาม WO-024 + git truth)
 
 ---
 
@@ -226,3 +227,73 @@ Suggested commit message (draft creation):
 - Evidence classification summary
 - Remaining risks / unknowns
 - หมายเหตุ: นี่คือ WO สุดท้ายใน eligible `project + verified` gate — ภายหลังปิด WO-030 ให้รายงานสถานะ remaining repos ที่รอเจ้าของตัดสิน (tooling-infrastructure 6 ตัว + sandbox/backup/dup/unknown)
+
+---
+
+## 14. Closeout Status (updated 2026-08-11)
+
+- **Status:** CLOSED — committed (owner-authorized bounded commit; NO push)
+- **Preflight:** `PREFLIGHT_DECISION: READY` (VAULT_DOCUMENTATION)
+- **Source repo:** READ-ONLY — ไม่มีการแก้ไข `D:\ai-tools\AI-Workspace` (pre-existing dirty tracked `.serena/project.yml` + `src/App.jsx` คงเดิม บันทึกเพื่อความโปร่งใส)
+- **Path correction:** คำสั่งสร้าง draft ระบุ `D:\AI-Workspace` (ไม่มีจริง) → resolved จริง `D:\ai-tools\AI-Workspace` (git truth + WO-024 evidence) — บันทึกใน Overview + Registry เพื่อไม่ให้เดาผิด
+
+### Source repo truth (fresh, 2026-08-11)
+- Resolved path/root: `D:\ai-tools\AI-Workspace` (`git rev-parse --show-toplevel`)
+- Branch: `main`
+- HEAD: `69340677fb61af3e7d2b7f840363632f3211f5fd` (short `6934067`)
+- Commits: 47
+- Status: **pre-existing dirty tracked files** (`.serena/project.yml`, `src/App.jsx`) — not caused by this WO
+- Remote: `https://github.com/expellirmud-dot/Expellirmud-AI-Workspace.git`
+- Authority files (actual): `README.md`, `AGENTS.md`, `WORKSPACE.md` (Workspace Contract v1), `workspace-modules.yaml`, `CLI_MODEL_CATALOG.md`, `ai-ops-registry/AGENTS.md`, `ai-ops-registry/registry/REGISTRY_CONTRACT.md`, `ai-ops-registry/docs/READ_FIRST_POLICY.md`, `docs/CONNECTOR_GATEWAY_RUNBOOK.md`
+- Current work state: ไม่มี AGENTS/work-order pointer ใน source; git log ล่าสุด = maintenance/infra tasks (task pack composer, registry YAML validation, connector token docs, dashboard workflow) + last commit 2026-06-30 → stable / maintenance, ไม่มี active task tracker ชัดเจน
+
+### Files changed (Allowed Files only)
+- `01 Projects/AI-Workspace.md` (new — Project Overview)
+- `01 Projects/Project Registry.md` (DIS→IMP, evidence refresh, counts 11 imported / 18 discovered)
+- `01 Projects/Project Index.md` (แถวใหม่)
+- `00 Dashboard/Project Dashboard.md` (ย้ายเข้า Imported Projects)
+- `04 Work Orders/CURRENT_WORK_ORDER.md` (pointer → WO-030 CLOSED)
+- `04 Work Orders/WO-OBSIDIAN-030-ONBOARD-AI-WORKSPACE.md` (closeout)
+
+### Validation results (WO §10)
+1. ✅ exact source root resolved (คำสั่ง `D:\AI-Workspace` ไม่มี → จริง `D:\ai-tools\AI-Workspace` ตาม git truth)
+2. ✅ git status/branch/HEAD captured (main, 6934067, dirty pre-existing)
+3. ✅ authority files identified from actual repo (README/AGENTS/WORKSPACE/workspace-modules/ai-ops-registry — ไม่ใช้เดาสันนิษฐาน)
+4. ✅ Project Overview มีครบทุกหัวข้อ AGENTS.md
+5. ✅ ไม่มี unsupported current-status claims (lifecycle = UNK, ไม่ infer; source ไม่มี active WO → ไม่อ้าง active task)
+6. ✅ Registry import transition ถูกต้อง (DIS→IMP)
+7. ✅ Dashboard ไม่แสดง AI-Workspace ใน Discovered — Not Imported อีกต่อไป
+8. ✅ wikilinks ทั้งหมด resolve ([[AI-Workspace]], [[Project Registry]], [[Project Index]], [[Project Dashboard]])
+9. ✅ source repo unchanged (READ-ONLY enforced; pre-existing dirty คงเดิม)
+10. ✅ diff เฉพาะ Allowed Files
+11. ✅ pre-existing CRLF artifacts (`STT Typing.md`, `Work Order Index.md`) ยังคง out-of-scope (ไม่ถูก stage)
+12. ✅ owner notes + canvas/base files ยังคง untouched
+13. ✅ diff summary ก่อน commit
+
+### Remaining Registry categories/counts (หลังปิด WO-030 — โปรเจกต์สุดท้ายใน eligible `project + verified` gate)
+- **Imported (IMP): 11** — `llm-agents`, `STT Typing`, `AI Worker Harness`, `Utility Disbursement App`, `Adobe Stock Upload Assistant`, `thai_stt_app`, `lumina-studio`, `lightroom-ai-exposure`, `citizen_portal`, `TalkToClibord`, `AI-Workspace`
+- **Discovered-not-imported (DIS): 18** แบ่งตาม Triage Class:
+  - `tooling-infrastructure` (TLG): 6 — ต้อง Owner ยืนยัน lifecycle อิสระก่อนติดตาม (conditionally eligible)
+  - `sandbox-experiment` (SBX): 6 — ไม่ผ่าน gate อัตโนมัติ
+  - `backup-archive-candidate` (BAK): 2
+  - `duplicate-superseded-candidate` (DUP): 1
+  - `unknown` (UNK): 3 — needs-verification (`Automation`, `JAVIS_Nexus`, `office_council_keeper`)
+- **unknown (UNK import): 0**
+- **รวม repos ที่พบ: 29** (reconcile = 29, missing = 0)
+- **Automatically eligible gate:** 0 เหลือ (onboard ครบ `project + verified` 6 ตัวแล้ว)
+
+### Evidence classification
+- verified: repo truth 2026-08-11 (structure, HEAD, status, authority files, source work state)
+- needs-verification: ไม่มีประเด็นค้างในรอบนี้
+
+### Unresolved / needs-verification
+- Source ไม่มี AGENTS.md / work-order pointer → ไม่มี current-task authority ชัดเจน (สถานะสืบจาก git log)
+- Source มี pre-existing dirty tracked files (`.serena/project.yml`, `src/App.jsx`) — บันทึก ไม่นำมาสรุปสถาปัตยกรรมหลัก
+- ชื่อ `AI-Workspace` คือ orchestration workspace ไม่ใช่ product app เดี่ยว — บันทึกเพื่อป้องกันเข้าใจผิด (Vault governance "Repository ≠ Project / Tooling ≠ Project")
+- Path ในคำสั่ง (`D:\AI-Workspace`) ล้าสมัย — ที่จริง `D:\ai-tools\AI-Workspace` (บันทึกใน Registry + Overview)
+- Lifecycle เจตนาปล่อย `unknown` (ไม่ infer)
+
+### Recommended next (beyond this gate)
+Remaining DIS 18 ตัวรอเจ้าของตัดสิน:
+- `tooling-infrastructure` ×6 → หากเจ้าของยืนยันว่ามี lifecycle อิสระ จึงติดตาม/ onboard ได้
+- `sandbox-experiment` ×6, `backup-archive-candidate` ×2, `duplicate-superseded-candidate` ×1, `unknown` ×3 → ไม่ผ่าน gate โดยอัตโนมัติ ต้องเจ้าของสั่ง explicitly

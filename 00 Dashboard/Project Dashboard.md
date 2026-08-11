@@ -20,11 +20,12 @@ last_reviewed: 2026-08-11
 - [[lightroom-ai-exposure]]
 - [[citizen_portal]]
 - [[TalkToClibord]]
+- [[AI-Workspace]]
 
 ## Discovered — Not Imported
 
-พบ **19 repositories** บนดิสก์ที่ยังไม่มี Project Overview ใน Vault (รายการเต็มใน [[Project Registry]])
-ตัวอย่าง: `AI-Workspace`, `mcp-agentic-framework`, `JAVIS_Nexus`, `.sandbox/*`
+พบ **18 repositories** บนดิสก์ที่ยังไม่มี Project Overview ใน Vault (รายการเต็มใน [[Project Registry]])
+ตัวอย่าง: `mcp-agentic-framework`, `JAVIS_Nexus`, `.sandbox/*`
 
 > สถานะทั้งหมด = `needs-verification` — ต้อง on-board ทีละโปรเจกต์ก่อนระบุ lifecycle
 

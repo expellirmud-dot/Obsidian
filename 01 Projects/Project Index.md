@@ -21,6 +21,7 @@ last_reviewed: 2026-07-29
 | [[lightroom-ai-exposure]] | Windows-first Lightroom Classic exposure assistant (Python lr-ai-exposure, MVP adjusts only crs:Exposure2012, dry_run default) | `D:\ai-tools\lightroom-ai-exposure` | **verified** (onboarded WO-OBSIDIAN-027; HEAD 243c405; source stable/complete after WO-028) | 2026-08-11 (WO-OBSIDIAN-027: Repository truth verified, HEAD 243c405) |
 | [[citizen_portal]] | Online citizen-request management system for ด่านทับตะโก municipality (Next.js 16 + Prisma + Supabase + Auth.js), research prototype, MVP flows working | `D:\citizen_portal` | **verified** (onboarded WO-OBSIDIAN-028; HEAD f8ae9fb; research prototype, no active task) | 2026-08-11 (WO-OBSIDIAN-028: Repository truth verified, HEAD f8ae9fb) |
 | [[TalkToClibord]] | J.A.V.I.S desktop AI assistant (Python Tkinter GUI + vision_*.py backend + Gemini API + MemoryVault + pygame TTS, Thai-language), active dev / Test Sprint | `D:\TalkToClibord` | **verified** (onboarded WO-OBSIDIAN-029; HEAD 40b565e; pre-existing dirty + untracked artifacts) | 2026-08-11 (WO-OBSIDIAN-029: Repository truth verified, HEAD 40b565e) |
+| [[AI-Workspace]] | System-level AI ops workspace (multi-app/multi-model/multi-project orchestration, manual-safe V1, ai-ops-registry) | `D:\ai-tools\AI-Workspace` | **verified** (onboarded WO-OBSIDIAN-030; HEAD 6934067; pre-existing dirty .serena/project.yml + src/App.jsx) | 2026-08-11 (WO-OBSIDIAN-030: Repository truth verified, HEAD 6934067) |
 
 หมายเหตุ: `Last Verified` ในแต่ละรอบขึ้นอยู่กับขอบเขตของ Work Order นั้น
 
