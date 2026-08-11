@@ -7,10 +7,10 @@ Task Classification: Documentation / Project Onboarding / Knowledge Base Governa
 Execution Mode: Bounded Single Work Order
 Owner: Toto
 Target Vault: `D:\Obsidian\Project-Knowledge-Vault`
-Status: PLANNED
+Status: CLOSED
 
-> ใบงานนี้เป็น **draft PLANNED เท่านั้น** — ยังไม่ Activate และห้าม execute ในรอบที่สร้างไฟล์นี้
-> การ Activate + Execute ต้องรอ Owner สั่งแยกต่างหาก
+> ใบงานนี้ถูก Activate + Execute เรียบร้อยแล้ว (2026-08-11) — ดู §14 Closeout Status
+> การ Activate ได้รับ Owner authorization ชัดเจน
 
 ---
 
@@ -221,3 +221,57 @@ Suggested commit message (draft creation):
 - Evidence classification summary
 - Remaining risks / unknowns
 - Recommended next Work Order (onboard `lightroom-ai-exposure`)
+
+---
+
+## 14. Closeout Status (updated 2026-08-11)
+
+- **Status:** CLOSED — committed (owner-authorized bounded commit; NO push)
+- **Preflight:** `PREFLIGHT_DECISION: READY` (VAULT_DOCUMENTATION)
+- **Source repo:** READ-ONLY — ไม่มีการแก้ไข `D:\lumina-studio` (pre-existing dirty `.serena/project.yml` คงเดิม บันทึกเพื่อความโปร่งใส)
+
+### Source repo truth (fresh, 2026-08-11)
+- Path/root: `D:\lumina-studio` (`git rev-parse --show-toplevel`)
+- Branch: `main`
+- HEAD: `e98c9f627c50830c74cf76956abb15770690702d` (short `e98c9f6`)
+- Commits: 93
+- Status: tracked dirty `.serena/project.yml` (pre-existing, not caused by this WO)
+- Remote: `https://github.com/expellirmud-dot/LUMINA-Studio.git`
+- Authority files (actual): `AGENTS.md`, `PROJECT_RULES.md`, `AI_HANDOFF.md`, `README.md`, `docs/CONTEXT_INDEX.md`, `LUMINA_CONFIG_SYSTEM.md`, `GEMINI.md`, `IDEA.md`
+- Current work state: `AI_HANDOFF.md` → Overall Status **PASSED / READY FOR DEPLOY**; active task `TASK-030` COMPLETE; "Await owner's instruction"
+- Production URL: `https://lumina-studio-iota-ten.vercel.app`
+
+### Files changed (Allowed Files only)
+- `01 Projects/lumina-studio.md` (new — Project Overview)
+- `01 Projects/Project Registry.md` (DIS→IMP, evidence refresh)
+- `01 Projects/Project Index.md` (แถวใหม่)
+- `00 Dashboard/Project Dashboard.md` (ย้ายเข้า Imported Projects)
+- `04 Work Orders/CURRENT_WORK_ORDER.md` (pointer → WO-026 CLOSED)
+- `04 Work Orders/WO-OBSIDIAN-026-ONBOARD-LUMINA-STUDIO.md` (closeout)
+
+### Validation results (WO §10)
+1. ✅ exact source root resolved
+2. ✅ git status/branch/HEAD captured
+3. ✅ authority files identified from actual repo
+4. ✅ Project Overview มีครบทุกหัวข้อ AGENTS.md
+5. ✅ ไม่มี unsupported current-status claims (lifecycle = UNK, ไม่ infer)
+6. ✅ Registry import transition ถูกต้อง (DIS→IMP)
+7. ✅ Dashboard ไม่แสดง lumina-studio ใน Discovered — Not Imported อีกต่อไป
+8. ✅ wikilinks ทั้งหมด resolve ([[lumina-studio]], [[Project Registry]], [[Project Index]], [[Project Dashboard]])
+9. ✅ source repo unchanged (นอกเหนือจาก pre-existing dirty `.serena/project.yml`)
+10. ✅ diff เฉพาะ Allowed Files
+11. ✅ owner notes ยังคง untouched
+12. ✅ diff summary ก่อน commit
+
+### Evidence classification
+- verified: repo truth 2026-08-11 (structure, HEAD, status, authority files, deploy status, task state)
+- needs-verification: ไม่มีประเด็นค้างในรอบนี้ (production URL ระบุใน AI_HANDOFF.md = verified)
+
+### Unresolved / needs-verification
+- Pre-existing dirty `.serena/project.yml` ใน source repo — ไม่เกี่ยวข้องกับ Vault onboarding (บันทึก)
+- Hero FROZEN — การปรับ hero ต้อง owner อนุมัติ (ข้อจำกัดโดยเจตนา จาก PROJECT_RULES.md)
+- Lifecycle state เจตนาปล่อย `unknown` (ไม่ infer)
+- หากขยายนอก Phase 1 ต้องเข้า ROADMAP.md
+
+### Recommended next Work Order
+`WO-OBSIDIAN-027 — Onboard lightroom-ai-exposure` (ตามลำดับที่ Owner กำหนด)

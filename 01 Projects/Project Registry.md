@@ -14,8 +14,8 @@ last_reviewed: 2026-08-11
 
 | Import State | Count |
 | ------------ | ----- |
-| imported | 6 |
-| discovered-not-imported | 23 |
+| imported | 7 |
+| discovered-not-imported | 22 |
 | unknown | 0 |
 | **รวม repos ที่พบ** | **29** |
 
@@ -28,7 +28,7 @@ last_reviewed: 2026-08-11
 
 | Verification State | Count |
 | ------------------ | ----- |
-| verified | 5 (imported) + 22 (discovered) = 27 |
+| verified | 6 (imported) + 21 (discovered) = 27 |
 | owner-confirmed | 1 (imported) |
 | needs-verification | 3 (discovered: Automation, JAVIS_Nexus, office_council_keeper) |
 
@@ -47,8 +47,8 @@ last_reviewed: 2026-08-11
 | **รวม** | **24** | reconcile = 24, missing = 0 |
 
 **Post-Triage Onboarding Gate (WO-024 §13):**
-- Automatically eligible (onboard ได้พิจารณา): `project` + `verified` = 5 repos (เหลือหลังจาก onboard `thai_stt_app`)
-  - `AI-Workspace`, `lightroom-ai-exposure`, `citizen_portal`, `lumina-studio`, `TalkToClibord`
+- Automatically eligible (onboard ได้พิจารณา): `project` + `verified` = 4 repos (เหลือหลังจาก onboard `thai_stt_app`, `lumina-studio`)
+  - `AI-Workspace`, `lightroom-ai-exposure`, `citizen_portal`, `TalkToClibord`
 - Conditionally eligible: `tooling-infrastructure` + `verified` = 6 repos — ต้อง Owner ยืนยันว่ามี lifecycle เป็นอิสระจึงติดตามได้
 - ไม่ผ่าน gate โดยอัตโนมัติ: `sandbox-experiment` (6), `backup-archive-candidate` (2), `duplicate-superseded-candidate` (1), `unknown` (3) = 12 repos
 - Triage Class ไม่กำหนด Lifecycle State (ห้าม infer)
@@ -83,7 +83,7 @@ last_reviewed: 2026-08-11
 | Automation | `D:\Automation` | DIS | UNK | NEE | UNK | 0 commits on all branches; ไม่มี remote; ไม่มี README (มี .rar + โค้ด) | automation scripts | หลักฐานไม่พอ — unverifiable |
 | citizen_portal | `D:\citizen_portal` | DIS | UNK | VER | PRJ | README Next.js; remote `expellirmud-dot/citizen-portal`; 37 commits; AGENTS.md/CLAUDE.md | citizen portal | **project** (owner GitHub) — ผ่าน onboarding gate |
 | JAVIS_Nexus | `D:\JAVIS_Nexus` | DIS | UNK | NEE | UNK | 0 commits on all branches; ไม่มี remote; ไม่มี README (มี async_engine.py ฯลฯ) | JAVIS Nexus | หลักฐานไม่พอ — unverifiable |
-| lumina-studio | `D:\lumina-studio` | DIS | UNK | VER | PRJ | README "LUMINA Studio"; remote `expellirmud-dot/LUMINA-Studio`; 93 commits | lumina studio | **project** (owner GitHub) — ผ่าน onboarding gate |
+| lumina-studio | `D:\lumina-studio` | IMP | UNK | VER | PRJ | README "LUMINA Studio"; remote `expellirmud-dot/LUMINA-Studio`; HEAD `e98c9f6`, 93 commits; deployed Vercel, PASSED/READY (2026-08-11) | lumina studio | **project** (owner GitHub) — onboarded via WO-026 (2026-08-11); Lifecycle UNK (ห้าม infer) |
 | mcp-agentic-framework | `D:\mcp-agentic-framework` | DIS | UNK | VER | TLG | README "MCP Agentic Framework"; remote `Piotr1215/mcp-agentic-framework` (third-party); 38 commits | MCP agentic framework | tooling-infrastructure (third-party mirror) |
 | office_council_keeper | `D:\office_council_keeper` | DIS | UNK | NEE | UNK | 0 commits on all branches; ไม่มี remote; README หัวข้อ "AI Tools Kit" (คัดลอก); agents/skills | office council keeper | หลักฐานไม่พอ — unverifiable |
 | Utility Automation2 | `D:\project_backups\Utility Automation2` | DIS | UNK | VER | BAK | อยู่ใต้ `project_backups/`; README "Utility Automation V2"; remote `expellirmud-dot/utility_automation_v2`; 16 commits | utility automation backup | backup-archive-candidate |
