@@ -14,8 +14,8 @@ last_reviewed: 2026-08-11
 
 | Import State | Count |
 | ------------ | ----- |
-| imported | 7 |
-| discovered-not-imported | 22 |
+| imported | 8 |
+| discovered-not-imported | 21 |
 | unknown | 0 |
 | **รวม repos ที่พบ** | **29** |
 
@@ -28,7 +28,7 @@ last_reviewed: 2026-08-11
 
 | Verification State | Count |
 | ------------------ | ----- |
-| verified | 6 (imported) + 21 (discovered) = 27 |
+| verified | 7 (imported) + 20 (discovered) = 27 |
 | owner-confirmed | 1 (imported) |
 | needs-verification | 3 (discovered: Automation, JAVIS_Nexus, office_council_keeper) |
 
@@ -47,8 +47,8 @@ last_reviewed: 2026-08-11
 | **รวม** | **24** | reconcile = 24, missing = 0 |
 
 **Post-Triage Onboarding Gate (WO-024 §13):**
-- Automatically eligible (onboard ได้พิจารณา): `project` + `verified` = 4 repos (เหลือหลังจาก onboard `thai_stt_app`, `lumina-studio`)
-  - `AI-Workspace`, `lightroom-ai-exposure`, `citizen_portal`, `TalkToClibord`
+- Automatically eligible (onboard ได้พิจารณา): `project` + `verified` = 3 repos (เหลือหลังจาก onboard `thai_stt_app`, `lumina-studio`, `lightroom-ai-exposure`)
+  - `AI-Workspace`, `citizen_portal`, `TalkToClibord`
 - Conditionally eligible: `tooling-infrastructure` + `verified` = 6 repos — ต้อง Owner ยืนยันว่ามี lifecycle เป็นอิสระจึงติดตามได้
 - ไม่ผ่าน gate โดยอัตโนมัติ: `sandbox-experiment` (6), `backup-archive-candidate` (2), `duplicate-superseded-candidate` (1), `unknown` (3) = 12 repos
 - Triage Class ไม่กำหนด Lifecycle State (ห้าม infer)
@@ -79,7 +79,7 @@ last_reviewed: 2026-08-11
 | AI-Workspace | `D:\ai-tools\AI-Workspace` | DIS | UNK | VER | PRJ | README "Expellirmud AI-Workspace"; remote `expellirmud-dot/Expellirmud-AI-Workspace`; 47 commits | AI workspace | **project** (owner GitHub) — ผ่าน onboarding gate |
 | computer-use-preview | `D:\ai-tools\computer-use-preview` | DIS | UNK | VER | TLG | README "Computer Use Preview"; remote `google-gemini/computer-use-preview` (third-party); 25 commits | computer-use tool | tooling-infrastructure (third-party mirror) |
 | gridgeist | `D:\ai-tools\gridgeist` | DIS | UNK | VER | TLG | README "Gridgeist"; remote `ohmiler/gridgeist` (third-party); 22 commits | unknown tool | tooling-infrastructure (third-party mirror) |
-| lightroom-ai-exposure | `D:\ai-tools\lightroom-ai-exposure` | DIS | UNK | VER | PRJ | README "Lightroom AI Exposure Assist"; remote `expellirmud-dot/Lightroom-AI-Workflow-.git`; 96 commits | Lightroom AI exposure | **project** (owner GitHub) — อาจเกี่ยวข้องกับ LR workflow |
+| lightroom-ai-exposure | `D:\ai-tools\lightroom-ai-exposure` | IMP | UNK | VER | PRJ | README "Lightroom AI Exposure Assist"; remote `expellirmud-dot/Lightroom-AI-Workflow-.git`; HEAD `243c405`, 96 commits; source STATUS NONE/no active WO (2026-08-11) | Lightroom AI exposure | **project** (owner GitHub) — onboarded via WO-027 (2026-08-11); Lifecycle UNK (ห้าม infer) |
 | Automation | `D:\Automation` | DIS | UNK | NEE | UNK | 0 commits on all branches; ไม่มี remote; ไม่มี README (มี .rar + โค้ด) | automation scripts | หลักฐานไม่พอ — unverifiable |
 | citizen_portal | `D:\citizen_portal` | DIS | UNK | VER | PRJ | README Next.js; remote `expellirmud-dot/citizen-portal`; 37 commits; AGENTS.md/CLAUDE.md | citizen portal | **project** (owner GitHub) — ผ่าน onboarding gate |
 | JAVIS_Nexus | `D:\JAVIS_Nexus` | DIS | UNK | NEE | UNK | 0 commits on all branches; ไม่มี remote; ไม่มี README (มี async_engine.py ฯลฯ) | JAVIS Nexus | หลักฐานไม่พอ — unverifiable |

@@ -7,10 +7,10 @@ Task Classification: Documentation / Project Onboarding / Knowledge Base Governa
 Execution Mode: Bounded Single Work Order
 Owner: Toto
 Target Vault: `D:\Obsidian\Project-Knowledge-Vault`
-Status: PLANNED
+Status: CLOSED
 
-> ใบงานนี้เป็น **draft PLANNED เท่านั้น** — ยังไม่ Activate และห้าม execute ในรอบที่สร้างไฟล์นี้
-> การ Activate + Execute ต้องรอ Owner สั่งแยกต่างหาก
+> ใบงานนี้ถูก Activate + Execute เรียบร้อยแล้ว (2026-08-11) — ดู §14 Closeout Status
+> การ Activate ได้รับ Owner authorization ชัดเจน
 
 ---
 
@@ -224,3 +224,59 @@ Suggested commit message (draft creation):
 - Evidence classification summary
 - Remaining risks / unknowns
 - Recommended next Work Order (onboard `citizen_portal`)
+
+---
+
+## 14. Closeout Status (updated 2026-08-11)
+
+- **Status:** CLOSED — committed (owner-authorized bounded commit; NO push)
+- **Preflight:** `PREFLIGHT_DECISION: READY` (VAULT_DOCUMENTATION)
+- **Source repo:** READ-ONLY — ไม่มีการแก้ไข `D:\ai-tools\lightroom-ai-exposure` (pre-existing dirty tracked files คงเดิม บันทึกเพื่อความโปร่งใส)
+
+### Source repo truth (fresh, 2026-08-11)
+- **Path correction:** WO-024 draft + WO-027 draft ระบุ `D:\lightroom-ai-exposure` แต่จริงๆ ไม่มี; ที่อยู่จริงคือ `D:\ai-tools\lightroom-ai-exposure` (resolved fresh)
+- Path/root: `D:\ai-tools\lightroom-ai-exposure` (`git rev-parse --show-toplevel`)
+- Branch: `main`
+- HEAD: `243c405e46aa36116e377cfa8cb062ed37fdb44a` (short `243c405`)
+- Commits: 96
+- Status: pre-existing dirty tracked files (`config/settings.json`, `src/lr_ai_exposure/bridge.py`, `handoff.py`, `main.py`) — not caused by this WO
+- Remote: `https://github.com/expellirmud-dot/Lightroom-AI-Workflow-.git`
+- Authority files (actual): `AGENTS.md`, `README.md`, `docs/INDEX.md`, `docs/ARCHITECTURE.md`, `docs/XMP_SAFETY.md`, `docs/AI_JUDGE_CONTRACT.md`, `docs/CAPABILITY_MATRIX.md`, `docs/PROJECT_STATUS.md`, `docs/VALIDATION_REGISTER.md`, `docs/DECISIONS.md`, `Work-Order/CURRENT_WORK_ORDER.md`
+- Current work state: `Work-Order/CURRENT_WORK_ORDER.md` → STATUS: NONE; no active WO; LATEST_COMPLETED = WO-028 (hotfix, real-runtime certification)
+- Last commit: `2026-07-29 docs: close WO-028 after successful real Lightroom certification`
+
+### Files changed (Allowed Files only)
+- `01 Projects/lightroom-ai-exposure.md` (new — Project Overview)
+- `01 Projects/Project Registry.md` (DIS→IMP, evidence refresh)
+- `01 Projects/Project Index.md` (แถวใหม่)
+- `00 Dashboard/Project Dashboard.md` (ย้ายเข้า Imported Projects)
+- `04 Work Orders/CURRENT_WORK_ORDER.md` (pointer → WO-027 CLOSED)
+- `04 Work Orders/WO-OBSIDIAN-027-ONBOARD-LIGHTROOM-AI-EXPOSURE.md` (closeout)
+
+### Validation results (WO §10)
+1. ✅ exact source root resolved (`D:\ai-tools\lightroom-ai-exposure`)
+2. ✅ git status/branch/HEAD captured
+3. ✅ authority files identified from actual repo
+4. ✅ Project Overview มีครบทุกหัวข้อ AGENTS.md
+5. ✅ ไม่มี unsupported current-status claims (lifecycle = UNK, ไม่ infer; source STATUS NONE ไม่ถูกอ้างเป็น active)
+6. ✅ Registry import transition ถูกต้อง (DIS→IMP)
+7. ✅ Dashboard ไม่แสดง lightroom-ai-exposure ใน Discovered — Not Imported อีกต่อไป
+8. ✅ wikilinks ทั้งหมด resolve ([[lightroom-ai-exposure]], [[Project Registry]], [[Project Index]], [[Project Dashboard]])
+9. ✅ source repo unchanged (นอกเหนือจาก pre-existing dirty tracked files)
+10. ✅ diff เฉพาะ Allowed Files
+11. ✅ pre-existing `STT Typing.md` CRLF artifact ยังคง out-of-scope (ไม่ถูก stage)
+12. ✅ owner notes ยังคง untouched
+13. ✅ diff summary ก่อน commit
+
+### Evidence classification
+- verified: repo truth 2026-08-11 (structure, HEAD, status, authority files, source work state)
+- needs-verification: ไม่มีประเด็นค้างในรอบนี้
+
+### Unresolved / needs-verification
+- Pre-existing dirty tracked files ใน source (`config/settings.json`, `bridge.py`, `handoff.py`, `main.py`) — ไม่เกี่ยวข้องกับ Vault onboarding (บันทึก)
+- Path ใน Vault history (`D:\lightroom-ai-exposure` ใน WO-024 draft + WO-027 draft) ล้าสมัย — ที่จริง `D:\ai-tools\lightroom-ai-exposure` (บันทึกไว้ใน Registry + Project Overview แล้ว)
+- Source WO numbering (WO-001..028) ซ้ำกับ Vault WO — ต่างบริบท (Vault WO-OBSIDIAN-027 ≠ source WO-027)
+- Lifecycle state เจตนาปล่อย `unknown` (ไม่ infer)
+
+### Recommended next Work Order
+`WO-OBSIDIAN-028 — Onboard citizen_portal` (ตามลำดับที่ Owner กำหนด)

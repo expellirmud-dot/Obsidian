@@ -17,11 +17,12 @@ last_reviewed: 2026-08-11
 - [[Adobe Stock Upload Assistant]]
 - [[thai_stt_app]]
 - [[lumina-studio]]
+- [[lightroom-ai-exposure]]
 
 ## Discovered — Not Imported
 
-พบ **22 repositories** บนดิสก์ที่ยังไม่มี Project Overview ใน Vault (รายการเต็มใน [[Project Registry]])
-ตัวอย่าง: `citizen_portal`, `lightroom-ai-exposure`, `mcp-agentic-framework`, `JAVIS_Nexus`, `.sandbox/*`
+พบ **21 repositories** บนดิสก์ที่ยังไม่มี Project Overview ใน Vault (รายการเต็มใน [[Project Registry]])
+ตัวอย่าง: `citizen_portal`, `mcp-agentic-framework`, `JAVIS_Nexus`, `.sandbox/*`
 
 > สถานะทั้งหมด = `needs-verification` — ต้อง on-board ทีละโปรเจกต์ก่อนระบุ lifecycle
 
