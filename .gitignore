@@ -1,3 +1,7 @@
 # MCP tooling (machine-specific, do not commit)
 .serena/
 .codegraph/
+
+# Local app state
+.obsidian/
+.opencode/
