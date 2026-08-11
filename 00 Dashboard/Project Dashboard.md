@@ -1,11 +1,14 @@
 ---
 type: dashboard
-last_reviewed: 2026-07-29
+last_reviewed: 2026-08-11
 ---
 
 # Project Dashboard
 
-## Projects in Vault
+> Canonical inventory ของโปรเจกต์ทั้งหมดที่ Vault รู้จักอยู่ที่ [[Project Registry]]
+> รายชื่อ Project Overview 5 รายการด้านล่างไม่ใช่ inventory ทั้งหมด (ดู [[Project Registry]])
+
+## Imported Projects
 
 - [[llm-agents]]
 - [[STT Typing]]
@@ -13,13 +16,24 @@ last_reviewed: 2026-07-29
 - [[Utility Disbursement App]]
 - [[Adobe Stock Upload Assistant]]
 
-> รายชื่อด้านบนหมายถึง "โปรเจกต์ที่อยู่ในคลัง" ไม่ใช่การยืนยันสถานะ Runtime
+## Discovered — Not Imported
+
+พบ **24 repositories** บนดิสก์ที่ยังไม่มี Project Overview ใน Vault (รายการเต็มใน [[Project Registry]])
+ตัวอย่าง: `thai_stt_app`, `citizen_portal`, `lumina-studio`, `mcp-agentic-framework`, `JAVIS_Nexus`, `.sandbox/*`
+
+> สถานะทั้งหมด = `needs-verification` — ต้อง on-board ทีละโปรเจกต์ก่อนระบุ lifecycle
+
+## Paused / Archived
+
+- [[Utility Disbursement App]] — paused (owner-confirmed 2026-07-29), ย้ายไป `D:\project_backups\utility-disbursement-app`
+- อื่น ๆ: ไม่มีหลักฐาน → ดู [[Project Registry]]
 
 ## Needs Verification
 
-โปรเจกต์ที่สถานะยังไม่ได้ตรวจสอบจาก Repository จริง หรือตรวจสอบเพียงบางส่วน:
+โปรเจกต์ที่สถานะยังไม่ได้ตรวจสอบจาก Repository จริง:
 
-ไม่มี — ทั้งหมดผ่านการตรวจสอบแล้ว
+- 24 discovered-not-imported repos ([[Project Registry]])
+- [[Adobe Stock Upload Assistant]] — lifecycle ไม่ได้ประกาศใน prior WO (repo verified แต่ lifecycle = unknown)
 
 ## Recently Reviewed
 
@@ -30,10 +44,6 @@ last_reviewed: 2026-07-29
 | [[AI Worker Harness]] | 2026-07-28 (WO-OBSIDIAN-006: Repository truth verified, HEAD 7096991; status: verified, Goal-09 R07 ACTIVE) |
 | [[Utility Disbursement App]] | 2026-07-29 (WO-OBSIDIAN-008: Repository truth verified, HEAD 429cb91; status: paused/owner-confirmed) |
 | [[Adobe Stock Upload Assistant]] | 2026-07-28 (WO-OBSIDIAN-007: Repository truth verified, HEAD 0e5f9fc; status: verified, no active task) |
-
-## Paused Projects
-
-- [[Utility Disbursement App]] — Owner ยืนยัน 2026-07-28 ว่าหยุดพัฒนาชั่วคราว ย้ายไปเก็บที่ `D:\project_backups\utility-disbursement-app`
 
 ## Completed Projects
 
@@ -50,6 +60,7 @@ last_reviewed: 2026-07-29
 
 ## Indexes
 
+- [[Project Registry]] — canonical inventory (WO-OBSIDIAN-023)
 - [[Project Index]]
 - [[Architecture Index]]
 - [[Decision Index]] — `03 Decisions/DEC-Vault-Staleness-and-Reverification-Policy.md`

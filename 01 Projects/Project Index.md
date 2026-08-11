@@ -7,6 +7,8 @@ last_reviewed: 2026-07-29
 
 ตารางรวมโปรเจกต์ทั้งหมดในคลังความรู้ — สถานะจริงต้องตรวจจาก Git repository และ Current Work Order
 
+> **Registry vs Project Overview:** [[Project Registry]] คือรายการโปรเจกต์ที่ Vault รู้จักทั้งหมด (รวม `discovered-not-imported`); ตารางด้านล่างนี้ครอบคลุมเฉพาะโปรเจกต์ที่นำเข้าแล้ว (`imported`) ที่มี Project Overview เต็มรูปแบบ สำหรับ discovered projects ทั้งหมด ดูที่ [[Project Registry]]
+
 | Project | Description | Local Path | Status | Last Verified |
 | ------- | ----------- | ---------- | ------ | ------------- |
 | [[llm-agents]] | ระบบควบคุมและดำเนินงาน AI Agent แยกบทบาท Controller, Worker, Validation และ Runtime Execution | `D:\llm-agents` | **active** (Wave 1 live verification pending) | 2026-07-28 (WO-OBSIDIAN-004: Repository truth verified, HEAD 099e516) |

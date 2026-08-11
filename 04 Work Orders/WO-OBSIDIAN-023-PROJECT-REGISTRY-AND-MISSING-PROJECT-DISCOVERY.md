@@ -7,7 +7,7 @@ Task Classification: Documentation / Repository Inventory / Knowledge Base Gover
 Execution Mode: Bounded Single Work Order
 Owner: Toto
 Target Vault: `D:\Obsidian\Project-Knowledge-Vault`
-Status: PLANNED
+Status: CLOSED
 
 ---
 
@@ -300,3 +300,20 @@ Suggested commit message:
 Recommended next step หลัง WO นี้สำเร็จ:
 
 `Import Missing Projects` ก่อนเริ่มงาน `Live Project State / Project Wall Automation`
+
+---
+
+## 14. Closeout Status (updated 2026-08-11)
+
+- **Status:** CLOSED — committed `5a0dee3`; closeout correction amended same commit (owner-authorized; NO push)
+- **Preflight:** `PREFLIGHT_DECISION: READY`
+- **Discovery evidence:** `find /d -maxdepth 3 -name .git` + `find /c/Users/Expellirmud -maxdepth 3 -name .git` (2026-08-11, read-only)
+- **Imported (5):** ทุกโปรเจกต์ยืนยันเป็น git repo จริงบนดิสก์
+- **Discovered — Not Imported (24):** git repos พบบนดิสก์ ยังไม่มีใน Vault; lifecycle/purpose = needs-verification
+- **Source repositories:** ไม่มีการเปลี่ยนแปลง (read-only)
+- **Artifacts produced:**
+  - `01 Projects/Project Registry.md` (new)
+  - `00 Dashboard/Project Dashboard.md` — อ้างอิง Registry + แสดง missing projects
+  - `01 Projects/Project Index.md` — เชื่อมโยง Registry + อธิบาย Registry vs Overview
+  - `04 Work Orders/CURRENT_WORK_ORDER.md` → WO-023 CLOSED (pointer updated)
+- **Recommended next WO:** `Import Missing Projects` (onboard discovered repos one-by-one ก่อน Live Wall automation)
