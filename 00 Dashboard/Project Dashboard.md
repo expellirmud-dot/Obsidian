@@ -32,6 +32,15 @@ last_reviewed: 2026-08-11
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | Thai STT App | active | WO-Skill-Audit IN_PROGRESS — audit, fix, and install skills (project-read-first, windows-ui-review-runtime, impeccable, gridgeist) | unknown | null | 2026-08-09 | Complete WO-Skill-Audit; then WO-OCR-09D (Real Thai OCR Provider, DRAFT) and WO-UI-08E (Final Compact Liquid Glass, DRAFT) | 2026-08-12T04:33:00Z |
 | LUMINA Studio | ready-for-deploy | TASK-030 (Micro Lock Polish) COMPLETE — Overall Status PASSED / READY FOR DEPLOY | unknown | null | 2026-08-06 | Vercel production deploy (owner action); then Phase 2 scoping | 2026-08-12T04:33:00Z |
+| llm-agents | active | WO-03 G3 Clean Live Retest — DRAFTED, NOT EXECUTED (awaiting Owner Go) | unknown | null | 2026-07-28 | Owner Go → Execute WO-03 live run (single invocation, strict gate) | 2026-08-12T07:10:00Z |
+| STT Typing | superseded-pending-roadmap | TASK-STT-LEGACY-TK-CLEANUP-067 — SUPERSEDED-PENDING-ROADMAP (no active executable task) | unknown | null | 2026-07-28 | null | 2026-08-12T07:10:00Z |
+| AI Worker Harness | verified | WO-G9-R07-TASK-CLASS-EVALUATION-ROBUSTNESS (R07 live campaign, ACTIVE) | unknown | null | 2026-07-28 | Validate fresh route health for google-gemma-main; run sentinel batch TC-01 + TC-07 | 2026-08-12T07:10:00Z |
+| Utility Disbursement App | paused | null | unknown | null | 2026-07-29 | null | 2026-08-12T07:10:00Z |
+| Adobe Stock Upload Assistant | verified | TASK-ADOBE-STOCK-SAFETY-TERMS-CORE-001 (completed — no active executable task) | unknown | null | 2026-07-28 | null | 2026-08-12T07:10:00Z |
+| Lightroom AI Exposure | stable | null | unknown | null | 2026-07-29 | null | 2026-08-12T07:10:00Z |
+| Citizen Portal | research-prototype | null | unknown | null | 2026-06-24 | null | 2026-08-12T07:10:00Z |
+| TalkToClibord | active | Test Sprint (JAVIS.md Sprint Status, updated 2026-04-18) | unknown | null | 2026-05-13 | null | 2026-08-12T07:10:00Z |
+| AI-Workspace | stable | null | unknown | null | 2026-06-30 | null | 2026-08-12T07:10:00Z |
 <!-- LIVE_PROJECT_WALL:END -->
 
 ## Discovered — Not Imported

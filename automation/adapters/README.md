@@ -37,3 +37,21 @@ The adapter does **not** mutate the source repository. It reads truth and emits 
 - `evidence_classification` is the overall record confidence, kept separate.
 
 See `automation/state/README.md` for the normalized-state contract and `automation/schema/project-state.schema.json` for the validation contract.
+
+## Adapter coverage (WO-031 + WO-032)
+
+| project_id | status | WO |
+|-----------|--------|----|
+| thai_stt_app | adapted | WO-031 |
+| lumina-studio | adapted | WO-031 |
+| llm-agents | adapted | WO-032 |
+| STT-Typing | adapted | WO-032 |
+| AI-Worker-Harness | adapted | WO-032 |
+| Utility-Disbursement-App | adapted | WO-032 |
+| Adobe-Stock-Upload-Assistant | adapted | WO-032 |
+| lightroom-ai-exposure | adapted | WO-032 |
+| citizen_portal | adapted | WO-032 |
+| TalkToClibord | adapted | WO-032 |
+| AI-Workspace | adapted | WO-032 |
+
+All 11 imported projects are adapter-covered and rendered on the Live Project Wall.

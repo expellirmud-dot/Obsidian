@@ -41,12 +41,13 @@ last_reviewed: 2026-07-29
 | 009 | [[WO-OBSIDIAN-009-VAULT-CONSISTENCY-AUDIT]] | ตรวจ schema, links, paths, evidence และ consistency ทั้ง Vault | CLOSED |
 | 010 | [[WO-OBSIDIAN-010-STALENESS-AND-REVERIFICATION-POLICY]] | กำหนด freshness/staleness และ re-verification policy | CLOSED |
 | 011 | [[WO-OBSIDIAN-011-PROJECT-RESUME-WORKFLOW]] | กำหนด workflow กลับมาทำงานแต่ละโปรเจกต์อย่างปลอดภัย | ACTIVE |
-| 032 | [[WO-OBSIDIAN-032-EXPAND-PROJECT-WALL-ADAPTERS]] | ขยาย Live Project Wall adapter จาก 2 pilots ไปยัง imported projects ที่เหลืออีก 9 ตัว | PLANNED |
+| 032 | [[WO-OBSIDIAN-032-EXPAND-PROJECT-WALL-ADAPTERS]] | ขยาย Live Project Wall adapter จาก 2 pilots ไปยัง imported projects ที่เหลืออีก 9 ตัว | CLOSED |
 
 ลำดับนี้เป็น sequential gate: ห้ามเริ่ม Work Order ถัดไปก่อนงานก่อนหน้าปิด `CLOSED` และ Validation ผ่านครบ
 
 ## Closed Work Orders
 
+- [[WO-OBSIDIAN-032-EXPAND-PROJECT-WALL-ADAPTERS]] — CLOSED
 - [[WO-OBSIDIAN-011-PROJECT-RESUME-WORKFLOW]] — CLOSED
 - [[WO-OBSIDIAN-010-STALENESS-AND-REVERIFICATION-POLICY]] — CLOSED
 - [[WO-OBSIDIAN-009-VAULT-CONSISTENCY-AUDIT]] — CLOSED

@@ -1,0 +1,29 @@
+# Normalized project state — Utility-Disbursement-App
+# Produced by WO-OBSIDIAN-032 (Expand Project Wall Adapters).
+# State instance is YAML. Validated against automation/schema/project-state.schema.json.
+# Source repository is READ-ONLY; no source files were modified.
+# Evidence: 01 Projects/Utility Disbursement App.md (WO-OBSIDIAN-008 verified 2026-07-29), Project Registry (WO-023 verified 2026-08-11).
+# Source repo not directly accessible in execution environment; state derived from already-verified Vault records.
+# Pre-existing dirty worktree (dev.db modified) recorded, preserved, NOT caused by WO-032.
+
+project_id: Utility-Disbursement-App
+project_name: Utility Disbursement App
+source_path: D:\project_backups\utility-disbursement-app
+repository: https://github.com/expellirmud-dot/utility-disbursement-app.git
+branch: main
+head: 429cb91f5a4a6d5b64a14fac6e0136f59649e95d
+project_state: paused
+current_goal: null
+current_work: null
+current_work_authority:
+  path: null
+  kind: null
+current_work_evidence: owner-confirmed
+ci_state: unknown
+open_pr: null
+last_change: "2026-07-29"
+next_action: null
+blockers: null
+evidence_classification: owner-confirmed
+verified_at: "2026-08-12T07:10:00Z"
+adapter_id: generic-git-plus-authority-files

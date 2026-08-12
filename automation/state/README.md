@@ -57,11 +57,23 @@ Validate a state instance against the schema:
 python3 scripts/render_project_wall.py --validate automation/state/<project_id>.yaml
 ```
 
-## Pilot scope (WO-031)
+## Pilot scope (WO-031 + WO-032)
 
-Only two state instances are produced in WO-031:
+WO-031 produced the first two state instances:
 
 - `automation/state/thai_stt_app.yaml`
 - `automation/state/lumina-studio.yaml`
 
-The other 9 imported projects are registered in `automation/projects.yaml` but are `enabled_for_wall: false` / `pilot_status: not-yet-adapted` and have no state instance in this WO.
+WO-032 expanded adapter coverage to the remaining 9 imported projects:
+
+- `automation/state/llm-agents.yaml`
+- `automation/state/STT-Typing.yaml`
+- `automation/state/AI-Worker-Harness.yaml`
+- `automation/state/Utility-Disbursement-App.yaml`
+- `automation/state/Adobe-Stock-Upload-Assistant.yaml`
+- `automation/state/lightroom-ai-exposure.yaml`
+- `automation/state/citizen_portal.yaml`
+- `automation/state/TalkToClibord.yaml`
+- `automation/state/AI-Workspace.yaml`
+
+All 11 imported projects now have valid normalized state and appear on the Live Project Wall.

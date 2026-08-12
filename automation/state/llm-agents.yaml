@@ -1,0 +1,28 @@
+# Normalized project state — llm-agents
+# Produced by WO-OBSIDIAN-032 (Expand Project Wall Adapters).
+# State instance is YAML. Validated against automation/schema/project-state.schema.json.
+# Source repository is READ-ONLY; no source files were modified.
+# Evidence: 01 Projects/llm-agents.md (WO-OBSIDIAN-004 verified 2026-07-28), Project Registry (WO-023 verified 2026-08-11).
+# Source repo not directly accessible in execution environment; state derived from already-verified Vault records.
+
+project_id: llm-agents
+project_name: llm-agents
+source_path: D:\llm-agents
+repository: https://github.com/expellirmud-dot/llm-agents.git
+branch: integration/wave1-foundation
+head: 099e516b2cf504d664d9cf12a40b722900ba7dde
+project_state: active
+current_goal: Wave 1 — Live provider test (1 bounded run, credential ready)
+current_work: WO-03 G3 Clean Live Retest — DRAFTED, NOT EXECUTED (awaiting Owner Go)
+current_work_authority:
+  path: work_orders/03-WORK ORDER — G3 CLEAN LIVE RETEST (CREDENTIAL READY).md
+  kind: work-order
+current_work_evidence: verified
+ci_state: unknown
+open_pr: null
+last_change: "2026-07-28"
+next_action: Owner Go → Execute WO-03 live run (single invocation, strict gate)
+blockers: Owner Go required — credential ready, single live run pending
+evidence_classification: verified
+verified_at: "2026-08-12T07:10:00Z"
+adapter_id: generic-git-plus-authority-files
