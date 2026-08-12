@@ -1,0 +1,126 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/expellirmud-dot/Obsidian/blob/main/automation/schema/project-state.schema.json",
+  "title": "Normalized Project State",
+  "description": "Validation contract for normalized project-state instances. State instances are YAML files (automation/state/<project_id>.yaml). JSON Schema is used only as the validation contract because YAML is compatible with the JSON data model. Do not switch normalized project-state files from YAML to JSON.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "project_id",
+    "project_name",
+    "source_path",
+    "repository",
+    "branch",
+    "head",
+    "project_state",
+    "current_goal",
+    "current_work",
+    "current_work_authority",
+    "current_work_evidence",
+    "ci_state",
+    "open_pr",
+    "last_change",
+    "next_action",
+    "blockers",
+    "evidence_classification",
+    "verified_at",
+    "adapter_id"
+  ],
+  "properties": {
+    "project_id": {
+      "type": "string",
+      "description": "Stable identifier matching the Project Registry project_id."
+    },
+    "project_name": {
+      "type": "string",
+      "description": "Human-readable project name."
+    },
+    "source_path": {
+      "type": "string",
+      "description": "Absolute local path of the source repository (as recorded in the Project Registry)."
+    },
+    "repository": {
+      "type": ["string", "null"],
+      "description": "Remote URL or null if no remote."
+    },
+    "branch": {
+      "type": ["string", "null"],
+      "description": "Active branch or null if unknown."
+    },
+    "head": {
+      "type": ["string", "null"],
+      "description": "HEAD commit SHA or null if unknown."
+    },
+    "project_state": {
+      "type": "string",
+      "description": "Verified state string or 'unknown'. Must not be guessed."
+    },
+    "current_goal": {
+      "type": ["string", "null"],
+      "description": "Current goal or null if none/unknown."
+    },
+    "current_work": {
+      "type": ["string", "null"],
+      "description": "Current work description or null if none/unknown."
+    },
+    "current_work_authority": {
+      "type": "object",
+      "description": "Where the current-work claim came from. Separate from evidence confidence.",
+      "additionalProperties": false,
+      "required": ["path", "kind"],
+      "properties": {
+        "path": {
+          "type": ["string", "null"],
+          "description": "Source file/path the current-work claim was read from, or null."
+        },
+        "kind": {
+          "type": ["string", "null"],
+          "enum": ["work-order", "current-task", "handoff", "roadmap", "readme", "other", null],
+          "description": "Type of authority document the claim was read from, or null."
+        }
+      }
+    },
+    "current_work_evidence": {
+      "type": "string",
+      "enum": ["verified", "owner-confirmed", "inference", "unknown"],
+      "description": "How strongly the current-work claim is supported. Separate from current_work_authority."
+    },
+    "ci_state": {
+      "type": ["string", "null"],
+      "enum": ["success", "failure", "pending", "unknown", null],
+      "description": "CI state or null/unknown if not verified in this WO."
+    },
+    "open_pr": {
+      "description": "Open PR number (integer) or null if none/not verified.",
+      "anyOf": [
+        { "type": "integer" },
+        { "type": "null" }
+      ]
+    },
+    "last_change": {
+      "type": ["string", "null"],
+      "description": "ISO-8601 date of last commit, or null if unknown."
+    },
+    "next_action": {
+      "type": ["string", "null"],
+      "description": "Next action or null if unknown."
+    },
+    "blockers": {
+      "type": ["string", "null"],
+      "description": "Blockers or null if none."
+    },
+    "evidence_classification": {
+      "type": "string",
+      "enum": ["verified", "owner-confirmed", "inference", "unknown"],
+      "description": "Overall evidence confidence for the normalized state record as a whole."
+    },
+    "verified_at": {
+      "type": ["string", "null"],
+      "description": "ISO-8601 timestamp when this state was verified, or null."
+    },
+    "adapter_id": {
+      "type": "string",
+      "description": "Identifier of the adapter that produced this state."
+    }
+  }
+}

@@ -1,0 +1,39 @@
+# Project Adapter Registry
+
+> Canonical registry of adapters for the Live Project Wall.
+> Created by WO-OBSIDIAN-031 (Live Project Wall Foundation).
+> Source of truth for which imported projects are registered, enabled, and adapted.
+
+## Rule (registration scope)
+
+`automation/projects.yaml` registers **all 11 imported projects** from the Project Registry.
+
+- Only `thai_stt_app` and `lumina-studio` are `enabled_for_wall: true` / `pilot_status: adapted` in WO-031.
+- The remaining 9 imported projects are registered but `enabled_for_wall: false` / `pilot_status: not-yet-adapted`.
+- The 18 discovered-not-imported repositories are **not** registered here and must **never** appear as Wall-eligible.
+
+## Adapter contract
+
+Each adapted project maps source-repository evidence to normalized state via an adapter:
+
+- `adapter_id` — identifies the adapter implementation (e.g. `generic-git-plus-authority-files`)
+- `authority_candidates` — ordered list of authority files to read for current-work state
+- `github.prs` / `github.ci` — whether PR/CI evidence is mapped (in WO-031 these are declared but **not** integrated; CI/PR render as `unknown`/`null`)
+
+## Adapter: `generic-git-plus-authority-files`
+
+A generic adapter that resolves project state from:
+
+- git branch / HEAD / status / remote (read-only)
+- authority files present in the source repo (e.g. `AGENTS.md`, `WORK_ORDER.md`, `AI_HANDOFF.md`, `PROJECT_RULES.md`, `README.md`)
+- `.tasks/` task packets and `work-order/` work orders where present
+
+The adapter does **not** mutate the source repository. It reads truth and emits a normalized YAML state instance under `automation/state/<project_id>.yaml`.
+
+## Authority vs evidence (do not conflate)
+
+- `current_work_authority` (path + kind) answers: *where did this current-work claim come from?*
+- `current_work_evidence` answers: *how strongly is this claim supported?*
+- `evidence_classification` is the overall record confidence, kept separate.
+
+See `automation/state/README.md` for the normalized-state contract and `automation/schema/project-state.schema.json` for the validation contract.

@@ -7,7 +7,7 @@ Task Classification: Vault Operational Tooling / Knowledge Layer
 Execution Mode: Bounded Single Work Order (foundation-only)
 Owner: Toto
 Target Vault: `D:\Obsidian\Project-Knowledge-Vault`
-Status: PLANNED
+Status: CLOSED
 
 > ใบงานนี้เป็น **draft PLANNED เท่านั้น** — ยังไม่ Activate และห้าม execute ในรอบที่สร้างไฟล์นี้
 > การ Activate + Execute ต้องรอ Owner สั่งแยกต่างหาก
