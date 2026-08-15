@@ -1,14 +1,13 @@
 # Project Adapter Registry — Live Project Wall
 #
 # Created by WO-OBSIDIAN-031 (Live Project Wall Foundation).
-# Registers all 11 imported projects from the Project Registry.
-# Only thai_stt_app and lumina-studio are enabled/adapted for the WO-031 pilot.
-# The remaining 9 are registered but disabled / not-yet-adapted.
+# WO-OBSIDIAN-032 expanded adapter coverage to all 11 imported projects.
+# All 11 imported projects are enabled_for_wall: true / pilot_status: adapted.
 # No discovered-not-imported repository may be Wall-eligible.
 #
 # Field meanings:
 #   enabled_for_wall: whether the project appears on the Live Project Wall
-#   pilot_status: adaptation status for the WO-031 pilot
+#   pilot_status: adaptation status (adapted once an adapter produces normalized state)
 #   adapter_id: adapter implementation (null when not-yet-adapted)
 
 registry_version: 1
