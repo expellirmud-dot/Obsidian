@@ -7,7 +7,7 @@
 schema_version: 2
 project_id: thai_stt_app
 project_name: Thai STT App
-github_repository_id: null
+github_repository_id: 1327192726
 source_path: D:\thai_stt_app
 repository: https://github.com/expellirmud-dot/thai_stt_app.git
 branch: main

@@ -8,7 +8,7 @@
 schema_version: 2
 project_id: AI-Worker-Harness
 project_name: AI Worker Harness
-github_repository_id: null
+github_repository_id: 1306269881
 source_path: D:\ai-tools\ai-worker-harness
 repository: https://github.com/expellirmud-dot/ai-worker-harness.git
 branch: main

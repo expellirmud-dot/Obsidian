@@ -9,7 +9,7 @@
 schema_version: 2
 project_id: lightroom-ai-exposure
 project_name: Lightroom AI Exposure
-github_repository_id: null
+github_repository_id: 1314588912
 source_path: D:\ai-tools\lightroom-ai-exposure
 repository: https://github.com/expellirmud-dot/Lightroom-AI-Workflow-.git
 branch: main

@@ -9,7 +9,7 @@
 schema_version: 2
 project_id: citizen_portal
 project_name: Citizen Portal
-github_repository_id: null
+github_repository_id: 1237490934
 source_path: D:\citizen_portal
 repository: https://github.com/expellirmud-dot/citizen-portal.git
 branch: main
