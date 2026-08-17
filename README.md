@@ -45,6 +45,26 @@ Project-Knowledge-Vault
 - Skill เริ่มงาน: `.agents/skills/project-read-first/SKILL.md` — ทุกงานต้องผ่าน READ_FIRST_PREFLIGHT ก่อนแก้ไฟล์
 - Skill สำรวจโปรเจกต์: `.agents/skills/project-context-discovery/SKILL.md` — ใช้ก่อน onboard หรืออัปเดตบริบทโปรเจกต์ภายนอกเข้า Vault (read-only ต่อ Source Repository; output ตาม `.agents/skills/project-context-discovery/references/PROJECT_CONTEXT_OUTPUT_CONTRACT.md`)
 
+## Runtime Setup (Live Project Wall)
+
+สำหรับการรัน `scripts/render_project_wall.py` บน fresh clone:
+
+```bash
+# 1. ติดตั้ง dependencies
+python3 -m pip install -r requirements.txt
+
+# 2. Validate ทุก state file (ต้อง 11/11 VALID)
+python3 scripts/render_project_wall.py --validate-all
+
+# 3. Render Live Project Wall (idempotent — รอบที่สองต้อง zero diff)
+python3 scripts/render_project_wall.py
+
+# 4. Validate state file เดียว
+python3 scripts/render_project_wall.py --validate automation/state/<project_id>.yaml
+```
+
+ต้องการ: Python 3.10+ (ใช้ `from __future__ import annotations` และ `list[str]` hints)
+
 ## วิธีเพิ่มโปรเจกต์ใหม่
 
 1. คัดลอก `06 Prompts/Templates/Project Template.md` ไปไว้ที่ `01 Projects/<Project Name>.md`
