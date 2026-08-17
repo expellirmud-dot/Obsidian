@@ -4,3 +4,8 @@
 
 PyYAML>=6.0,<7.0
 jsonschema>=4.18,<5.0
+
+# Test dependency for the WO-OBSIDIAN-035 regression suite (tests/).
+# pytest is required to run `python3 -m pytest tests/` and the regression
+# gate inside automation/refresh_state.py.
+pytest>=7.0,<9.0

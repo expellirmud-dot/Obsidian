@@ -7,11 +7,11 @@ Task Classification: Vault Operational Tooling / Regression Layer
 Execution Mode: Bounded Single Work Order (automation + pytest suite)
 Owner: Toto
 Target Vault: `D:\Obsidian\Project-Knowledge-Vault`
-Status: PLANNED
+Status: CLOSED
 
-> ใบงานนี้เป็น **draft PLANNED เท่านั้น** — ยังไม่ Activate และห้าม execute ในรอบที่สร้างไฟล์นี้
-> การ Activate + Execute ต้องรอ Owner สั่งแยกต่างหาก
-> Baseline: WO-OBSIDIAN-034 CLOSED (depends on `automation/adapters/github_adapter.py` existing)
+> ใบงานนี้ CLOSED — Owner authorized execute + commit + push (2026-08-17).
+> Code review: REQUEST_CHANGES → fixed (3 issues: Dashboard restore in refresh, separate test_github_adapter.py, non-mutating marker test) → re-reviewed APPROVED.
+> pytest: 11/11 passing. Refresh script: all 4 gates PASS, dry-run withholds correctly.
 
 ---
 
@@ -287,33 +287,33 @@ Suggested commit message (draft):
 
 ```text
 WORK_ORDER: WO-OBSIDIAN-035
-RESULT: <COMPLETED | BLOCKED | PARTIAL>
+RESULT: COMPLETED
 BASELINE: WO-OBSIDIAN-034 CLOSED (github_adapter.py existing)
-PYTEST_CREATED: <yes | no>
-TESTS_PASSING_COUNT: <11/11 | other>
-TEST_RENDER_PROJECT_WALL_CREATED: <yes | no>
-TEST_GITHUB_ADAPTER_CREATED: <yes | no>
-CONFTEST_CREATED: <yes | no | n/a>
-REFRESH_SCRIPT_CREATED: <yes | no>
-REFRESH_PUBLISHES_ON_PASS: <yes | no>
-REFRESH_WITHHOLDS_ON_TEST_FAILURE: <yes | no>
-REFRESH_FLOW_FOLLOWED: <discover/read → refresh → validate → render → tests → publish | other>
-VALIDATE_ALL_EXIT_CODE: <0 | nonzero>
-VALIDATE_ALL_COUNT: <11/11 | other>
-RENDER_EXIT_CODE: <0 | nonzero>
-SECOND_RENDER_ZERO_DIFF: <yes | no>
-PYTEST_EXIT_CODE: <0 | nonzero>
+PYTEST_CREATED: yes
+TESTS_PASSING_COUNT: 11/11
+TEST_RENDER_PROJECT_WALL_CREATED: yes (9 renderer tests)
+TEST_GITHUB_ADAPTER_CREATED: yes (2 adapter tests)
+CONFTEST_CREATED: yes
+REFRESH_SCRIPT_CREATED: yes
+REFRESH_PUBLISHES_ON_PASS: yes (gated behind --publish)
+REFRESH_WITHHOLDS_ON_TEST_FAILURE: yes (restores state + Dashboard on failure/dry-run)
+REFRESH_FLOW_FOLLOWED: discover/read → refresh → validate → render → tests → publish only if all PASS
+VALIDATE_ALL_EXIT_CODE: 0
+VALIDATE_ALL_COUNT: 11/11
+RENDER_EXIT_CODE: 0
+SECOND_RENDER_ZERO_DIFF: yes
+PYTEST_EXIT_CODE: 0
 SOURCE_MODIFICATIONS: 0
 SECRETS: 0
-SEMANTICS_CHANGE_TO_SCHEMA: <no | yes (reason)>
-SEMANTICS_CHANGE_TO_STATE: <no | yes (reason)>
-SEMANTICS_CHANGE_TO_RENDERER: <no | yes (reason)>
-SEMANTICS_CHANGE_TO_ADAPTER: <no | yes (reason)>
+SEMANTICS_CHANGE_TO_SCHEMA: no
+SEMANTICS_CHANGE_TO_STATE: no
+SEMANTICS_CHANGE_TO_RENDERER: no
+SEMANTICS_CHANGE_TO_ADAPTER: no
 REPOS_ONBOARDED_BEYOND_11: 0
 CLEANUP_FILES_TOUCHED: 0
-FILES_CHANGED: <list>
+FILES_CHANGED: tests/test_render_project_wall.py, tests/test_github_adapter.py, tests/conftest.py, automation/refresh_state.py, requirements.txt, .gitignore, 04 Work Orders/WO-OBSIDIAN-035-AUTOMATED-REFRESH-AND-REGRESSION-SAFETY.md, 04 Work Orders/Work Order Index.md
 FILES_CHANGED_OUTSIDE_SCOPE: 0
-PUSH_PERFORMED: <yes | no>
-REMAINING_RISKS: <list or none>
+PUSH_PERFORMED: yes (Owner-authorized 2026-08-17)
+REMAINING_RISKS: refresh script publish step commits but does not push (push requires separate Owner authorization); adapter still in no-token mode (ci_state=unknown); __pycache__ now gitignored
 NEXT_RECOMMENDED_ACTION: SYSTEM AUDIT → CLEANUP WO (orphan files) → ONBOARD NEXT BATCH (18 repos)
 ```
