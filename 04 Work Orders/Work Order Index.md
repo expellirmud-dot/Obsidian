@@ -49,6 +49,7 @@ last_reviewed: 2026-07-29
 | 037 | [[WO-OBSIDIAN-037-REPOSITORY-DISCOVERY]] | read-only GitHub discovery + safe auto-onboarding ด้วย stable repo ID + idempotent (Goal 37: Repository Discovery) | CLOSED |
 | 038 | [[WO-OBSIDIAN-038-EVIDENCE-BACKED-TRUTH]] | evidence collector อ่าน content จริง + truth builder + Mission Drift Protection (Goal 38: Evidence-Backed Truth) | CLOSED |
 | 039 | [[WO-OBSIDIAN-039-PROGRESS-ENGINE]] | deterministic evidence-constrained progress + next-action engine (Goal 39: Progress + Next Action) | CLOSED |
+| 040 | [[WO-OBSIDIAN-040-AUTOMATION-VALIDATION]] | freshness engine + targeted refresh + Automation A/B + 73 tests + 6 e2e scenarios (Goal 40: Automation + Validation) | CLOSED |
 
 ลำดับนี้เป็น sequential gate: ห้ามเริ่ม Work Order ถัดไปก่อนงานก่อนหน้าปิด `CLOSED` และ Validation ผ่านครบ
 
