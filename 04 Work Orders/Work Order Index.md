@@ -48,6 +48,7 @@ last_reviewed: 2026-07-29
 | 036 | [[WO-OBSIDIAN-036-PROJECT-TRUTH-MODEL-V2]] | v2 schema แยก identity/execution/freshness/progress + backward-safe migration + github_repository_id (Goal 36: Project Truth Model v2) | CLOSED |
 | 037 | [[WO-OBSIDIAN-037-REPOSITORY-DISCOVERY]] | read-only GitHub discovery + safe auto-onboarding ด้วย stable repo ID + idempotent (Goal 37: Repository Discovery) | CLOSED |
 | 038 | [[WO-OBSIDIAN-038-EVIDENCE-BACKED-TRUTH]] | evidence collector อ่าน content จริง + truth builder + Mission Drift Protection (Goal 38: Evidence-Backed Truth) | CLOSED |
+| 039 | [[WO-OBSIDIAN-039-PROGRESS-ENGINE]] | deterministic evidence-constrained progress + next-action engine (Goal 39: Progress + Next Action) | CLOSED |
 
 ลำดับนี้เป็น sequential gate: ห้ามเริ่ม Work Order ถัดไปก่อนงานก่อนหน้าปิด `CLOSED` และ Validation ผ่านครบ
 
