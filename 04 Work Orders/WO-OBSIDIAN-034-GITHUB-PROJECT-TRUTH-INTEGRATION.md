@@ -7,11 +7,11 @@ Task Classification: Vault Operational Tooling / GitHub Integration Layer
 Execution Mode: Bounded Single Work Order (read-only adapter only)
 Owner: Toto
 Target Vault: `D:\Obsidian\Project-Knowledge-Vault`
-Status: PLANNED
+Status: CLOSED
 
-> ใบงานนี้เป็น **draft PLANNED เท่านั้น** — ยังไม่ Activate และห้าม execute ในรอบที่สร้างไฟล์นี้
-> การ Activate + Execute ต้องรอ Owner สั่งแยกต่างหาก
-> Baseline: WO-OBSIDIAN-033 CLOSED (repo reproducible — `requirements.txt` + bootstrap verified)
+> ใบงานนี้ CLOSED — Owner authorized execute + commit + push (2026-08-17).
+> Code review: APPROVED (sub-agent, risk LOW, no issues).
+> Note: adapter ran in fail-safe no-token mode (ci_state=unknown for all 11); re-run with GITHUB_TOKEN to populate real values.
 
 ---
 
@@ -251,35 +251,35 @@ Suggested commit message (draft):
 
 ```text
 WORK_ORDER: WO-OBSIDIAN-034
-RESULT: <COMPLETED | BLOCKED | PARTIAL>
+RESULT: COMPLETED
 BASELINE: WO-OBSIDIAN-033 CLOSED (repo reproducible)
-ADAPTER_CREATED: <yes | no>
-ADAPTER_PATH: <automation/github_adapter.py | automation/adapters/github_adapter.py>
-ADAPTER_READ_ONLY: <yes | no>
-PROJECTS_UPDATED: <11/11 | other>
-API_FAILURE_HANDLED: <yes | no — unknown rendered, no fabrication>
-NO_TOKEN_HANDLED: <yes | no — unknown rendered, no fabrication>
-RATE_LIMIT_GRACEFUL: <yes | no — provenance stored, no crash>
-OBSERVED_AT_PRESENT: <yes | no — 11/11 state files>
-PR_CI_TIED_TO_SHA: <yes | no>
-SCHEMA_OPTIONAL_FIELDS_ADDED: <no | yes (list fields + reason)>
-RENDERER_CHANGE: <no | yes (reason)>
-VALIDATE_ALL_EXIT_CODE: <0 | nonzero>
-VALIDATE_ALL_COUNT: <11/11 | other>
-RENDER_EXIT_CODE: <0 | nonzero>
-SECOND_RENDER_ZERO_DIFF: <yes | no>
+ADAPTER_CREATED: yes
+ADAPTER_PATH: automation/github_adapter.py
+ADAPTER_READ_ONLY: yes (GET-only, zero write endpoints)
+PROJECTS_UPDATED: 11/11
+API_FAILURE_HANDLED: yes — unknown rendered, no fabrication
+NO_TOKEN_HANDLED: yes — unknown rendered, no fabrication (no GITHUB_TOKEN in env; fail-safe mode)
+RATE_LIMIT_GRACEFUL: yes — provenance stored, no crash (not triggered; no token)
+OBSERVED_AT_PRESENT: yes — 11/11 state files
+PR_CI_TIED_TO_SHA: yes
+SCHEMA_OPTIONAL_FIELDS_ADDED: yes (observed_at — optional, not required, ISO-8601 timestamp)
+RENDERER_CHANGE: no
+VALIDATE_ALL_EXIT_CODE: 0
+VALIDATE_ALL_COUNT: 11/11
+RENDER_EXIT_CODE: 0
+SECOND_RENDER_ZERO_DIFF: yes
 SOURCE_MODIFICATIONS: 0
 SECRETS: 0
-SEMANTICS_CHANGE_TO_SCHEMA: <no | yes (reason)>
-SEMANTICS_CHANGE_TO_STATE: <no | yes (reason)>
-SEMANTICS_CHANGE_TO_RENDERER: <no | yes (reason)>
+SEMANTICS_CHANGE_TO_SCHEMA: no (additive optional field only)
+SEMANTICS_CHANGE_TO_STATE: no (observed_at added; ci_state/open_pr unchanged from fail-safe unknown/null)
+SEMANTICS_CHANGE_TO_RENDERER: no
 REPOS_ONBOARDED_BEYOND_11: 0
 CLEANUP_FILES_TOUCHED: 0
-SCHEDULED_REFRESH_IMPLEMENTED: <no — WO-035 scope>
-PYTEST_IMPLEMENTED: <no — WO-035 scope>
-FILES_CHANGED: <list>
+SCHEDULED_REFRESH_IMPLEMENTED: no — WO-035 scope
+PYTEST_IMPLEMENTED: no — WO-035 scope
+FILES_CHANGED: automation/github_adapter.py, automation/schema/project-state.schema.json, automation/state/*.yaml (11 files), 04 Work Orders/WO-OBSIDIAN-034-GITHUB-PROJECT-TRUTH-INTEGRATION.md, 04 Work Orders/Work Order Index.md
 FILES_CHANGED_OUTSIDE_SCOPE: 0
-PUSH_PERFORMED: <yes | no>
-REMAINING_RISKS: <list or none>
+PUSH_PERFORMED: yes (Owner-authorized 2026-08-17)
+REMAINING_RISKS: adapter ran in no-token mode (ci_state=unknown for all 11); re-run with GITHUB_TOKEN to populate real PR/CI values; observed_at regenerates per-run (adapter intentionally non-idempotent; renderer idempotency unaffected)
 NEXT_RECOMMENDED_ACTION: WO-OBSIDIAN-035 Automated Refresh & Regression Safety
 ```

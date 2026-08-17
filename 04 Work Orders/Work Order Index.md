@@ -43,7 +43,7 @@ last_reviewed: 2026-07-29
 | 011 | [[WO-OBSIDIAN-011-PROJECT-RESUME-WORKFLOW]] | กำหนด workflow กลับมาทำงานแต่ละโปรเจกต์อย่างปลอดภัย | ACTIVE |
 | 032 | [[WO-OBSIDIAN-032-EXPAND-PROJECT-WALL-ADAPTERS]] | ขยาย Live Project Wall adapter จาก 2 pilots ไปยัง imported projects ที่เหลืออีก 9 ตัว | CLOSED |
 | 033 | [[WO-OBSIDIAN-033-RUNTIME-REPRODUCIBILITY-FOUNDATION]] | เพิ่ม dependency manifest + bootstrap docs ให้ fresh clone รัน validate/render ได้ทันที (Goal 33: Runtime Reproducibility) | CLOSED |
-| 034 | [[WO-OBSIDIAN-034-GITHUB-PROJECT-TRUTH-INTEGRATION]] | Read-only GitHub adapter เพื่อเติม ci_state/open_pr ของ 11 projects (Goal 34: GitHub Live Truth) | PLANNED |
+| 034 | [[WO-OBSIDIAN-034-GITHUB-PROJECT-TRUTH-INTEGRATION]] | Read-only GitHub adapter เพื่อเติม ci_state/open_pr ของ 11 projects (Goal 34: GitHub Live Truth) | CLOSED |
 | 035 | [[WO-OBSIDIAN-035-AUTOMATED-REFRESH-AND-REGRESSION-SAFETY]] | pytest regression suite + scheduled refresh ที่ publish เฉพาะเมื่อ gates ผ่าน (Goal 35: Automated Refresh + Tests) | PLANNED |
 
 ลำดับนี้เป็น sequential gate: ห้ามเริ่ม Work Order ถัดไปก่อนงานก่อนหน้าปิด `CLOSED` และ Validation ผ่านครบ

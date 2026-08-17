@@ -118,6 +118,10 @@
       "type": ["string", "null"],
       "description": "ISO-8601 timestamp when this state was verified, or null."
     },
+    "observed_at": {
+      "type": ["string", "null"],
+      "description": "ISO-8601 timestamp when the GitHub adapter last observed ci_state/open_pr truth for this state, or null. Optional (added by WO-OBSIDIAN-034); not required."
+    },
     "adapter_id": {
       "type": "string",
       "description": "Identifier of the adapter that produced this state."
