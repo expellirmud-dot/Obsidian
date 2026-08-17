@@ -1,0 +1,52 @@
+# Evidence manifest -- thai_stt_app
+# Produced by WO-OBSIDIAN-038 (Evidence-Backed Project Truth Ingestion).
+# Source repository is READ-ONLY; no source files were modified.
+# Every claim traces to repository + ref + commit SHA + path + classification.
+project_id: thai_stt_app
+repository: https://github.com/expellirmud-dot/thai_stt_app.git
+tracked_ref: main
+commit_sha: null
+observed_at: '2026-08-17T13:45:35Z'
+status: ok
+error: null
+evidence:
+- path: AGENTS.md
+  category: identity
+  kind: agents
+  classification: verified
+  commit_sha: null
+  blob_sha: e09a7ccc5ae205eee728f3b27f6c38a403025f28
+  ref: main
+  observed_at: '2026-08-17T13:45:35Z'
+  heading: Thai STT App - Repository Knowledge
+  content_excerpt: '# Thai STT App - Repository Knowledge  > 📑 ดู [INDEX.md](./INDEX.md) สำหรับติดตามความคืบหน้า และ [WORK_ORDER.md](./WORK_ORDER.md) สำหรับใบสั่งงาน  ## Operating Rules  กฎการทำงาน (อ่านก่อนเนื้อหา repo ด้านล่าง) — ครอบคลุมทุกงานใน repo นี้เสมอ  ### กฎตัดสินใจ 7 ข้อ  1. **จำแนกงานก่อนลงมือ** — งานเล็กขอบเขตชัดให้ทำทันที งานใหญ่ต้องระบุแหล่งข้อมูล ความเสี่ยง dependencies และ Definition of Done ก่อน (ดูขอบเขตงานใน [WORK_ORDER.md](./WORK_ORDER.md)) 2. **กำหนดคำว่า "เสร็จ" ก่อนเริ่ม** — ระบุ acceptance'
+- path: CHANGELOG.md
+  category: completed_work
+  kind: changelog
+  classification: verified
+  commit_sha: null
+  blob_sha: 20d1eae82090157105bb1cef8f1276ee5b37a99e
+  ref: main
+  observed_at: '2026-08-17T13:45:35Z'
+  heading: 📜 Changelog
+  content_excerpt: '# 📜 Changelog  รูปแบบอ้างอิง [Keep a Changelog](https://keepachangelog.com/), และ [Semantic Versioning](https://semver.org/).  ---  ## [0.3.0] - 2026-08-08  ### เพิ่ม (Added) - `PySide6` dependency (replace Tkinter) - `qt_ui.py`: `STTQtWindow` (frameless/topmost/draggable PySide6 shell) + `HotkeyManager` + `ClickableLabel` + glass helpers (`glass_qss`, `apply_glass_surface`, `apply_soft_shadow`) - `config.py`: `GlassTheme` dataclass (Liquid Glass design tokens, separate from behavioral `UIConfig'
+- path: INDEX.md
+  category: completed_work
+  kind: index
+  classification: verified
+  commit_sha: null
+  blob_sha: 6df442cd181c2d26a26e0be1e68c6f8805608f48
+  ref: main
+  observed_at: '2026-08-17T13:45:35Z'
+  heading: 📑 Thai STT App - Documentation Index
+  content_excerpt: '# 📑 Thai STT App - Documentation Index  > เอกสารหลักสำหรับติดตามความคืบหน้า สถานะ และบันทึกต่างๆ ของโปรเจกต์  ---  ## 🗂️ เอกสารทั้งหมด  | เอกสาร | คำอธิบาย | สถานะ | |--------|----------|-------| | [INDEX.md](./INDEX.md) | หน้านี้ - ดัชนีเอกสาร + ความคืบหน้า | 🟢 ใช้งาน | | [AGENTS.md](./AGENTS.md) | ความรู้ repository, สถาปัตยกรรม, กฎ thread-safety, Operating Rules | 🟢 ใช้งาน | | [WORK_ORDER.md](./WORK_ORDER.md) | ดัชนีใบสั่งงาน (ชี้ไป `work-order/`) | 🟢 ใช้งาน | | [CHANGELOG.md](./CHANGELOG.md)'
+- path: pyproject.toml
+  category: manifest
+  kind: manifest
+  classification: verified
+  commit_sha: null
+  blob_sha: 1118d09976500673568c4bb08295c8585825c713
+  ref: main
+  observed_at: '2026-08-17T13:45:35Z'
+  heading: null
+  content_excerpt: '[build-system] requires = ["setuptools>=68.0", "wheel"] build-backend = "setuptools.build_meta"  [project] name = "thai-stt" version = "0.2.0" description = "Thai Speech-to-Text app with Silero VAD and Groq Whisper" readme = "README.md" requires-python = ">=3.9" license = { text = "MIT" } authors = [{ name = "expellirmud-dot" }] keywords = ["thai", "stt", "whisper", "groq", "vad", "silero"]  dependencies = [     "SpeechRecognition>=3.10",     "pyaudio>=0.2.11",     "pyperclip>=1.8",     "keyboar'
