@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Deterministic Live Project Wall renderer.
+"""Deterministic Live Project Wall renderer (v2 -- Project Truth Control Plane).
 
-Reads normalized project-state YAML instances and renders a bounded Markdown
-section inside 00 Dashboard/Project Dashboard.md between the markers:
+Reads normalized project-state v2 YAML instances and renders a bounded
+Markdown section inside 00 Dashboard/Project Dashboard.md between the markers:
 
     <!-- LIVE_PROJECT_WALL:START -->
     ...
@@ -11,11 +11,17 @@ section inside 00 Dashboard/Project Dashboard.md between the markers:
 The renderer modifies ONLY the content between the markers. Content outside
 the markers is never altered.
 
+v2 (WO-OBSIDIAN-036): the state schema now separates project_identity,
+current_execution, freshness, and progress. The wall surfaces Mission,
+Lifecycle Phase, Current Goal, Current Work, Progress, Confidence,
+Freshness, Vault HEAD, Remote HEAD, Last Truth Refresh, Next Action, and
+Blocker per project. Stale projects are marked explicitly.
+
 Usage:
-    # Render the wall from all enabled pilot state files
+    # Render the wall from all enabled state files
     python3 scripts/render_project_wall.py
 
-    # Validate a single state file against the schema
+    # Validate a single state file against the v2 schema
     python3 scripts/render_project_wall.py --validate automation/state/thai_stt_app.yaml
 
     # Validate all enabled state files
@@ -25,6 +31,7 @@ Idempotency: rendering twice against identical normalized state produces no
 additional diff.
 
 Created by WO-OBSIDIAN-031 (Live Project Wall Foundation).
+Upgraded to v2 by WO-OBSIDIAN-036 (Project Truth Model v2 + Freshness Contract).
 """
 
 from __future__ import annotations
@@ -38,7 +45,7 @@ from jsonschema import Draft202012Validator
 
 # Resolve paths relative to the repository root (this script lives in scripts/).
 REPO_ROOT = Path(__file__).resolve().parent.parent
-SCHEMA_PATH = REPO_ROOT / "automation" / "schema" / "project-state.schema.json"
+SCHEMA_PATH = REPO_ROOT / "automation" / "schema" / "project-state.v2.schema.json"
 PROJECTS_YAML = REPO_ROOT / "automation" / "projects.yaml"
 STATE_DIR = REPO_ROOT / "automation" / "state"
 DASHBOARD_PATH = REPO_ROOT / "00 Dashboard" / "Project Dashboard.md"
@@ -48,13 +55,18 @@ END_MARKER = "<!-- LIVE_PROJECT_WALL:END -->"
 
 WALL_COLUMNS = [
     "Project",
-    "State",
+    "Mission",
+    "Phase",
+    "Current Goal",
     "Current Work",
-    "CI",
-    "PR",
-    "Last Change",
+    "Progress",
+    "Confidence",
+    "Freshness",
+    "Vault HEAD",
+    "Remote HEAD",
+    "Last Truth Refresh",
     "Next Action",
-    "Verified At",
+    "Blocker",
 ]
 
 
@@ -109,21 +121,85 @@ def cell(value) -> str:
     return text.replace("|", "\\|")
 
 
+def short_sha(sha) -> str:
+    """Render a commit SHA as a short 7-char prefix, or null."""
+    if not sha:
+        return "null"
+    s = str(sha)
+    return s[:7]
+
+
+def progress_cell(progress: dict) -> str:
+    """Render progress as '~estimate% [range_min-range_max]' or UNKNOWN."""
+    if not isinstance(progress, dict):
+        return "UNKNOWN"
+    estimate = progress.get("estimate")
+    rmin = progress.get("range_min")
+    rmax = progress.get("range_max")
+    confidence = progress.get("confidence") or "unknown"
+    if estimate is None and rmin is None and rmax is None:
+        return "UNKNOWN"
+    if estimate is not None and rmin is not None and rmax is not None:
+        return f"~{estimate}% [{rmin}-{rmax}] [{confidence.upper()}]"
+    if estimate is not None:
+        return f"~{estimate}% [{confidence.upper()}]"
+    if rmin is not None and rmax is not None:
+        return f"[{rmin}-{rmax}] [{confidence.upper()}]"
+    return "UNKNOWN"
+
+
+def freshness_cell(freshness: dict) -> str:
+    """Render freshness status with an explicit stale marker when stale."""
+    if not isinstance(freshness, dict):
+        return "UNKNOWN"
+    status = freshness.get("status") or "unknown"
+    if status == "stale":
+        return "STALE — source HEAD changed after last semantic truth build"
+    if status == "refresh_failed":
+        return f"REFRESH_FAILED — {freshness.get('reason') or 'reason unknown'}"
+    if status == "unknown":
+        return "UNKNOWN"
+    return "FRESH"
+
+
+def mission_cell(identity: dict) -> str:
+    """Render a short Mission string. UNKNOWN when evidence is insufficient."""
+    if not isinstance(identity, dict):
+        return "UNKNOWN"
+    purpose = identity.get("purpose")
+    if not purpose:
+        return "UNKNOWN"
+    # Keep the mission short for the wall table.
+    s = str(purpose)
+    if len(s) > 80:
+        s = s[:77] + "..."
+    return s
+
+
 def render_wall(states: list[dict]) -> str:
     """Render the bounded wall section content (without markers)."""
     header = "| " + " | ".join(WALL_COLUMNS) + " |"
     separator = "| " + " | ".join("---" for _ in WALL_COLUMNS) + " |"
     lines = [header, separator]
     for s in states:
+        identity = s.get("project_identity") or {}
+        execution = s.get("current_execution") or {}
+        freshness = s.get("freshness") or {}
+        progress = s.get("progress") or {}
         row = [
             cell(s.get("project_name")),
-            cell(s.get("project_state")),
-            cell(s.get("current_work")),
-            cell(s.get("ci_state")),
-            cell(s.get("open_pr")),
-            cell(s.get("last_change")),
-            cell(s.get("next_action")),
-            cell(s.get("verified_at")),
+            mission_cell(identity),
+            cell(execution.get("lifecycle_phase")),
+            cell(execution.get("current_goal")),
+            cell(execution.get("current_work")),
+            progress_cell(progress),
+            cell(progress.get("confidence")),
+            freshness_cell(freshness),
+            short_sha(freshness.get("truth_built_from_head")),
+            short_sha(freshness.get("remote_head")),
+            cell(freshness.get("truth_built_at")),
+            cell(execution.get("next_action")),
+            cell(execution.get("blockers")),
         ]
         lines.append("| " + " | ".join(row) + " |")
     return "\n".join(lines)

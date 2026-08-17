@@ -4,26 +4,66 @@
 # Source repository is READ-ONLY; no source files were modified.
 # Evidence: 01 Projects/STT Typing.md (WO-OBSIDIAN-005 verified 2026-07-28), Project Registry (WO-023 verified 2026-08-11).
 # Source repo not directly accessible in execution environment; state derived from already-verified Vault records.
-
+# --- v2 (WO-OBSIDIAN-036): identity/execution/freshness/progress separated ---
+schema_version: 2
 project_id: STT-Typing
 project_name: STT Typing
+github_repository_id: null
 source_path: D:\stt_typing
 repository: https://github.com/expellirmud-dot/stt_typing.git
 branch: main
 head: af10254774766425b735e63632eb9a11f9056002
-project_state: superseded-pending-roadmap
-current_goal: null
-current_work: TASK-STT-LEGACY-TK-CLEANUP-067 — SUPERSEDED-PENDING-ROADMAP (no active executable task)
-current_work_authority:
-  path: .tasks/TASK-STT-LEGACY-TK-CLEANUP-067
-  kind: current-task
-current_work_evidence: verified
-ci_state: unknown
-open_pr: null
-last_change: "2026-07-28"
-next_action: null
-blockers: STAGE_11_PRODUCTION_QT_ARCHITECTURE_INCOMPLETE
+knowledge_state: needs-verification
+project_identity:
+  purpose: STT Typing
+  problem_statement: null
+  intended_outcome: null
+  primary_users: null
+  success_definition: null
+  scope: null
+  non_goals: null
+  identity_drift_detected: false
+  previous_identity: null
+current_execution:
+  lifecycle_phase: superseded-pending-roadmap
+  current_goal: null
+  current_work: TASK-STT-LEGACY-TK-CLEANUP-067 — SUPERSEDED-PENDING-ROADMAP (no active executable task)
+  current_work_authority:
+    path: .tasks/TASK-STT-LEGACY-TK-CLEANUP-067
+    kind: current-task
+  current_work_evidence: verified
+  last_completed: null
+  blockers: STAGE_11_PRODUCTION_QT_ARCHITECTURE_INCOMPLETE
+  next_action: null
+freshness:
+  status: fresh
+  tracked_ref: main
+  remote_head: af10254774766425b735e63632eb9a11f9056002
+  truth_built_from_head: af10254774766425b735e63632eb9a11f9056002
+  source_checked_at: '2026-08-17T10:33:05Z'
+  truth_built_at: '2026-08-12T07:10:00Z'
+  stale_since: null
+  reason: null
+  source_freshness: fresh
+  semantic_freshness: fresh
+  progress_freshness: fresh
+progress:
+  scope: null
+  method: null
+  estimate: null
+  range_min: null
+  range_max: null
+  confidence: unknown
+  completed: null
+  active: null
+  remaining: null
+  basis: null
+github:
+  ci_state: unknown
+  open_pr: null
+  open_pr_count: null
+  observed_at: '2026-08-17T10:33:05Z'
+last_change: '2026-07-28'
 evidence_classification: verified
-verified_at: "2026-08-12T07:10:00Z"
+verified_at: '2026-08-12T07:10:00Z'
 adapter_id: generic-git-plus-authority-files
-observed_at: "2026-08-17T10:33:05Z"

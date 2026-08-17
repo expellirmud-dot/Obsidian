@@ -1,0 +1,216 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/expellirmud-dot/Obsidian/blob/main/automation/schema/project-state.v2.schema.json",
+  "title": "Normalized Project State v2 (Project Truth Control Plane)",
+  "description": "Validation contract for normalized project-state v2 instances. Separates project_identity, current_execution, freshness, and progress so that Project Mission is never rewritten when a Work Order changes. State instances are YAML (automation/state/<project_id>.yaml). JSON Schema is used only as the validation contract because YAML is compatible with the JSON data model. Do not switch normalized project-state files from YAML to JSON. Created by WO-OBSIDIAN-036.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "project_id",
+    "project_name",
+    "github_repository_id",
+    "source_path",
+    "repository",
+    "branch",
+    "head",
+    "knowledge_state",
+    "project_identity",
+    "current_execution",
+    "freshness",
+    "progress",
+    "github",
+    "evidence_classification",
+    "verified_at",
+    "adapter_id"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "integer",
+      "const": 2,
+      "description": "Schema version. v2 separates identity/execution/freshness/progress."
+    },
+    "project_id": {
+      "type": "string",
+      "description": "Stable identifier matching the Project Registry project_id."
+    },
+    "project_name": {
+      "type": "string",
+      "description": "Human-readable project name."
+    },
+    "github_repository_id": {
+      "type": ["integer", "null"],
+      "description": "Stable GitHub repository numeric id. Survives repository rename. null for local-only projects."
+    },
+    "source_path": {
+      "type": ["string", "null"],
+      "description": "Absolute local path of the source repository, or null for GitHub-only projects."
+    },
+    "repository": {
+      "type": ["string", "null"],
+      "description": "Remote URL or null if no remote."
+    },
+    "branch": {
+      "type": ["string", "null"],
+      "description": "Tracked branch or null if unknown."
+    },
+    "head": {
+      "type": ["string", "null"],
+      "description": "HEAD commit SHA the truth was built from, or null if unknown."
+    },
+    "knowledge_state": {
+      "type": "string",
+      "enum": ["verified", "needs-verification", "unknown"],
+      "description": "Whether the project's knowledge has been verified against source evidence."
+    },
+    "project_identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "purpose",
+        "problem_statement",
+        "intended_outcome",
+        "primary_users",
+        "success_definition",
+        "scope",
+        "non_goals",
+        "identity_drift_detected",
+        "previous_identity"
+      ],
+      "description": "Stable Project Mission. Derived from authoritative repository documents across the project's history. MUST NOT be rewritten when a Work Order changes.",
+      "properties": {
+        "purpose": { "type": ["string", "null"], "description": "What the project is, in one line. null/unknown if evidence insufficient." },
+        "problem_statement": { "type": ["string", "null"], "description": "The problem the project exists to solve." },
+        "intended_outcome": { "type": ["string", "null"], "description": "The intended end-state outcome." },
+        "primary_users": { "type": ["string", "null"], "description": "Who the project is for." },
+        "success_definition": { "type": ["string", "null"], "description": "How success is defined." },
+        "scope": { "type": ["string", "null"], "description": "In-scope boundaries." },
+        "non_goals": { "type": ["string", "null"], "description": "Explicit non-goals." },
+        "identity_drift_detected": { "type": "boolean", "description": "True when authoritative evidence indicates the Mission itself has changed. The previous identity is preserved; the new candidate is recorded but NOT silently overwritten." },
+        "previous_identity": { "type": ["array", "null"], "description": "Preserved previous identity snapshots when drift is detected. null when no drift.", "items": { "type": "object" } }
+      }
+    },
+    "current_execution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "lifecycle_phase",
+        "current_goal",
+        "current_work",
+        "current_work_authority",
+        "current_work_evidence",
+        "last_completed",
+        "blockers",
+        "next_action"
+      ],
+      "description": "Current execution truth. Distinct from Project Mission. May change per Work Order without affecting project_identity.",
+      "properties": {
+        "lifecycle_phase": { "type": ["string", "null"], "description": "Current lifecycle phase (e.g. active, paused, stable, research-prototype). null if unknown." },
+        "current_goal": { "type": ["string", "null"], "description": "Current goal or null if none/unknown." },
+        "current_work": { "type": ["string", "null"], "description": "Current work description or null if none/unknown." },
+        "current_work_authority": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["path", "kind"],
+          "properties": {
+            "path": { "type": ["string", "null"], "description": "Source file/path the current-work claim was read from, or null." },
+            "kind": { "type": ["string", "null"], "enum": ["work-order", "current-task", "handoff", "roadmap", "readme", "other", null], "description": "Type of authority document, or null." }
+          }
+        },
+        "current_work_evidence": { "type": "string", "enum": ["verified", "owner-confirmed", "inference", "unknown"], "description": "How strongly the current-work claim is supported." },
+        "last_completed": { "type": ["string", "null"], "description": "Last completed milestone/work or null if unknown." },
+        "blockers": { "type": ["string", "null"], "description": "Current blockers or null if none." },
+        "next_action": { "type": ["string", "null"], "description": "Next authoritative action or null if unknown. Derived from explicit authority only; never invented." }
+      }
+    },
+    "freshness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "tracked_ref",
+        "remote_head",
+        "truth_built_from_head",
+        "source_checked_at",
+        "truth_built_at",
+        "stale_since",
+        "reason",
+        "source_freshness",
+        "semantic_freshness",
+        "progress_freshness"
+      ],
+      "description": "Freshness contract. remote_head != truth_built_from_head => stale. GitHub unreachable => unknown. UNKNOWN must never become FRESH. refresh_failed preserves known-good truth with a stale marker.",
+      "properties": {
+        "status": { "type": "string", "enum": ["fresh", "stale", "unknown", "refresh_failed"], "description": "Aggregate freshness status." },
+        "tracked_ref": { "type": ["string", "null"], "description": "The tracked ref (e.g. 'main') the truth is bound to." },
+        "remote_head": { "type": ["string", "null"], "description": "Latest remote HEAD SHA observed at source_checked_at, or null if unreachable." },
+        "truth_built_from_head": { "type": ["string", "null"], "description": "HEAD SHA the semantic truth was built from. Equal to remote_head => fresh." },
+        "source_checked_at": { "type": ["string", "null"], "description": "ISO-8601 timestamp when the remote HEAD was last probed." },
+        "truth_built_at": { "type": ["string", "null"], "description": "ISO-8601 timestamp when the semantic truth was last built." },
+        "stale_since": { "type": ["string", "null"], "description": "ISO-8601 timestamp since when the truth has been stale, or null." },
+        "reason": { "type": ["string", "null"], "description": "Human-readable reason for stale/unknown/refresh_failed, or null." },
+        "source_freshness": { "type": "string", "enum": ["fresh", "stale", "unknown", "refresh_failed"], "description": "Whether the source HEAD is fresh relative to truth_built_from_head." },
+        "semantic_freshness": { "type": "string", "enum": ["fresh", "stale", "unknown", "refresh_failed"], "description": "Whether the semantic truth (identity/execution) is fresh relative to the source." },
+        "progress_freshness": { "type": "string", "enum": ["fresh", "stale", "unknown", "refresh_failed"], "description": "Whether the progress computation is fresh relative to the source." }
+      }
+    },
+    "progress": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "method",
+        "estimate",
+        "range_min",
+        "range_max",
+        "confidence",
+        "completed",
+        "active",
+        "remaining",
+        "basis"
+      ],
+      "description": "Deterministic, evidence-constrained progress. Never an LLM impression. Supports unknown when denominator is missing.",
+      "properties": {
+        "scope": { "type": ["string", "null"], "description": "What the progress estimate measures (e.g. 'current_goal', 'current_roadmap'). null if unknown." },
+        "method": { "type": ["string", "null"], "description": "Calculation method (e.g. 'weighted_milestones', 'bounded_milestones', 'bounded_work_orders'). null if unknown." },
+        "estimate": { "type": ["integer", "null"], "minimum": 0, "maximum": 100, "description": "Point estimate 0-100, or null if unknown." },
+        "range_min": { "type": ["integer", "null"], "minimum": 0, "maximum": 100, "description": "Lower bound, or null if unknown." },
+        "range_max": { "type": ["integer", "null"], "minimum": 0, "maximum": 100, "description": "Upper bound, or null if unknown." },
+        "confidence": { "type": "string", "enum": ["high", "medium", "low", "unknown"], "description": "Confidence in the estimate." },
+        "completed": { "type": ["integer", "null"], "minimum": 0, "description": "Count of completed units, or null if unknown." },
+        "active": { "type": ["integer", "null"], "minimum": 0, "description": "Count of active/in-progress units, or null if unknown." },
+        "remaining": { "type": ["integer", "null"], "minimum": 0, "description": "Count of remaining units, or null if unknown." },
+        "basis": { "type": ["string", "null"], "description": "Evidence basis explaining how the numbers were derived, or null." }
+      }
+    },
+    "github": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ci_state", "open_pr", "open_pr_count", "observed_at"],
+      "description": "GitHub live truth (read-only adapter output). Tied to the exact head SHA.",
+      "properties": {
+        "ci_state": { "type": ["string", "null"], "enum": ["success", "failure", "pending", "unknown", null] },
+        "open_pr": { "type": ["integer", "null"], "description": "First open PR number or null." },
+        "open_pr_count": { "type": ["integer", "null"], "minimum": 0, "description": "Count of open PRs or null." },
+        "observed_at": { "type": ["string", "null"], "description": "ISO-8601 timestamp when GitHub truth was last observed." }
+      }
+    },
+    "last_change": {
+      "type": ["string", "null"],
+      "description": "ISO-8601 date of last commit on the tracked ref, or null if unknown."
+    },
+    "evidence_classification": {
+      "type": "string",
+      "enum": ["verified", "owner-confirmed", "inference", "unknown"],
+      "description": "Overall evidence confidence for the normalized state record as a whole."
+    },
+    "verified_at": {
+      "type": ["string", "null"],
+      "description": "ISO-8601 timestamp when this state was verified, or null."
+    },
+    "adapter_id": {
+      "type": "string",
+      "description": "Identifier of the adapter that produced this state."
+    }
+  }
+}
