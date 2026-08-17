@@ -42,6 +42,7 @@ last_reviewed: 2026-07-29
 | 010 | [[WO-OBSIDIAN-010-STALENESS-AND-REVERIFICATION-POLICY]] | กำหนด freshness/staleness และ re-verification policy | CLOSED |
 | 011 | [[WO-OBSIDIAN-011-PROJECT-RESUME-WORKFLOW]] | กำหนด workflow กลับมาทำงานแต่ละโปรเจกต์อย่างปลอดภัย | ACTIVE |
 | 032 | [[WO-OBSIDIAN-032-EXPAND-PROJECT-WALL-ADAPTERS]] | ขยาย Live Project Wall adapter จาก 2 pilots ไปยัง imported projects ที่เหลืออีก 9 ตัว | CLOSED |
+| 033 | [[WO-OBSIDIAN-033-RUNTIME-REPRODUCIBILITY-FOUNDATION]] | เพิ่ม dependency manifest + bootstrap docs ให้ fresh clone รัน validate/render ได้ทันที (Goal 33: Runtime Reproducibility) | PLANNED |
 
 ลำดับนี้เป็น sequential gate: ห้ามเริ่ม Work Order ถัดไปก่อนงานก่อนหน้าปิด `CLOSED` และ Validation ผ่านครบ
 
