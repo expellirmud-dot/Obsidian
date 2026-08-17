@@ -8,8 +8,8 @@
 
 `automation/projects.yaml` registers **all 11 imported projects** from the Project Registry.
 
-- Only `thai_stt_app` and `lumina-studio` are `enabled_for_wall: true` / `pilot_status: adapted` in WO-031.
-- The remaining 9 imported projects are registered but `enabled_for_wall: false` / `pilot_status: not-yet-adapted`.
+- WO-OBSIDIAN-031 adapted the first two pilots (`thai_stt_app`, `lumina-studio`).
+- WO-OBSIDIAN-032 expanded adapter coverage to the remaining 9 imported projects; all 11 are now `enabled_for_wall: true` / `pilot_status: adapted`.
 - The 18 discovered-not-imported repositories are **not** registered here and must **never** appear as Wall-eligible.
 
 ## Adapter contract

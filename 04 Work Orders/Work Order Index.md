@@ -1,6 +1,6 @@
 ---
 type: index
-last_reviewed: 2026-07-29
+last_reviewed: 2026-08-15
 ---
 
 # Work Order Index
@@ -26,7 +26,7 @@ last_reviewed: 2026-07-29
 
 ## Current Work Order
 - [[CURRENT_WORK_ORDER]]
-- **ACTIVE:** [[WO-OBSIDIAN-011-PROJECT-RESUME-WORKFLOW]]
+- **LATEST CLOSED:** [[WO-OBSIDIAN-032-EXPAND-PROJECT-WALL-ADAPTERS]] (no active Work Order)
 
 ## Planned Sequence
 
@@ -40,7 +40,7 @@ last_reviewed: 2026-07-29
 | 008 | [[WO-OBSIDIAN-008-ONBOARD-UTILITY-DISBURSEMENT-APP]] | ตรวจและบันทึกบริบท Utility Disbursement App | CLOSED |
 | 009 | [[WO-OBSIDIAN-009-VAULT-CONSISTENCY-AUDIT]] | ตรวจ schema, links, paths, evidence และ consistency ทั้ง Vault | CLOSED |
 | 010 | [[WO-OBSIDIAN-010-STALENESS-AND-REVERIFICATION-POLICY]] | กำหนด freshness/staleness และ re-verification policy | CLOSED |
-| 011 | [[WO-OBSIDIAN-011-PROJECT-RESUME-WORKFLOW]] | กำหนด workflow กลับมาทำงานแต่ละโปรเจกต์อย่างปลอดภัย | ACTIVE |
+| 011 | [[WO-OBSIDIAN-011-PROJECT-RESUME-WORKFLOW]] | กำหนด workflow กลับมาทำงานแต่ละโปรเจกต์อย่างปลอดภัย | CLOSED |
 | 032 | [[WO-OBSIDIAN-032-EXPAND-PROJECT-WALL-ADAPTERS]] | ขยาย Live Project Wall adapter จาก 2 pilots ไปยัง imported projects ที่เหลืออีก 9 ตัว | CLOSED |
 | 033 | [[WO-OBSIDIAN-033-RUNTIME-REPRODUCIBILITY-FOUNDATION]] | เพิ่ม dependency manifest + bootstrap docs ให้ fresh clone รัน validate/render ได้ทันที (Goal 33: Runtime Reproducibility) | CLOSED |
 | 034 | [[WO-OBSIDIAN-034-GITHUB-PROJECT-TRUTH-INTEGRATION]] | Read-only GitHub adapter เพื่อเติม ci_state/open_pr ของ 11 projects (Goal 34: GitHub Live Truth) | CLOSED |
