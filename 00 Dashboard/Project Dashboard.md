@@ -28,19 +28,19 @@ last_reviewed: 2026-08-15
 > WO-OBSIDIAN-032 expanded adapter coverage to all 11 imported projects. CI/PR render as `unknown`/`null` until a follow-up WO integrates GitHub PR/CI.
 
 <!-- LIVE_PROJECT_WALL:START -->
-| Project | State | Current Work | CI | PR | Last Change | Next Action | Verified At |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| Thai STT App | active | WO-Skill-Audit IN_PROGRESS — audit, fix, and install skills (project-read-first, windows-ui-review-runtime, impeccable, gridgeist) | unknown | null | 2026-08-09 | Complete WO-Skill-Audit; then WO-OCR-09D (Real Thai OCR Provider, DRAFT) and WO-UI-08E (Final Compact Liquid Glass, DRAFT) | 2026-08-12T04:33:00Z |
-| LUMINA Studio | ready-for-deploy | TASK-030 (Micro Lock Polish) COMPLETE — Overall Status PASSED / READY FOR DEPLOY | unknown | null | 2026-08-06 | Vercel production deploy (owner action); then Phase 2 scoping | 2026-08-12T04:33:00Z |
-| llm-agents | active | WO-03 G3 Clean Live Retest — DRAFTED, NOT EXECUTED (awaiting Owner Go) | unknown | null | 2026-07-28 | Owner Go → Execute WO-03 live run (single invocation, strict gate) | 2026-08-12T07:10:00Z |
-| STT Typing | superseded-pending-roadmap | TASK-STT-LEGACY-TK-CLEANUP-067 — SUPERSEDED-PENDING-ROADMAP (no active executable task) | unknown | null | 2026-07-28 | null | 2026-08-12T07:10:00Z |
-| AI Worker Harness | verified | WO-G9-R07-TASK-CLASS-EVALUATION-ROBUSTNESS (R07 live campaign, ACTIVE) | unknown | null | 2026-07-28 | Validate fresh route health for google-gemma-main; run sentinel batch TC-01 + TC-07 | 2026-08-12T07:10:00Z |
-| Utility Disbursement App | paused | null | unknown | null | 2026-07-29 | null | 2026-08-12T07:10:00Z |
-| Adobe Stock Upload Assistant | verified | TASK-ADOBE-STOCK-SAFETY-TERMS-CORE-001 (completed — no active executable task) | unknown | null | 2026-07-28 | null | 2026-08-12T07:10:00Z |
-| Lightroom AI Exposure | stable | null | unknown | null | 2026-07-29 | null | 2026-08-12T07:10:00Z |
-| Citizen Portal | research-prototype | null | unknown | null | 2026-06-24 | null | 2026-08-12T07:10:00Z |
-| TalkToClibord | active | Test Sprint (JAVIS.md Sprint Status, updated 2026-04-18) | unknown | null | 2026-05-13 | null | 2026-08-12T07:10:00Z |
-| AI-Workspace | stable | null | unknown | null | 2026-06-30 | null | 2026-08-12T07:10:00Z |
+| Project | Mission | Phase | Current Goal | Current Work | Progress | Confidence | Freshness | Vault HEAD | Remote HEAD | Last Truth Refresh | Next Action | Blocker |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Thai STT App | Thai STT App | active | WO-Skill-Audit (skill audit + install for repository) | WO-Skill-Audit IN_PROGRESS — audit, fix, and install skills (project-read-first, windows-ui-review-runtime, impeccable, gridgeist) | UNKNOWN | unknown | FRESH | be7bd07 | be7bd07 | 2026-08-12T04:33:00Z | Complete WO-Skill-Audit; then WO-OCR-09D (Real Thai OCR Provider, DRAFT) and WO-UI-08E (Final Compact Liquid Glass, DRAFT) | null |
+| LUMINA Studio | LUMINA Studio | ready-for-deploy | Phase 1 — Premium Photography Landing Page (complete; ready for Vercel production deploy) | TASK-030 (Micro Lock Polish) COMPLETE — Overall Status PASSED / READY FOR DEPLOY | UNKNOWN | unknown | FRESH | e98c9f6 | e98c9f6 | 2026-08-12T04:33:00Z | Vercel production deploy (owner action); then Phase 2 scoping | null |
+| llm-agents | llm-agents | active | Wave 1 — Live provider test (1 bounded run, credential ready) | WO-03 G3 Clean Live Retest — DRAFTED, NOT EXECUTED (awaiting Owner Go) | UNKNOWN | unknown | FRESH | 099e516 | 099e516 | 2026-08-12T07:10:00Z | Owner Go → Execute WO-03 live run (single invocation, strict gate) | Owner Go required — credential ready, single live run pending |
+| STT Typing | STT Typing | superseded-pending-roadmap | null | TASK-STT-LEGACY-TK-CLEANUP-067 — SUPERSEDED-PENDING-ROADMAP (no active executable task) | UNKNOWN | unknown | FRESH | af10254 | af10254 | 2026-08-12T07:10:00Z | Resolve blocker: STAGE_11_PRODUCTION_QT_ARCHITECTURE_INCOMPLETE | STAGE_11_PRODUCTION_QT_ARCHITECTURE_INCOMPLETE |
+| AI Worker Harness | AI Worker Harness | verified | Goal-09 — Runtime Observability, Information Sufficiency, and Model Evaluation | WO-G9-R07-TASK-CLASS-EVALUATION-ROBUSTNESS (R07 live campaign, ACTIVE) | UNKNOWN | unknown | FRESH | 7096991 | 7096991 | 2026-08-12T07:10:00Z | Validate fresh route health for google-gemma-main; run sentinel batch TC-01 + TC-07 | null |
+| Utility Disbursement App | Utility Disbursement App | paused | null | null | UNKNOWN | unknown | FRESH | 429cb91 | 429cb91 | 2026-08-12T07:10:00Z | null | null |
+| Adobe Stock Upload Assistant | Adobe Stock Upload Assistant | verified | null | TASK-ADOBE-STOCK-SAFETY-TERMS-CORE-001 (completed — no active executable task) | UNKNOWN | unknown | FRESH | 0e5f9fc | 0e5f9fc | 2026-08-12T07:10:00Z | null | null |
+| Lightroom AI Exposure | Lightroom AI Exposure | stable | null | null | UNKNOWN | unknown | FRESH | 243c405 | 243c405 | 2026-08-12T07:10:00Z | null | null |
+| Citizen Portal | Citizen Portal | research-prototype | null | null | UNKNOWN | unknown | FRESH | f8ae9fb | f8ae9fb | 2026-08-12T07:10:00Z | null | null |
+| TalkToClibord | TalkToClibord | active | null | Test Sprint (JAVIS.md Sprint Status, updated 2026-04-18) | UNKNOWN | unknown | FRESH | 40b565e | 40b565e | 2026-08-12T07:10:00Z | null | null |
+| AI-Workspace | AI-Workspace | stable | null | null | UNKNOWN | unknown | FRESH | 6934067 | 6934067 | 2026-08-12T07:10:00Z | null | null |
 <!-- LIVE_PROJECT_WALL:END -->
 
 ## Discovered — Not Imported

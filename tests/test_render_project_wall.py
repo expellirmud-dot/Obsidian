@@ -41,30 +41,76 @@ for _d in (str(REPO_ROOT), str(SCRIPTS_DIR), str(AUTOMATION_DIR)):
 # ---------------------------------------------------------------------------
 
 def test_schema_validation(schema):
-    """The schema file loads and is itself a valid JSON Schema (Draft 2020-12)."""
+    """The v2 schema file loads and is itself a valid JSON Schema (Draft 2020-12)."""
     assert isinstance(schema, dict)
     assert schema.get("type") == "object"
     # The schema must be usable as a Draft 2020-12 validator (raises on invalid).
     Draft202012Validator.check_schema(schema)
-    # Sanity: a known-good state validates cleanly.
+    # Sanity: a known-good v2 state validates cleanly.
     validator = Draft202012Validator(schema)
     good = {
+        "schema_version": 2,
         "project_id": "x",
         "project_name": "X",
-        "source_path": "D:\\x",
+        "github_repository_id": None,
+        "source_path": None,
         "repository": None,
         "branch": "main",
         "head": None,
-        "project_state": "active",
-        "current_goal": None,
-        "current_work": None,
-        "current_work_authority": {"path": None, "kind": None},
-        "current_work_evidence": "unknown",
-        "ci_state": "unknown",
-        "open_pr": None,
+        "knowledge_state": "unknown",
+        "project_identity": {
+            "purpose": None,
+            "problem_statement": None,
+            "intended_outcome": None,
+            "primary_users": None,
+            "success_definition": None,
+            "scope": None,
+            "non_goals": None,
+            "identity_drift_detected": False,
+            "previous_identity": None,
+        },
+        "current_execution": {
+            "lifecycle_phase": None,
+            "current_goal": None,
+            "current_work": None,
+            "current_work_authority": {"path": None, "kind": None},
+            "current_work_evidence": "unknown",
+            "last_completed": None,
+            "blockers": None,
+            "next_action": None,
+        },
+        "freshness": {
+            "status": "unknown",
+            "tracked_ref": None,
+            "remote_head": None,
+            "truth_built_from_head": None,
+            "source_checked_at": None,
+            "truth_built_at": None,
+            "stale_since": None,
+            "reason": None,
+            "source_freshness": "unknown",
+            "semantic_freshness": "unknown",
+            "progress_freshness": "unknown",
+        },
+        "progress": {
+            "scope": None,
+            "method": None,
+            "estimate": None,
+            "range_min": None,
+            "range_max": None,
+            "confidence": "unknown",
+            "completed": None,
+            "active": None,
+            "remaining": None,
+            "basis": None,
+        },
+        "github": {
+            "ci_state": "unknown",
+            "open_pr": None,
+            "open_pr_count": None,
+            "observed_at": None,
+        },
         "last_change": None,
-        "next_action": None,
-        "blockers": None,
         "evidence_classification": "unknown",
         "verified_at": None,
         "adapter_id": "generic-git-plus-authority-files",
@@ -234,15 +280,15 @@ def test_malformed_yaml_fail_closed(renderer_module, schema, tmp_path):
 # ---------------------------------------------------------------------------
 
 def test_missing_required_field_fail(renderer_module, schema, valid_state_dict):
-    """A state missing a required field fails validation."""
+    """A v2 state missing a required field fails validation."""
     missing = dict(valid_state_dict)
-    del missing["project_state"]
+    del missing["project_identity"]
     errors = renderer_module.validate_state(missing, schema)
     assert errors, "missing required field must produce validation errors"
     # The error must reference the missing required field.
     joined = " ".join(errors)
-    assert "project_state" in joined, (
-        f"validation error did not mention 'project_state': {errors}"
+    assert "project_identity" in joined, (
+        f"validation error did not mention 'project_identity': {errors}"
     )
 
 

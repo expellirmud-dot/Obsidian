@@ -36,7 +36,7 @@ def repo_root() -> Path:
 
 @pytest.fixture(scope="session")
 def schema_path(repo_root) -> Path:
-    return repo_root / "automation" / "schema" / "project-state.schema.json"
+    return repo_root / "automation" / "schema" / "project-state.v2.schema.json"
 
 
 @pytest.fixture(scope="session")
@@ -141,24 +141,70 @@ def sample_check_runs_api_response() -> dict:
 
 @pytest.fixture
 def valid_state_dict() -> dict:
-    """A minimal-but-complete state instance that satisfies the schema."""
+    """A minimal-but-complete v2 state instance that satisfies the v2 schema."""
     return {
+        "schema_version": 2,
         "project_id": "thai_stt_app",
         "project_name": "Thai STT App",
+        "github_repository_id": None,
         "source_path": "D:\\thai_stt_app",
         "repository": "https://github.com/expellirmud-dot/thai_stt_app.git",
         "branch": "main",
         "head": "be7bd07760cc6c426927a2aec9e0cbce8c2ddf60",
-        "project_state": "active",
-        "current_goal": "WO-Skill-Audit",
-        "current_work": "audit and install skills",
-        "current_work_authority": {"path": "work-order/WO-Skill-Audit/work-order.md", "kind": "work-order"},
-        "current_work_evidence": "verified",
-        "ci_state": "unknown",
-        "open_pr": None,
+        "knowledge_state": "needs-verification",
+        "project_identity": {
+            "purpose": "Thai STT App",
+            "problem_statement": None,
+            "intended_outcome": None,
+            "primary_users": None,
+            "success_definition": None,
+            "scope": "WO-Skill-Audit",
+            "non_goals": None,
+            "identity_drift_detected": False,
+            "previous_identity": None,
+        },
+        "current_execution": {
+            "lifecycle_phase": "active",
+            "current_goal": "WO-Skill-Audit",
+            "current_work": "audit and install skills",
+            "current_work_authority": {"path": "work-order/WO-Skill-Audit/work-order.md", "kind": "work-order"},
+            "current_work_evidence": "verified",
+            "last_completed": None,
+            "blockers": None,
+            "next_action": "Complete WO-Skill-Audit",
+        },
+        "freshness": {
+            "status": "fresh",
+            "tracked_ref": "main",
+            "remote_head": "be7bd07760cc6c426927a2aec9e0cbce8c2ddf60",
+            "truth_built_from_head": "be7bd07760cc6c426927a2aec9e0cbce8c2ddf60",
+            "source_checked_at": "2026-08-12T04:33:00Z",
+            "truth_built_at": "2026-08-12T04:33:00Z",
+            "stale_since": None,
+            "reason": None,
+            "source_freshness": "fresh",
+            "semantic_freshness": "fresh",
+            "progress_freshness": "fresh",
+        },
+        "progress": {
+            "scope": None,
+            "method": None,
+            "estimate": None,
+            "range_min": None,
+            "range_max": None,
+            "confidence": "unknown",
+            "completed": None,
+            "active": None,
+            "remaining": None,
+            "basis": None,
+        },
+        "github": {
+            "ci_state": "unknown",
+            "open_pr": None,
+            "open_pr_count": None,
+            "observed_at": "2026-08-17T10:33:05Z",
+        },
         "last_change": "2026-08-09",
-        "next_action": "Complete WO-Skill-Audit",
-        "blockers": None,
         "evidence_classification": "verified",
         "verified_at": "2026-08-12T04:33:00Z",
         "adapter_id": "generic-git-plus-authority-files",

@@ -3,26 +3,66 @@
 # State instance is YAML. Validated against automation/schema/project-state.schema.json.
 # Source repository is READ-ONLY; no source files were modified.
 # Fresh source truth resolved 2026-08-12 from expellirmud-dot/LUMINA-Studio (main).
-
+# --- v2 (WO-OBSIDIAN-036): identity/execution/freshness/progress separated ---
+schema_version: 2
 project_id: lumina-studio
 project_name: LUMINA Studio
+github_repository_id: 1253367642
 source_path: D:\lumina-studio
 repository: https://github.com/expellirmud-dot/LUMINA-Studio.git
 branch: main
 head: e98c9f627c50830c74cf76956abb15770690702d
-project_state: ready-for-deploy
-current_goal: Phase 1 — Premium Photography Landing Page (complete; ready for Vercel production deploy)
-current_work: TASK-030 (Micro Lock Polish) COMPLETE — Overall Status PASSED / READY FOR DEPLOY
-current_work_authority:
-  path: AI_HANDOFF.md
-  kind: handoff
-current_work_evidence: verified
-ci_state: unknown
-open_pr: null
-last_change: "2026-08-06"
-next_action: Vercel production deploy (owner action); then Phase 2 scoping
-blockers: null
+knowledge_state: needs-verification
+project_identity:
+  purpose: LUMINA Studio
+  problem_statement: null
+  intended_outcome: null
+  primary_users: null
+  success_definition: null
+  scope: Phase 1 — Premium Photography Landing Page (complete; ready for Vercel production deploy)
+  non_goals: null
+  identity_drift_detected: false
+  previous_identity: null
+current_execution:
+  lifecycle_phase: ready-for-deploy
+  current_goal: Phase 1 — Premium Photography Landing Page (complete; ready for Vercel production deploy)
+  current_work: TASK-030 (Micro Lock Polish) COMPLETE — Overall Status PASSED / READY FOR DEPLOY
+  current_work_authority:
+    path: AI_HANDOFF.md
+    kind: handoff
+  current_work_evidence: verified
+  last_completed: null
+  blockers: null
+  next_action: Vercel production deploy (owner action); then Phase 2 scoping
+freshness:
+  status: fresh
+  tracked_ref: main
+  remote_head: e98c9f627c50830c74cf76956abb15770690702d
+  truth_built_from_head: e98c9f627c50830c74cf76956abb15770690702d
+  source_checked_at: '2026-08-17T10:33:05Z'
+  truth_built_at: '2026-08-12T04:33:00Z'
+  stale_since: null
+  reason: null
+  source_freshness: fresh
+  semantic_freshness: fresh
+  progress_freshness: fresh
+progress:
+  scope: null
+  method: null
+  estimate: null
+  range_min: null
+  range_max: null
+  confidence: unknown
+  completed: null
+  active: null
+  remaining: null
+  basis: no denominator (roadmap/milestone evidence not found)
+github:
+  ci_state: unknown
+  open_pr: null
+  open_pr_count: null
+  observed_at: '2026-08-17T10:33:05Z'
+last_change: '2026-08-06'
 evidence_classification: verified
-verified_at: "2026-08-12T04:33:00Z"
+verified_at: '2026-08-12T04:33:00Z'
 adapter_id: generic-git-plus-authority-files
-observed_at: "2026-08-17T10:33:05Z"

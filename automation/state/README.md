@@ -1,79 +1,73 @@
-# Normalized Project State
+# Normalized Project State (v2 — Project Truth Control Plane)
 
-> Contract for normalized project-state instances consumed by the Live Project Wall renderer.
-> Created by WO-OBSIDIAN-031 (Live Project Wall Foundation).
+> Contract for normalized project-state v2 instances consumed by the Live
+> Project Wall renderer. Created by WO-OBSIDIAN-031; upgraded to v2 by
+> WO-OBSIDIAN-036 (Project Truth Model v2 + Freshness Contract).
+
+## Critical semantic rule
+
+> **Current Work Order is NOT the Project Mission.** v2 separates
+> `project_identity` (stable Mission) from `current_execution` (current
+> goal/work). A Work Order change touches `current_execution` only; the
+> Mission is never rewritten automatically. When authoritative evidence
+> indicates the Mission itself changed, `identity_drift_detected` is set and
+> the previous identity is preserved in `previous_identity` (never silently
+> overwritten).
 
 ## Format rule
 
 > Normalized state instances are **YAML**.
-> JSON Schema (`automation/schema/project-state.schema.json`) is used only as the validation contract because YAML is compatible with the JSON data model.
-> Do not switch normalized project-state files from YAML to JSON.
+> JSON Schema (`automation/schema/project-state.v2.schema.json`) is used only
+> as the validation contract because YAML is compatible with the JSON data
+> model. Do not switch normalized project-state files from YAML to JSON.
 
 - State files live at `automation/state/<project_id>.yaml`.
-- The JSON Schema validates the YAML data model; it does **not** dictate that instances become JSON on disk.
+- The v1 schema (`project-state.schema.json`) is retained for history only;
+  the active contract is v2.
 
-## Required fields
+## Top-level blocks
 
-Every state instance must include all fields below. Values that cannot be verified must remain explicit `null` / `unknown` / `needs-verification` — **never guess**.
+| Block | Purpose |
+| --- | --- |
+| `project_identity` | Stable Mission: purpose, problem_statement, intended_outcome, primary_users, success_definition, scope, non_goals, identity_drift_detected, previous_identity |
+| `current_execution` | Current truth: lifecycle_phase, current_goal, current_work, current_work_authority, current_work_evidence, last_completed, blockers, next_action |
+| `freshness` | Freshness contract: status, tracked_ref, remote_head, truth_built_from_head, source_checked_at, truth_built_at, stale_since, reason, source_freshness, semantic_freshness, progress_freshness |
+| `progress` | Deterministic progress: scope, method, estimate, range_min, range_max, confidence, completed, active, remaining, basis |
+| `github` | Live GitHub truth: ci_state, open_pr, open_pr_count, observed_at |
 
-| Field | Type | Meaning |
-| --- | --- | --- |
-| `project_id` | string | Stable id matching the Project Registry |
-| `project_name` | string | Human-readable name |
-| `source_path` | string | Absolute local path of the source repo |
-| `repository` | string \| null | Remote URL or null |
-| `branch` | string \| null | Active branch or null |
-| `head` | string \| null | HEAD commit SHA or null |
-| `project_state` | string | Verified state string or `unknown` |
-| `current_goal` | string \| null | Current goal or null |
-| `current_work` | string \| null | Current work or null |
-| `current_work_authority.path` | string \| null | Where the current-work claim came from |
-| `current_work_authority.kind` | enum \| null | `work-order` \| `current-task` \| `handoff` \| `roadmap` \| `readme` \| `other` \| null |
-| `current_work_evidence` | enum | `verified` \| `owner-confirmed` \| `inference` \| `unknown` |
-| `ci_state` | enum \| null | `success` \| `failure` \| `pending` \| `unknown` \| null |
-| `open_pr` | integer \| null | PR number or null |
-| `last_change` | iso-date \| null | Last commit date or null |
-| `next_action` | string \| null | Next action or null |
-| `blockers` | string \| null | Blockers or null |
-| `evidence_classification` | enum | Overall record confidence |
-| `verified_at` | iso-date \| null | When this state was verified |
-| `adapter_id` | string | Adapter that produced this state |
+Plus scalar fields: `schema_version`, `project_id`, `project_name`,
+`github_repository_id` (stable across rename), `source_path` (nullable for
+GitHub-only projects), `repository`, `branch`, `head`, `knowledge_state`,
+`last_change`, `evidence_classification`, `verified_at`, `adapter_id`.
 
-## Authority vs evidence (rule)
+## Freshness safety contract
 
-`current_work_authority` and `current_work_evidence` are **separate concerns**:
+- `remote_head != truth_built_from_head` → `stale`
+- GitHub unreachable → `unknown` (UNKNOWN must never become FRESH)
+- refresh failed → `refresh_failed` (known-good truth preserved with stale marker)
+- old verified truth is kept when a new refresh fails
 
-- **`current_work_authority`** answers *"Where did this current-work state come from?"* — `path` (source file) + `kind` (document type).
-- **`current_work_evidence`** answers *"How strongly is this claim supported?"* — `verified` \| `owner-confirmed` \| `inference` \| `unknown`.
-- **`evidence_classification`** is the overall evidence confidence for the record, kept separately.
+## Migration (backward-safe)
 
-The previous ambiguous scalar `current_work_authority: <verified | owner-confirmed | inference | unknown>` is **replaced** by the authority (path/kind) + evidence (confidence) pair.
+`automation/migrate_state_v2.py` transforms v1 flat state → v2 nested state.
+It is idempotent (v2 input is returned unchanged) and drops no data. Identity
+fields default to `null` (unknown) — the Mission is never fabricated.
+
+```bash
+python3 automation/migrate_state_v2.py            # migrate all v1 states
+python3 automation/migrate_state_v2.py --check     # report only
+python3 automation/migrate_state_v2.py --validate  # validate all v2 states
+```
 
 ## Validation
 
-Validate a state instance against the schema:
-
 ```bash
 python3 scripts/render_project_wall.py --validate automation/state/<project_id>.yaml
+python3 scripts/render_project_wall.py --validate-all
 ```
 
-## Pilot scope (WO-031 + WO-032)
+## Scope
 
-WO-031 produced the first two state instances:
-
-- `automation/state/thai_stt_app.yaml`
-- `automation/state/lumina-studio.yaml`
-
-WO-032 expanded adapter coverage to the remaining 9 imported projects:
-
-- `automation/state/llm-agents.yaml`
-- `automation/state/STT-Typing.yaml`
-- `automation/state/AI-Worker-Harness.yaml`
-- `automation/state/Utility-Disbursement-App.yaml`
-- `automation/state/Adobe-Stock-Upload-Assistant.yaml`
-- `automation/state/lightroom-ai-exposure.yaml`
-- `automation/state/citizen_portal.yaml`
-- `automation/state/TalkToClibord.yaml`
-- `automation/state/AI-Workspace.yaml`
-
-All 11 imported projects now have valid normalized state and appear on the Live Project Wall.
+All 11 imported projects have valid v2 state and appear on the Live Project
+Wall. `github_repository_id` is null until filled by the discovery layer
+(WO-OBSIDIAN-037).

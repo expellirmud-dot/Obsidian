@@ -45,6 +45,11 @@ last_reviewed: 2026-08-15
 | 033 | [[WO-OBSIDIAN-033-RUNTIME-REPRODUCIBILITY-FOUNDATION]] | เพิ่ม dependency manifest + bootstrap docs ให้ fresh clone รัน validate/render ได้ทันที (Goal 33: Runtime Reproducibility) | CLOSED |
 | 034 | [[WO-OBSIDIAN-034-GITHUB-PROJECT-TRUTH-INTEGRATION]] | Read-only GitHub adapter เพื่อเติม ci_state/open_pr ของ 11 projects (Goal 34: GitHub Live Truth) | CLOSED |
 | 035 | [[WO-OBSIDIAN-035-AUTOMATED-REFRESH-AND-REGRESSION-SAFETY]] | pytest regression suite + scheduled refresh ที่ publish เฉพาะเมื่อ gates ผ่าน (Goal 35: Automated Refresh + Tests) | CLOSED |
+| 036 | [[WO-OBSIDIAN-036-PROJECT-TRUTH-MODEL-V2]] | v2 schema แยก identity/execution/freshness/progress + backward-safe migration + github_repository_id (Goal 36: Project Truth Model v2) | CLOSED |
+| 037 | [[WO-OBSIDIAN-037-REPOSITORY-DISCOVERY]] | read-only GitHub discovery + safe auto-onboarding ด้วย stable repo ID + idempotent (Goal 37: Repository Discovery) | CLOSED |
+| 038 | [[WO-OBSIDIAN-038-EVIDENCE-BACKED-TRUTH]] | evidence collector อ่าน content จริง + truth builder + Mission Drift Protection (Goal 38: Evidence-Backed Truth) | CLOSED |
+| 039 | [[WO-OBSIDIAN-039-PROGRESS-ENGINE]] | deterministic evidence-constrained progress + next-action engine (Goal 39: Progress + Next Action) | CLOSED |
+| 040 | [[WO-OBSIDIAN-040-AUTOMATION-VALIDATION]] | freshness engine + targeted refresh + Automation A/B + 73 tests + 6 e2e scenarios (Goal 40: Automation + Validation) | CLOSED |
 
 ลำดับนี้เป็น sequential gate: ห้ามเริ่ม Work Order ถัดไปก่อนงานก่อนหน้าปิด `CLOSED` และ Validation ผ่านครบ
 

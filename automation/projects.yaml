@@ -31,6 +31,7 @@ projects:
     github:
       prs: true
       ci: true
+    github_repository_id: 1327192726
 
   - project_id: lumina-studio
     project_name: LUMINA Studio
@@ -47,6 +48,7 @@ projects:
     github:
       prs: true
       ci: true
+    github_repository_id: 1253367642
 
   # --- Remaining 9 imported projects (adapted by WO-OBSIDIAN-032) ---
   - project_id: llm-agents
@@ -60,6 +62,7 @@ projects:
       - AGENTS.md
       - work_orders/CURRENT_WORK_ORDER.md
       - README.md
+    github_repository_id: 1312662022
 
   - project_id: STT-Typing
     project_name: STT Typing
@@ -72,6 +75,7 @@ projects:
       - AGENTS.md
       - .tasks/CURRENT_TASK.md
       - README.md
+    github_repository_id: 1305539299
 
   - project_id: AI-Worker-Harness
     project_name: AI Worker Harness
@@ -84,6 +88,7 @@ projects:
       - AGENTS.md
       - work-order/CURRENT_WORK_ORDER.md
       - README.md
+    github_repository_id: 1306269881
 
   - project_id: Utility-Disbursement-App
     project_name: Utility Disbursement App
@@ -95,6 +100,7 @@ projects:
     authority_candidates:
       - AGENTS.md
       - README.md
+    github_repository_id: 1252869333
 
   - project_id: Adobe-Stock-Upload-Assistant
     project_name: Adobe Stock Upload Assistant
@@ -119,6 +125,7 @@ projects:
       - AGENTS.md
       - Work-Order/CURRENT_WORK_ORDER.md
       - README.md
+    github_repository_id: 1314588912
 
   - project_id: citizen_portal
     project_name: Citizen Portal
@@ -131,6 +138,7 @@ projects:
       - PROJECT_RULES.md
       - AGENTS.md
       - README.md
+    github_repository_id: 1237490934
 
   - project_id: TalkToClibord
     project_name: TalkToClibord
@@ -142,6 +150,7 @@ projects:
     authority_candidates:
       - README.md
       - JAVIS.md
+    github_repository_id: 1237311855
 
   - project_id: AI-Workspace
     project_name: AI-Workspace
@@ -154,3 +163,4 @@ projects:
       - AGENTS.md
       - README.md
       - WORKSPACE.md
+    github_repository_id: 1256075991

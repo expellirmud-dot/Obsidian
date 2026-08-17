@@ -3,26 +3,66 @@
 # State instance is YAML. Validated against automation/schema/project-state.schema.json.
 # Source repository is READ-ONLY; no source files were modified.
 # Fresh source truth resolved 2026-08-12 from expellirmud-dot/thai_stt_app (main).
-
+# --- v2 (WO-OBSIDIAN-036): identity/execution/freshness/progress separated ---
+schema_version: 2
 project_id: thai_stt_app
 project_name: Thai STT App
+github_repository_id: 1327192726
 source_path: D:\thai_stt_app
 repository: https://github.com/expellirmud-dot/thai_stt_app.git
 branch: main
 head: be7bd07760cc6c426927a2aec9e0cbce8c2ddf60
-project_state: active
-current_goal: WO-Skill-Audit (skill audit + install for repository)
-current_work: WO-Skill-Audit IN_PROGRESS — audit, fix, and install skills (project-read-first, windows-ui-review-runtime, impeccable, gridgeist)
-current_work_authority:
-  path: work-order/WO-Skill-Audit/work-order.md
-  kind: work-order
-current_work_evidence: verified
-ci_state: unknown
-open_pr: null
-last_change: "2026-08-09"
-next_action: Complete WO-Skill-Audit; then WO-OCR-09D (Real Thai OCR Provider, DRAFT) and WO-UI-08E (Final Compact Liquid Glass, DRAFT)
-blockers: null
+knowledge_state: verified
+project_identity:
+  purpose: Thai STT App
+  problem_statement: null
+  intended_outcome: null
+  primary_users: null
+  success_definition: null
+  scope: WO-Skill-Audit (skill audit + install for repository)
+  non_goals: null
+  identity_drift_detected: false
+  previous_identity: null
+current_execution:
+  lifecycle_phase: active
+  current_goal: WO-Skill-Audit (skill audit + install for repository)
+  current_work: WO-Skill-Audit IN_PROGRESS — audit, fix, and install skills (project-read-first, windows-ui-review-runtime, impeccable, gridgeist)
+  current_work_authority:
+    path: work-order/WO-Skill-Audit/work-order.md
+    kind: work-order
+  current_work_evidence: verified
+  last_completed: null
+  blockers: null
+  next_action: Complete WO-Skill-Audit; then WO-OCR-09D (Real Thai OCR Provider, DRAFT) and WO-UI-08E (Final Compact Liquid Glass, DRAFT)
+freshness:
+  status: fresh
+  tracked_ref: main
+  remote_head: be7bd07760cc6c426927a2aec9e0cbce8c2ddf60
+  truth_built_from_head: be7bd07760cc6c426927a2aec9e0cbce8c2ddf60
+  source_checked_at: '2026-08-17T10:33:05Z'
+  truth_built_at: '2026-08-12T04:33:00Z'
+  stale_since: null
+  reason: null
+  source_freshness: fresh
+  semantic_freshness: fresh
+  progress_freshness: fresh
+progress:
+  scope: null
+  method: null
+  estimate: null
+  range_min: null
+  range_max: null
+  confidence: unknown
+  completed: null
+  active: null
+  remaining: null
+  basis: no denominator (roadmap/milestone evidence not found)
+github:
+  ci_state: unknown
+  open_pr: null
+  open_pr_count: null
+  observed_at: '2026-08-17T10:33:05Z'
+last_change: '2026-08-09'
 evidence_classification: verified
-verified_at: "2026-08-12T04:33:00Z"
-adapter_id: generic-git-plus-authority-files
-observed_at: "2026-08-17T10:33:05Z"
+verified_at: '2026-08-17T13:45:35Z'
+adapter_id: evidence-truth-builder-v1

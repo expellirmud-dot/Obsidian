@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
-"""Read-only GitHub adapter for the Live Project Wall.
+"""Read-only GitHub adapter for the Project Truth Control Plane (v2).
 
-Fills `ci_state`, `open_pr`, and `observed_at` in
+Fills the `github` block (ci_state, open_pr, open_pr_count, observed_at) and
+reconciles the `freshness` block (remote_head, source_checked_at) in
 `automation/state/<project_id>.yaml` for every project registered in
 `automation/projects.yaml` by querying the GitHub REST API (read-only).
 
 Created by WO-OBSIDIAN-034 (GitHub Project Truth Integration).
+Upgraded to v2 by WO-OBSIDIAN-036 (Project Truth Model v2 + Freshness Contract).
 
 Safety contract (enforced unconditionally):
   * READ-ONLY -- never calls any endpoint that mutates a source repository
@@ -42,7 +44,7 @@ from jsonschema import Draft202012Validator
 REPO_ROOT = Path(__file__).resolve().parent.parent
 PROJECTS_YAML = REPO_ROOT / "automation" / "projects.yaml"
 STATE_DIR = REPO_ROOT / "automation" / "state"
-SCHEMA_PATH = REPO_ROOT / "automation" / "schema" / "project-state.schema.json"
+SCHEMA_PATH = REPO_ROOT / "automation" / "schema" / "project-state.v2.schema.json"
 
 API_BASE = "https://api.github.com"
 REQUEST_TIMEOUT = 20  # seconds
@@ -264,46 +266,58 @@ def yaml_scalar(value) -> str:
         return '"' + s.replace('"', '\\"') + '"'
     return s
 
-def update_state_file(project_id: str, updates: dict) -> bool:
-    """Surgically update a state YAML file with the given field values.
+def update_state_file(project_id: str, github_updates: dict, freshness_updates: dict, last_change: str | None = None) -> bool:
+    """Surgically update a v2 state YAML file's `github` and `freshness` blocks.
 
-    Only the lines for keys present in `updates` are rewritten; an
-    `observed_at` line is added/replaced. All other lines (including header
-    comments) are preserved verbatim to keep the diff minimal.
+    Loads the YAML, mutates the nested `github` and `freshness` dicts in place,
+    and re-renders the file while preserving the leading `#`-comment header.
+    The freshness *status* is NOT changed here (only remote_head /
+    source_checked_at are recorded); status reconciliation is the job of the
+    freshness engine (WO-037/040). This keeps the contract: GitHub unreachable
+    => remote_head stays null (UNKNOWN, never FRESH).
     """
     state_path = STATE_DIR / f"{project_id}.yaml"
-    original_lines = state_path.read_text(encoding="utf-8").splitlines(keepends=True)
+    original_text = state_path.read_text(encoding="utf-8")
 
-    key_re = re.compile(r"^(\s*)([A-Za-z0-9_]+):\s*(.*)$")
-    updated_lines = list(original_lines)
-    touched_keys: set[str] = set()
-    insert_idx: int | None = None
-
-    for i, line in enumerate(updated_lines):
-        m = key_re.match(line.rstrip("\n"))
-        if not m:
-            continue
-        indent, key, _rest = m.group(1), m.group(2), m.group(3)
-        if indent != "":
-            continue
-        if key in updates:
-            new_val = updates[key]
-            updated_lines[i] = f"{key}: {new_val}\n"
-            touched_keys.add(key)
-        if key == "adapter_id":
-            insert_idx = i + 1
-
-    if "observed_at" in updates and "observed_at" not in touched_keys:
-        val = updates["observed_at"]
-        new_line = f"observed_at: {val}\n"
-        if insert_idx is not None:
-            updated_lines.insert(insert_idx, new_line)
+    # Preserve the leading comment header (every line starting with '#' or
+    # blank, up to the first content line).
+    header_lines: list[str] = []
+    for line in original_text.splitlines():
+        if line.startswith("#") or line.strip() == "":
+            header_lines.append(line)
         else:
-            updated_lines.append(new_line)
+            break
+    while header_lines and header_lines[-1].strip() == "":
+        header_lines.pop()
 
-    new_text = "".join(updated_lines)
-    if new_text == "".join(original_lines):
+    state = yaml.safe_load(original_text)
+    if not isinstance(state, dict):
+        raise ValueError(f"{state_path} is not a YAML dict")
+
+    changed = False
+    github_block = state.setdefault("github", {})
+    for k, v in github_updates.items():
+        if github_block.get(k) != v:
+            github_block[k] = v
+            changed = True
+
+    freshness_block = state.setdefault("freshness", {})
+    for k, v in freshness_updates.items():
+        if freshness_block.get(k) != v:
+            freshness_block[k] = v
+            changed = True
+
+    if last_change is not None and state.get("last_change") != last_change:
+        state["last_change"] = last_change
+        changed = True
+
+    if not changed:
         return False
+
+    body = yaml.safe_dump(
+        state, sort_keys=False, default_flow_style=False, allow_unicode=True, width=1000
+    )
+    new_text = "\n".join(header_lines) + "\n" + body
     state_path.write_text(new_text, encoding="utf-8")
     return True
 
@@ -330,15 +344,15 @@ def validate_all_states(schema: dict, project_ids: list[str]) -> tuple[int, int]
 
 
 def main() -> int:
-    print("WO-OBSIDIAN-034 -- GitHub Project Truth Integration (read-only adapter)")
+    print("WO-OBSIDIAN-036 -- GitHub adapter v2 (read-only)")
     print("=" * 70)
 
     token = resolve_token()
     if not token:
         print(
             "WARNING: No GITHUB_TOKEN (or GH_TOKEN) in environment. "
-            "All projects will be rendered ci_state=unknown, open_pr=null "
-            "(fail-safe, no fabrication)."
+            "All projects will be rendered ci_state=unknown, open_pr=null, "
+            "remote_head=null (fail-safe, no fabrication)."
         )
 
     projects = load_projects_registry()
@@ -354,6 +368,7 @@ def main() -> int:
 
         ci_state = "unknown"
         open_pr = None
+        open_pr_count = None
         last_change = None
         head_sha = None
         note = None
@@ -382,25 +397,36 @@ def main() -> int:
                 prs = fetch_open_prs(owner, repo, token)
                 if "error" in prs:
                     open_pr = None
+                    open_pr_count = None
                     if note is None:
                         note = prs["error"]
                 else:
                     open_pr = prs.get("open_pr")
+                    open_pr_count = prs.get("open_pr_count")
 
-        updates = {
-            "ci_state": yaml_scalar(ci_state),
-            "open_pr": yaml_scalar(open_pr),
-            "observed_at": yaml_scalar(observed_at),
+        github_updates = {
+            "ci_state": ci_state,
+            "open_pr": open_pr,
+            "open_pr_count": open_pr_count,
+            "observed_at": observed_at,
         }
-        if last_change:
-            updates["last_change"] = yaml_scalar(last_change)
+        # Record the observed remote_head + source_checked_at. The freshness
+        # *status* is NOT changed here (reconciled by the freshness engine).
+        # GitHub unreachable => remote_head stays null (UNKNOWN, never FRESH).
+        freshness_updates = {
+            "remote_head": head_sha,
+            "source_checked_at": observed_at,
+        }
 
-        changed = update_state_file(pid, updates)
+        changed = update_state_file(
+            pid, github_updates, freshness_updates, last_change=last_change
+        )
         summary.append(
             {
                 "project_id": pid,
                 "ci_state": ci_state,
                 "open_pr": open_pr,
+                "remote_head": head_sha,
                 "observed_at": observed_at,
                 "note": note,
                 "changed": changed,
@@ -408,12 +434,13 @@ def main() -> int:
         )
 
     print("\n--- Adapter summary ---")
-    print(f"{'project_id':<32} {'ci_state':<10} {'open_pr':<10} {'observed_at'}")
-    print("-" * 70)
+    print(f"{'project_id':<32} {'ci_state':<10} {'open_pr':<8} {'remote_head':<10} {'observed_at'}")
+    print("-" * 80)
     for s in summary:
         pr = "null" if s["open_pr"] is None else str(s["open_pr"])
+        rh = "null" if s["remote_head"] is None else str(s["remote_head"])[:7]
         print(
-            f"{s['project_id']:<32} {s['ci_state']:<10} {pr:<10} {s['observed_at']}"
+            f"{s['project_id']:<32} {s['ci_state']:<10} {pr:<8} {rh:<10} {s['observed_at']}"
         )
     notes = [s for s in summary if s["note"]]
     if notes:
