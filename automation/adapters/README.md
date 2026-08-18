@@ -18,7 +18,7 @@ Each adapted project maps source-repository evidence to normalized state via an 
 
 - `adapter_id` — identifies the adapter implementation (e.g. `generic-git-plus-authority-files`)
 - `authority_candidates` — ordered list of authority files to read for current-work state
-- `github.prs` / `github.ci` — whether PR/CI evidence is mapped (in WO-031 these are declared but **not** integrated; CI/PR render as `unknown`/`null`)
+- `github.prs` / `github.ci` — whether PR/CI evidence is mapped (WO-OBSIDIAN-034 integrated the read-only GitHub adapter `automation/github_adapter.py`; CI/PR render as `unknown`/`null` until the adapter is re-run with `GITHUB_TOKEN`)
 
 ## Adapter: `generic-git-plus-authority-files`
 
