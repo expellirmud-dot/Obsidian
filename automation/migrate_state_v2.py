@@ -20,15 +20,15 @@ Migration rules (backward-safe):
   * project_identity is seeded from v1 `project_state`/`current_goal` as a
     *placeholder* with knowledge_state=needs-verification -- the Mission is NOT
     fabricated; every identity field defaults to null (unknown) unless a v1
-    field can be mapped without guessing. Concretely only `purpose` is seeded
-    from project_name and `scope` from current_goal when present, and even
-    those are marked needs-verification. This keeps the contract: do not
-    fabricate Mission.
+    field can be mapped without guessing. Concretely `purpose` is NOT seeded
+    (stays null -- a project name is not a Mission, WO-OBSIDIAN-041 F1);
+    `scope` is seeded from current_goal as a needs-verification placeholder.
+    This keeps the contract: do not fabricate Mission.
   * freshness is seeded from v1 `head`/`verified_at`/`observed_at`:
-      truth_built_from_head = v1 head
-      remote_head = v1 head (assume fresh at migration time; the next
-      freshness probe will correct this)
-      status = fresh if head is set else unknown
+      truth_built_from_head = v1 head (preserved for reference)
+      remote_head = v1 head (preserved for reference)
+      status = unknown (legacy migration does NOT perform evidence refresh;
+      the freshness probe establishes FRESH from current evidence)
   * progress defaults to unknown (no denominator in v1).
   * github_repository_id is left null here -- it is filled by the discovery
     layer (WO-037). null is valid for local-only projects.
@@ -147,23 +147,29 @@ def migrate_one(v1: dict) -> dict:
         "next_action": v1.get("next_action"),
     }
 
-    # Freshness: assume fresh at migration time when a head exists. The next
-    # freshness probe (WO-037/040) will reconcile remote_head against
-    # truth_built_from_head. UNKNOWN must never silently become FRESH, but a
-    # known head with no contrary evidence is a legitimate fresh seed.
+    # Freshness: legacy migration is a DATA TRANSFORM, not an evidence
+    # refresh. A stored v1 HEAD does NOT prove current semantic/progress
+    # truth -- the migrated state still has knowledge_state=
+    # needs-verification, purpose=null, progress.estimate=null and
+    # progress.confidence=unknown. Therefore ALL freshness fields must be
+    # "unknown" (WO-OBSIDIAN-041 F13). The stored head is preserved in
+    # remote_head / truth_built_from_head for reference only -- that is data
+    # preservation, NOT a freshness claim. The freshness probe (WO-037/040)
+    # establishes FRESH from current evidence. UNKNOWN must never silently
+    # become FRESH.
     if head:
         freshness = {
-            "status": "fresh",
+            "status": "unknown",
             "tracked_ref": v1.get("branch"),
             "remote_head": head,
             "truth_built_from_head": head,
             "source_checked_at": observed_at or verified_at,
             "truth_built_at": verified_at,
             "stale_since": None,
-            "reason": None,
-            "source_freshness": "fresh",
-            "semantic_freshness": "fresh",
-            "progress_freshness": "fresh",
+            "reason": "legacy state migrated; freshness requires source re-verification",
+            "source_freshness": "unknown",
+            "semantic_freshness": "unknown",
+            "progress_freshness": "unknown",
         }
     else:
         freshness = {

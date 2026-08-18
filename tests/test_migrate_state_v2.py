@@ -533,3 +533,116 @@ def test_v2_shape_upgrade_preserves_existing_data(schema):
     assert identity["scope"] == "scope A"
     # Validates against the current schema.
     assert list(validator.iter_errors(upgraded)) == []
+
+
+# ---------------------------------------------------------------------------
+# WO-OBSIDIAN-041 F13: legacy migration must NOT fabricate freshness.
+# Migration is a data transform, not an evidence refresh. A stored v1 HEAD
+# does not prove current semantic/progress truth, so ALL freshness fields
+# must be "unknown" after migration. The stored head is preserved in
+# remote_head / truth_built_from_head for reference only (data preservation,
+# not a freshness claim). The freshness probe establishes FRESH from current
+# evidence.
+# ---------------------------------------------------------------------------
+
+def _v1_with_head() -> dict:
+    """A v1 flat state with a non-null head (the F13 regression input)."""
+    return {
+        "project_id": "demo",
+        "project_name": "Demo",
+        "source_path": "D:\\demo",
+        "repository": "https://github.com/expellirmud-dot/demo.git",
+        "branch": "main",
+        "head": "abc1234567890",
+        "project_state": "active",
+        "current_goal": "Ship v1",
+        "current_work": "writing tests",
+        "current_work_authority": {"path": "WO-1.md", "kind": "work-order"},
+        "current_work_evidence": "verified",
+        "ci_state": "success",
+        "open_pr": 7,
+        "last_change": "2026-08-10",
+        "next_action": "merge",
+        "blockers": "none",
+        "evidence_classification": "verified",
+        "verified_at": "2026-08-10T00:00:00Z",
+        "adapter_id": "generic-git-plus-authority-files",
+        "observed_at": "2026-08-17T00:00:00Z",
+    }
+
+
+def test_v1_with_head_does_not_fabricate_freshness(schema):
+    """A v1 state with a non-null head must NOT migrate to freshness=fresh.
+
+    Legacy migration is a data transform, not an evidence refresh. The
+    migrated state still has knowledge_state=needs-verification, purpose=null,
+    progress.estimate=null and progress.confidence=unknown -- so it cannot
+    claim semantic/progress FRESH. All freshness fields must be "unknown".
+    The stored head is preserved in remote_head / truth_built_from_head for
+    reference only. The result must pass the current schema.
+    """
+    validator = Draft202012Validator(schema)
+    v2 = mig.migrate_one(_v1_with_head())
+
+    # Identity / knowledge / progress are conservative (no fabrication).
+    assert v2["project_identity"]["purpose"] is None
+    assert v2["knowledge_state"] == "needs-verification"
+    assert v2["progress"]["estimate"] is None
+    assert v2["progress"]["confidence"] == "unknown"
+
+    fr = v2["freshness"]
+    # Freshness status and all sub-gates must NOT be "fresh".
+    assert fr["status"] != "fresh"
+    assert fr["status"] == "unknown"
+    assert fr["semantic_freshness"] != "fresh"
+    assert fr["semantic_freshness"] == "unknown"
+    assert fr["progress_freshness"] != "fresh"
+    assert fr["progress_freshness"] == "unknown"
+    assert fr["source_freshness"] != "fresh"
+    assert fr["source_freshness"] == "unknown"
+
+    # The stored head is preserved for reference (data preservation, not a
+    # freshness claim).
+    assert fr["remote_head"] == "abc1234567890"
+    assert fr["truth_built_from_head"] == "abc1234567890"
+
+    # The migrated state must pass the current schema.
+    assert list(validator.iter_errors(v2)) == []
+
+
+def test_v1_without_head_unknown_freshness(schema):
+    """A v1 state with head=None migrates to all-unknown freshness (existing
+    behavior, kept as a regression guard)."""
+    validator = Draft202012Validator(schema)
+    v1 = _v1_with_head()
+    v1["head"] = None
+    v2 = mig.migrate_one(v1)
+    fr = v2["freshness"]
+    assert fr["status"] == "unknown"
+    assert fr["source_freshness"] == "unknown"
+    assert fr["semantic_freshness"] == "unknown"
+    assert fr["progress_freshness"] == "unknown"
+    assert fr["remote_head"] is None
+    assert fr["truth_built_from_head"] is None
+    assert list(validator.iter_errors(v2)) == []
+
+
+def test_migration_reason_documents_reverification():
+    """The freshness.reason for a head-present v1 migration must mention
+    re-verification (it documents that freshness requires source
+    re-verification, not a fabricated fresh claim)."""
+    v2 = mig.migrate_one(_v1_with_head())
+    reason = v2["freshness"]["reason"]
+    assert reason is not None
+    assert "re-verification" in reason or "re-verify" in reason
+    # The reason must not claim a fresh STATUS (it documents that freshness
+    # requires re-verification). "freshness" (the field name) is fine; the
+    # standalone status word "fresh" as a claim is not.
+    assert "fresh" not in reason.replace("freshness", "")
+
+
+def test_migrated_state_passes_schema(schema):
+    """A migrated v1 state (with head) passes the current v2 schema."""
+    validator = Draft202012Validator(schema)
+    v2 = mig.migrate_one(_v1_with_head())
+    assert list(validator.iter_errors(v2)) == []

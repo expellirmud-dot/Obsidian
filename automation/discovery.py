@@ -503,6 +503,42 @@ def _registry_entry(project_id, project_name, repository, rid) -> dict:
     }
 
 
+def _load_validated_state(
+    state_path: Path, schema: dict, validator: Draft202012Validator,
+) -> tuple[dict | None, str | None]:
+    """Load an existing state file and validate it against the v2 schema.
+
+    Existence alone is NOT sufficient evidence of a valid normalized state
+    (F12): a malformed or schema-invalid state file must not be treated as
+    "complete" by the onboarding contract.
+
+    Returns ``(state_dict, None)`` when the file exists, parses as a YAML
+    mapping, and passes schema validation. Otherwise returns
+    ``(None, reason)`` where reason is one of:
+      * ``"missing"``           -- file does not exist (or is unreadable)
+      * ``"malformed_yaml"``    -- file exists but is not valid YAML
+      * ``"not_a_dict"``        -- YAML parsed but is not a mapping
+      * ``"schema_invalid: <details>"`` -- parsed dict fails schema validation
+    """
+    if not state_path.exists():
+        return None, "missing"
+    try:
+        raw = state_path.read_text("utf-8")
+    except OSError:
+        return None, "missing"
+    try:
+        data = yaml.safe_load(raw)
+    except yaml.YAMLError:
+        return None, "malformed_yaml"
+    if not isinstance(data, dict):
+        return None, "not_a_dict"
+    errors = list(validator.iter_errors(data))
+    if errors:
+        details = "; ".join(str(e.message) for e in errors)
+        return None, f"schema_invalid: {details}"
+    return data, None
+
+
 def _repair_onboarding(
     project_id: str,
     project_name: str,
@@ -513,6 +549,8 @@ def _repair_onboarding(
     overview_path: Path,
     state: dict,
     header: str,
+    schema: dict,
+    validator: Draft202012Validator,
     dry_run: bool = False,
 ) -> dict:
     """Converge a partially-onboarded project to a complete registration.
@@ -530,30 +568,35 @@ def _repair_onboarding(
     Returns a report with created=False, reason="repaired" (or
     "already_onboarded" if nothing was missing).
     """
-    # Prefer values from the existing state file (source of truth) when present.
+    # Prefer values from the existing state file (source of truth) when it is
+    # VALID. An invalid state (malformed YAML / non-dict / schema-invalid) is
+    # treated as needing rebuild: the eff_* fields fall back to the passed-in
+    # values and the file is overwritten with the schema-validated `state`.
+    existing_state, state_reason = _load_validated_state(state_path, schema, validator)
+    state_valid = existing_state is not None
+
     eff_name = project_name
     eff_repo = repository
     eff_rid = rid
-    if state_path.exists():
-        try:
-            existing = yaml.safe_load(state_path.read_text("utf-8")) or {}
-            if existing.get("project_name"):
-                eff_name = existing["project_name"]
-            if existing.get("repository"):
-                eff_repo = existing["repository"]
-            if existing.get("github_repository_id") is not None:
-                eff_rid = existing["github_repository_id"]
-        except (OSError, yaml.YAMLError):
-            pass
+    if state_valid:
+        if existing_state.get("project_name"):
+            eff_name = existing_state["project_name"]
+        if existing_state.get("repository"):
+            eff_repo = existing_state["repository"]
+        if existing_state.get("github_repository_id") is not None:
+            eff_rid = existing_state["github_repository_id"]
 
-    # Compute which of the three artifacts are missing (no writes here).
-    state_missing = not state_path.exists()
+    # state_needs_rebuild is True when the state file is missing OR invalid.
+    # Existence alone is not sufficient (F12): an invalid state must be rebuilt.
+    state_needs_rebuild = not state_valid
+    state_file_exists = state_path.exists()
     registry = load_projects_registry()
     registry_missing = _registry_find_entry(registry, project_id, eff_rid) is None
     overview_missing = not overview_path.exists()
 
     if dry_run:
         # Strictly read-only: report what would be done, perform ZERO writes.
+        state_invalid = state_file_exists and not state_valid
         return {
             "project_id": project_id,
             "project_name": eff_name,
@@ -561,9 +604,11 @@ def _repair_onboarding(
             "dry_run": True,
             "reason": "proposed_repair",
             "proposed_repairs": {
-                "state": state_missing,
+                "state": state_needs_rebuild,
                 "registry": registry_missing,
                 "overview": overview_missing,
+                "state_invalid": state_invalid,
+                "state_invalid_reason": state_reason if state_invalid else None,
             },
             "state_path": str(state_path),
             "overview_path": str(overview_path),
@@ -573,8 +618,10 @@ def _repair_onboarding(
     repaired_registry = False
     repaired_overview = False
 
-    # Repair the state file if missing (same header+body format as onboard_project).
-    if state_missing:
+    # Repair the state file if missing OR invalid (same header+body format as
+    # onboard_project). The new state is the schema-validated `state` dict
+    # passed in, so the rebuilt file always validates.
+    if state_needs_rebuild:
         state_path.parent.mkdir(parents=True, exist_ok=True)
         body = yaml.safe_dump(
             state, sort_keys=False, default_flow_style=False,
@@ -691,23 +738,29 @@ def onboard_project(
     )
 
     # Completeness-aware idempotency + stable-id duplicate prevention.
-    # A project is fully onboarded iff ALL THREE artifacts exist.
-    state_exists = state_path.exists()
+    # A project is fully onboarded iff ALL THREE artifacts exist AND the state
+    # file is VALID (F12: existence alone is not sufficient). An invalid state
+    # file is treated as "needs rebuild" -- the file exists so we go to repair
+    # (not full onboarding), and repair overwrites it with the validated state.
+    existing_state, _state_reason = _load_validated_state(state_path, schema, validator)
+    state_valid = existing_state is not None
+    state_file_exists = state_path.exists()
     overview_exists = overview_path.exists()
     registry = load_projects_registry()
     registry_entry = _registry_find_entry(registry, project_id, rid)
     registry_exists = registry_entry is not None
 
-    if state_exists and registry_exists and overview_exists:
+    if state_valid and registry_exists and overview_exists:
         return {"project_id": project_id, "created": False, "reason": "already_onboarded"}
 
-    if state_exists or registry_exists or overview_exists:
-        # Partial registration -> repair the missing pieces (no duplicate).
-        # dry_run is forwarded so dry-run mode performs ZERO writes and only
-        # reports proposed repairs.
+    if state_file_exists or registry_exists or overview_exists:
+        # Partial registration -> repair the missing/invalid pieces (no
+        # duplicate). dry_run is forwarded so dry-run mode performs ZERO
+        # writes and only reports proposed repairs.
         return _repair_onboarding(
             project_id, project_name, repository, rid, overview,
-            state_path, overview_path, state, header, dry_run=dry_run,
+            state_path, overview_path, state, header, schema, validator,
+            dry_run=dry_run,
         )
 
     # NONE exist -> proceed with full onboarding.

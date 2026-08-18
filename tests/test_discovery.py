@@ -751,3 +751,191 @@ def test_never_already_onboarded_while_state_missing(monkeypatch, tmp_path):
     assert res["reason"] == "repaired"
     assert res["repaired_state"] is True
     assert (state_dir / "brand-new-repo.yaml").exists()
+
+
+# ---------------------------------------------------------------------------
+# F12 -- Existing state must be VALID, not merely present (WO-OBSIDIAN-041)
+# ---------------------------------------------------------------------------
+
+def _assert_state_validates(state_path, schema):
+    """Helper: the state file at state_path must parse and validate against v2."""
+    loaded = yaml.safe_load(state_path.read_text("utf-8"))
+    assert isinstance(loaded, dict), "rebuilt state must be a YAML mapping"
+    validator = Draft202012Validator(schema)
+    errors = list(validator.iter_errors(loaded))
+    assert errors == [], f"rebuilt state must validate: {[e.message for e in errors]}"
+
+
+def test_malformed_yaml_state_registry_missing(monkeypatch, tmp_path, schema):
+    """Malformed YAML state file + no registry entry -> onboard rebuilds the
+    state (overwriting the invalid file) and appends the registry. The
+    resulting state validates against the v2 schema."""
+    state_dir, projects_dir, projects_yaml = _setup_workspace(monkeypatch, tmp_path)
+    repo = _brand_new_repo()
+
+    state_path = state_dir / "brand-new-repo.yaml"
+    state_path.write_text("key: [unclosed", encoding="utf-8")
+    state_before = state_path.read_bytes()
+
+    res = disc.onboard_project(repo, token="fake", dry_run=False)
+    assert res["created"] is False
+    assert res["reason"] == "repaired"
+    assert res["repaired_state"] is True
+    assert res["repaired_registry"] is True
+
+    # The state file was overwritten (no longer the malformed bytes).
+    assert state_path.read_bytes() != state_before
+    _assert_state_validates(state_path, schema)
+
+    # Registry now has exactly one entry.
+    reg = yaml.safe_load(projects_yaml.read_text("utf-8"))
+    brand_entries = [p for p in reg["projects"] if p["project_id"] == "brand-new-repo"]
+    assert len(brand_entries) == 1
+
+
+def test_non_dict_state_registry_missing(monkeypatch, tmp_path, schema):
+    """A state file that is valid YAML but parses to a non-dict (e.g. a list)
+    is NOT treated as a valid state. onboard rebuilds it from the
+    schema-validated onboarding state."""
+    state_dir, projects_dir, projects_yaml = _setup_workspace(monkeypatch, tmp_path)
+    repo = _brand_new_repo()
+
+    state_path = state_dir / "brand-new-repo.yaml"
+    state_path.write_text("- just\n- a\n- list\n", encoding="utf-8")
+    state_before = state_path.read_bytes()
+
+    res = disc.onboard_project(repo, token="fake", dry_run=False)
+    assert res["created"] is False
+    assert res["reason"] == "repaired"
+    assert res["repaired_state"] is True
+    assert state_path.read_bytes() != state_before
+    _assert_state_validates(state_path, schema)
+
+
+def test_schema_invalid_state_registry_missing(monkeypatch, tmp_path, schema):
+    """Valid YAML but schema-invalid state (missing required schema_version) +
+    no registry entry -> onboard rebuilds the state. Resulting state validates."""
+    state_dir, projects_dir, projects_yaml = _setup_workspace(monkeypatch, tmp_path)
+    repo = _brand_new_repo()
+
+    state_path = state_dir / "brand-new-repo.yaml"
+    # Valid YAML mapping, but missing required fields -> schema-invalid.
+    state_path.write_text("project_id: brand-new-repo\n", encoding="utf-8")
+    state_before = state_path.read_bytes()
+
+    res = disc.onboard_project(repo, token="fake", dry_run=False)
+    assert res["created"] is False
+    assert res["reason"] == "repaired"
+    assert res["repaired_state"] is True
+    assert res["repaired_registry"] is True
+
+    assert state_path.read_bytes() != state_before
+    _assert_state_validates(state_path, schema)
+
+    reg = yaml.safe_load(projects_yaml.read_text("utf-8"))
+    brand_entries = [p for p in reg["projects"] if p["project_id"] == "brand-new-repo"]
+    assert len(brand_entries) == 1
+
+
+def test_invalid_state_registry_and_overview(monkeypatch, tmp_path, schema):
+    """State is schema-invalid, registry + overview exist -> onboard rebuilds
+    the state (does NOT report already_onboarded). All three valid after."""
+    state_dir, projects_dir, projects_yaml = _setup_workspace(monkeypatch, tmp_path)
+    repo = _brand_new_repo()
+
+    # Schema-invalid state file.
+    (state_dir / "brand-new-repo.yaml").write_text(
+        "project_id: brand-new-repo\n", encoding="utf-8"
+    )
+    _seed_registry_entry(projects_yaml)
+    _seed_overview(projects_dir)
+
+    res = disc.onboard_project(repo, token="fake", dry_run=False)
+    assert res.get("reason") != "already_onboarded"
+    assert res["reason"] == "repaired"
+    assert res["repaired_state"] is True
+    # Registry + overview already existed -> not repaired.
+    assert res["repaired_registry"] is False
+    assert res["repaired_overview"] is False
+
+    _assert_state_validates(state_dir / "brand-new-repo.yaml", schema)
+    assert (projects_dir / "Brand New Repo.md").exists()
+    reg = yaml.safe_load(projects_yaml.read_text("utf-8"))
+    brand_entries = [p for p in reg["projects"] if p["project_id"] == "brand-new-repo"]
+    assert len(brand_entries) == 1
+
+
+def test_fully_valid_state_remains_untouched(monkeypatch, tmp_path, schema):
+    """A fully valid state + registry + overview -> onboard returns
+    already_onboarded and the state file is byte-for-byte unchanged."""
+    state_dir, projects_dir, projects_yaml = _setup_workspace(monkeypatch, tmp_path)
+    repo = _brand_new_repo()
+
+    state_path = _seed_state_file(state_dir)
+    _seed_registry_entry(projects_yaml)
+    _seed_overview(projects_dir)
+    state_before = state_path.read_bytes()
+    projects_yaml_before = projects_yaml.read_bytes()
+    overview_before = (projects_dir / "Brand New Repo.md").read_bytes()
+
+    res = disc.onboard_project(repo, token="fake", dry_run=False)
+    assert res["created"] is False
+    assert res["reason"] == "already_onboarded"
+
+    # Byte-for-byte unchanged.
+    assert state_path.read_bytes() == state_before
+    assert projects_yaml.read_bytes() == projects_yaml_before
+    assert (projects_dir / "Brand New Repo.md").read_bytes() == overview_before
+
+
+def test_already_onboarded_requires_valid_state(monkeypatch, tmp_path, schema):
+    """Registry + overview exist, state file exists but is schema-invalid ->
+    onboard must NOT return already_onboarded; it must rebuild the state."""
+    state_dir, projects_dir, projects_yaml = _setup_workspace(monkeypatch, tmp_path)
+    repo = _brand_new_repo()
+
+    # Schema-invalid state file (wrong type for schema_version).
+    (state_dir / "brand-new-repo.yaml").write_text(
+        "schema_version: not-an-integer\nproject_id: brand-new-repo\n",
+        encoding="utf-8",
+    )
+    _seed_registry_entry(projects_yaml)
+    _seed_overview(projects_dir)
+
+    res = disc.onboard_project(repo, token="fake", dry_run=False)
+    assert res.get("reason") != "already_onboarded"
+    assert res["reason"] == "repaired"
+    assert res["repaired_state"] is True
+
+    _assert_state_validates(state_dir / "brand-new-repo.yaml", schema)
+
+
+def test_dry_run_invalid_state_no_writes(monkeypatch, tmp_path, schema):
+    """State is schema-invalid, dry_run=True -> ZERO writes, state file
+    byte-for-byte unchanged, report includes state_invalid info."""
+    state_dir, projects_dir, projects_yaml = _setup_workspace(monkeypatch, tmp_path)
+    repo = _brand_new_repo()
+
+    state_path = state_dir / "brand-new-repo.yaml"
+    state_path.write_text(
+        "schema_version: not-an-integer\nproject_id: brand-new-repo\n",
+        encoding="utf-8",
+    )
+    state_before = state_path.read_bytes()
+    projects_yaml_before = projects_yaml.read_bytes()
+    projects_dir_before = sorted(p.read_bytes() for p in projects_dir.glob("*.md"))
+
+    res = disc.onboard_project(repo, token="fake", dry_run=True)
+    assert res["dry_run"] is True
+    assert res["reason"] == "proposed_repair"
+    # State needs rebuild (invalid) -> proposed.
+    assert res["proposed_repairs"]["state"] is True
+    # state_invalid info is reported.
+    assert res["proposed_repairs"]["state_invalid"] is True
+    assert res["proposed_repairs"]["state_invalid_reason"] is not None
+    assert "schema_invalid" in res["proposed_repairs"]["state_invalid_reason"]
+
+    # ZERO writes: byte-for-byte unchanged.
+    assert state_path.read_bytes() == state_before
+    assert projects_yaml.read_bytes() == projects_yaml_before
+    assert sorted(p.read_bytes() for p in projects_dir.glob("*.md")) == projects_dir_before
