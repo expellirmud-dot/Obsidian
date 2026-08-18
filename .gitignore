@@ -9,3 +9,14 @@
 # Python bytecode cache
 __pycache__/
 *.pyc
+# Local AI tooling links
+.claude/
+
+# Windows shortcuts
+*.lnk
+
+# Obsidian scratch artifacts
+ยังไม่ได้ตั้งชื่อ*.canvas
+
+# Accidental nested repository
+/Project-Knowledge-Vault/
