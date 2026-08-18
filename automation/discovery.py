@@ -566,7 +566,9 @@ def _repair_onboarding(
     report carries repaired_{state,registry,overview} flags.
 
     Returns a report with created=False, reason="repaired" (or
-    "already_onboarded" if nothing was missing).
+    "already_onboarded" if nothing was missing). On failure, returns
+    reason="repair_failed" after rolling back every artifact changed by
+    this repair attempt (F14: transaction failure safety).
     """
     # Prefer values from the existing state file (source of truth) when it is
     # VALID. An invalid state (malformed YAML / non-dict / schema-invalid) is
@@ -614,37 +616,107 @@ def _repair_onboarding(
             "overview_path": str(overview_path),
         }
 
+    # --- Transaction-safe repair (F14) ---
+    # Snapshot pre-repair state of each artifact we may touch, so a later
+    # write failure can roll back ALL changes made by this attempt.
+    orig_state_bytes: bytes | None = None
+    if state_file_exists:
+        try:
+            orig_state_bytes = state_path.read_bytes()
+        except OSError:
+            orig_state_bytes = None  # treat as unrestorable; still attempt rollback
+
+    orig_registry_bytes: bytes | None = None
+    if PROJECTS_YAML.exists():
+        try:
+            orig_registry_bytes = PROJECTS_YAML.read_bytes()
+        except OSError:
+            orig_registry_bytes = None
+
+    orig_overview_bytes: bytes | None = None
+    overview_existed = overview_path.exists()
+    if overview_existed:
+        try:
+            orig_overview_bytes = overview_path.read_bytes()
+        except OSError:
+            orig_overview_bytes = None
+
     repaired_state = False
     repaired_registry = False
     repaired_overview = False
 
-    # Repair the state file if missing OR invalid (same header+body format as
-    # onboard_project). The new state is the schema-validated `state` dict
-    # passed in, so the rebuilt file always validates.
-    if state_needs_rebuild:
-        state_path.parent.mkdir(parents=True, exist_ok=True)
-        body = yaml.safe_dump(
-            state, sort_keys=False, default_flow_style=False,
-            allow_unicode=True, width=1000,
-        )
-        state_path.write_text(header + body, encoding="utf-8")
-        repaired_state = True
+    def _rollback() -> None:
+        """Best-effort restore of every artifact changed by this repair."""
+        if repaired_state:
+            if orig_state_bytes is not None:
+                try:
+                    state_path.write_bytes(orig_state_bytes)
+                except OSError:
+                    pass
+            else:
+                try:
+                    state_path.unlink()
+                except OSError:
+                    pass
+        if repaired_registry and orig_registry_bytes is not None:
+            try:
+                PROJECTS_YAML.write_bytes(orig_registry_bytes)
+            except OSError:
+                pass
+        if repaired_overview:
+            if orig_overview_bytes is not None:
+                try:
+                    overview_path.write_bytes(orig_overview_bytes)
+                except OSError:
+                    pass
+            else:
+                try:
+                    overview_path.unlink()
+                except OSError:
+                    pass
 
-    # Repair the registry entry if missing (atomic write). Reload in case the
-    # state write is the source of truth for matching.
-    registry = load_projects_registry()
-    if _registry_find_entry(registry, project_id, eff_rid) is None:
-        registry.setdefault("projects", []).append(
-            _registry_entry(project_id, eff_name, eff_repo, eff_rid)
-        )
-        _atomic_write_registry(registry)
-        repaired_registry = True
+    try:
+        # Repair the state file if missing OR invalid (same header+body format
+        # as onboard_project). The new state is the schema-validated `state`
+        # dict passed in, so the rebuilt file always validates.
+        if state_needs_rebuild:
+            state_path.parent.mkdir(parents=True, exist_ok=True)
+            body = yaml.safe_dump(
+                state, sort_keys=False, default_flow_style=False,
+                allow_unicode=True, width=1000,
+            )
+            state_path.write_text(header + body, encoding="utf-8")
+            repaired_state = True
 
-    # Repair the overview if missing.
-    if overview_missing:
-        overview_path.parent.mkdir(parents=True, exist_ok=True)
-        overview_path.write_text(overview, encoding="utf-8")
-        repaired_overview = True
+        # Repair the registry entry if missing (atomic write). Reload in case
+        # the state write is the source of truth for matching.
+        registry = load_projects_registry()
+        if _registry_find_entry(registry, project_id, eff_rid) is None:
+            registry.setdefault("projects", []).append(
+                _registry_entry(project_id, eff_name, eff_repo, eff_rid)
+            )
+            _atomic_write_registry(registry)
+            repaired_registry = True
+
+        # Repair the overview if missing.
+        if overview_missing:
+            overview_path.parent.mkdir(parents=True, exist_ok=True)
+            overview_path.write_text(overview, encoding="utf-8")
+            repaired_overview = True
+    except Exception as exc:
+        _rollback()
+        return {
+            "project_id": project_id,
+            "project_name": eff_name,
+            "created": False,
+            "reason": "repair_failed",
+            "error": str(exc),
+            "repaired_state": False,
+            "repaired_registry": False,
+            "repaired_overview": False,
+            "state_path": str(state_path),
+            "overview_path": str(overview_path),
+        }
 
     reason = (
         "repaired" if (repaired_state or repaired_registry or repaired_overview)

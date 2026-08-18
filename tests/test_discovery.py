@@ -939,3 +939,183 @@ def test_dry_run_invalid_state_no_writes(monkeypatch, tmp_path, schema):
     assert state_path.read_bytes() == state_before
     assert projects_yaml.read_bytes() == projects_yaml_before
     assert sorted(p.read_bytes() for p in projects_dir.glob("*.md")) == projects_dir_before
+
+
+# ---------------------------------------------------------------------------
+# F14 -- Repair transaction failure safety (WO-OBSIDIAN-041 Round 4)
+# ---------------------------------------------------------------------------
+
+def test_repair_failed_registry_write_restores_state(monkeypatch, tmp_path, schema):
+    """Invalid state + missing registry + missing overview; the registry write
+    fails -> original (invalid) state bytes restored, registry unchanged,
+    overview still missing, explicit repair_failed."""
+    state_dir, projects_dir, projects_yaml = _setup_workspace(monkeypatch, tmp_path)
+    repo = _brand_new_repo()
+
+    state_path = state_dir / "brand-new-repo.yaml"
+    invalid_bytes = b"schema_version: not-an-integer\nproject_id: brand-new-repo\n"
+    state_path.write_bytes(invalid_bytes)
+    registry_before = projects_yaml.read_bytes()
+
+    # Inject failure into the registry atomic write.
+    def _fail_registry(_registry):
+        raise OSError("simulated registry write failure")
+    monkeypatch.setattr(disc, "_atomic_write_registry", _fail_registry)
+
+    res = disc.onboard_project(repo, token="fake", dry_run=False)
+    assert res["created"] is False
+    assert res["reason"] == "repair_failed"
+    assert "error" in res
+
+    # Original (invalid) state bytes restored -- not the rebuilt state.
+    assert state_path.read_bytes() == invalid_bytes
+    # Registry unchanged.
+    assert projects_yaml.read_bytes() == registry_before
+    # Overview still missing.
+    assert not (projects_dir / "Brand New Repo.md").exists()
+
+
+def test_repair_failed_overview_write_restores_all(monkeypatch, tmp_path, schema):
+    """State valid + registry missing + overview missing; the overview write
+    fails after the registry append -> state restored, registry restored
+    (appended entry removed), explicit repair_failed."""
+    import shutil as _shutil
+
+    state_dir, projects_dir, projects_yaml = _setup_workspace(monkeypatch, tmp_path)
+    repo = _brand_new_repo()
+
+    _seed_state_file(state_dir)
+    state_path = state_dir / "brand-new-repo.yaml"
+    state_before = state_path.read_bytes()
+    registry_before = projects_yaml.read_bytes()
+
+    # Make the overview parent a file so overview_path.parent.mkdir raises.
+    _shutil.rmtree(projects_dir)
+    projects_dir.write_text("blocker")  # now a file, not a dir
+
+    res = disc.onboard_project(repo, token="fake", dry_run=False)
+    assert res["created"] is False
+    assert res["reason"] == "repair_failed"
+    assert "error" in res
+
+    # State restored to original bytes.
+    assert state_path.read_bytes() == state_before
+    # Registry restored -- the appended entry is gone.
+    assert projects_yaml.read_bytes() == registry_before
+    reg = yaml.safe_load(projects_yaml.read_text("utf-8"))
+    brand_entries = [p for p in reg["projects"] if p["project_id"] == "brand-new-repo"]
+    assert len(brand_entries) == 0
+
+
+def test_repair_success_all_three_complete(monkeypatch, tmp_path, schema):
+    """Invalid state + missing registry + missing overview; no failure ->
+    all three artifacts complete, state validates."""
+    state_dir, projects_dir, projects_yaml = _setup_workspace(monkeypatch, tmp_path)
+    repo = _brand_new_repo()
+
+    state_path = state_dir / "brand-new-repo.yaml"
+    state_path.write_text("schema_version: not-an-integer\n", encoding="utf-8")
+
+    res = disc.onboard_project(repo, token="fake", dry_run=False)
+    assert res["reason"] == "repaired"
+    assert res["repaired_state"] is True
+    assert res["repaired_registry"] is True
+    assert res["repaired_overview"] is True
+
+    _assert_state_validates(state_path, schema)
+    reg = yaml.safe_load(projects_yaml.read_text("utf-8"))
+    brand_entries = [p for p in reg["projects"] if p["project_id"] == "brand-new-repo"]
+    assert len(brand_entries) == 1
+    assert (projects_dir / "Brand New Repo.md").exists()
+
+
+def test_repair_dry_run_remains_zero_write(monkeypatch, tmp_path, schema):
+    """dry_run=True on a partial repair -> ZERO writes (byte-for-byte)."""
+    state_dir, projects_dir, projects_yaml = _setup_workspace(monkeypatch, tmp_path)
+    repo = _brand_new_repo()
+
+    _seed_state_file(state_dir)
+    state_path = state_dir / "brand-new-repo.yaml"
+    state_before = state_path.read_bytes()
+    registry_before = projects_yaml.read_bytes()
+    overview_before = sorted(p.read_bytes() for p in projects_dir.glob("*.md"))
+
+    res = disc.onboard_project(repo, token="fake", dry_run=True)
+    assert res["dry_run"] is True
+    assert res["reason"] == "proposed_repair"
+
+    assert state_path.read_bytes() == state_before
+    assert projects_yaml.read_bytes() == registry_before
+    assert sorted(p.read_bytes() for p in projects_dir.glob("*.md")) == overview_before
+
+
+def test_retry_after_repair_failed_succeeds(monkeypatch, tmp_path, schema):
+    """First repair attempt fails (registry write injected to fail) -> all
+    artifacts restored. Second attempt (no failure) -> repaired, no
+    duplicates, all three complete."""
+    state_dir, projects_dir, projects_yaml = _setup_workspace(monkeypatch, tmp_path)
+    repo = _brand_new_repo()
+
+    _seed_state_file(state_dir)
+    state_path = state_dir / "brand-new-repo.yaml"
+    state_before = state_path.read_bytes()
+    registry_before = projects_yaml.read_bytes()
+
+    # First attempt: inject registry failure.
+    _orig_atomic = disc._atomic_write_registry
+
+    def _fail_registry(_registry):
+        raise OSError("simulated failure on first attempt")
+    monkeypatch.setattr(disc, "_atomic_write_registry", _fail_registry)
+
+    res1 = disc.onboard_project(repo, token="fake", dry_run=False)
+    assert res1["reason"] == "repair_failed"
+    # Artifacts restored.
+    assert state_path.read_bytes() == state_before
+    assert projects_yaml.read_bytes() == registry_before
+
+    # Second attempt: restore the real atomic write (no failure).
+    monkeypatch.setattr(disc, "_atomic_write_registry", _orig_atomic)
+
+    res2 = disc.onboard_project(repo, token="fake", dry_run=False)
+    assert res2["reason"] == "repaired"
+    assert res2["repaired_registry"] is True
+
+    _assert_state_validates(state_path, schema)
+    reg = yaml.safe_load(projects_yaml.read_text("utf-8"))
+    brand_entries = [p for p in reg["projects"] if p["project_id"] == "brand-new-repo"]
+    assert len(brand_entries) == 1  # no duplicate
+    assert (projects_dir / "Brand New Repo.md").exists()
+
+
+def test_repair_failed_deletes_newly_created_state(monkeypatch, tmp_path, schema):
+    """State MISSING (did not exist) + registry present + overview missing;
+    the state is created by repair, then the overview write fails -> the
+    newly created state file is DELETED (restored to non-existence), registry
+    unchanged, overview missing, explicit repair_failed."""
+    import shutil as _shutil
+
+    state_dir, projects_dir, projects_yaml = _setup_workspace(monkeypatch, tmp_path)
+    repo = _brand_new_repo()
+
+    # Seed ONLY the registry entry so the repair path is taken (state + overview
+    # missing). The repair creates the missing state, then attempts the overview
+    # write -- which we make fail.
+    _seed_registry_entry(projects_yaml)
+    state_path = state_dir / "brand-new-repo.yaml"
+    assert not state_path.exists()  # state does not exist before repair
+    registry_before = projects_yaml.read_bytes()
+
+    # Make the overview parent a file so overview_path.parent.mkdir raises.
+    _shutil.rmtree(projects_dir)
+    projects_dir.write_text("blocker")  # now a file, not a dir
+
+    res = disc.onboard_project(repo, token="fake", dry_run=False)
+    assert res["created"] is False
+    assert res["reason"] == "repair_failed"
+    assert "error" in res
+
+    # The newly created state file was DELETED (restored to non-existence).
+    assert not state_path.exists()
+    # Registry unchanged.
+    assert projects_yaml.read_bytes() == registry_before
