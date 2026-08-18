@@ -57,6 +57,8 @@ def test_v2_schema_separates_identity_execution_freshness_progress(schema):
         "non_goals",
         "identity_drift_detected",
         "previous_identity",
+        "candidate_identity",
+        "candidate_identity_provenance",
     ):
         assert f in schema["properties"]["project_identity"]["properties"], (
             f"project_identity missing {f}"
@@ -195,8 +197,10 @@ def test_migration_does_not_fabricate_mission():
     }
     v2 = mig.migrate_one(v1)
     identity = v2["project_identity"]
-    # Only purpose (from project_name) and scope (from current_goal, here null)
-    # are seeded; everything else must be null -- no fabrication.
+    # WO-OBSIDIAN-041 F1: purpose is NO LONGER seeded from project_name (a name
+    # is not a Mission). All identity fields must be null -- no fabrication.
+    # scope is seeded from current_goal (execution scope, not Mission).
+    assert identity["purpose"] is None
     assert identity["problem_statement"] is None
     assert identity["intended_outcome"] is None
     assert identity["primary_users"] is None
@@ -204,6 +208,8 @@ def test_migration_does_not_fabricate_mission():
     assert identity["non_goals"] is None
     assert identity["identity_drift_detected"] is False
     assert identity["previous_identity"] is None
+    assert identity["candidate_identity"] is None
+    assert identity["candidate_identity_provenance"] is None
     # knowledge_state must be needs-verification, not verified-by-guess.
     assert v2["knowledge_state"] == "needs-verification"
 

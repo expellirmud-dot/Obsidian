@@ -63,7 +63,8 @@ def _v2_state(pid="demo", purpose=None, truth_head=None, remote_head=None,
         "knowledge_state": "verified" if purpose else "needs-verification",
         "project_identity": {"purpose": purpose, "problem_statement": None, "intended_outcome": None,
             "primary_users": None, "success_definition": None, "scope": None, "non_goals": None,
-            "identity_drift_detected": False, "previous_identity": None},
+            "identity_drift_detected": False, "previous_identity": None,
+            "candidate_identity": None, "candidate_identity_provenance": None},
         "current_execution": {"lifecycle_phase": "active", "current_goal": None, "current_work": None,
             "current_work_authority": {"path": None, "kind": None}, "current_work_evidence": "unknown",
             "last_completed": None, "blockers": blockers, "next_action": next_action},
@@ -187,7 +188,12 @@ def test_failed_refresh_preserves_known_good_state(monkeypatch, tmp_path):
 
 
 def test_any_gate_fail_prevents_partial_publish(monkeypatch, tmp_path):
-    """A schema-validation failure prevents publishing partial truth."""
+    """A schema-validation failure prevents publishing partial truth.
+
+    Under F2 the publication gate requires manifest status=="ok" before any
+    schema validation runs, so the evidence must succeed first; the broken
+    schema then forces refresh_failed with rollback.
+    """
     monkeypatch.setattr(fe, "STATE_DIR", tmp_path / "state")
     monkeypatch.setattr(fe, "PROJECTS_YAML", tmp_path / "projects.yaml")
     monkeypatch.setattr(fe, "EVIDENCE_DIR", tmp_path / "evidence")
@@ -199,11 +205,22 @@ def test_any_gate_fail_prevents_partial_publish(monkeypatch, tmp_path):
     original = _v2_state(pid="demo", purpose="Mission A", truth_head="h1", status="fresh")
     _seed_state(tmp_path, "demo", original)
 
+    agents_md = "## Mission\n\nMission A\n"
+    roadmap_md = "# Roadmap\n\n- [x] (3) M1\n- [ ] (7) M2\n"
     responses = {
         "/repos/owner/demo": (200, {"default_branch": "main"}, {}),
         "/repos/owner/demo/commits/main": (200, {"sha": "h2"}, {}),
+        "/repos/owner/demo/contents/?ref=main": (200, [
+            {"type": "file", "path": "AGENTS.md", "sha": "blob-a"},
+            {"type": "file", "path": "ROADMAP.md", "sha": "blob-r"},
+        ], {}),
+        "/repos/owner/demo/contents/AGENTS.md?ref=main": (
+            200, {"content": _b64(agents_md), "encoding": "base64", "sha": "blob-a"}, {}),
+        "/repos/owner/demo/contents/ROADMAP.md?ref=main": (
+            200, {"content": _b64(roadmap_md), "encoding": "base64", "sha": "blob-r"}, {}),
     }
     _patch_fe_github(monkeypatch, responses)
+    monkeypatch.setattr(ev, "github_request", fe.github_request)
     # Make schema validation fail by returning a broken schema.
     monkeypatch.setattr(fe, "load_schema", lambda: {"type": "string"})  # state is dict -> invalid
 
@@ -212,6 +229,12 @@ def test_any_gate_fail_prevents_partial_publish(monkeypatch, tmp_path):
     assert res["published"] is False
     assert res["status"] == "refresh_failed"
     assert res.get("restored") is True
+    # Original verified identity preserved (not nulled).
+    state = yaml.safe_load((tmp_path / "state" / "demo.yaml").read_text("utf-8"))
+    assert state["project_identity"]["purpose"] == "Mission A"
+    assert state["freshness"]["status"] == "refresh_failed"
+    assert state["freshness"]["semantic_freshness"] == "refresh_failed"
+    assert state["freshness"]["progress_freshness"] == "refresh_failed"
 
 
 # ===========================================================================
@@ -231,15 +254,19 @@ def test_full_refresh_pass_publishes(monkeypatch, tmp_path):
     original = _v2_state(pid="demo", purpose="Mission A", truth_head="h1", status="fresh")
     _seed_state(tmp_path, "demo", original)
 
-    agents_md = "# Mission A\n\nA multi-agent platform.\n"
+    agents_md = "## Mission\n\nMission A\n"
+    roadmap_md = "# Roadmap\n\n- [x] (3) M1\n- [ ] (7) M2\n"
     responses = {
         "/repos/owner/demo": (200, {"default_branch": "main"}, {}),
         "/repos/owner/demo/commits/main": (200, {"sha": "h2"}, {}),
         "/repos/owner/demo/contents/?ref=main": (200, [
             {"type": "file", "path": "AGENTS.md", "sha": "blob-a"},
+            {"type": "file", "path": "ROADMAP.md", "sha": "blob-r"},
         ], {}),
         "/repos/owner/demo/contents/AGENTS.md?ref=main": (
             200, {"content": _b64(agents_md), "encoding": "base64", "sha": "blob-a"}, {}),
+        "/repos/owner/demo/contents/ROADMAP.md?ref=main": (
+            200, {"content": _b64(roadmap_md), "encoding": "base64", "sha": "blob-r"}, {}),
     }
     _patch_fe_github(monkeypatch, responses)
     # evidence_collector uses its own github_request; patch it too.
@@ -254,6 +281,9 @@ def test_full_refresh_pass_publishes(monkeypatch, tmp_path):
     assert state["freshness"]["status"] == "fresh"
     assert state["freshness"]["truth_built_from_head"] == "h2"
     assert state["freshness"]["remote_head"] == "h2"
+    assert state["freshness"]["source_freshness"] == "fresh"
+    assert state["freshness"]["semantic_freshness"] == "fresh"
+    assert state["freshness"]["progress_freshness"] == "fresh"
     # Mission preserved (same mission).
     assert state["project_identity"]["purpose"] == "Mission A"
     assert state["project_identity"]["identity_drift_detected"] is False
@@ -441,13 +471,17 @@ def test_current_wo_change_does_not_rewrite_mission(monkeypatch, tmp_path):
 
 
 def test_identity_drift_detection(monkeypatch, tmp_path):
-    """A genuinely different mission triggers drift detection + preservation."""
+    """A genuinely different mission triggers drift detection + preservation.
+
+    Under F1 a bare heading/paragraph is NOT a purpose, so the candidate mission
+    must come from an EXPLICIT Purpose/Mission label for drift to be meaningful.
+    """
     monkeypatch.setattr(ev, "STATE_DIR", tmp_path / "state")
     (tmp_path / "state").mkdir()
     state = _v2_state(pid="demo", purpose="Mission A", truth_head="h1", status="fresh")
     _seed_state(tmp_path, "demo", state)
 
-    agents_md = "# Completely Different Project\n\nNow a data pipeline.\n"
+    agents_md = "## Purpose\n\nNow a data pipeline.\n"
     responses = {
         "/repos/owner/demo": (200, {"default_branch": "main"}, {}),
         "/repos/owner/demo/contents/?ref=main": (200, [
@@ -466,6 +500,129 @@ def test_identity_drift_detection(monkeypatch, tmp_path):
     assert new_state["project_identity"]["purpose"] == "Mission A"  # preserved
     assert new_state["project_identity"]["identity_drift_detected"] is True
     assert new_state["project_identity"]["previous_identity"][0]["purpose"] == "Mission A"
+
+
+def test_refresh_bare_heading_does_not_verify_mission(monkeypatch, tmp_path):
+    """F1 regression (Reviewer 1 Finding 1): the refresh path must NOT set
+    knowledge_state=verified when the only identity evidence is a bare heading
+    (no explicit Purpose/Mission text). The refresh path previously duplicated
+    the truth logic and used `e.heading` instead of `purpose is not None`."""
+    monkeypatch.setattr(fe, "STATE_DIR", tmp_path / "state")
+    monkeypatch.setattr(fe, "PROJECTS_YAML", tmp_path / "projects.yaml")
+    monkeypatch.setattr(fe, "EVIDENCE_DIR", tmp_path / "evidence")
+    (tmp_path / "state").mkdir()
+    (tmp_path / "evidence").mkdir()
+    (tmp_path / "projects.yaml").write_text(
+        yaml.safe_dump({"projects": [{"project_id": "demo",
+            "repository": "https://github.com/owner/demo.git"}]}), encoding="utf-8")
+    # Existing state: needs-verification, no purpose.
+    original = _v2_state(pid="demo", purpose=None, truth_head="h1", status="stale")
+    _seed_state(tmp_path, "demo", original)
+
+    # AGENTS.md with ONLY a bare heading (no explicit Purpose section).
+    agents_md = "# Thai STT App\n\nSome intro text.\n"
+    responses = {
+        "/repos/owner/demo": (200, {"default_branch": "main"}, {}),
+        "/repos/owner/demo/commits/main": (200, {"sha": "h2"}, {}),
+        "/repos/owner/demo/contents/?ref=main": (200, [
+            {"type": "file", "path": "AGENTS.md", "sha": "blob-a"},
+        ], {}),
+        "/repos/owner/demo/contents/AGENTS.md?ref=main": (
+            200, {"content": _b64(agents_md), "encoding": "base64", "sha": "blob-a"}, {}),
+    }
+    _patch_fe_github(monkeypatch, responses)
+    monkeypatch.setattr(ev, "github_request", fe.github_request)
+
+    res = fe.refresh_project({"project_id": "demo",
+        "repository": "https://github.com/owner/demo.git"}, token="fake", dry_run=False)
+    new_state = yaml.safe_load((tmp_path / "state" / "demo.yaml").read_text("utf-8"))
+    # A bare heading must NOT verify the mission.
+    assert new_state["project_identity"]["purpose"] is None
+    assert new_state["knowledge_state"] != "verified"
+
+
+def test_refresh_drift_records_candidate_identity_and_provenance(monkeypatch, tmp_path):
+    """F4 regression (Reviewer 1 Finding 2): the refresh path must record
+    candidate_identity + candidate_identity_provenance on drift, not just
+    previous_identity."""
+    monkeypatch.setattr(fe, "STATE_DIR", tmp_path / "state")
+    monkeypatch.setattr(fe, "PROJECTS_YAML", tmp_path / "projects.yaml")
+    monkeypatch.setattr(fe, "EVIDENCE_DIR", tmp_path / "evidence")
+    (tmp_path / "state").mkdir()
+    (tmp_path / "evidence").mkdir()
+    (tmp_path / "projects.yaml").write_text(
+        yaml.safe_dump({"projects": [{"project_id": "demo",
+            "repository": "https://github.com/owner/demo.git"}]}), encoding="utf-8")
+    original = _v2_state(pid="demo", purpose="Mission A", truth_head="h1", status="stale")
+    _seed_state(tmp_path, "demo", original)
+
+    agents_md = "## Purpose\n\nNow a data pipeline for streaming analytics.\n"
+    responses = {
+        "/repos/owner/demo": (200, {"default_branch": "main"}, {}),
+        "/repos/owner/demo/commits/main": (200, {"sha": "h2"}, {}),
+        "/repos/owner/demo/contents/?ref=main": (200, [
+            {"type": "file", "path": "AGENTS.md", "sha": "blob-a"},
+        ], {}),
+        "/repos/owner/demo/contents/AGENTS.md?ref=main": (
+            200, {"content": _b64(agents_md), "encoding": "base64", "sha": "blob-a"}, {}),
+    }
+    _patch_fe_github(monkeypatch, responses)
+    monkeypatch.setattr(ev, "github_request", fe.github_request)
+
+    res = fe.refresh_project({"project_id": "demo",
+        "repository": "https://github.com/owner/demo.git"}, token="fake", dry_run=False)
+    new_state = yaml.safe_load((tmp_path / "state" / "demo.yaml").read_text("utf-8"))
+    ident = new_state["project_identity"]
+    # Old purpose preserved.
+    assert ident["purpose"] == "Mission A"
+    assert ident["identity_drift_detected"] is True
+    # Candidate + provenance recorded (F4).
+    assert ident["candidate_identity"] is not None
+    assert ident["candidate_identity"]["purpose"] is not None
+    assert "data pipeline" in ident["candidate_identity"]["purpose"].lower()
+    assert ident["candidate_identity_provenance"] is not None
+    assert ident["candidate_identity_provenance"]["path"] == "AGENTS.md"
+
+
+def test_refresh_no_drift_clears_candidate_identity(monkeypatch, tmp_path):
+    """F4 regression: when a prior drift is resolved (mission now matches),
+    the refresh path must clear stale candidate_identity/candidate_identity_provenance."""
+    monkeypatch.setattr(fe, "STATE_DIR", tmp_path / "state")
+    monkeypatch.setattr(fe, "PROJECTS_YAML", tmp_path / "projects.yaml")
+    monkeypatch.setattr(fe, "EVIDENCE_DIR", tmp_path / "evidence")
+    (tmp_path / "state").mkdir()
+    (tmp_path / "evidence").mkdir()
+    (tmp_path / "projects.yaml").write_text(
+        yaml.safe_dump({"projects": [{"project_id": "demo",
+            "repository": "https://github.com/owner/demo.git"}]}), encoding="utf-8")
+    # Existing state has a STALE candidate from a prior drift cycle.
+    state = _v2_state(pid="demo", purpose="Mission A", truth_head="h1", status="stale")
+    state["project_identity"]["candidate_identity"] = {"purpose": "stale candidate"}
+    state["project_identity"]["candidate_identity_provenance"] = {"path": "old.md"}
+    _seed_state(tmp_path, "demo", state)
+
+    # New evidence matches the existing mission (no drift).
+    agents_md = "## Purpose\n\nMission A\n"
+    responses = {
+        "/repos/owner/demo": (200, {"default_branch": "main"}, {}),
+        "/repos/owner/demo/commits/main": (200, {"sha": "h2"}, {}),
+        "/repos/owner/demo/contents/?ref=main": (200, [
+            {"type": "file", "path": "AGENTS.md", "sha": "blob-a"},
+        ], {}),
+        "/repos/owner/demo/contents/AGENTS.md?ref=main": (
+            200, {"content": _b64(agents_md), "encoding": "base64", "sha": "blob-a"}, {}),
+    }
+    _patch_fe_github(monkeypatch, responses)
+    monkeypatch.setattr(ev, "github_request", fe.github_request)
+
+    fe.refresh_project({"project_id": "demo",
+        "repository": "https://github.com/owner/demo.git"}, token="fake", dry_run=False)
+    new_state = yaml.safe_load((tmp_path / "state" / "demo.yaml").read_text("utf-8"))
+    ident = new_state["project_identity"]
+    assert ident["identity_drift_detected"] is False
+    # Stale candidate cleared.
+    assert ident["candidate_identity"] is None
+    assert ident["candidate_identity_provenance"] is None
 
 
 # ===========================================================================
@@ -542,18 +699,28 @@ class TestEndToEndScenarios:
         assert res["published"] is True
 
     def test_scenario_b_existing_project_changed(self, monkeypatch, tmp_path):
-        """Scenario B: remote HEAD new -> STALE -> targeted refresh -> FRESH."""
+        """Scenario B: remote HEAD new -> STALE -> targeted refresh -> FRESH.
+
+        Under F2, FRESH requires all three sub-gates fresh, so the evidence
+        must include an explicit purpose (matching the existing mission) and
+        a roadmap with milestones.
+        """
         self._setup(monkeypatch, tmp_path)
         original = _v2_state(pid="demo", purpose="Mission A", truth_head="h1", status="fresh")
         _seed_state(tmp_path, "demo", original)
-        agents_md = "# Mission A\n\nA platform.\n"
+        agents_md = "## Mission\n\nMission A\n"
+        roadmap_md = "# Roadmap\n\n- [x] (3) M1\n- [ ] (7) M2\n"
         responses = {
             "/repos/owner/demo": (200, {"default_branch": "main"}, {}),
             "/repos/owner/demo/commits/main": (200, {"sha": "h2"}, {}),  # changed
             "/repos/owner/demo/contents/?ref=main": (200, [
-                {"type": "file", "path": "AGENTS.md", "sha": "a"}], {}),
+                {"type": "file", "path": "AGENTS.md", "sha": "a"},
+                {"type": "file", "path": "ROADMAP.md", "sha": "r"},
+            ], {}),
             "/repos/owner/demo/contents/AGENTS.md?ref=main": (
                 200, {"content": _b64(agents_md), "encoding": "base64", "sha": "a"}, {}),
+            "/repos/owner/demo/contents/ROADMAP.md?ref=main": (
+                200, {"content": _b64(roadmap_md), "encoding": "base64", "sha": "r"}, {}),
         }
         _patch_fe_github(monkeypatch, responses)
         monkeypatch.setattr(ev, "github_request", fe.github_request)
@@ -564,6 +731,8 @@ class TestEndToEndScenarios:
         assert res["published"] is True
         state = yaml.safe_load((tmp_path / "state" / "demo.yaml").read_text("utf-8"))
         assert state["freshness"]["truth_built_from_head"] == "h2"
+        assert state["freshness"]["semantic_freshness"] == "fresh"
+        assert state["freshness"]["progress_freshness"] == "fresh"
 
     def test_scenario_c_brand_new_repository(self, monkeypatch, tmp_path):
         """Scenario C: repo not in registry -> DISCOVERED -> onboard -> state + overview."""
@@ -647,3 +816,169 @@ class TestEndToEndScenarios:
         p2 = pe.compute_progress({"evidence": []}, _v2_state())
         assert p2["estimate"] is None
         assert p2["confidence"] == "unknown"
+
+
+# ===========================================================================
+# WO-OBSIDIAN-041 / F2: False Freshness / Partial Truth (P1)
+# ===========================================================================
+
+def test_remote_head_known_but_evidence_unavailable_not_fresh(monkeypatch, tmp_path):
+    """remote_head known but manifest status="no_evidence" -> NOT fresh.
+
+    The OLD bug set all sub-gates "fresh" whenever remote_head was known,
+    fabricating fresh semantic truth even when evidence collection failed.
+    """
+    monkeypatch.setattr(fe, "STATE_DIR", tmp_path / "state")
+    monkeypatch.setattr(fe, "PROJECTS_YAML", tmp_path / "projects.yaml")
+    monkeypatch.setattr(fe, "EVIDENCE_DIR", tmp_path / "evidence")
+    (tmp_path / "state").mkdir()
+    (tmp_path / "evidence").mkdir()
+    (tmp_path / "projects.yaml").write_text(
+        yaml.safe_dump({"projects": [{"project_id": "demo",
+            "repository": "https://github.com/owner/demo.git"}]}), encoding="utf-8")
+    original = _v2_state(pid="demo", purpose="Mission A", truth_head="h1", status="fresh")
+    _seed_state(tmp_path, "demo", original)
+
+    # remote HEAD known (h2) but contents are non-authoritative -> no_evidence.
+    responses = {
+        "/repos/owner/demo": (200, {"default_branch": "main"}, {}),
+        "/repos/owner/demo/commits/main": (200, {"sha": "h2"}, {}),
+        "/repos/owner/demo/contents/?ref=main": (200, [
+            {"type": "file", "path": "src/main.py", "sha": "x"}], {}),
+    }
+    _patch_fe_github(monkeypatch, responses)
+    monkeypatch.setattr(ev, "github_request", fe.github_request)
+
+    res = fe.refresh_project({"project_id": "demo",
+        "repository": "https://github.com/owner/demo.git"}, token="fake", dry_run=False)
+    assert res["published"] is False
+    assert res["status"] != "fresh"
+    state = yaml.safe_load((tmp_path / "state" / "demo.yaml").read_text("utf-8"))
+    assert state["freshness"]["semantic_freshness"] != "fresh"
+    assert state["freshness"]["status"] != "fresh"
+
+
+def test_no_evidence_does_not_publish_fresh_semantic_truth(monkeypatch, tmp_path):
+    """manifest status="no_evidence" -> semantic_freshness="unknown", not fresh."""
+    monkeypatch.setattr(fe, "STATE_DIR", tmp_path / "state")
+    monkeypatch.setattr(fe, "PROJECTS_YAML", tmp_path / "projects.yaml")
+    monkeypatch.setattr(fe, "EVIDENCE_DIR", tmp_path / "evidence")
+    (tmp_path / "state").mkdir()
+    (tmp_path / "evidence").mkdir()
+    (tmp_path / "projects.yaml").write_text(
+        yaml.safe_dump({"projects": [{"project_id": "demo",
+            "repository": "https://github.com/owner/demo.git"}]}), encoding="utf-8")
+    original = _v2_state(pid="demo", purpose="Mission A", truth_head="h1", status="fresh")
+    _seed_state(tmp_path, "demo", original)
+
+    responses = {
+        "/repos/owner/demo": (200, {"default_branch": "main"}, {}),
+        "/repos/owner/demo/commits/main": (200, {"sha": "h2"}, {}),
+        "/repos/owner/demo/contents/?ref=main": (200, [
+            {"type": "file", "path": "src/main.py", "sha": "x"}], {}),
+    }
+    _patch_fe_github(monkeypatch, responses)
+    monkeypatch.setattr(ev, "github_request", fe.github_request)
+
+    res = fe.refresh_project({"project_id": "demo",
+        "repository": "https://github.com/owner/demo.git"}, token="fake", dry_run=False)
+    assert res["published"] is False
+    state = yaml.safe_load((tmp_path / "state" / "demo.yaml").read_text("utf-8"))
+    assert state["freshness"]["semantic_freshness"] == "unknown"
+    assert state["freshness"]["progress_freshness"] == "unknown"
+    assert state["freshness"]["status"] == "unknown"
+
+
+def test_failed_semantic_refresh_preserves_previous_verified_identity(monkeypatch, tmp_path):
+    """Existing verified purpose preserved when refresh fails (evidence unavailable)."""
+    monkeypatch.setattr(fe, "STATE_DIR", tmp_path / "state")
+    monkeypatch.setattr(fe, "PROJECTS_YAML", tmp_path / "projects.yaml")
+    monkeypatch.setattr(fe, "EVIDENCE_DIR", tmp_path / "evidence")
+    (tmp_path / "state").mkdir()
+    (tmp_path / "evidence").mkdir()
+    (tmp_path / "projects.yaml").write_text(
+        yaml.safe_dump({"projects": [{"project_id": "demo",
+            "repository": "https://github.com/owner/demo.git"}]}), encoding="utf-8")
+    original = _v2_state(pid="demo", purpose="Mission A", truth_head="h1", status="fresh")
+    _seed_state(tmp_path, "demo", original)
+
+    responses = {
+        "/repos/owner/demo": (200, {"default_branch": "main"}, {}),
+        "/repos/owner/demo/commits/main": (200, {"sha": "h2"}, {}),
+        "/repos/owner/demo/contents/?ref=main": (200, [
+            {"type": "file", "path": "src/main.py", "sha": "x"}], {}),
+    }
+    _patch_fe_github(monkeypatch, responses)
+    monkeypatch.setattr(ev, "github_request", fe.github_request)
+
+    fe.refresh_project({"project_id": "demo",
+        "repository": "https://github.com/owner/demo.git"}, token="fake", dry_run=False)
+    state = yaml.safe_load((tmp_path / "state" / "demo.yaml").read_text("utf-8"))
+    # Previous verified identity preserved (not nulled).
+    assert state["project_identity"]["purpose"] == "Mission A"
+    # truth_built_from_head unchanged (not overwritten with remote_head or null).
+    assert state["freshness"]["truth_built_from_head"] == "h1"
+
+
+def test_unknown_semantic_freshness_prevents_aggregate_fresh():
+    """source_freshness="fresh" but semantic_freshness="unknown" -> aggregate="unknown"."""
+    assert fe._aggregate_freshness("fresh", "unknown", "fresh") == "unknown"
+    assert fe._aggregate_freshness("fresh", "unknown", "stale") == "unknown"
+    assert fe._aggregate_freshness("fresh", "unknown", "unknown") == "unknown"
+
+
+def test_refresh_failure_never_publishes_partial_truth(monkeypatch, tmp_path):
+    """Exception during refresh -> published=False, original restored, refresh_failed."""
+    monkeypatch.setattr(fe, "STATE_DIR", tmp_path / "state")
+    monkeypatch.setattr(fe, "PROJECTS_YAML", tmp_path / "projects.yaml")
+    monkeypatch.setattr(fe, "EVIDENCE_DIR", tmp_path / "evidence")
+    (tmp_path / "state").mkdir()
+    (tmp_path / "evidence").mkdir()
+    (tmp_path / "projects.yaml").write_text(
+        yaml.safe_dump({"projects": [{"project_id": "demo",
+            "repository": "https://github.com/owner/demo.git"}]}), encoding="utf-8")
+    original = _v2_state(pid="demo", purpose="Mission A", truth_head="h1", status="fresh")
+    _seed_state(tmp_path, "demo", original)
+
+    responses = {
+        "/repos/owner/demo": (200, {"default_branch": "main"}, {}),
+        "/repos/owner/demo/commits/main": (200, {"sha": "h2"}, {}),
+        "/repos/owner/demo/contents/?ref=main": (200, [
+            {"type": "file", "path": "AGENTS.md", "sha": "a"}], {}),
+        "/repos/owner/demo/contents/AGENTS.md?ref=main": (
+            200, {"content": _b64("## Mission\n\nMission A\n"),
+                  "encoding": "base64", "sha": "a"}, {}),
+    }
+    _patch_fe_github(monkeypatch, responses)
+    monkeypatch.setattr(ev, "github_request", fe.github_request)
+    # Force an exception mid-refresh by breaking the progress engine import.
+    import progress_engine as _pe
+    monkeypatch.setattr(_pe, "compute_progress",
+                        lambda manifest, state: (_ for _ in ()).throw(RuntimeError("boom")))
+
+    res = fe.refresh_project({"project_id": "demo",
+        "repository": "https://github.com/owner/demo.git"}, token="fake", dry_run=False)
+    assert res["published"] is False
+    assert res["status"] == "refresh_failed"
+    assert res.get("restored") is True
+    state = yaml.safe_load((tmp_path / "state" / "demo.yaml").read_text("utf-8"))
+    # Original verified identity preserved.
+    assert state["project_identity"]["purpose"] == "Mission A"
+    assert state["freshness"]["status"] == "refresh_failed"
+
+
+def test_aggregate_fresh_requires_all_three_gates_fresh():
+    """All three fresh -> aggregate="fresh"; any one not fresh -> aggregate != "fresh"."""
+    assert fe._aggregate_freshness("fresh", "fresh", "fresh") == "fresh"
+    for combo in [
+        ("stale", "fresh", "fresh"),
+        ("fresh", "stale", "fresh"),
+        ("fresh", "fresh", "stale"),
+        ("unknown", "fresh", "fresh"),
+        ("fresh", "unknown", "fresh"),
+        ("fresh", "fresh", "unknown"),
+        ("refresh_failed", "fresh", "fresh"),
+        ("fresh", "refresh_failed", "fresh"),
+        ("fresh", "fresh", "refresh_failed"),
+    ]:
+        assert fe._aggregate_freshness(*combo) != "fresh", combo

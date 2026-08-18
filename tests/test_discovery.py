@@ -329,3 +329,168 @@ def test_onboard_appends_registry_and_overview(sample_repos, monkeypatch, tmp_pa
     # Project Overview stub exists and mentions needs-verification.
     overviews = list(projects_dir.glob("*.md"))
     assert any("needs-verification" in p.read_text("utf-8") for p in overviews)
+
+
+# ---------------------------------------------------------------------------
+# F6 -- Atomic / repairable onboarding (WO-OBSIDIAN-041)
+# ---------------------------------------------------------------------------
+
+def _setup_workspace(monkeypatch, tmp_path):
+    """Point discovery file paths at a tmp workspace and return the dirs."""
+    state_dir = tmp_path / "state"
+    projects_dir = tmp_path / "projects"
+    projects_yaml = tmp_path / "projects.yaml"
+    state_dir.mkdir()
+    projects_dir.mkdir()
+    projects_yaml.write_text(
+        yaml.safe_dump({"registry_version": 1, "projects": []}), encoding="utf-8"
+    )
+    monkeypatch.setattr(disc, "STATE_DIR", state_dir)
+    monkeypatch.setattr(disc, "PROJECTS_DIR", projects_dir)
+    monkeypatch.setattr(disc, "PROJECTS_YAML", projects_yaml)
+    monkeypatch.setattr(
+        disc, "fetch_repo_head_sha",
+        lambda o, r, t: {"default_branch": "main", "head_sha": "abc", "last_change": "2026-08-10"},
+    )
+    return state_dir, projects_dir, projects_yaml
+
+
+def _brand_new_repo():
+    return {
+        "id": 1002, "name": "brand-new-repo",
+        "full_name": "expellirmud-dot/brand-new-repo",
+        "default_branch": "main",
+        "html_url": "https://github.com/expellirmud-dot/brand-new-repo",
+    }
+
+
+def test_onboarding_failure_does_not_leave_partial_registration(monkeypatch, tmp_path):
+    """A crash after the state write but before the registry append is repaired
+    on rerun: the missing registry entry + overview are appended without
+    creating a duplicate."""
+    state_dir, projects_dir, projects_yaml = _setup_workspace(monkeypatch, tmp_path)
+    repo = _brand_new_repo()
+
+    # First call: succeed fully, then simulate a partial state by removing the
+    # registry entry and overview (as if onboarding crashed after the state write).
+    disc.onboard_project(repo, token="fake", dry_run=False)
+    assert (state_dir / "brand-new-repo.yaml").exists()
+
+    # Simulate the crash: registry entry + overview gone, state file remains.
+    projects_yaml.write_text(
+        yaml.safe_dump({"registry_version": 1, "projects": []}), encoding="utf-8"
+    )
+    for md in projects_dir.glob("*.md"):
+        md.unlink()
+
+    # Rerun must repair (append registry + write overview), not duplicate.
+    res = disc.onboard_project(repo, token="fake", dry_run=False)
+    assert res["created"] is False
+    assert res["reason"] == "repaired"
+    assert res["repaired_registry"] is True
+    assert res["repaired_overview"] is True
+
+    reg = yaml.safe_load(projects_yaml.read_text("utf-8"))
+    brand_entries = [p for p in reg["projects"] if p["project_id"] == "brand-new-repo"]
+    assert len(brand_entries) == 1  # no duplicate
+    assert brand_entries[0]["github_repository_id"] == 1002
+    assert any("needs-verification" in p.read_text("utf-8") for p in projects_dir.glob("*.md"))
+
+
+def test_onboarding_rerun_repairs_incomplete_state(monkeypatch, tmp_path):
+    """State file exists, no registry entry, no overview -> rerun repairs both
+    and the registry ends with exactly one entry."""
+    state_dir, projects_dir, projects_yaml = _setup_workspace(monkeypatch, tmp_path)
+    repo = _brand_new_repo()
+
+    # Seed ONLY a state file (no registry entry, no overview).
+    state = disc._default_state_v2(
+        "brand-new-repo", "Brand New Repo", 1002,
+        "https://github.com/expellirmud-dot/brand-new-repo.git",
+        "main", "abc", "2026-08-10", disc.now_iso(),
+    )
+    (state_dir / "brand-new-repo.yaml").write_text(
+        yaml.safe_dump(state, sort_keys=False), encoding="utf-8"
+    )
+
+    res = disc.onboard_project(repo, token="fake", dry_run=False)
+    assert res["created"] is False
+    assert res["reason"] == "repaired"
+
+    reg = yaml.safe_load(projects_yaml.read_text("utf-8"))
+    assert len(reg["projects"]) == 1
+    assert reg["projects"][0]["project_id"] == "brand-new-repo"
+    assert (projects_dir / "Brand New Repo.md").exists()
+
+
+def test_onboarding_is_idempotent_after_success(monkeypatch, tmp_path):
+    """After a successful onboarding, a second call returns already_onboarded
+    with no duplicate registry entry and no duplicate overview."""
+    state_dir, projects_dir, projects_yaml = _setup_workspace(monkeypatch, tmp_path)
+    repo = _brand_new_repo()
+
+    r1 = disc.onboard_project(repo, token="fake", dry_run=False)
+    assert r1["created"] is True
+
+    overview_count_before = len(list(projects_dir.glob("*.md")))
+
+    r2 = disc.onboard_project(repo, token="fake", dry_run=False)
+    assert r2["created"] is False
+    assert r2["reason"] == "already_onboarded"
+
+    reg = yaml.safe_load(projects_yaml.read_text("utf-8"))
+    brand_entries = [p for p in reg["projects"] if p["project_id"] == "brand-new-repo"]
+    assert len(brand_entries) == 1
+    assert len(list(projects_dir.glob("*.md"))) == overview_count_before  # no dup overview
+
+
+def test_onboarding_never_duplicates_project_by_stable_repo_id(monkeypatch, tmp_path):
+    """Onboarding a repo, then re-onboarding with the SAME stable id but a
+    DIFFERENT name, does not create a duplicate registry entry (matched by
+    stable github_repository_id)."""
+    state_dir, projects_dir, projects_yaml = _setup_workspace(monkeypatch, tmp_path)
+
+    repo_a = {
+        "id": 3001, "name": "alpha-repo", "full_name": "owner/alpha-repo",
+        "default_branch": "main", "html_url": "https://github.com/owner/alpha-repo",
+    }
+    repo_b = {
+        "id": 3001, "name": "renamed-repo", "full_name": "owner/renamed-repo",
+        "default_branch": "main", "html_url": "https://github.com/owner/renamed-repo",
+    }
+
+    disc.onboard_project(repo_a, token="fake", dry_run=False)
+    res = disc.onboard_project(repo_b, token="fake", dry_run=False)
+
+    # Matched by stable id 3001 -> not a new project; repaired (no duplicate).
+    assert res["created"] is False
+    reg = yaml.safe_load(projects_yaml.read_text("utf-8"))
+    rid_entries = [p for p in reg["projects"] if p.get("github_repository_id") == 3001]
+    assert len(rid_entries) == 1  # exactly one entry for the stable id
+
+
+def test_onboarding_validates_state_before_any_write(monkeypatch, tmp_path):
+    """Schema-invalid state is never written: no state file, no registry entry,
+    no overview."""
+    state_dir, projects_dir, projects_yaml = _setup_workspace(monkeypatch, tmp_path)
+    repo = _brand_new_repo()
+
+    # Force schema validation to fail by making the produced state invalid.
+    real_default_state = disc._default_state_v2
+
+    def bad_state(*args, **kwargs):
+        s = real_default_state(*args, **kwargs)
+        s["schema_version"] = 999  # invalid -> schema rejects
+        return s
+
+    monkeypatch.setattr(disc, "_default_state_v2", bad_state)
+
+    res = disc.onboard_project(repo, token="fake", dry_run=False)
+    assert res["created"] is False
+    assert res["reason"] == "schema_invalid"
+
+    # Nothing was written.
+    assert not (state_dir / "brand-new-repo.yaml").exists()
+    reg = yaml.safe_load(projects_yaml.read_text("utf-8"))
+    assert reg["projects"] == []
+    assert list(projects_dir.glob("*.md")) == []

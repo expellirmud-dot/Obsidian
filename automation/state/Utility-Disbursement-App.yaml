@@ -16,7 +16,7 @@ branch: main
 head: 429cb91f5a4a6d5b64a14fac6e0136f59649e95d
 knowledge_state: needs-verification
 project_identity:
-  purpose: Utility Disbursement App
+  purpose: null
   problem_statement: null
   intended_outcome: null
   primary_users: null
@@ -25,6 +25,8 @@ project_identity:
   non_goals: null
   identity_drift_detected: false
   previous_identity: null
+  candidate_identity: null
+  candidate_identity_provenance: null
 current_execution:
   lifecycle_phase: paused
   current_goal: null

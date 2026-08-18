@@ -75,19 +75,23 @@
         "scope",
         "non_goals",
         "identity_drift_detected",
-        "previous_identity"
+        "previous_identity",
+        "candidate_identity",
+        "candidate_identity_provenance"
       ],
-      "description": "Stable Project Mission. Derived from authoritative repository documents across the project's history. MUST NOT be rewritten when a Work Order changes.",
+      "description": "Stable Project Mission. Only `purpose` is derived from explicit Purpose/Mission/Problem text in authoritative repository documents; the remaining identity fields are schema-supported-but-not-derived (null until an evidence-backed extractor exists). MUST NOT be rewritten when a Work Order changes. A bare project title/heading/repository name is NOT sufficient to verify the Mission.",
       "properties": {
-        "purpose": { "type": ["string", "null"], "description": "What the project is, in one line. null/unknown if evidence insufficient." },
-        "problem_statement": { "type": ["string", "null"], "description": "The problem the project exists to solve." },
-        "intended_outcome": { "type": ["string", "null"], "description": "The intended end-state outcome." },
-        "primary_users": { "type": ["string", "null"], "description": "Who the project is for." },
-        "success_definition": { "type": ["string", "null"], "description": "How success is defined." },
-        "scope": { "type": ["string", "null"], "description": "In-scope boundaries." },
-        "non_goals": { "type": ["string", "null"], "description": "Explicit non-goals." },
-        "identity_drift_detected": { "type": "boolean", "description": "True when authoritative evidence indicates the Mission itself has changed. The previous identity is preserved; the new candidate is recorded but NOT silently overwritten." },
-        "previous_identity": { "type": ["array", "null"], "description": "Preserved previous identity snapshots when drift is detected. null when no drift.", "items": { "type": "object" } }
+        "purpose": { "type": ["string", "null"], "description": "What the project is, in one line. Derived ONLY from explicit Purpose/Mission/Problem/Designed-to text. null/unknown if evidence insufficient (a bare heading or project name is NOT sufficient)." },
+        "problem_statement": { "type": ["string", "null"], "description": "The problem the project exists to solve. Schema-supported-but-not-derived (null until an evidence-backed extractor exists)." },
+        "intended_outcome": { "type": ["string", "null"], "description": "The intended end-state outcome. Schema-supported-but-not-derived." },
+        "primary_users": { "type": ["string", "null"], "description": "Who the project is for. Schema-supported-but-not-derived." },
+        "success_definition": { "type": ["string", "null"], "description": "How success is defined. Schema-supported-but-not-derived." },
+        "scope": { "type": ["string", "null"], "description": "In-scope boundaries. Schema-supported-but-not-derived." },
+        "non_goals": { "type": ["string", "null"], "description": "Explicit non-goals. Schema-supported-but-not-derived." },
+        "identity_drift_detected": { "type": "boolean", "description": "True when authoritative evidence indicates the Mission itself has changed. The previous identity is preserved; the candidate new identity + its evidence provenance are recorded in candidate_identity/candidate_identity_provenance. The existing purpose is NOT silently overwritten." },
+        "previous_identity": { "type": ["array", "null"], "description": "Preserved previous identity snapshots when drift is detected. null when no drift.", "items": { "type": "object" } },
+        "candidate_identity": { "type": ["object", "null"], "description": "The candidate new identity proposed by evidence when drift is detected. null when no drift. Inspectable but NOT applied automatically.", "properties": { "purpose": { "type": ["string", "null"] } }, "additionalProperties": true },
+        "candidate_identity_provenance": { "type": ["object", "null"], "description": "Evidence provenance for the candidate identity (path, ref, blob_sha, observed_at). null when no drift.", "additionalProperties": true }
       }
     },
     "current_execution": {

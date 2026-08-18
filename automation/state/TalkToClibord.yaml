@@ -16,7 +16,7 @@ branch: main
 head: 40b565e6c1dc34c6efa3640d79e2ada9083e74b0
 knowledge_state: needs-verification
 project_identity:
-  purpose: TalkToClibord
+  purpose: null
   problem_statement: null
   intended_outcome: null
   primary_users: null
@@ -25,6 +25,8 @@ project_identity:
   non_goals: null
   identity_drift_detected: false
   previous_identity: null
+  candidate_identity: null
+  candidate_identity_provenance: null
 current_execution:
   lifecycle_phase: active
   current_goal: null

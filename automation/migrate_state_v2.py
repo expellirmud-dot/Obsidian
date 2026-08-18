@@ -84,9 +84,14 @@ def migrate_one(v1: dict) -> dict:
     open_pr = v1.get("open_pr")
     current_goal = v1.get("current_goal")
 
-    # Seed identity conservatively. Do NOT fabricate a Mission. Only map fields
-    # that can be carried without guessing; everything else stays null.
-    purpose = v1.get("project_name") or None
+    # Seed identity conservatively. Do NOT fabricate a Mission. A project name
+    # or heading is NOT a purpose (WO-OBSIDIAN-041 F1). Only an explicit
+    # Purpose/Mission/Problem statement would justify a non-null purpose, and
+    # the migrator has no content evidence -- so purpose stays null here. The
+    # evidence collector (WO-038) fills purpose later from real file content
+    # using explicit-purpose detection. scope is seeded from current_goal only
+    # as a needs-verification placeholder (it is execution scope, not Mission).
+    purpose = None
     scope = current_goal or None
     identity = {
         "purpose": purpose,
@@ -98,6 +103,8 @@ def migrate_one(v1: dict) -> dict:
         "non_goals": None,
         "identity_drift_detected": False,
         "previous_identity": None,
+        "candidate_identity": None,
+        "candidate_identity_provenance": None,
     }
 
     current_execution = {

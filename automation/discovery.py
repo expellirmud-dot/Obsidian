@@ -51,6 +51,7 @@ import json
 import os
 import re
 import sys
+import tempfile
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -365,6 +366,8 @@ def _default_state_v2(
             "non_goals": None,
             "identity_drift_detected": False,
             "previous_identity": None,
+            "candidate_identity": None,
+            "candidate_identity_provenance": None,
         },
         "current_execution": {
             "lifecycle_phase": None,
@@ -440,20 +443,158 @@ def fetch_repo_head_sha(owner: str, repo: str, token: str | None) -> dict:
     return {"default_branch": default_branch, "head_sha": sha, "last_change": last_change}
 
 
+def _registry_find_entry(
+    registry: dict, project_id: str, github_repository_id: int | None,
+) -> dict | None:
+    """Return the registry entry matching project_id OR github_repository_id.
+
+    Stable-id matching (github_repository_id) takes precedence so that a
+    renamed repo is never re-onboarded as a duplicate.
+    """
+    projects = registry.get("projects", []) if registry else []
+    if github_repository_id is not None:
+        for p in projects:
+            if p.get("github_repository_id") == github_repository_id:
+                return p
+    for p in projects:
+        if p.get("project_id") == project_id:
+            return p
+    return None
+
+
+def _atomic_write_registry(registry: dict) -> None:
+    """Write projects.yaml atomically via temp file + os.replace.
+
+    A mid-write crash leaves the previous registry intact instead of
+    truncating the whole registry (which 'w' mode would do).
+    """
+    parent = PROJECTS_YAML.parent
+    parent.mkdir(parents=True, exist_ok=True)
+    tmp_fd, tmp_path = tempfile.mkstemp(dir=str(parent), suffix=".tmp")
+    try:
+        with os.fdopen(tmp_fd, "w", encoding="utf-8") as f:
+            f.write(
+                yaml.safe_dump(
+                    registry, sort_keys=False, default_flow_style=False,
+                    allow_unicode=True, width=1000,
+                )
+            )
+        os.replace(tmp_path, str(PROJECTS_YAML))
+    except Exception:
+        try:
+            if os.path.exists(tmp_path):
+                os.unlink(tmp_path)
+        except OSError:
+            pass
+        raise
+
+
+def _registry_entry(project_id, project_name, repository, rid) -> dict:
+    return {
+        "project_id": project_id,
+        "project_name": project_name,
+        "source_path": None,
+        "repository": repository,
+        "github_repository_id": rid,
+        "enabled_for_wall": True,
+        "pilot_status": "discovered",
+        "adapter_id": "discovery-onboard-v1",
+        "authority_candidates": ["AGENTS.md", "README.md", "PROJECT_RULES.md"],
+    }
+
+
+def _repair_onboarding(
+    project_id: str,
+    project_name: str,
+    repository: str | None,
+    rid: int | None,
+    overview: str,
+    state_path: Path,
+    overview_path: Path,
+) -> dict:
+    """Converge a partially-onboarded project to a complete registration.
+
+    A project is "fully onboarded" when ALL THREE artifacts exist: state file,
+    projects.yaml entry (by stable id OR project_id), AND overview file. This
+    helper appends the missing registry entry and/or writes the missing
+    overview using the existing state file. It never creates a duplicate
+    registry entry.
+
+    Returns a report with created=False, reason="repaired" (or
+    "already_onboarded" if nothing was missing).
+    """
+    repaired_registry = False
+    repaired_overview = False
+
+    # Prefer values from the existing state file (source of truth) when present.
+    eff_name = project_name
+    eff_repo = repository
+    eff_rid = rid
+    if state_path.exists():
+        try:
+            existing = yaml.safe_load(state_path.read_text("utf-8")) or {}
+            if existing.get("project_name"):
+                eff_name = existing["project_name"]
+            if existing.get("repository"):
+                eff_repo = existing["repository"]
+            if existing.get("github_repository_id") is not None:
+                eff_rid = existing["github_repository_id"]
+        except (OSError, yaml.YAMLError):
+            pass
+
+    # Repair the registry entry if missing (atomic write).
+    registry = load_projects_registry()
+    if _registry_find_entry(registry, project_id, eff_rid) is None:
+        registry.setdefault("projects", []).append(
+            _registry_entry(project_id, eff_name, eff_repo, eff_rid)
+        )
+        _atomic_write_registry(registry)
+        repaired_registry = True
+
+    # Repair the overview if missing.
+    if not overview_path.exists():
+        overview_path.parent.mkdir(parents=True, exist_ok=True)
+        overview_path.write_text(overview, encoding="utf-8")
+        repaired_overview = True
+
+    reason = "repaired" if (repaired_registry or repaired_overview) else "already_onboarded"
+    return {
+        "project_id": project_id,
+        "project_name": eff_name,
+        "created": False,
+        "reason": reason,
+        "repaired_registry": repaired_registry,
+        "repaired_overview": repaired_overview,
+        "state_path": str(state_path),
+        "overview_path": str(overview_path),
+    }
+
+
 def onboard_project(
     repo: dict,
     token: str | None,
     dry_run: bool = True,
 ) -> dict:
-    """Onboard a single discovered repo into the Vault (idempotent).
+    """Onboard a single discovered repo into the Vault (atomic + repairable).
 
     Creates:
       * automation/state/<project_id>.yaml (v2 state, needs-verification)
       * appends to automation/projects.yaml (enabled_for_wall: true)
       * 01 Projects/<project_name>.md (Project Overview stub)
 
+    Onboarding is atomic and repairable:
+      * Schema validation happens BEFORE any write.
+      * A project is "fully onboarded" only when ALL THREE artifacts exist
+        (state file, projects.yaml entry by stable id OR project_id, AND
+        overview). If some but not all exist, the missing pieces are repaired
+        instead of creating a duplicate.
+      * projects.yaml is written atomically (temp + os.replace) so a mid-write
+        crash cannot truncate the whole registry.
+      * Write order for new onboarding: state -> overview -> registry. If the
+        registry append fails, the partial state/overview files are removed
+        (best-effort) so a rerun starts clean.
+
     Returns a report dict with project_id, created (bool), and path.
-    Idempotent: if the project_id already exists, returns created=False.
     """
     name = repo.get("name") or "unknown"
     rid = repo.get("id")
@@ -465,8 +606,6 @@ def onboard_project(
 
     state_path = STATE_DIR / f"{project_id}.yaml"
     overview_path = PROJECTS_DIR / f"{project_name}.md"
-    if state_path.exists():
-        return {"project_id": project_id, "created": False, "reason": "state_exists"}
 
     # Resolve head sha (read-only). Failure -> unknown freshness, not a crash.
     owner_repo = parse_owner_repo(repository) if repository else None
@@ -497,6 +636,25 @@ def onboard_project(
 
     overview = _overview_stub(project_id, project_name, repository, rid, observed_at)
 
+    # Completeness-aware idempotency + stable-id duplicate prevention.
+    # A project is fully onboarded iff ALL THREE artifacts exist.
+    state_exists = state_path.exists()
+    overview_exists = overview_path.exists()
+    registry = load_projects_registry()
+    registry_entry = _registry_find_entry(registry, project_id, rid)
+    registry_exists = registry_entry is not None
+
+    if state_exists and registry_exists and overview_exists:
+        return {"project_id": project_id, "created": False, "reason": "already_onboarded"}
+
+    if state_exists or registry_exists:
+        # Partial registration -> repair the missing pieces (no duplicate).
+        return _repair_onboarding(
+            project_id, project_name, repository, rid, overview,
+            state_path, overview_path,
+        )
+
+    # NONE exist -> proceed with full onboarding.
     if dry_run:
         return {
             "project_id": project_id,
@@ -509,7 +667,8 @@ def onboard_project(
             "knowledge_state": "needs-verification",
         }
 
-    # Write state file.
+    # Write order: state -> overview -> registry (atomic). The state file alone
+    # is NOT "published" until the registry entry exists.
     header = (
         f"# Normalized project state (v2) -- {project_id}\n"
         f"# Onboarded by WO-OBSIDIAN-037 (Repository Discovery + Safe Auto-Onboarding).\n"
@@ -519,32 +678,37 @@ def onboard_project(
     body = yaml.safe_dump(
         state, sort_keys=False, default_flow_style=False, allow_unicode=True, width=1000
     )
-    state_path.write_text(header + body, encoding="utf-8")
+    written_state = False
+    written_overview = False
+    try:
+        state_path.parent.mkdir(parents=True, exist_ok=True)
+        state_path.write_text(header + body, encoding="utf-8")
+        written_state = True
 
-    # Append to projects.yaml.
-    registry = load_projects_registry()
-    entry = {
-        "project_id": project_id,
-        "project_name": project_name,
-        "source_path": None,
-        "repository": repository,
-        "github_repository_id": rid,
-        "enabled_for_wall": True,
-        "pilot_status": "discovered",
-        "adapter_id": "discovery-onboard-v1",
-        "authority_candidates": ["AGENTS.md", "README.md", "PROJECT_RULES.md"],
-    }
-    registry.setdefault("projects", []).append(entry)
-    with open(PROJECTS_YAML, "w", encoding="utf-8") as f:
-        f.write(
-            yaml.safe_dump(
-                registry, sort_keys=False, default_flow_style=False,
-                allow_unicode=True, width=1000,
+        overview_path.parent.mkdir(parents=True, exist_ok=True)
+        overview_path.write_text(overview, encoding="utf-8")
+        written_overview = True
+
+        registry = load_projects_registry()
+        if _registry_find_entry(registry, project_id, rid) is None:
+            registry.setdefault("projects", []).append(
+                _registry_entry(project_id, project_name, repository, rid)
             )
-        )
-
-    # Write Project Overview stub.
-    overview_path.write_text(overview, encoding="utf-8")
+            _atomic_write_registry(registry)
+    except Exception as exc:
+        # Best-effort cleanup of partial files so a rerun starts clean.
+        for p, written in ((state_path, written_state), (overview_path, written_overview)):
+            if written:
+                try:
+                    p.unlink()
+                except OSError:
+                    pass
+        return {
+            "project_id": project_id,
+            "created": False,
+            "reason": "onboarding_failed",
+            "error": str(exc),
+        }
 
     return {
         "project_id": project_id,

@@ -14,7 +14,7 @@ branch: main
 head: e98c9f627c50830c74cf76956abb15770690702d
 knowledge_state: needs-verification
 project_identity:
-  purpose: LUMINA Studio
+  purpose: null
   problem_statement: null
   intended_outcome: null
   primary_users: null
@@ -23,6 +23,8 @@ project_identity:
   non_goals: null
   identity_drift_detected: false
   previous_identity: null
+  candidate_identity: null
+  candidate_identity_provenance: null
 current_execution:
   lifecycle_phase: ready-for-deploy
   current_goal: Phase 1 — Premium Photography Landing Page (complete; ready for Vercel production deploy)

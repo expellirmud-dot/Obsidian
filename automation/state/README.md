@@ -10,9 +10,16 @@
 > `project_identity` (stable Mission) from `current_execution` (current
 > goal/work). A Work Order change touches `current_execution` only; the
 > Mission is never rewritten automatically. When authoritative evidence
-> indicates the Mission itself changed, `identity_drift_detected` is set and
-> the previous identity is preserved in `previous_identity` (never silently
-> overwritten).
+> indicates the Mission itself changed, `identity_drift_detected` is set, the
+> previous identity is preserved in `previous_identity`, and the candidate new
+> identity + its evidence provenance are recorded in `candidate_identity` /
+> `candidate_identity_provenance` (never silently overwritten).
+
+> **WO-OBSIDIAN-041 hardening (F1):** A bare project title, repository name,
+> or document heading is NOT sufficient to verify the Mission.
+> `knowledge_state=verified` requires an explicit Purpose/Mission/Problem
+> statement read from real file content. Insufficient evidence →
+> `purpose=null`, `knowledge_state=needs-verification` (never fabricated).
 
 ## Format rule
 
@@ -29,7 +36,7 @@
 
 | Block | Purpose |
 | --- | --- |
-| `project_identity` | Stable Mission: purpose, problem_statement, intended_outcome, primary_users, success_definition, scope, non_goals, identity_drift_detected, previous_identity |
+| `project_identity` | Stable Mission: purpose (derived from explicit Purpose/Mission/Problem text only), problem_statement, intended_outcome, primary_users, success_definition, scope, non_goals (schema-supported-but-not-derived), identity_drift_detected, previous_identity, candidate_identity, candidate_identity_provenance |
 | `current_execution` | Current truth: lifecycle_phase, current_goal, current_work, current_work_authority, current_work_evidence, last_completed, blockers, next_action |
 | `freshness` | Freshness contract: status, tracked_ref, remote_head, truth_built_from_head, source_checked_at, truth_built_at, stale_since, reason, source_freshness, semantic_freshness, progress_freshness |
 | `progress` | Deterministic progress: scope, method, estimate, range_min, range_max, confidence, completed, active, remaining, basis |

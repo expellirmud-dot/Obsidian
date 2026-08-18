@@ -153,7 +153,7 @@ def valid_state_dict() -> dict:
         "head": "be7bd07760cc6c426927a2aec9e0cbce8c2ddf60",
         "knowledge_state": "needs-verification",
         "project_identity": {
-            "purpose": "Thai STT App",
+            "purpose": None,
             "problem_statement": None,
             "intended_outcome": None,
             "primary_users": None,
@@ -162,6 +162,8 @@ def valid_state_dict() -> dict:
             "non_goals": None,
             "identity_drift_detected": False,
             "previous_identity": None,
+            "candidate_identity": None,
+            "candidate_identity_provenance": None,
         },
         "current_execution": {
             "lifecycle_phase": "active",

@@ -14,7 +14,7 @@ branch: main
 head: be7bd07760cc6c426927a2aec9e0cbce8c2ddf60
 knowledge_state: verified
 project_identity:
-  purpose: Thai STT App
+  purpose: null
   problem_statement: null
   intended_outcome: null
   primary_users: null
@@ -23,6 +23,8 @@ project_identity:
   non_goals: null
   identity_drift_detected: false
   previous_identity: null
+  candidate_identity: null
+  candidate_identity_provenance: null
 current_execution:
   lifecycle_phase: active
   current_goal: WO-Skill-Audit (skill audit + install for repository)

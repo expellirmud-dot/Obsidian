@@ -2,10 +2,22 @@
 """Deterministic progress + next-action engine (WO-OBSIDIAN-039).
 
 Computes progress from EVIDENCE only -- never from LLM impression. Priority:
-  1. explicit weighted roadmap milestones
-  2. explicit phases/goals with completion status
-  3. bounded work-order set belonging to the current goal
-  4. insufficient denominator -> UNKNOWN
+  1. explicit weighted roadmap milestones (explicit weights)
+  2. bounded milestones (equal weight)
+  3. UNSUPPORTED -> UNKNOWN (do not claim support that does not exist):
+       * phase/goal progress: NOT IMPLEMENTED
+       * bounded work-order set: NOT IMPLEMENTED (no reliable structure in
+         evidence to bound the denominator)
+  4. insufficient / incomplete denominator -> UNKNOWN
+
+Truncation safety (WO-OBSIDIAN-041): the evidence collector caps
+`content_excerpt` at 500 chars and strips newlines. A roadmap whose checklist
+extends past that cap yields an INCOMPLETE denominator, so a percentage derived
+from the excerpt would be false (later milestones silently lost). Before
+computing a percentage, compute_progress checks every roadmap evidence item for
+truncation (the `truncated` flag / `content_length` added by the evidence
+collector, with a `len(excerpt) >= 500` fallback for old manifests). If any
+roadmap evidence is truncated -> UNKNOWN, never a fabricated percentage.
 
 Derives the next authoritative action from:
   1. explicit Current WO/Task
@@ -20,8 +32,8 @@ state file. It is deterministic: identical inputs produce identical outputs.
 
 Safety:
   * READ-ONLY w.r.t. source repositories (it only reads Vault files).
-  * Never fabricates a percentage. Missing denominator -> estimate=null,
-    confidence=unknown.
+  * Never fabricates a percentage. Missing/incomplete denominator ->
+    estimate=null, confidence=unknown.
   * The basis string explains exactly how the numbers were derived.
 
 Usage:
@@ -70,23 +82,71 @@ MILESTONE_RE = re.compile(
     r"^\s*[-*]?\s*\[(?P<done>[xX ])\]\s*(?:\((?P<weight>\d+)\)\s*)?(?P<name>.+)$"
 )
 
+# Non-line-anchored variant for newline-stripped excerpts: the evidence
+# collector flattens content to a single line, so the line-anchored regex
+# above would collapse several milestones into one (greedy name) or miss
+# them. This variant finds each `[x]`/`[ ]` marker in place; the name is
+# lazy and bounded by a lookahead to the next marker (or end of string).
+MILESTONE_RE_FLAT = re.compile(
+    r"\[(?P<done>[xX ])\]\s*(?:\((?P<weight>\d+)\)\s*)?"
+    r"(?P<name>.+?)(?=\s*[-*]?\s*\[[xX ]\]|$)"
+)
+
+# A single milestone checkbox marker, used to count markers regardless of
+# whether the line structure is intact.
+_MARKER_RE = re.compile(r"\[[xX ]\]")
+
+
+def _milestone_from_match(m: re.Match) -> dict | None:
+    done = m.group("done").strip().lower() == "x"
+    weight = int(m.group("weight")) if m.group("weight") else 1
+    name = m.group("name").strip().strip("*_`-").strip()
+    if not name:
+        return None
+    return {"name": name, "done": done, "weight": weight}
+
 
 def parse_milestones_from_content(content: str) -> list[dict]:
     """Parse weighted milestone lines from markdown content.
 
     Returns a list of {name, done (bool), weight (int)}.
+
+    Handles two shapes of content:
+      * multi-line checklists (line-anchored regex over splitlines());
+      * newline-stripped excerpts (a single long line with several
+        ``[x]``/``[ ]`` markers), via a finditer fallback. The fallback only
+        triggers when the content has no newlines but contains multiple
+        markers, so normal multi-line content is unaffected.
+
+    NOTE: this parser does NOT decide whether the excerpt was truncated -- that
+    is the caller's responsibility (see ``is_evidence_truncated`` /
+    ``compute_progress``). A truncated excerpt may still parse here, but
+    ``compute_progress`` gates on truncation and returns UNKNOWN.
     """
+    if not content:
+        return []
     milestones: list[dict] = []
     for line in content.splitlines():
         m = MILESTONE_RE.match(line)
         if not m:
             continue
-        done = m.group("done").strip().lower() == "x"
-        weight = int(m.group("weight")) if m.group("weight") else 1
-        name = m.group("name").strip().strip("*_`").strip()
-        if not name:
-            continue
-        milestones.append({"name": name, "done": done, "weight": weight})
+        ms = _milestone_from_match(m)
+        if ms:
+            milestones.append(ms)
+
+    # Fallback for newline-stripped excerpts: one long line, many markers.
+    has_newlines = "\n" in content
+    marker_count = len(_MARKER_RE.findall(content))
+    if not has_newlines and marker_count > 1:
+        flat: list[dict] = []
+        for m in MILESTONE_RE_FLAT.finditer(content):
+            ms = _milestone_from_match(m)
+            if ms:
+                flat.append(ms)
+        # Only adopt the flat parse if it recovers at least as many milestones
+        # (it should recover all markers when the line was flattened).
+        if len(flat) >= len(milestones):
+            milestones = flat
     return milestones
 
 
@@ -97,6 +157,35 @@ def collect_roadmap_evidence(manifest: dict) -> list[dict]:
 
 def collect_completed_evidence(manifest: dict) -> list[dict]:
     return [e for e in manifest.get("evidence", []) if e.get("category") == "completed_work"]
+
+
+# Evidence-collector excerpt cap (see evidence_collector.py). Excerpts at or
+# past this cap are treated as truncated when no explicit signal is present.
+_EXCERPT_CAP = 500
+
+
+def is_evidence_truncated(ev: dict) -> bool:
+    """Decide whether an evidence item's content_excerpt is incomplete.
+
+    Reads the ``truncated`` (bool) and ``content_length`` (int, full content
+    length before truncation) fields defensively -- they are added by the
+    evidence collector (WO-OBSIDIAN-041) and may be absent in old manifests.
+
+    Resolution order:
+      1. explicit ``truncated`` flag (if present);
+      2. ``content_length`` (if present): truncated when the full content was
+         longer than the kept excerpt, or longer than the 500-char cap;
+      3. fallback for old manifests: truncated when the excerpt itself is at
+         least as long as the 500-char cap (i.e. it likely hit the cap).
+    """
+    if "truncated" in ev:
+        return bool(ev.get("truncated"))
+    content_length = ev.get("content_length")
+    if isinstance(content_length, int):
+        excerpt = ev.get("content_excerpt") or ""
+        return content_length > len(excerpt) or content_length > _EXCERPT_CAP
+    excerpt = ev.get("content_excerpt") or ""
+    return len(excerpt) >= _EXCERPT_CAP
 
 
 # ---------------------------------------------------------------------------
@@ -180,10 +269,27 @@ def compute_progress(manifest: dict, state: dict) -> dict:
     Priority:
       1. weighted roadmap milestones (explicit weights)
       2. bounded milestones (equal weight)
-      3. (work-order set: not enough structure in evidence to bound reliably)
+      3. UNSUPPORTED -> UNKNOWN:
+           * phase/goal progress: NOT IMPLEMENTED
+           * bounded work-order set: NOT IMPLEMENTED (no reliable structure in
+             evidence to bound the denominator)
       4. UNKNOWN
+
+    Truncation gate (WO-OBSIDIAN-041): before computing a percentage, every
+    roadmap evidence item is checked for truncation. If ANY roadmap evidence is
+    truncated, the denominator is INCOMPLETE and a percentage would be false --
+    so UNKNOWN is returned regardless of what the parser recovered.
     """
     roadmap_ev = collect_roadmap_evidence(manifest)
+
+    # Truncation gate: an incomplete denominator must never yield a percentage.
+    for ev in roadmap_ev:
+        if is_evidence_truncated(ev):
+            return compute_unknown_progress(
+                reason="roadmap evidence truncated (incomplete denominator; "
+                "cannot compute a reliable percentage)"
+            )
+
     all_milestones: list[dict] = []
     has_explicit_weights = False
     for ev in roadmap_ev:

@@ -68,6 +68,8 @@ def test_schema_validation(schema):
             "non_goals": None,
             "identity_drift_detected": False,
             "previous_identity": None,
+            "candidate_identity": None,
+            "candidate_identity_provenance": None,
         },
         "current_execution": {
             "lifecycle_phase": None,

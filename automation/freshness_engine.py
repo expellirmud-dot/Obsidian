@@ -130,7 +130,11 @@ def fetch_remote_head(owner: str, repo: str, token: str | None) -> dict:
 
 def classify_freshness(truth_built_from_head: str | None, remote_head: str | None,
                        accessible: bool) -> tuple[str, str | None]:
-    """Classify freshness per the safety contract.
+    """Classify SOURCE-level freshness per the safety contract.
+
+    This models only the source HEAD vs. the HEAD the semantic truth was built
+    from. It does NOT model semantic/progress freshness (those are gated on
+    evidence-collection + identity-rebuild + progress-compute success).
 
     Returns (status, reason).
     """
@@ -145,6 +149,77 @@ def classify_freshness(truth_built_from_head: str | None, remote_head: str | Non
     if remote_head != truth_built_from_head:
         return "stale", "remote HEAD changed after last semantic truth build"
     return "fresh", None
+
+
+def semantic_freshness_for(manifest: dict, candidate_purpose: str | None,
+                           existing_purpose: str | None,
+                           has_identity_evidence: bool) -> str:
+    """Classify SEMANTIC freshness from the evidence manifest + identity rebuild.
+
+    "fresh" ONLY when ALL of:
+      * manifest["status"] == "ok" (evidence collection succeeded)
+      * identity was rebuilt successfully: candidate purpose is non-null (new
+        evidence) OR existing verified identity is preserved (existing purpose
+        non-null)
+      * has_identity_evidence is true
+    Otherwise:
+      * "stale" if manifest ok but identity rebuild incomplete
+      * "unknown" if manifest status is no_evidence/no_token/repo_not_accessible/
+        tree_unavailable/no_remote
+      * "refresh_failed" on schema-invalid/exception (caller sets this)
+    """
+    status = manifest.get("status") if isinstance(manifest, dict) else None
+    if status == "ok":
+        identity_ok = bool(candidate_purpose) or bool(existing_purpose)
+        if identity_ok and has_identity_evidence:
+            return "fresh"
+        return "stale"
+    if status in ("no_evidence", "no_token", "repo_not_accessible",
+                  "tree_unavailable", "no_remote"):
+        return "unknown"
+    # Unknown manifest status or manifest missing -> treat as unknown (safe).
+    return "unknown"
+
+
+def progress_freshness_for(manifest: dict, progress: dict) -> str:
+    """Classify PROGRESS freshness from the manifest + computed progress.
+
+    "fresh" ONLY when ALL of:
+      * manifest["status"] == "ok"
+      * progress.estimate is not None (confidence != "unknown")
+    Otherwise:
+      * "unknown" if no evidence (manifest status not ok)
+      * "stale" if evidence ok but progress unknown
+    """
+    status = manifest.get("status") if isinstance(manifest, dict) else None
+    if status != "ok":
+        return "unknown"
+    estimate = (progress or {}).get("estimate")
+    if estimate is None:
+        return "stale"
+    return "fresh"
+
+
+def _aggregate_freshness(source_f: str, semantic_f: str, progress_f: str) -> str:
+    """Aggregate the three sub-gates into a single freshness status.
+
+    Precedence (most severe first):
+      * "refresh_failed" if any sub-gate is refresh_failed
+      * "unknown" if any sub-gate is unknown
+      * "stale" if any sub-gate is stale
+      * "fresh" ONLY if all three sub-gates are fresh
+    """
+    gates = (source_f, semantic_f, progress_f)
+    if any(g == "refresh_failed" for g in gates):
+        return "refresh_failed"
+    if any(g == "unknown" for g in gates):
+        return "unknown"
+    if any(g == "stale" for g in gates):
+        return "stale"
+    if all(g == "fresh" for g in gates):
+        return "fresh"
+    # Defensive: any unexpected value -> unknown (never fresh).
+    return "unknown"
 
 
 def probe_project(project: dict, token: str | None) -> dict:
@@ -230,15 +305,21 @@ def refresh_project(project: dict, token: str | None, dry_run: bool = False) -> 
 
     if status == "fresh":
         # No deep refresh. Update source_checked_at only (lightweight).
+        # Re-assert sub-gates from EXISTING state: source is fresh, but the
+        # aggregate must NOT be fresh unless the existing semantic/progress
+        # sub-gates are also fresh (Freshness Safety Contract, F2).
         state = dict(original_state)
-        fr = state.get("freshness") or {}
+        fr = dict(state.get("freshness") or {})
         fr["source_checked_at"] = probe["checked_at"]
         fr["remote_head"] = probe["remote_head"]
-        fr["status"] = "fresh"
         fr["reason"] = None
         fr["stale_since"] = None
-        # Sub-freshness: source fresh; semantic/progress unchanged.
         fr["source_freshness"] = "fresh"
+        existing_semantic = fr.get("semantic_freshness") or "unknown"
+        existing_progress = fr.get("progress_freshness") or "unknown"
+        fr["semantic_freshness"] = existing_semantic
+        fr["progress_freshness"] = existing_progress
+        fr["status"] = _aggregate_freshness("fresh", existing_semantic, existing_progress)
         state["freshness"] = fr
         # Validate before writing (consistent with deep-refresh path).
         errors = _validate_state(state)
@@ -256,8 +337,9 @@ def refresh_project(project: dict, token: str | None, dry_run: bool = False) -> 
                     "reason": "schema invalid (fresh path)", "restored": True}
         if not dry_run:
             _write_state(state_path, state, original_text)
-        return {"project_id": pid, "published": not dry_run, "status": "fresh",
-                "deep_refresh": False, "reason": "HEAD unchanged"}
+        return {"project_id": pid, "published": not dry_run,
+                "status": fr["status"], "deep_refresh": False,
+                "reason": "HEAD unchanged"}
 
     # 2. STALE or UNKNOWN -> attempt deep refresh.
     # Import the truth builder + progress engine lazily (guard against
@@ -282,19 +364,37 @@ def refresh_project(project: dict, token: str | None, dry_run: bool = False) -> 
         existing_identity = working.get("project_identity") or {}
         existing_purpose = existing_identity.get("purpose")
         new_identity = dict(existing_identity)
+        # Reset drift fields each cycle (a prior drift may have been resolved).
+        new_identity["identity_drift_detected"] = False
+        new_identity["previous_identity"] = None
+        new_identity["candidate_identity"] = None
+        new_identity["candidate_identity_provenance"] = None
         drift = False
         if existing_purpose and candidate_identity["purpose"]:
             ep = existing_purpose.strip().lower()
             cp = candidate_identity["purpose"].strip().lower()
             same = ep == cp or ep in cp or cp in ep
             if not same:
+                # Mission drift: preserve old identity, record candidate +
+                # provenance (F4). Do NOT overwrite the existing purpose.
                 drift = True
                 new_identity["identity_drift_detected"] = True
                 new_identity["previous_identity"] = [dict(existing_identity)]
+                new_identity["candidate_identity"] = {"purpose": candidate_identity["purpose"]}
+                cand_ev, _ = ev._select_purpose_evidence(manifest)
+                if cand_ev is not None:
+                    new_identity["candidate_identity_provenance"] = {
+                        "path": cand_ev.get("path"),
+                        "ref": cand_ev.get("ref"),
+                        "blob_sha": cand_ev.get("blob_sha"),
+                        "observed_at": cand_ev.get("observed_at"),
+                    }
         elif not existing_purpose and candidate_identity["purpose"]:
             new_identity = dict(candidate_identity)
             new_identity["identity_drift_detected"] = False
             new_identity["previous_identity"] = None
+            new_identity["candidate_identity"] = None
+            new_identity["candidate_identity_provenance"] = None
         working["project_identity"] = new_identity
         if candidate_execution["current_work"] is not None:
             existing_exec = working.get("current_execution") or {}
@@ -303,10 +403,9 @@ def refresh_project(project: dict, token: str | None, dry_run: bool = False) -> 
                 if v is not None:
                     merged_exec[k] = v
             working["current_execution"] = merged_exec
-        has_identity_evidence = any(
-            e.get("category") == "identity" and e.get("heading")
-            for e in manifest.get("evidence", [])
-        )
+        # F1: knowledge_state=verified requires an explicit purpose (not just
+        # any heading). A bare project title/heading must NOT verify the Mission.
+        has_identity_evidence = candidate_identity["purpose"] is not None
         if has_identity_evidence:
             working["knowledge_state"] = "verified"
         working["verified_at"] = manifest.get("observed_at")
@@ -320,50 +419,92 @@ def refresh_project(project: dict, token: str | None, dry_run: bool = False) -> 
         exec_block["next_action"] = next_action
         working["current_execution"] = exec_block
 
-        # 2e. Update freshness.
+        # 2e. Compute the three sub-gates (F2: False Freshness / Partial Truth).
         remote_head = probe.get("remote_head")
+        accessible = probe.get("status") != "unknown" or remote_head is not None
+        # Source freshness is derived from classify_freshness (source-level).
+        source_f, _ = classify_freshness(
+            (working.get("freshness") or {}).get("truth_built_from_head"),
+            remote_head, accessible)
+        # If the remote head is known, source is fresh relative to the rebuilt
+        # truth (we bind truth_built_from_head to it below); otherwise classify
+        # already returned unknown/stale.
+        if remote_head:
+            source_f = "fresh"
+        semantic_f = semantic_freshness_for(
+            manifest, candidate_identity["purpose"], existing_purpose,
+            has_identity_evidence)
+        progress_f = progress_freshness_for(manifest, progress)
+        aggregate = _aggregate_freshness(source_f, semantic_f, progress_f)
+
+        # 2f. Publication gate (F2): if evidence collection did not succeed,
+        # do NOT publish the rebuilt truth as fresh. Roll back to the original
+        # state, preserving the previous verified identity + truth_built_from_head.
+        if manifest.get("status") != "ok":
+            if not dry_run:
+                state_path.write_text(original_text, encoding="utf-8")
+            failed_state = yaml.safe_load(original_text)
+            ffr = dict(failed_state.get("freshness") or {})
+            ffr["source_checked_at"] = probe["checked_at"]
+            ffr["remote_head"] = remote_head
+            ffr["tracked_ref"] = probe.get("default_branch") or ffr.get("tracked_ref")
+            # Preserve previous verified identity + truth_built_from_head
+            # (do NOT overwrite with null or with remote_head).
+            ffr["source_freshness"] = source_f
+            ffr["semantic_freshness"] = "unknown"
+            ffr["progress_freshness"] = "unknown"
+            ffr["status"] = "unknown"
+            ffr["reason"] = f"evidence unavailable: manifest status={manifest.get('status')}"
+            failed_state["freshness"] = ffr
+            if not dry_run:
+                _write_state(state_path, failed_state, original_text)
+            return {"project_id": pid, "published": False, "status": "unknown",
+                    "deep_refresh": True, "restored": True,
+                    "reason": f"evidence unavailable: manifest status={manifest.get('status')}",
+                    "manifest_status": manifest.get("status")}
+
+        # 2g. Evidence OK -> bind truth to remote head (if known) and publish
+        # the aggregate status. Aggregate is fresh ONLY if all three sub-gates
+        # are fresh.
         fr = working.get("freshness") or {}
         fr["source_checked_at"] = probe["checked_at"]
         fr["remote_head"] = remote_head
         fr["tracked_ref"] = probe.get("default_branch") or fr.get("tracked_ref")
-        # If we have a remote head, bind truth to it; else keep unknown.
         if remote_head:
             fr["truth_built_from_head"] = remote_head
             fr["truth_built_at"] = now_iso()
-            fr["status"] = "fresh"
-            fr["reason"] = None
-            fr["stale_since"] = None
-            fr["source_freshness"] = "fresh"
-            fr["semantic_freshness"] = "fresh"
-            fr["progress_freshness"] = "fresh"
             working["head"] = remote_head
-        else:
-            # No remote head resolvable -> UNKNOWN (never FRESH).
-            fr["status"] = "unknown"
-            fr["reason"] = "remote head could not be resolved after refresh"
-            fr["source_freshness"] = "unknown"
-            fr["semantic_freshness"] = "unknown"
-            fr["progress_freshness"] = "unknown"
+        fr["source_freshness"] = source_f
+        fr["semantic_freshness"] = semantic_f
+        fr["progress_freshness"] = progress_f
+        fr["status"] = aggregate
+        fr["reason"] = None if aggregate == "fresh" else (
+            f"sub-gates: source={source_f} semantic={semantic_f} progress={progress_f}")
+        fr["stale_since"] = None if aggregate == "fresh" else fr.get("stale_since")
         working["freshness"] = fr
 
-        # 2f. Schema validate.
+        # 2h. Schema validate.
         errors = _validate_state(working)
         if errors:
-            # Restore original; mark refresh_failed.
+            # Restore original; mark refresh_failed. Preserve the original
+            # verified identity (do NOT null it).
             if not dry_run:
                 state_path.write_text(original_text, encoding="utf-8")
             failed_state = yaml.safe_load(original_text)
-            ffr = failed_state.get("freshness") or {}
+            ffr = dict(failed_state.get("freshness") or {})
             ffr["status"] = "refresh_failed"
             ffr["reason"] = f"schema invalid: {errors[:2]}"
             ffr["source_checked_at"] = probe["checked_at"]
+            ffr["source_freshness"] = source_f
+            ffr["semantic_freshness"] = "refresh_failed"
+            ffr["progress_freshness"] = "refresh_failed"
             failed_state["freshness"] = ffr
             if not dry_run:
                 _write_state(state_path, failed_state, original_text)
             return {"project_id": pid, "published": False, "status": "refresh_failed",
                     "reason": f"schema invalid", "errors": errors[:3], "restored": True}
 
-        # 2g. Publish (only if all PASS).
+        # 2i. Publish (only if all PASS).
         if not dry_run:
             _write_state(state_path, working, original_text)
         return {
@@ -377,15 +518,19 @@ def refresh_project(project: dict, token: str | None, dry_run: bool = False) -> 
             "next_action": next_action,
         }
     except Exception as exc:  # noqa: BLE001
-        # Restore original good state; mark refresh_failed.
+        # Restore original good state; mark refresh_failed. Preserve the
+        # original verified identity (do NOT null it).
         if not dry_run:
             state_path.write_text(original_text, encoding="utf-8")
         try:
             failed_state = yaml.safe_load(original_text)
-            ffr = failed_state.get("freshness") or {}
+            ffr = dict(failed_state.get("freshness") or {})
             ffr["status"] = "refresh_failed"
             ffr["reason"] = f"exception: {type(exc).__name__}: {exc}"[:200]
             ffr["source_checked_at"] = now_iso()
+            ffr["source_freshness"] = ffr.get("source_freshness") or "unknown"
+            ffr["semantic_freshness"] = "refresh_failed"
+            ffr["progress_freshness"] = "refresh_failed"
             failed_state["freshness"] = ffr
             if not dry_run:
                 _write_state(state_path, failed_state, original_text)

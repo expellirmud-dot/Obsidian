@@ -286,8 +286,18 @@ def collect_evidence_for_project(project: dict, token: str | None) -> dict:
         if content is None:
             continue
         category, kind = classify_file(path, content)
-        excerpt = content[:500].replace("\n", " ").strip()
+        # Preserve newlines so the truth builder can detect explicit
+        # Purpose/Mission section headings (a flattened excerpt would hide the
+        # heading structure). Capped at 500 chars to keep manifests compact.
+        excerpt = content[:500].strip()
         heading = _first_heading(content)
+        # WO-OBSIDIAN-041 F5: record content_length + truncated so the progress
+        # engine can detect an incomplete denominator (a truncated roadmap must
+        # NOT produce a false percentage). truncated is True only when the
+        # full content exceeded the 500-char excerpt cap (not when strip()
+        # merely removed surrounding whitespace).
+        content_length = len(content)
+        truncated = content_length > 500
         manifest["evidence"].append(
             {
                 "path": path,
@@ -300,6 +310,8 @@ def collect_evidence_for_project(project: dict, token: str | None) -> dict:
                 "observed_at": observed_at,
                 "heading": heading,
                 "content_excerpt": excerpt,
+                "content_length": content_length,
+                "truncated": truncated,
             }
         )
 
@@ -367,10 +379,121 @@ def _first_paragraph(content: str, max_len: int = 300) -> str | None:
     return None
 
 
+# Section headings whose presence indicates an explicit Purpose/Mission
+# statement (as opposed to a bare project title). Matched case-insensitively
+# against the heading label (trailing ":" stripped).
+_PURPOSE_HEADINGS = {
+    "purpose",
+    "mission",
+    "problem",
+    "problem statement",
+    "what this project does",
+    "overview",
+    "about",
+}
+
+# Explicit purpose phrases that, appearing in a leading paragraph, indicate the
+# sentence is a real mission statement rather than a title.
+_PHRASE_PATTERNS = [
+    re.compile(r"\bthis project (?:provides|is|exists to)\b", re.IGNORECASE),
+    re.compile(r"\bdesigned to\b", re.IGNORECASE),
+    re.compile(r"\bproject exists to\b", re.IGNORECASE),
+]
+_LABEL_COLON_RE = re.compile(r"\b(purpose|mission)\s*:\s*(.+)$", re.IGNORECASE)
+_HEADING_RE = re.compile(r"^#{1,6}\s+(.+)$")
+
+
+def _extract_explicit_purpose(content: str) -> str | None:
+    """Return an EXPLICIT project purpose/mission statement, or None.
+
+    A purpose is only recognized when there is explicit descriptive text:
+      * a section heading whose label is Purpose/Mission/Problem/Overview/About/
+        "What this project does", followed by real descriptive text (the heading
+        label itself is NOT the purpose -- the following paragraph is); or
+      * a leading paragraph containing an explicit phrase such as
+        "This project provides...", "Designed to...", "Project exists to...",
+        "Purpose: ...", "Mission: ...".
+
+    A bare H1 title (e.g. "# Thai STT App") or a repository/project name is
+    NEVER treated as a purpose. Returns None when no explicit purpose text is
+    found (callers must then leave purpose null / knowledge_state unverified).
+    """
+    if not content:
+        return None
+
+    lines = content.splitlines()
+
+    # Skip a leading YAML frontmatter block so headings/labels inside it are
+    # not mistaken for the project's purpose.
+    body_start = 0
+    if lines and lines[0].strip() == "---":
+        for i in range(1, len(lines)):
+            if lines[i].strip() == "---":
+                body_start = i + 1
+                break
+
+    # 1. Explicit Purpose/Mission/... section heading followed by text.
+    for i in range(body_start, len(lines)):
+        m = _HEADING_RE.match(lines[i].strip())
+        if not m:
+            continue
+        label = m.group(1).strip().lower().rstrip(":")
+        if label not in _PURPOSE_HEADINGS:
+            continue
+        parts: list[str] = []
+        for j in range(i + 1, len(lines)):
+            t = lines[j].strip()
+            if _HEADING_RE.match(t):
+                break
+            if t:
+                parts.append(t)
+        text = " ".join(parts).strip()
+        # Overview/About (and every label) only count when followed by real
+        # descriptive text -- a bare label is not a purpose.
+        if text:
+            return text[:300]
+
+    # 2. Explicit purpose phrase in a leading paragraph.
+    paras: list[str] = []
+    for line in lines[body_start:]:
+        s = line.strip()
+        if not s or s.startswith("#") or s == "---" or s.startswith(">") or s.startswith("|") or s.startswith("```"):
+            continue
+        paras.append(s)
+        if len(paras) >= 5:
+            break
+    for p in paras:
+        m = _LABEL_COLON_RE.search(p)
+        if m and m.group(2).strip():
+            return m.group(2).strip()[:300]
+        if any(pat.search(p) for pat in _PHRASE_PATTERNS):
+            return p[:300]
+    return None
+
+
+def _select_purpose_evidence(manifest: dict) -> tuple[dict | None, str | None]:
+    """Return (evidence_item, purpose) for the first identity evidence item that
+    yields an explicit purpose, or (None, None).
+
+    Used both to fill project_identity.purpose and to attribute the candidate
+    mission's provenance on drift (F4).
+    """
+    for ev in manifest.get("evidence", []):
+        if ev.get("category") != "identity":
+            continue
+        purpose = _extract_explicit_purpose(ev.get("content_excerpt", ""))
+        if purpose:
+            return ev, purpose
+    return None, None
+
+
 def build_identity_from_evidence(manifest: dict) -> dict:
     """Conservatively build project_identity from evidence. Never fabricates.
 
-    Only fills a field when there is clear textual evidence. Otherwise null.
+    Only `purpose` is derived, and ONLY from explicit Purpose/Mission/Problem
+    text in authoritative identity evidence. A bare heading or project name is
+    NOT sufficient -- purpose stays null. The remaining identity fields are
+    schema-supported-but-not-derived (always null here).
     """
     identity = {
         "purpose": None,
@@ -382,15 +505,11 @@ def build_identity_from_evidence(manifest: dict) -> dict:
         "non_goals": None,
         "identity_drift_detected": False,
         "previous_identity": None,
+        "candidate_identity": None,
+        "candidate_identity_provenance": None,
     }
-    # Prefer README/AGENTS for purpose.
-    for ev in manifest.get("evidence", []):
-        if ev["category"] == "identity":
-            heading = ev.get("heading")
-            para = _first_paragraph(ev.get("content_excerpt", ""))
-            if not identity["purpose"]:
-                identity["purpose"] = heading or para
-            break
+    _ev, purpose = _select_purpose_evidence(manifest)
+    identity["purpose"] = purpose
     return identity
 
 
@@ -424,15 +543,22 @@ def apply_truth_to_state(project_id: str, manifest: dict, dry_run: bool = False)
 
     Mission Drift Protection:
       - The existing project_identity is loaded.
-      - A new candidate identity is built from evidence.
+      - A new candidate identity is built from evidence (purpose only, and only
+        from EXPLICIT Purpose/Mission/Problem text -- a bare heading or project
+        name is never a purpose, F1).
       - If the existing identity has a non-null `purpose` AND the candidate
         purpose differs meaningfully, this is treated as potential drift:
           * identity_drift_detected = True
           * previous_identity = the existing identity snapshot
-          * the candidate is recorded but the existing purpose is PRESERVED
-            (not silently overwritten).
+          * candidate_identity = {"purpose": <candidate mission>} (inspectable,
+            NOT applied)
+          * candidate_identity_provenance = {path, ref, blob_sha, observed_at}
+            of the evidence item that produced the candidate (F4)
+          * the existing purpose is PRESERVED (not silently overwritten).
       - If the existing identity is all-null (never set), the candidate is
         applied (this is initial onboarding, not drift).
+      - knowledge_state is set to "verified" ONLY when an explicit purpose is
+        derived; otherwise the existing knowledge_state is left untouched (F1).
       - current_execution is always updated from evidence (it is NOT the
         Mission and may change per Work Order).
     """
@@ -452,6 +578,9 @@ def apply_truth_to_state(project_id: str, manifest: dict, dry_run: bool = False)
 
     drift = False
     new_identity = dict(existing_identity)
+    # By default no candidate is recorded; only drift records a candidate.
+    new_identity["candidate_identity"] = None
+    new_identity["candidate_identity_provenance"] = None
     if existing_purpose and candidate_identity["purpose"]:
         ep = existing_purpose.strip().lower()
         cp = candidate_identity["purpose"].strip().lower()
@@ -462,18 +591,30 @@ def apply_truth_to_state(project_id: str, manifest: dict, dry_run: bool = False)
         same = ep == cp or ep in cp or cp in ep
         if not same:
             # Potential Mission drift. Preserve previous identity; do NOT
-            # overwrite the purpose silently.
+            # overwrite the purpose silently. Record the candidate mission and
+            # its evidence provenance so the proposed change is inspectable
+            # without being applied (F4).
             drift = True
             new_identity["identity_drift_detected"] = True
             new_identity["previous_identity"] = [dict(existing_identity)]
-            # Keep the existing purpose; record the candidate in previous_identity
-            # context (already preserved above). Do not overwrite purpose.
+            src_ev, _ = _select_purpose_evidence(manifest)
+            new_identity["candidate_identity"] = {"purpose": candidate_identity["purpose"]}
+            if src_ev is not None:
+                new_identity["candidate_identity_provenance"] = {
+                    "path": src_ev.get("path"),
+                    "ref": src_ev.get("ref"),
+                    "blob_sha": src_ev.get("blob_sha"),
+                    "observed_at": src_ev.get("observed_at"),
+                }
+        # else: same purpose -> no drift, no candidate recorded.
     elif not existing_purpose and candidate_identity["purpose"]:
         # Initial onboarding: apply candidate identity (no drift).
         new_identity = dict(candidate_identity)
         new_identity["identity_drift_detected"] = False
         new_identity["previous_identity"] = None
-    # else: no new evidence or same purpose -> leave identity as-is.
+        new_identity["candidate_identity"] = None
+        new_identity["candidate_identity_provenance"] = None
+    # else: no candidate purpose -> leave identity as-is (candidate stays None).
 
     state["project_identity"] = new_identity
     # current_execution is updated from evidence (it is not the Mission), but
@@ -495,13 +636,11 @@ def apply_truth_to_state(project_id: str, manifest: dict, dry_run: bool = False)
         fr["truth_built_at"] = manifest.get("observed_at")
         state["freshness"] = fr
         state["head"] = manifest["commit_sha"]
-    # Mark knowledge_state verified only when we have IDENTITY evidence (a
-    # purpose). Evidence without identity (e.g. only a changelog) does not
-    # verify the project's Mission.
-    has_identity_evidence = any(
-        e.get("category") == "identity" and e.get("heading")
-        for e in manifest.get("evidence", [])
-    )
+    # Mark knowledge_state verified ONLY when the evidence yields an explicit
+    # purpose (a real Mission statement). A bare heading/title/repository name
+    # is NOT sufficient (F1): without an explicit purpose we leave the existing
+    # knowledge_state untouched rather than promoting to "verified".
+    has_identity_evidence = candidate_identity["purpose"] is not None
     if has_identity_evidence:
         state["knowledge_state"] = "verified"
     state["verified_at"] = manifest.get("observed_at")
