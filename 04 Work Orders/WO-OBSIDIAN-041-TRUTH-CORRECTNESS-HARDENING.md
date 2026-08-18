@@ -7,11 +7,14 @@ Task Classification: Vault Operational Tooling / Truth Layer Correctness
 Execution Mode: Bounded Single Work Order (MANDATORY PARALLEL MULTI-AGENT)
 Owner: Toto
 Target Vault: `D:\Obsidian\Project-Knowledge-Vault`
-Status: ACTIVE
+Status: CLOSED
 
-> ACTIVE — corrective hardening of the Truth Control Plane built in WO-036–040.
+> CLOSED — corrective hardening of the Truth Control Plane built in WO-036–040.
 > Principle: CORRECTNESS > FEATURE COUNT. UNKNOWN is better than fabricated truth.
 > No claim is preserved merely because a prior Work Order marked it PASS.
+>
+> All 14 findings (F1–F14) accepted across 4 independent review rounds.
+> Final independent owner review: PASS. Ready for merge.
 
 ## 1. Objective
 
@@ -295,10 +298,63 @@ Wave 4 — Parallel Independent Review (3 agents):
 - Schema: 11/11 VALID
 - Renderer: all VALID
 - Render idempotency: PASS (zero diff on second render)
-- Tests: 109 passed, 0 failed (baseline 73; +36 regression tests)
+- Tests: 146 passed, 0 failed (baseline 73; +36 Round 1; +20 Round 2; +11 Round 3; +6 Round 4)
 - diff-check: clean
 - No source repository mutation (GET-only)
 - No secrets
 - No out-of-scope changes
 
-Status: ACTIVE (awaiting independent owner review; DO NOT MERGE)
+## 16. Closeout (Round 4 — Final)
+
+Final HEAD SHA: `82329f07518c0c0c97010a05bd750e60db3a3e91`
+origin/main baseline SHA: `26caeaefca03aa61f030c5c6d277b9616332c1c9`
+PR: #3 (https://github.com/expellirmud-dot/Obsidian/pull/3)
+
+### Cumulative Findings Reconciliation (F1–F14)
+
+| Finding | Round | Before | Fix | Final |
+|---------|-------|--------|-----|-------|
+| F1 Mission Verification | 1 | heading/project_name → purpose + verified | `_extract_explicit_purpose` requires explicit Purpose/Mission/Problem text | ACCEPTED |
+| F2 Freshness Publication | 1 | remote_head known → all gates fresh | sub-gates gate on manifest status; aggregate requires all 3 fresh | ACCEPTED |
+| F3 Acceptance Overclaim | 1 | "fills identity from evidence" | WO-036/038/039 corrected; 6 fields schema-supported-but-not-derived | ACCEPTED |
+| F4 Mission Drift Provenance | 1 | candidate discarded; no provenance | `candidate_identity` + provenance recorded; old identity preserved | ACCEPTED |
+| F5 Progress Correctness | 1 | truncated roadmap → false % | truncation gate; finditer fallback; unsupported methods UNKNOWN | ACCEPTED |
+| F6 Atomic Onboarding | 1 | sequential writes; `'w'` mode | `_atomic_write_registry`; completeness-aware idempotency | ACCEPTED |
+| F7 Git Automation Safety | 1 | `git add -A` in Automation A/B | explicit path staging; forbidden in docs | ACCEPTED |
+| F8 Dry-Run Read-Only | 2 | wrote before dry_run gate | `dry_run` param; ZERO writes in every state | ACCEPTED |
+| F9 Complete Partial Repair | 2 | state file never repaired | repairs missing state; completeness requires all 3 | ACCEPTED |
+| F10 Progress Value ≠ Freshness | 2 | `estimate==null` → stale | "fresh" when manifest ok regardless of estimate | ACCEPTED |
+| F11 Backward-Safe v2 Migration | 2 | v2 states skipped | `_upgrade_v2_shape` adds candidate fields; no longer skips v2 | ACCEPTED |
+| F12 State Validity | 3 | `state_path.exists()` treated as complete | `_load_validated_state` loads + validates; invalid state rebuilt | ACCEPTED |
+| F13 Migration Freshness Fabrication | 3 | v1 head → all freshness = "fresh" | all freshness = "unknown" for migrated v1 states | ACCEPTED |
+| F14 Repair Transaction Safety | 4 | no rollback on later write failure | pre-repair snapshots + `_rollback()` + explicit `repair_failed` | ACCEPTED |
+
+Expected findings: 14
+Resolved: 14
+Unresolved: 0
+
+### Final Independent Owner Review
+
+```
+WO-OBSIDIAN-041
+HEAD: 82329f07518c0c0c97010a05bd750e60db3a3e91
+
+F1–F14: ACCEPTED
+OPEN CORRECTNESS FINDINGS: 0
+
+INDEPENDENT REVIEW: PASS
+READY FOR CLOSEOUT: YES
+READY FOR MERGE: YES
+```
+
+### Known Limitations (accepted as non-blocking)
+
+1. Legacy manifests without `truncated`/`content_length` → progress UNKNOWN (safe default)
+2. 6 identity fields remain schema-supported-but-not-derived (future WO)
+3. bounded work-order set + phase/goal progress marked UNSUPPORTED (return UNKNOWN)
+4. Repair-on-rename edge case (narrow, not reachable via normal flow)
+5. Non-blocking: schema `progress_freshness` enum includes "stale" though no code produces it (harmless over-permissiveness; preserved for forward-compatibility)
+6. Non-blocking: if the state write itself fails mid-write (disk full, first write), `repaired_state` stays False and rollback skips the state file — failure occurs before publish of registry/overview; retry re-enters via invalid-state repair; not a fail-open of the Project Truth Control Plane
+7. Evidence limitation: no GitHub Actions workflow run at this HEAD; `146 passed` is from OpenHands/local execution, not GitHub CI reproduced by the owner. Not a blocker under the current workflow.
+
+Status: CLOSED (final independent owner review PASS; ready for merge)
