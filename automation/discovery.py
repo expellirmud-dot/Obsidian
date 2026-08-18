@@ -511,21 +511,25 @@ def _repair_onboarding(
     overview: str,
     state_path: Path,
     overview_path: Path,
+    state: dict,
+    header: str,
+    dry_run: bool = False,
 ) -> dict:
     """Converge a partially-onboarded project to a complete registration.
 
     A project is "fully onboarded" when ALL THREE artifacts exist: state file,
     projects.yaml entry (by stable id OR project_id), AND overview file. This
-    helper appends the missing registry entry and/or writes the missing
-    overview using the existing state file. It never creates a duplicate
-    registry entry.
+    helper writes any missing artifact among the three. It never creates a
+    duplicate registry entry.
+
+    When dry_run=True this performs ZERO writes and instead returns a report
+    with dry_run=True and proposed_repairs describing which artifacts would be
+    written. When dry_run=False the missing artifacts are written and the
+    report carries repaired_{state,registry,overview} flags.
 
     Returns a report with created=False, reason="repaired" (or
     "already_onboarded" if nothing was missing).
     """
-    repaired_registry = False
-    repaired_overview = False
-
     # Prefer values from the existing state file (source of truth) when present.
     eff_name = project_name
     eff_repo = repository
@@ -542,7 +546,45 @@ def _repair_onboarding(
         except (OSError, yaml.YAMLError):
             pass
 
-    # Repair the registry entry if missing (atomic write).
+    # Compute which of the three artifacts are missing (no writes here).
+    state_missing = not state_path.exists()
+    registry = load_projects_registry()
+    registry_missing = _registry_find_entry(registry, project_id, eff_rid) is None
+    overview_missing = not overview_path.exists()
+
+    if dry_run:
+        # Strictly read-only: report what would be done, perform ZERO writes.
+        return {
+            "project_id": project_id,
+            "project_name": eff_name,
+            "created": False,
+            "dry_run": True,
+            "reason": "proposed_repair",
+            "proposed_repairs": {
+                "state": state_missing,
+                "registry": registry_missing,
+                "overview": overview_missing,
+            },
+            "state_path": str(state_path),
+            "overview_path": str(overview_path),
+        }
+
+    repaired_state = False
+    repaired_registry = False
+    repaired_overview = False
+
+    # Repair the state file if missing (same header+body format as onboard_project).
+    if state_missing:
+        state_path.parent.mkdir(parents=True, exist_ok=True)
+        body = yaml.safe_dump(
+            state, sort_keys=False, default_flow_style=False,
+            allow_unicode=True, width=1000,
+        )
+        state_path.write_text(header + body, encoding="utf-8")
+        repaired_state = True
+
+    # Repair the registry entry if missing (atomic write). Reload in case the
+    # state write is the source of truth for matching.
     registry = load_projects_registry()
     if _registry_find_entry(registry, project_id, eff_rid) is None:
         registry.setdefault("projects", []).append(
@@ -552,17 +594,21 @@ def _repair_onboarding(
         repaired_registry = True
 
     # Repair the overview if missing.
-    if not overview_path.exists():
+    if overview_missing:
         overview_path.parent.mkdir(parents=True, exist_ok=True)
         overview_path.write_text(overview, encoding="utf-8")
         repaired_overview = True
 
-    reason = "repaired" if (repaired_registry or repaired_overview) else "already_onboarded"
+    reason = (
+        "repaired" if (repaired_state or repaired_registry or repaired_overview)
+        else "already_onboarded"
+    )
     return {
         "project_id": project_id,
         "project_name": eff_name,
         "created": False,
         "reason": reason,
+        "repaired_state": repaired_state,
         "repaired_registry": repaired_registry,
         "repaired_overview": repaired_overview,
         "state_path": str(state_path),
@@ -636,6 +682,14 @@ def onboard_project(
 
     overview = _overview_stub(project_id, project_name, repository, rid, observed_at)
 
+    # State file header (shared by new onboarding and partial repair).
+    header = (
+        f"# Normalized project state (v2) -- {project_id}\n"
+        f"# Onboarded by WO-OBSIDIAN-037 (Repository Discovery + Safe Auto-Onboarding).\n"
+        f"# Source repository is READ-ONLY; no source files were modified.\n"
+        f"# knowledge_state=needs-verification: Mission not yet verified against source evidence.\n"
+    )
+
     # Completeness-aware idempotency + stable-id duplicate prevention.
     # A project is fully onboarded iff ALL THREE artifacts exist.
     state_exists = state_path.exists()
@@ -647,11 +701,13 @@ def onboard_project(
     if state_exists and registry_exists and overview_exists:
         return {"project_id": project_id, "created": False, "reason": "already_onboarded"}
 
-    if state_exists or registry_exists:
+    if state_exists or registry_exists or overview_exists:
         # Partial registration -> repair the missing pieces (no duplicate).
+        # dry_run is forwarded so dry-run mode performs ZERO writes and only
+        # reports proposed repairs.
         return _repair_onboarding(
             project_id, project_name, repository, rid, overview,
-            state_path, overview_path,
+            state_path, overview_path, state, header, dry_run=dry_run,
         )
 
     # NONE exist -> proceed with full onboarding.
@@ -669,12 +725,6 @@ def onboard_project(
 
     # Write order: state -> overview -> registry (atomic). The state file alone
     # is NOT "published" until the registry entry exists.
-    header = (
-        f"# Normalized project state (v2) -- {project_id}\n"
-        f"# Onboarded by WO-OBSIDIAN-037 (Repository Discovery + Safe Auto-Onboarding).\n"
-        f"# Source repository is READ-ONLY; no source files were modified.\n"
-        f"# knowledge_state=needs-verification: Mission not yet verified against source evidence.\n"
-    )
     body = yaml.safe_dump(
         state, sort_keys=False, default_flow_style=False, allow_unicode=True, width=1000
     )

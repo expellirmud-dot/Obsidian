@@ -184,19 +184,25 @@ def semantic_freshness_for(manifest: dict, candidate_purpose: str | None,
 def progress_freshness_for(manifest: dict, progress: dict) -> str:
     """Classify PROGRESS freshness from the manifest + computed progress.
 
-    "fresh" ONLY when ALL of:
-      * manifest["status"] == "ok"
-      * progress.estimate is not None (confidence != "unknown")
-    Otherwise:
-      * "unknown" if no evidence (manifest status not ok)
-      * "stale" if evidence ok but progress unknown
+    Progress FRESHNESS describes whether the progress computation was rebuilt
+    from current evidence -- NOT whether a trustworthy percentage exists
+    (that is the progress VALUE, i.e. progress.estimate). A null estimate with
+    confidence="unknown" means "we freshly computed progress from current
+    evidence, and the result is: no denominator available" -- that is still a
+    FRESH computation, just with an unknown value.
+
+    compute_progress never throws (it returns UNKNOWN on failure), so a
+    manifest status of "ok" implies the computation ran from current evidence.
+
+      * manifest["status"] != "ok" -> "unknown" (evidence not current)
+      * manifest["status"] == "ok" -> "fresh" (computation ran from current
+        evidence, regardless of estimate value)
+    There is no "stale" case for progress: progress is either
+    fresh-from-current-evidence or unknown.
     """
     status = manifest.get("status") if isinstance(manifest, dict) else None
     if status != "ok":
         return "unknown"
-    estimate = (progress or {}).get("estimate")
-    if estimate is None:
-        return "stale"
     return "fresh"
 
 

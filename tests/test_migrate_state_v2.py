@@ -12,10 +12,16 @@ Test cases:
   6. test_freshness_contract_unknown_never_becomes_fresh
   7. test_github_repository_id_allows_null_for_local_only
   8. test_progress_supports_unknown
+  9. test_pre_wo041_v2_state_upgraded_with_new_fields        (WO-041 F11)
+  10. test_idempotent_v2_shape_upgrade                        (WO-041 F11)
+  11. test_migrate_all_upgrades_old_v2_states                 (WO-041 F11)
+  12. test_migrate_all_skips_already_current_v2               (WO-041 F11)
+  13. test_v2_shape_upgrade_preserves_existing_data           (WO-041 F11)
 """
 
 from __future__ import annotations
 
+import copy
 import sys
 from pathlib import Path
 
@@ -331,3 +337,199 @@ def test_progress_supports_unknown(schema, valid_state_dict):
         "basis": None,
     }
     assert list(validator.iter_errors(state)) == []
+
+
+# ---------------------------------------------------------------------------
+# 9-13. WO-OBSIDIAN-041 F11: backward-safe v2 shape upgrade
+# ---------------------------------------------------------------------------
+
+def _pre_wo041_v2_state() -> dict:
+    """A valid pre-WO-041 v2 state: schema_version=2 but project_identity
+    LACKS candidate_identity / candidate_identity_provenance (the fields the
+    WO-041 schema now requires)."""
+    state = {
+        "schema_version": 2,
+        "project_id": "demo",
+        "project_name": "Demo",
+        "github_repository_id": None,
+        "source_path": "D:\\demo",
+        "repository": "https://github.com/expellirmud-dot/demo.git",
+        "branch": "main",
+        "head": "abc1234567890",
+        "knowledge_state": "needs-verification",
+        "project_identity": {
+            "purpose": "Mission A",
+            "problem_statement": "Solve X",
+            "intended_outcome": "Outcome Y",
+            "primary_users": "users",
+            "success_definition": "def",
+            "scope": "scope A",
+            "non_goals": "ng",
+            "identity_drift_detected": False,
+            "previous_identity": None,
+            # NOTE: candidate_identity / candidate_identity_provenance absent
+        },
+        "current_execution": {
+            "lifecycle_phase": "active",
+            "current_goal": "Ship v1",
+            "current_work": "writing tests",
+            "current_work_authority": {"path": "WO-1.md", "kind": "work-order"},
+            "current_work_evidence": "verified",
+            "last_completed": None,
+            "blockers": None,
+            "next_action": "merge",
+        },
+        "freshness": {
+            "status": "fresh",
+            "tracked_ref": "main",
+            "remote_head": "abc1234567890",
+            "truth_built_from_head": "abc1234567890",
+            "source_checked_at": "2026-08-10T00:00:00Z",
+            "truth_built_at": "2026-08-10T00:00:00Z",
+            "stale_since": None,
+            "reason": None,
+            "source_freshness": "fresh",
+            "semantic_freshness": "fresh",
+            "progress_freshness": "fresh",
+        },
+        "progress": {
+            "scope": None,
+            "method": None,
+            "estimate": None,
+            "range_min": None,
+            "range_max": None,
+            "confidence": "unknown",
+            "completed": None,
+            "active": None,
+            "remaining": None,
+            "basis": None,
+        },
+        "github": {
+            "ci_state": "success",
+            "open_pr": 7,
+            "open_pr_count": None,
+            "observed_at": "2026-08-10T00:00:00Z",
+        },
+        "last_change": "2026-08-10",
+        "evidence_classification": "verified",
+        "verified_at": "2026-08-10T00:00:00Z",
+        "adapter_id": "generic-git-plus-authority-files",
+    }
+    return state
+
+
+def test_pre_wo041_v2_state_upgraded_with_new_fields(schema):
+    """A pre-WO-041 v2 state (missing candidate_* fields) is upgraded in-place
+    by migrate_one and then validates against the current schema."""
+    validator = Draft202012Validator(schema)
+    state = _pre_wo041_v2_state()
+    # Sanity: the pre-WO-041 state must FAIL the current schema (missing
+    # required fields) before the upgrade.
+    pre_errors = list(validator.iter_errors(state))
+    assert pre_errors, "pre-WO-041 v2 state should fail current schema before upgrade"
+
+    upgraded = mig.migrate_one(copy.deepcopy(state))
+
+    assert upgraded["schema_version"] == 2
+    identity = upgraded["project_identity"]
+    assert "candidate_identity" in identity
+    assert identity["candidate_identity"] is None
+    assert "candidate_identity_provenance" in identity
+    assert identity["candidate_identity_provenance"] is None
+    # Existing data preserved.
+    assert identity["purpose"] == "Mission A"
+    assert identity["problem_statement"] == "Solve X"
+    assert identity["scope"] == "scope A"
+    assert upgraded["project_id"] == "demo"
+    assert upgraded["current_execution"]["current_goal"] == "Ship v1"
+    assert upgraded["github"]["open_pr"] == 7
+    # The upgraded state must now pass the current schema.
+    assert list(validator.iter_errors(upgraded)) == []
+
+
+def test_idempotent_v2_shape_upgrade(schema):
+    """Running migrate_one on an already-upgraded v2 state is a no-op."""
+    validator = Draft202012Validator(schema)
+    state = _pre_wo041_v2_state()
+    upgraded_once = mig.migrate_one(copy.deepcopy(state))
+    upgraded_twice = mig.migrate_one(copy.deepcopy(upgraded_once))
+    assert upgraded_twice == upgraded_once
+    assert upgraded_twice["project_identity"]["candidate_identity"] is None
+    assert upgraded_twice["project_identity"]["candidate_identity_provenance"] is None
+    assert list(validator.iter_errors(upgraded_twice)) == []
+
+
+def test_migrate_all_upgrades_old_v2_states(schema, tmp_path, monkeypatch):
+    """migrate_all upgrades an old v2 state file on disk and the result is
+    valid against the current schema."""
+    # Point STATE_DIR at a temp dir with a single old v2 state file.
+    state_dir = tmp_path / "state"
+    state_dir.mkdir()
+    old_state = _pre_wo041_v2_state()
+    state_path = state_dir / "demo.yaml"
+    state_path.write_text(yaml.safe_dump(old_state, sort_keys=False), encoding="utf-8")
+
+    monkeypatch.setattr(mig, "STATE_DIR", state_dir)
+
+    migrated, skipped, errors = mig.migrate_all(check_only=False)
+    assert errors == 0
+    assert migrated == 1
+    assert skipped == 0
+
+    # The file on disk now has the candidate fields and validates.
+    written = yaml.safe_load(state_path.read_text(encoding="utf-8"))
+    identity = written["project_identity"]
+    assert "candidate_identity" in identity
+    assert identity["candidate_identity"] is None
+    assert "candidate_identity_provenance" in identity
+    assert identity["candidate_identity_provenance"] is None
+    validator = Draft202012Validator(schema)
+    assert list(validator.iter_errors(written)) == []
+
+
+def test_migrate_all_skips_already_current_v2(schema, valid_state_dict, tmp_path, monkeypatch):
+    """A v2 state that already has the candidate fields is NOT rewritten."""
+    state_dir = tmp_path / "state"
+    state_dir.mkdir()
+    state_path = state_dir / "current.yaml"
+    # valid_state_dict already has candidate_identity / candidate_identity_provenance.
+    original_text = yaml.safe_dump(valid_state_dict, sort_keys=False)
+    state_path.write_text(original_text, encoding="utf-8")
+
+    monkeypatch.setattr(mig, "STATE_DIR", state_dir)
+
+    migrated, skipped, errors = mig.migrate_all(check_only=False)
+    assert errors == 0
+    assert migrated == 0
+    assert skipped == 1
+    # File unchanged on disk.
+    assert state_path.read_text(encoding="utf-8") == original_text
+
+
+def test_v2_shape_upgrade_preserves_existing_data(schema):
+    """A v2 state that already has a non-null candidate_identity (from a prior
+    drift detection) must NOT have it overwritten by the shape upgrade."""
+    validator = Draft202012Validator(schema)
+    state = _pre_wo041_v2_state()
+    # Simulate a prior drift detection that recorded a candidate identity.
+    state["project_identity"]["candidate_identity"] = {"purpose": "candidate"}
+    state["project_identity"]["candidate_identity_provenance"] = {
+        "path": "README.md",
+        "ref": "main",
+        "blob_sha": "deadbeef",
+        "observed_at": "2026-08-10T00:00:00Z",
+    }
+    state["project_identity"]["identity_drift_detected"] = True
+
+    upgraded = mig.migrate_one(copy.deepcopy(state))
+
+    identity = upgraded["project_identity"]
+    # Existing candidate values preserved -- NOT overwritten with null.
+    assert identity["candidate_identity"] == {"purpose": "candidate"}
+    assert identity["candidate_identity_provenance"]["path"] == "README.md"
+    assert identity["identity_drift_detected"] is True
+    # Other existing data preserved.
+    assert identity["purpose"] == "Mission A"
+    assert identity["scope"] == "scope A"
+    # Validates against the current schema.
+    assert list(validator.iter_errors(upgraded)) == []

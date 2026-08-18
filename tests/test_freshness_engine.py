@@ -982,3 +982,65 @@ def test_aggregate_fresh_requires_all_three_gates_fresh():
         ("fresh", "fresh", "refresh_failed"),
     ]:
         assert fe._aggregate_freshness(*combo) != "fresh", combo
+
+
+# ===========================================================================
+# WO-OBSIDIAN-041 / F10: Progress VALUE != Progress FRESHNESS (P2)
+# ===========================================================================
+
+def test_progress_freshness_fresh_when_manifest_ok_even_with_null_estimate():
+    """manifest status="ok" + estimate=None + confidence="unknown" -> "fresh".
+
+    Progress FRESHNESS describes whether the computation was rebuilt from
+    current evidence, NOT whether a percentage exists. A null estimate with
+    confidence="unknown" is a FRESH computation (no denominator available),
+    not stale. No percentage is fabricated.
+    """
+    manifest = {"status": "ok"}
+    progress = {"estimate": None, "confidence": "unknown"}
+    assert fe.progress_freshness_for(manifest, progress) == "fresh"
+    # Sanity: the progress VALUE stays null (no fabrication).
+    assert progress["estimate"] is None
+    assert progress["confidence"] == "unknown"
+
+
+def test_progress_freshness_unknown_when_manifest_not_ok():
+    """manifest status="no_evidence" -> progress_freshness="unknown"."""
+    manifest = {"status": "no_evidence"}
+    progress = {"estimate": None, "confidence": "unknown"}
+    assert fe.progress_freshness_for(manifest, progress) == "unknown"
+
+
+def test_progress_freshness_fresh_with_valid_estimate():
+    """manifest status="ok" + estimate=67 -> progress_freshness="fresh"."""
+    manifest = {"status": "ok"}
+    progress = {"estimate": 67, "confidence": "high"}
+    assert fe.progress_freshness_for(manifest, progress) == "fresh"
+
+
+def test_aggregate_fresh_with_null_progress_estimate():
+    """A project with current evidence but no roadmap is FRESH (not stale).
+
+    source="fresh", semantic="fresh", progress="fresh" (manifest ok, estimate
+    null) -> aggregate="fresh". The progress VALUE being null doesn't make the
+    project stale -- it means progress is genuinely unknown (no roadmap), but
+    the freshness (evidence currency) is fresh.
+    """
+    assert fe._aggregate_freshness("fresh", "fresh", "fresh") == "fresh"
+    # Confirm the underlying progress_freshness contract that produces this.
+    manifest = {"status": "ok"}
+    progress = {"estimate": None, "confidence": "unknown"}
+    assert fe.progress_freshness_for(manifest, progress) == "fresh"
+
+
+def test_aggregate_not_fresh_when_progress_unknown():
+    """source="fresh", semantic="fresh", progress="unknown" -> aggregate="unknown".
+
+    When the manifest is not ok, progress_freshness="unknown" and the
+    aggregate cannot be "fresh" (unknown takes precedence).
+    """
+    assert fe._aggregate_freshness("fresh", "fresh", "unknown") == "unknown"
+    # Confirm the underlying progress_freshness contract that produces this.
+    manifest = {"status": "no_evidence"}
+    progress = {"estimate": None, "confidence": "unknown"}
+    assert fe.progress_freshness_for(manifest, progress) == "unknown"

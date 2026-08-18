@@ -494,3 +494,260 @@ def test_onboarding_validates_state_before_any_write(monkeypatch, tmp_path):
     reg = yaml.safe_load(projects_yaml.read_text("utf-8"))
     assert reg["projects"] == []
     assert list(projects_dir.glob("*.md")) == []
+
+
+# ---------------------------------------------------------------------------
+# F8 -- Dry-run must be strictly read-only (WO-OBSIDIAN-041)
+# ---------------------------------------------------------------------------
+
+def _seed_state_file(state_dir, project_id="brand-new-repo", project_name="Brand New Repo",
+                     rid=1002, repository="https://github.com/expellirmud-dot/brand-new-repo.git"):
+    """Write a minimal valid state file and return its path."""
+    state = disc._default_state_v2(
+        project_id, project_name, rid, repository,
+        "main", "abc", "2026-08-10", disc.now_iso(),
+    )
+    path = state_dir / f"{project_id}.yaml"
+    path.write_text(yaml.safe_dump(state, sort_keys=False), encoding="utf-8")
+    return path
+
+
+def _seed_registry_entry(projects_yaml, project_id="brand-new-repo",
+                         project_name="Brand New Repo", rid=1002,
+                         repository="https://github.com/expellirmud-dot/brand-new-repo.git"):
+    """Append a single registry entry to projects.yaml."""
+    reg = yaml.safe_load(projects_yaml.read_text("utf-8")) or {"projects": []}
+    reg.setdefault("projects", []).append({
+        "project_id": project_id, "project_name": project_name,
+        "repository": repository, "github_repository_id": rid,
+        "enabled_for_wall": True,
+    })
+    projects_yaml.write_text(yaml.safe_dump(reg), encoding="utf-8")
+
+
+def _seed_overview(projects_dir, project_name="Brand New Repo"):
+    """Write a minimal overview file and return its path."""
+    path = projects_dir / f"{project_name}.md"
+    path.write_text("---\ntype: project-overview\n---\n# seeded\n", encoding="utf-8")
+    return path
+
+
+def test_dry_run_new_onboarding_no_writes(monkeypatch, tmp_path):
+    """dry_run=True with nothing existing -> ZERO writes (byte-for-byte)."""
+    state_dir, projects_dir, projects_yaml = _setup_workspace(monkeypatch, tmp_path)
+    repo = _brand_new_repo()
+
+    state_before = None
+    projects_yaml_before = projects_yaml.read_bytes()
+    projects_dir_before = sorted(p.read_bytes() for p in projects_dir.glob("*.md"))
+
+    res = disc.onboard_project(repo, token="fake", dry_run=True)
+    assert res["dry_run"] is True
+
+    # No state file written.
+    assert not (state_dir / "brand-new-repo.yaml").exists()
+    # Registry byte-for-byte unchanged.
+    assert projects_yaml.read_bytes() == projects_yaml_before
+    # No overview written.
+    assert sorted(p.read_bytes() for p in projects_dir.glob("*.md")) == projects_dir_before
+
+
+def test_dry_run_state_only_partial_no_writes(monkeypatch, tmp_path):
+    """Seed state file only; dry_run=True -> state unchanged, no registry/overview."""
+    state_dir, projects_dir, projects_yaml = _setup_workspace(monkeypatch, tmp_path)
+    repo = _brand_new_repo()
+
+    state_path = _seed_state_file(state_dir)
+    state_before = state_path.read_bytes()
+    projects_yaml_before = projects_yaml.read_bytes()
+    projects_dir_before = sorted(p.read_bytes() for p in projects_dir.glob("*.md"))
+
+    res = disc.onboard_project(repo, token="fake", dry_run=True)
+    assert res["dry_run"] is True
+    assert res["reason"] == "proposed_repair"
+    assert res["proposed_repairs"]["state"] is False
+    assert res["proposed_repairs"]["registry"] is True
+    assert res["proposed_repairs"]["overview"] is True
+
+    # Byte-for-byte unchanged.
+    assert state_path.read_bytes() == state_before
+    assert projects_yaml.read_bytes() == projects_yaml_before
+    assert sorted(p.read_bytes() for p in projects_dir.glob("*.md")) == projects_dir_before
+
+
+def test_dry_run_registry_only_partial_no_writes(monkeypatch, tmp_path):
+    """Seed registry entry only; dry_run=True -> registry unchanged, no state/overview."""
+    state_dir, projects_dir, projects_yaml = _setup_workspace(monkeypatch, tmp_path)
+    repo = _brand_new_repo()
+
+    _seed_registry_entry(projects_yaml)
+    projects_yaml_before = projects_yaml.read_bytes()
+    projects_dir_before = sorted(p.read_bytes() for p in projects_dir.glob("*.md"))
+
+    res = disc.onboard_project(repo, token="fake", dry_run=True)
+    assert res["dry_run"] is True
+    assert res["reason"] == "proposed_repair"
+    assert res["proposed_repairs"]["state"] is True
+    assert res["proposed_repairs"]["registry"] is False
+    assert res["proposed_repairs"]["overview"] is True
+
+    # Byte-for-byte unchanged.
+    assert not (state_dir / "brand-new-repo.yaml").exists()
+    assert projects_yaml.read_bytes() == projects_yaml_before
+    assert sorted(p.read_bytes() for p in projects_dir.glob("*.md")) == projects_dir_before
+
+
+def test_dry_run_overview_only_partial_no_writes(monkeypatch, tmp_path):
+    """Seed overview only; dry_run=True -> overview unchanged, no state/registry."""
+    state_dir, projects_dir, projects_yaml = _setup_workspace(monkeypatch, tmp_path)
+    repo = _brand_new_repo()
+
+    overview_path = _seed_overview(projects_dir)
+    overview_before = overview_path.read_bytes()
+    projects_yaml_before = projects_yaml.read_bytes()
+
+    res = disc.onboard_project(repo, token="fake", dry_run=True)
+    assert res["dry_run"] is True
+    assert res["reason"] == "proposed_repair"
+    assert res["proposed_repairs"]["state"] is True
+    assert res["proposed_repairs"]["registry"] is True
+    assert res["proposed_repairs"]["overview"] is False
+
+    # Byte-for-byte unchanged.
+    assert not (state_dir / "brand-new-repo.yaml").exists()
+    assert projects_yaml.read_bytes() == projects_yaml_before
+    assert overview_path.read_bytes() == overview_before
+
+
+def test_dry_run_mixed_partial_no_writes(monkeypatch, tmp_path):
+    """Seed state + registry (no overview); dry_run=True -> all unchanged."""
+    state_dir, projects_dir, projects_yaml = _setup_workspace(monkeypatch, tmp_path)
+    repo = _brand_new_repo()
+
+    state_path = _seed_state_file(state_dir)
+    _seed_registry_entry(projects_yaml)
+    state_before = state_path.read_bytes()
+    projects_yaml_before = projects_yaml.read_bytes()
+    projects_dir_before = sorted(p.read_bytes() for p in projects_dir.glob("*.md"))
+
+    res = disc.onboard_project(repo, token="fake", dry_run=True)
+    assert res["dry_run"] is True
+    assert res["reason"] == "proposed_repair"
+    assert res["proposed_repairs"]["state"] is False
+    assert res["proposed_repairs"]["registry"] is False
+    assert res["proposed_repairs"]["overview"] is True
+
+    # Byte-for-byte unchanged.
+    assert state_path.read_bytes() == state_before
+    assert projects_yaml.read_bytes() == projects_yaml_before
+    assert sorted(p.read_bytes() for p in projects_dir.glob("*.md")) == projects_dir_before
+
+
+# ---------------------------------------------------------------------------
+# F9 -- Complete partial-onboarding repair (WO-OBSIDIAN-041)
+# ---------------------------------------------------------------------------
+
+def test_repair_registry_only_writes_state_and_overview(monkeypatch, tmp_path):
+    """Registry entry exists, no state, no overview -> repair writes state + overview;
+    registry has exactly one entry."""
+    state_dir, projects_dir, projects_yaml = _setup_workspace(monkeypatch, tmp_path)
+    repo = _brand_new_repo()
+
+    _seed_registry_entry(projects_yaml)
+
+    res = disc.onboard_project(repo, token="fake", dry_run=False)
+    assert res["created"] is False
+    assert res["reason"] == "repaired"
+    assert res["repaired_state"] is True
+    assert res["repaired_registry"] is False
+    assert res["repaired_overview"] is True
+
+    # State written.
+    assert (state_dir / "brand-new-repo.yaml").exists()
+    # Overview written.
+    assert (projects_dir / "Brand New Repo.md").exists()
+    # Registry has exactly one entry (no duplicate).
+    reg = yaml.safe_load(projects_yaml.read_text("utf-8"))
+    brand_entries = [p for p in reg["projects"] if p["project_id"] == "brand-new-repo"]
+    assert len(brand_entries) == 1
+
+
+def test_repair_registry_and_overview_state_missing(monkeypatch, tmp_path):
+    """Registry + overview exist, state missing -> repair writes state. All three exist."""
+    state_dir, projects_dir, projects_yaml = _setup_workspace(monkeypatch, tmp_path)
+    repo = _brand_new_repo()
+
+    _seed_registry_entry(projects_yaml)
+    _seed_overview(projects_dir)
+
+    res = disc.onboard_project(repo, token="fake", dry_run=False)
+    assert res["created"] is False
+    assert res["reason"] == "repaired"
+    assert res["repaired_state"] is True
+    assert res["repaired_registry"] is False
+    assert res["repaired_overview"] is False
+
+    # All three now exist.
+    assert (state_dir / "brand-new-repo.yaml").exists()
+    assert (projects_dir / "Brand New Repo.md").exists()
+    reg = yaml.safe_load(projects_yaml.read_text("utf-8"))
+    brand_entries = [p for p in reg["projects"] if p["project_id"] == "brand-new-repo"]
+    assert len(brand_entries) == 1
+
+
+def test_repair_state_and_registry_overview_missing(monkeypatch, tmp_path):
+    """State + registry exist, overview missing -> repair writes overview."""
+    state_dir, projects_dir, projects_yaml = _setup_workspace(monkeypatch, tmp_path)
+    repo = _brand_new_repo()
+
+    _seed_state_file(state_dir)
+    _seed_registry_entry(projects_yaml)
+
+    res = disc.onboard_project(repo, token="fake", dry_run=False)
+    assert res["created"] is False
+    assert res["reason"] == "repaired"
+    assert res["repaired_state"] is False
+    assert res["repaired_registry"] is False
+    assert res["repaired_overview"] is True
+
+    assert (projects_dir / "Brand New Repo.md").exists()
+    reg = yaml.safe_load(projects_yaml.read_text("utf-8"))
+    brand_entries = [p for p in reg["projects"] if p["project_id"] == "brand-new-repo"]
+    assert len(brand_entries) == 1
+
+
+def test_repair_state_and_overview_registry_missing(monkeypatch, tmp_path):
+    """State + overview exist, registry missing -> repair appends registry."""
+    state_dir, projects_dir, projects_yaml = _setup_workspace(monkeypatch, tmp_path)
+    repo = _brand_new_repo()
+
+    _seed_state_file(state_dir)
+    _seed_overview(projects_dir)
+
+    res = disc.onboard_project(repo, token="fake", dry_run=False)
+    assert res["created"] is False
+    assert res["reason"] == "repaired"
+    assert res["repaired_state"] is False
+    assert res["repaired_registry"] is True
+    assert res["repaired_overview"] is False
+
+    reg = yaml.safe_load(projects_yaml.read_text("utf-8"))
+    brand_entries = [p for p in reg["projects"] if p["project_id"] == "brand-new-repo"]
+    assert len(brand_entries) == 1
+
+
+def test_never_already_onboarded_while_state_missing(monkeypatch, tmp_path):
+    """Registry + overview exist but NO state -> must NOT return already_onboarded;
+    it must repair (write state) or fail closed."""
+    state_dir, projects_dir, projects_yaml = _setup_workspace(monkeypatch, tmp_path)
+    repo = _brand_new_repo()
+
+    _seed_registry_entry(projects_yaml)
+    _seed_overview(projects_dir)
+
+    res = disc.onboard_project(repo, token="fake", dry_run=False)
+    assert res.get("reason") != "already_onboarded"
+    # It repaired (wrote the missing state).
+    assert res["reason"] == "repaired"
+    assert res["repaired_state"] is True
+    assert (state_dir / "brand-new-repo.yaml").exists()
