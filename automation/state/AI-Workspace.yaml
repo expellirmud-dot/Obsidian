@@ -16,7 +16,7 @@ branch: main
 head: 69340677fb61af3e7d2b7f840363632f3211f5fd
 knowledge_state: needs-verification
 project_identity:
-  purpose: AI-Workspace
+  purpose: null
   problem_statement: null
   intended_outcome: null
   primary_users: null
@@ -25,6 +25,8 @@ project_identity:
   non_goals: null
   identity_drift_detected: false
   previous_identity: null
+  candidate_identity: null
+  candidate_identity_provenance: null
 current_execution:
   lifecycle_phase: stable
   current_goal: null

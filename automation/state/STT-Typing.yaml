@@ -15,7 +15,7 @@ branch: main
 head: af10254774766425b735e63632eb9a11f9056002
 knowledge_state: needs-verification
 project_identity:
-  purpose: STT Typing
+  purpose: null
   problem_statement: null
   intended_outcome: null
   primary_users: null
@@ -24,6 +24,8 @@ project_identity:
   non_goals: null
   identity_drift_detected: false
   previous_identity: null
+  candidate_identity: null
+  candidate_identity_provenance: null
 current_execution:
   lifecycle_phase: superseded-pending-roadmap
   current_goal: null

@@ -51,6 +51,7 @@ import json
 import os
 import re
 import sys
+import tempfile
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -365,6 +366,8 @@ def _default_state_v2(
             "non_goals": None,
             "identity_drift_detected": False,
             "previous_identity": None,
+            "candidate_identity": None,
+            "candidate_identity_provenance": None,
         },
         "current_execution": {
             "lifecycle_phase": None,
@@ -440,20 +443,323 @@ def fetch_repo_head_sha(owner: str, repo: str, token: str | None) -> dict:
     return {"default_branch": default_branch, "head_sha": sha, "last_change": last_change}
 
 
+def _registry_find_entry(
+    registry: dict, project_id: str, github_repository_id: int | None,
+) -> dict | None:
+    """Return the registry entry matching project_id OR github_repository_id.
+
+    Stable-id matching (github_repository_id) takes precedence so that a
+    renamed repo is never re-onboarded as a duplicate.
+    """
+    projects = registry.get("projects", []) if registry else []
+    if github_repository_id is not None:
+        for p in projects:
+            if p.get("github_repository_id") == github_repository_id:
+                return p
+    for p in projects:
+        if p.get("project_id") == project_id:
+            return p
+    return None
+
+
+def _atomic_write_registry(registry: dict) -> None:
+    """Write projects.yaml atomically via temp file + os.replace.
+
+    A mid-write crash leaves the previous registry intact instead of
+    truncating the whole registry (which 'w' mode would do).
+    """
+    parent = PROJECTS_YAML.parent
+    parent.mkdir(parents=True, exist_ok=True)
+    tmp_fd, tmp_path = tempfile.mkstemp(dir=str(parent), suffix=".tmp")
+    try:
+        with os.fdopen(tmp_fd, "w", encoding="utf-8") as f:
+            f.write(
+                yaml.safe_dump(
+                    registry, sort_keys=False, default_flow_style=False,
+                    allow_unicode=True, width=1000,
+                )
+            )
+        os.replace(tmp_path, str(PROJECTS_YAML))
+    except Exception:
+        try:
+            if os.path.exists(tmp_path):
+                os.unlink(tmp_path)
+        except OSError:
+            pass
+        raise
+
+
+def _registry_entry(project_id, project_name, repository, rid) -> dict:
+    return {
+        "project_id": project_id,
+        "project_name": project_name,
+        "source_path": None,
+        "repository": repository,
+        "github_repository_id": rid,
+        "enabled_for_wall": True,
+        "pilot_status": "discovered",
+        "adapter_id": "discovery-onboard-v1",
+        "authority_candidates": ["AGENTS.md", "README.md", "PROJECT_RULES.md"],
+    }
+
+
+def _load_validated_state(
+    state_path: Path, schema: dict, validator: Draft202012Validator,
+) -> tuple[dict | None, str | None]:
+    """Load an existing state file and validate it against the v2 schema.
+
+    Existence alone is NOT sufficient evidence of a valid normalized state
+    (F12): a malformed or schema-invalid state file must not be treated as
+    "complete" by the onboarding contract.
+
+    Returns ``(state_dict, None)`` when the file exists, parses as a YAML
+    mapping, and passes schema validation. Otherwise returns
+    ``(None, reason)`` where reason is one of:
+      * ``"missing"``           -- file does not exist (or is unreadable)
+      * ``"malformed_yaml"``    -- file exists but is not valid YAML
+      * ``"not_a_dict"``        -- YAML parsed but is not a mapping
+      * ``"schema_invalid: <details>"`` -- parsed dict fails schema validation
+    """
+    if not state_path.exists():
+        return None, "missing"
+    try:
+        raw = state_path.read_text("utf-8")
+    except OSError:
+        return None, "missing"
+    try:
+        data = yaml.safe_load(raw)
+    except yaml.YAMLError:
+        return None, "malformed_yaml"
+    if not isinstance(data, dict):
+        return None, "not_a_dict"
+    errors = list(validator.iter_errors(data))
+    if errors:
+        details = "; ".join(str(e.message) for e in errors)
+        return None, f"schema_invalid: {details}"
+    return data, None
+
+
+def _repair_onboarding(
+    project_id: str,
+    project_name: str,
+    repository: str | None,
+    rid: int | None,
+    overview: str,
+    state_path: Path,
+    overview_path: Path,
+    state: dict,
+    header: str,
+    schema: dict,
+    validator: Draft202012Validator,
+    dry_run: bool = False,
+) -> dict:
+    """Converge a partially-onboarded project to a complete registration.
+
+    A project is "fully onboarded" when ALL THREE artifacts exist: state file,
+    projects.yaml entry (by stable id OR project_id), AND overview file. This
+    helper writes any missing artifact among the three. It never creates a
+    duplicate registry entry.
+
+    When dry_run=True this performs ZERO writes and instead returns a report
+    with dry_run=True and proposed_repairs describing which artifacts would be
+    written. When dry_run=False the missing artifacts are written and the
+    report carries repaired_{state,registry,overview} flags.
+
+    Returns a report with created=False, reason="repaired" (or
+    "already_onboarded" if nothing was missing). On failure, returns
+    reason="repair_failed" after rolling back every artifact changed by
+    this repair attempt (F14: transaction failure safety).
+    """
+    # Prefer values from the existing state file (source of truth) when it is
+    # VALID. An invalid state (malformed YAML / non-dict / schema-invalid) is
+    # treated as needing rebuild: the eff_* fields fall back to the passed-in
+    # values and the file is overwritten with the schema-validated `state`.
+    existing_state, state_reason = _load_validated_state(state_path, schema, validator)
+    state_valid = existing_state is not None
+
+    eff_name = project_name
+    eff_repo = repository
+    eff_rid = rid
+    if state_valid:
+        if existing_state.get("project_name"):
+            eff_name = existing_state["project_name"]
+        if existing_state.get("repository"):
+            eff_repo = existing_state["repository"]
+        if existing_state.get("github_repository_id") is not None:
+            eff_rid = existing_state["github_repository_id"]
+
+    # state_needs_rebuild is True when the state file is missing OR invalid.
+    # Existence alone is not sufficient (F12): an invalid state must be rebuilt.
+    state_needs_rebuild = not state_valid
+    state_file_exists = state_path.exists()
+    registry = load_projects_registry()
+    registry_missing = _registry_find_entry(registry, project_id, eff_rid) is None
+    overview_missing = not overview_path.exists()
+
+    if dry_run:
+        # Strictly read-only: report what would be done, perform ZERO writes.
+        state_invalid = state_file_exists and not state_valid
+        return {
+            "project_id": project_id,
+            "project_name": eff_name,
+            "created": False,
+            "dry_run": True,
+            "reason": "proposed_repair",
+            "proposed_repairs": {
+                "state": state_needs_rebuild,
+                "registry": registry_missing,
+                "overview": overview_missing,
+                "state_invalid": state_invalid,
+                "state_invalid_reason": state_reason if state_invalid else None,
+            },
+            "state_path": str(state_path),
+            "overview_path": str(overview_path),
+        }
+
+    # --- Transaction-safe repair (F14) ---
+    # Snapshot pre-repair state of each artifact we may touch, so a later
+    # write failure can roll back ALL changes made by this attempt.
+    orig_state_bytes: bytes | None = None
+    if state_file_exists:
+        try:
+            orig_state_bytes = state_path.read_bytes()
+        except OSError:
+            orig_state_bytes = None  # treat as unrestorable; still attempt rollback
+
+    orig_registry_bytes: bytes | None = None
+    if PROJECTS_YAML.exists():
+        try:
+            orig_registry_bytes = PROJECTS_YAML.read_bytes()
+        except OSError:
+            orig_registry_bytes = None
+
+    orig_overview_bytes: bytes | None = None
+    overview_existed = overview_path.exists()
+    if overview_existed:
+        try:
+            orig_overview_bytes = overview_path.read_bytes()
+        except OSError:
+            orig_overview_bytes = None
+
+    repaired_state = False
+    repaired_registry = False
+    repaired_overview = False
+
+    def _rollback() -> None:
+        """Best-effort restore of every artifact changed by this repair."""
+        if repaired_state:
+            if orig_state_bytes is not None:
+                try:
+                    state_path.write_bytes(orig_state_bytes)
+                except OSError:
+                    pass
+            else:
+                try:
+                    state_path.unlink()
+                except OSError:
+                    pass
+        if repaired_registry and orig_registry_bytes is not None:
+            try:
+                PROJECTS_YAML.write_bytes(orig_registry_bytes)
+            except OSError:
+                pass
+        if repaired_overview:
+            if orig_overview_bytes is not None:
+                try:
+                    overview_path.write_bytes(orig_overview_bytes)
+                except OSError:
+                    pass
+            else:
+                try:
+                    overview_path.unlink()
+                except OSError:
+                    pass
+
+    try:
+        # Repair the state file if missing OR invalid (same header+body format
+        # as onboard_project). The new state is the schema-validated `state`
+        # dict passed in, so the rebuilt file always validates.
+        if state_needs_rebuild:
+            state_path.parent.mkdir(parents=True, exist_ok=True)
+            body = yaml.safe_dump(
+                state, sort_keys=False, default_flow_style=False,
+                allow_unicode=True, width=1000,
+            )
+            state_path.write_text(header + body, encoding="utf-8")
+            repaired_state = True
+
+        # Repair the registry entry if missing (atomic write). Reload in case
+        # the state write is the source of truth for matching.
+        registry = load_projects_registry()
+        if _registry_find_entry(registry, project_id, eff_rid) is None:
+            registry.setdefault("projects", []).append(
+                _registry_entry(project_id, eff_name, eff_repo, eff_rid)
+            )
+            _atomic_write_registry(registry)
+            repaired_registry = True
+
+        # Repair the overview if missing.
+        if overview_missing:
+            overview_path.parent.mkdir(parents=True, exist_ok=True)
+            overview_path.write_text(overview, encoding="utf-8")
+            repaired_overview = True
+    except Exception as exc:
+        _rollback()
+        return {
+            "project_id": project_id,
+            "project_name": eff_name,
+            "created": False,
+            "reason": "repair_failed",
+            "error": str(exc),
+            "repaired_state": False,
+            "repaired_registry": False,
+            "repaired_overview": False,
+            "state_path": str(state_path),
+            "overview_path": str(overview_path),
+        }
+
+    reason = (
+        "repaired" if (repaired_state or repaired_registry or repaired_overview)
+        else "already_onboarded"
+    )
+    return {
+        "project_id": project_id,
+        "project_name": eff_name,
+        "created": False,
+        "reason": reason,
+        "repaired_state": repaired_state,
+        "repaired_registry": repaired_registry,
+        "repaired_overview": repaired_overview,
+        "state_path": str(state_path),
+        "overview_path": str(overview_path),
+    }
+
+
 def onboard_project(
     repo: dict,
     token: str | None,
     dry_run: bool = True,
 ) -> dict:
-    """Onboard a single discovered repo into the Vault (idempotent).
+    """Onboard a single discovered repo into the Vault (atomic + repairable).
 
     Creates:
       * automation/state/<project_id>.yaml (v2 state, needs-verification)
       * appends to automation/projects.yaml (enabled_for_wall: true)
       * 01 Projects/<project_name>.md (Project Overview stub)
 
+    Onboarding is atomic and repairable:
+      * Schema validation happens BEFORE any write.
+      * A project is "fully onboarded" only when ALL THREE artifacts exist
+        (state file, projects.yaml entry by stable id OR project_id, AND
+        overview). If some but not all exist, the missing pieces are repaired
+        instead of creating a duplicate.
+      * projects.yaml is written atomically (temp + os.replace) so a mid-write
+        crash cannot truncate the whole registry.
+      * Write order for new onboarding: state -> overview -> registry. If the
+        registry append fails, the partial state/overview files are removed
+        (best-effort) so a rerun starts clean.
+
     Returns a report dict with project_id, created (bool), and path.
-    Idempotent: if the project_id already exists, returns created=False.
     """
     name = repo.get("name") or "unknown"
     rid = repo.get("id")
@@ -465,8 +771,6 @@ def onboard_project(
 
     state_path = STATE_DIR / f"{project_id}.yaml"
     overview_path = PROJECTS_DIR / f"{project_name}.md"
-    if state_path.exists():
-        return {"project_id": project_id, "created": False, "reason": "state_exists"}
 
     # Resolve head sha (read-only). Failure -> unknown freshness, not a crash.
     owner_repo = parse_owner_repo(repository) if repository else None
@@ -497,6 +801,41 @@ def onboard_project(
 
     overview = _overview_stub(project_id, project_name, repository, rid, observed_at)
 
+    # State file header (shared by new onboarding and partial repair).
+    header = (
+        f"# Normalized project state (v2) -- {project_id}\n"
+        f"# Onboarded by WO-OBSIDIAN-037 (Repository Discovery + Safe Auto-Onboarding).\n"
+        f"# Source repository is READ-ONLY; no source files were modified.\n"
+        f"# knowledge_state=needs-verification: Mission not yet verified against source evidence.\n"
+    )
+
+    # Completeness-aware idempotency + stable-id duplicate prevention.
+    # A project is fully onboarded iff ALL THREE artifacts exist AND the state
+    # file is VALID (F12: existence alone is not sufficient). An invalid state
+    # file is treated as "needs rebuild" -- the file exists so we go to repair
+    # (not full onboarding), and repair overwrites it with the validated state.
+    existing_state, _state_reason = _load_validated_state(state_path, schema, validator)
+    state_valid = existing_state is not None
+    state_file_exists = state_path.exists()
+    overview_exists = overview_path.exists()
+    registry = load_projects_registry()
+    registry_entry = _registry_find_entry(registry, project_id, rid)
+    registry_exists = registry_entry is not None
+
+    if state_valid and registry_exists and overview_exists:
+        return {"project_id": project_id, "created": False, "reason": "already_onboarded"}
+
+    if state_file_exists or registry_exists or overview_exists:
+        # Partial registration -> repair the missing/invalid pieces (no
+        # duplicate). dry_run is forwarded so dry-run mode performs ZERO
+        # writes and only reports proposed repairs.
+        return _repair_onboarding(
+            project_id, project_name, repository, rid, overview,
+            state_path, overview_path, state, header, schema, validator,
+            dry_run=dry_run,
+        )
+
+    # NONE exist -> proceed with full onboarding.
     if dry_run:
         return {
             "project_id": project_id,
@@ -509,42 +848,42 @@ def onboard_project(
             "knowledge_state": "needs-verification",
         }
 
-    # Write state file.
-    header = (
-        f"# Normalized project state (v2) -- {project_id}\n"
-        f"# Onboarded by WO-OBSIDIAN-037 (Repository Discovery + Safe Auto-Onboarding).\n"
-        f"# Source repository is READ-ONLY; no source files were modified.\n"
-        f"# knowledge_state=needs-verification: Mission not yet verified against source evidence.\n"
-    )
+    # Write order: state -> overview -> registry (atomic). The state file alone
+    # is NOT "published" until the registry entry exists.
     body = yaml.safe_dump(
         state, sort_keys=False, default_flow_style=False, allow_unicode=True, width=1000
     )
-    state_path.write_text(header + body, encoding="utf-8")
+    written_state = False
+    written_overview = False
+    try:
+        state_path.parent.mkdir(parents=True, exist_ok=True)
+        state_path.write_text(header + body, encoding="utf-8")
+        written_state = True
 
-    # Append to projects.yaml.
-    registry = load_projects_registry()
-    entry = {
-        "project_id": project_id,
-        "project_name": project_name,
-        "source_path": None,
-        "repository": repository,
-        "github_repository_id": rid,
-        "enabled_for_wall": True,
-        "pilot_status": "discovered",
-        "adapter_id": "discovery-onboard-v1",
-        "authority_candidates": ["AGENTS.md", "README.md", "PROJECT_RULES.md"],
-    }
-    registry.setdefault("projects", []).append(entry)
-    with open(PROJECTS_YAML, "w", encoding="utf-8") as f:
-        f.write(
-            yaml.safe_dump(
-                registry, sort_keys=False, default_flow_style=False,
-                allow_unicode=True, width=1000,
+        overview_path.parent.mkdir(parents=True, exist_ok=True)
+        overview_path.write_text(overview, encoding="utf-8")
+        written_overview = True
+
+        registry = load_projects_registry()
+        if _registry_find_entry(registry, project_id, rid) is None:
+            registry.setdefault("projects", []).append(
+                _registry_entry(project_id, project_name, repository, rid)
             )
-        )
-
-    # Write Project Overview stub.
-    overview_path.write_text(overview, encoding="utf-8")
+            _atomic_write_registry(registry)
+    except Exception as exc:
+        # Best-effort cleanup of partial files so a rerun starts clean.
+        for p, written in ((state_path, written_state), (overview_path, written_overview)):
+            if written:
+                try:
+                    p.unlink()
+                except OSError:
+                    pass
+        return {
+            "project_id": project_id,
+            "created": False,
+            "reason": "onboarding_failed",
+            "error": str(exc),
+        }
 
     return {
         "project_id": project_id,

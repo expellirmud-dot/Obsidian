@@ -20,15 +20,15 @@ Migration rules (backward-safe):
   * project_identity is seeded from v1 `project_state`/`current_goal` as a
     *placeholder* with knowledge_state=needs-verification -- the Mission is NOT
     fabricated; every identity field defaults to null (unknown) unless a v1
-    field can be mapped without guessing. Concretely only `purpose` is seeded
-    from project_name and `scope` from current_goal when present, and even
-    those are marked needs-verification. This keeps the contract: do not
-    fabricate Mission.
+    field can be mapped without guessing. Concretely `purpose` is NOT seeded
+    (stays null -- a project name is not a Mission, WO-OBSIDIAN-041 F1);
+    `scope` is seeded from current_goal as a needs-verification placeholder.
+    This keeps the contract: do not fabricate Mission.
   * freshness is seeded from v1 `head`/`verified_at`/`observed_at`:
-      truth_built_from_head = v1 head
-      remote_head = v1 head (assume fresh at migration time; the next
-      freshness probe will correct this)
-      status = fresh if head is set else unknown
+      truth_built_from_head = v1 head (preserved for reference)
+      remote_head = v1 head (preserved for reference)
+      status = unknown (legacy migration does NOT perform evidence refresh;
+      the freshness probe establishes FRESH from current evidence)
   * progress defaults to unknown (no denominator in v1).
   * github_repository_id is left null here -- it is filled by the discovery
     layer (WO-037). null is valid for local-only projects.
@@ -36,8 +36,10 @@ Migration rules (backward-safe):
     from already-verified Vault records but not re-verified against source in
     this run).
 
-The migrator is idempotent: migrating a v2 file is a no-op (it detects
-schema_version==2 and returns the file unchanged).
+The migrator is idempotent: migrating a v2 file upgrades it in-place to the
+current v2 shape (missing required project_identity fields added as null,
+WO-OBSIDIAN-041 F11). No data is lost; a v2 file that is already current is
+returned unchanged.
 
 Usage:
     python3 automation/migrate_state_v2.py            # migrate all v1 states
@@ -48,6 +50,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import copy
 import json
 import sys
 from pathlib import Path
@@ -70,13 +73,38 @@ def load_schema() -> dict:
         return json.load(f)
 
 
+def _upgrade_v2_shape(v2: dict) -> dict:
+    """Upgrade an old v2 state to the current v2 shape by adding any missing
+    required project_identity fields as null. Does NOT lose existing data.
+    Idempotent (WO-OBSIDIAN-041 F11).
+
+    Pre-WO-041 v2 states lack candidate_identity / candidate_identity_provenance,
+    which the schema now requires. This adds them as null when missing; existing
+    values (e.g. a candidate_identity recorded by a prior drift detection) are
+    preserved.
+    """
+    identity = v2.get("project_identity")
+    if not isinstance(identity, dict):
+        # Shouldn't happen for a valid v2 state, but be safe: do not touch it.
+        return v2
+    if "candidate_identity" not in identity:
+        identity["candidate_identity"] = None
+    if "candidate_identity_provenance" not in identity:
+        identity["candidate_identity_provenance"] = None
+    v2["project_identity"] = identity
+    return v2
+
+
 def migrate_one(v1: dict) -> dict:
     """Transform a v1 flat state dict into a v2 nested state dict.
 
-    Idempotent: if the input already has schema_version==2 it is returned as-is.
+    Idempotent: if the input already has schema_version==2, it is upgraded
+    in-place to the current v2 shape (missing required project_identity
+    fields added as null). This handles pre-WO-041 v2 states that lack
+    candidate_identity / candidate_identity_provenance (WO-OBSIDIAN-041 F11).
     """
     if v1.get("schema_version") == 2:
-        return v1
+        return _upgrade_v2_shape(v1)
 
     head = v1.get("head")
     verified_at = v1.get("verified_at")
@@ -84,9 +112,14 @@ def migrate_one(v1: dict) -> dict:
     open_pr = v1.get("open_pr")
     current_goal = v1.get("current_goal")
 
-    # Seed identity conservatively. Do NOT fabricate a Mission. Only map fields
-    # that can be carried without guessing; everything else stays null.
-    purpose = v1.get("project_name") or None
+    # Seed identity conservatively. Do NOT fabricate a Mission. A project name
+    # or heading is NOT a purpose (WO-OBSIDIAN-041 F1). Only an explicit
+    # Purpose/Mission/Problem statement would justify a non-null purpose, and
+    # the migrator has no content evidence -- so purpose stays null here. The
+    # evidence collector (WO-038) fills purpose later from real file content
+    # using explicit-purpose detection. scope is seeded from current_goal only
+    # as a needs-verification placeholder (it is execution scope, not Mission).
+    purpose = None
     scope = current_goal or None
     identity = {
         "purpose": purpose,
@@ -98,6 +131,8 @@ def migrate_one(v1: dict) -> dict:
         "non_goals": None,
         "identity_drift_detected": False,
         "previous_identity": None,
+        "candidate_identity": None,
+        "candidate_identity_provenance": None,
     }
 
     current_execution = {
@@ -112,23 +147,29 @@ def migrate_one(v1: dict) -> dict:
         "next_action": v1.get("next_action"),
     }
 
-    # Freshness: assume fresh at migration time when a head exists. The next
-    # freshness probe (WO-037/040) will reconcile remote_head against
-    # truth_built_from_head. UNKNOWN must never silently become FRESH, but a
-    # known head with no contrary evidence is a legitimate fresh seed.
+    # Freshness: legacy migration is a DATA TRANSFORM, not an evidence
+    # refresh. A stored v1 HEAD does NOT prove current semantic/progress
+    # truth -- the migrated state still has knowledge_state=
+    # needs-verification, purpose=null, progress.estimate=null and
+    # progress.confidence=unknown. Therefore ALL freshness fields must be
+    # "unknown" (WO-OBSIDIAN-041 F13). The stored head is preserved in
+    # remote_head / truth_built_from_head for reference only -- that is data
+    # preservation, NOT a freshness claim. The freshness probe (WO-037/040)
+    # establishes FRESH from current evidence. UNKNOWN must never silently
+    # become FRESH.
     if head:
         freshness = {
-            "status": "fresh",
+            "status": "unknown",
             "tracked_ref": v1.get("branch"),
             "remote_head": head,
             "truth_built_from_head": head,
             "source_checked_at": observed_at or verified_at,
             "truth_built_at": verified_at,
             "stale_since": None,
-            "reason": None,
-            "source_freshness": "fresh",
-            "semantic_freshness": "fresh",
-            "progress_freshness": "fresh",
+            "reason": "legacy state migrated; freshness requires source re-verification",
+            "source_freshness": "unknown",
+            "semantic_freshness": "unknown",
+            "progress_freshness": "unknown",
         }
     else:
         freshness = {
@@ -233,10 +274,15 @@ def migrate_all(check_only: bool = False) -> tuple[int, int, int]:
             print(f"  SKIP (not a dict): {path.name}")
             errors += 1
             continue
-        if v1.get("schema_version") == 2:
-            print(f"  SKIP (already v2): {path.name}")
-            skipped += 1
-            continue
+        # WO-OBSIDIAN-041 F11: do NOT skip schema_version==2 states. Old v2
+        # states may lack the now-required candidate_identity /
+        # candidate_identity_provenance fields; migrate_one upgrades them
+        # in-place. v1 states flow through the normal v1->v2 path.
+        #
+        # Snapshot the original dict before migration: migrate_one mutates v2
+        # states in place during the shape upgrade, so we compare against the
+        # snapshot to decide whether anything actually changed.
+        original_snapshot = copy.deepcopy(v1) if v1.get("schema_version") == 2 else None
         v2 = migrate_one(v1)
         verrors = sorted(validator.iter_errors(v2), key=lambda e: list(e.path))
         if verrors:
@@ -245,9 +291,21 @@ def migrate_all(check_only: bool = False) -> tuple[int, int, int]:
                 print(f"    - {'.'.join(map(str, e.path)) or '<root>'}: {e.message}")
             errors += 1
             continue
+        # A v2 state that was already current (shape upgrade was a no-op) is
+        # not rewritten. v1->v2 migrations always change the dict, so they are
+        # written.
+        already_current = original_snapshot is not None and v2 == original_snapshot
         if check_only:
-            print(f"  WOULD MIGRATE: {path.name}")
-            migrated += 1
+            if already_current:
+                print(f"  SKIP (already current v2): {path.name}")
+                skipped += 1
+            else:
+                print(f"  WOULD MIGRATE: {path.name}")
+                migrated += 1
+            continue
+        if already_current:
+            print(f"  SKIP (already current v2): {path.name}")
+            skipped += 1
             continue
         new_text = render_v2_yaml(v2, original_text)
         path.write_text(new_text, encoding="utf-8")

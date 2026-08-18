@@ -11,8 +11,16 @@ Status: CLOSED
 
 > CLOSED — evidence collector reads real file content via GitHub contents API;
 > evidence manifests with provenance (ref + blob_sha + path + classification);
-> truth builder fills identity/execution with Mission Drift Protection;
-> 35/35 tests PASS.
+> truth builder fills `purpose` (explicit Purpose/Mission/Problem text only) + execution;
+> 6 identity fields (problem_statement, intended_outcome, primary_users,
+> success_definition, scope, non_goals) are schema-supported-but-not-derived;
+> Mission Drift Protection (candidate identity + provenance recorded, not overwritten);
+> 35/35 tests PASS (WO-038 baseline).
+>
+> WO-OBSIDIAN-041 HARDENING: a bare project title/heading/repository name no
+> longer verifies the Mission (F1). knowledge_state=verified now requires an
+> explicit purpose. Mission drift records candidate_identity +
+> candidate_identity_provenance (F4). See WO-OBSIDIAN-041.
 
 ## 1. Objective
 
@@ -61,8 +69,9 @@ Therefore:
 
 - [x] evidence collector reads real file content (not filename alone)
 - [x] evidence manifests with provenance (ref + blob_sha + path + classification + observed_at)
-- [x] truth builder fills identity/execution from evidence
+- [x] truth builder fills `purpose` (explicit text only) + execution; 6 identity fields schema-supported-but-not-derived (WO-041 F1/F3)
 - [x] Mission Drift Protection (preserve previous identity, flag drift, no silent overwrite)
+- [x] Mission drift records candidate_identity + candidate_identity_provenance (WO-041 F4)
 - [x] current work change does NOT rewrite mission (test)
 - [x] insufficient evidence → unknown (no fabrication)
 - [x] API unavailable → fail-safe (no fabrication)

@@ -11,13 +11,20 @@ Status: CLOSED
 
 > CLOSED — deterministic evidence-constrained progress engine implemented;
 > weighted milestones / bounded milestones / UNKNOWN; next-action from explicit authority;
-> 43/43 tests PASS.
+> 43/43 tests PASS (WO-039 baseline).
+>
+> WO-OBSIDIAN-041 HARDENING: bounded work-order set + phase/goal progress
+> marked UNSUPPORTED (F3/F5). Truncation gate added: a truncated roadmap
+> (content > 500 chars) returns UNKNOWN instead of a false percentage from
+> an incomplete denominator (F5). See WO-OBSIDIAN-041.
 
 ## 1. Objective
 
 สร้าง deterministic/evidence-constrained progress engine ที่:
 - คำนวณ progress จาก evidence เท่านั้น (ไม่ใช่ LLM impression)
-- Priority: weighted roadmap milestones → bounded milestones → bounded work-order set → UNKNOWN
+- Priority: weighted roadmap milestones → bounded milestones → UNKNOWN
+  - bounded work-order set: UNSUPPORTED (not implemented; returns UNKNOWN)
+  - phase/goal progress: UNSUPPORTED (not implemented; returns UNKNOWN)
 - ห้าม LLM สร้าง percentage จาก impression ("ดูเหมือน 80%")
 - ถ้ามี evidence พอ: output estimate, range, confidence, calculation_method, evidence_basis
 - ถ้าไม่มี denominator: UNKNOWN

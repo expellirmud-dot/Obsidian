@@ -16,7 +16,7 @@ branch: main
 head: f8ae9fb428641da6101cab3ff76b1e5d20e43203
 knowledge_state: needs-verification
 project_identity:
-  purpose: Citizen Portal
+  purpose: null
   problem_statement: null
   intended_outcome: null
   primary_users: null
@@ -25,6 +25,8 @@ project_identity:
   non_goals: null
   identity_drift_detected: false
   previous_identity: null
+  candidate_identity: null
+  candidate_identity_provenance: null
 current_execution:
   lifecycle_phase: research-prototype
   current_goal: null

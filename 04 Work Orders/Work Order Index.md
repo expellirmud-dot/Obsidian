@@ -50,6 +50,7 @@ last_reviewed: 2026-08-15
 | 038 | [[WO-OBSIDIAN-038-EVIDENCE-BACKED-TRUTH]] | evidence collector อ่าน content จริง + truth builder + Mission Drift Protection (Goal 38: Evidence-Backed Truth) | CLOSED |
 | 039 | [[WO-OBSIDIAN-039-PROGRESS-ENGINE]] | deterministic evidence-constrained progress + next-action engine (Goal 39: Progress + Next Action) | CLOSED |
 | 040 | [[WO-OBSIDIAN-040-AUTOMATION-VALIDATION]] | freshness engine + targeted refresh + Automation A/B + 73 tests + 6 e2e scenarios (Goal 40: Automation + Validation) | CLOSED |
+| 041 | [[WO-OBSIDIAN-041-TRUTH-CORRECTNESS-HARDENING]] | corrective hardening of WO-036–040 truth plane: F1–F14 (mission verification, freshness publication, acceptance overclaim, mission drift provenance, progress correctness, atomic onboarding, git safety, dry-run read-only, complete partial repair, progress value ≠ freshness, backward-safe v2 migration, state validity, migration freshness fabrication, repair transaction safety) | CLOSED |
 
 ลำดับนี้เป็น sequential gate: ห้ามเริ่ม Work Order ถัดไปก่อนงานก่อนหน้าปิด `CLOSED` และ Validation ผ่านครบ
 
