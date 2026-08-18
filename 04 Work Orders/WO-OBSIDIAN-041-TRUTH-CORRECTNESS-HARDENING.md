@@ -215,3 +215,90 @@ tests fail โดย root cause ยังไม่ทราบ / diff หลุ�
 unresolved P1 correctness finding / secret ปรากฏ / ต้อง force push
 
 หาก STOP: ห้าม commit/push partial solution; รายงาน evidence + blocker ตามจริง
+
+## 11. Closeout Reconciliation
+
+| Finding | Before | Fix | Test Evidence | Reviewer | Final |
+|---------|--------|-----|---------------|----------|-------|
+| F1 Mission Verification | heading/project_name → purpose + verified | `_extract_explicit_purpose` requires explicit Purpose/Mission/Problem text; `knowledge_state=verified` requires `purpose is not None`; migrator no longer seeds purpose from project_name | 4 tests (test_evidence_collector) + 1 refresh-path regression (test_freshness_engine) | R1b PASS | RESOLVED |
+| F2 Freshness Publication | remote_head known → all gates fresh | `semantic_freshness_for`/`progress_freshness_for` gate on manifest status; `_aggregate_freshness` requires all 3 gates fresh; publication gate rolls back on manifest ≠ ok | 6 tests (test_freshness_engine) | R2 PASS | RESOLVED |
+| F3 Acceptance Overclaim | "fills identity from evidence"; bounded work-orders supported | WO-036/038/039 banners + DoD corrected; 6 fields marked schema-supported-but-not-derived; bounded work-orders + phase/goal marked UNSUPPORTED | Doc corrections (WO-036/038/039/040, state README, Work Order Index) | R3 PASS | RESOLVED |
+| F4 Mission Drift Provenance | candidate discarded; no provenance; no reset | `candidate_identity` + `candidate_identity_provenance` (path/ref/blob_sha/observed_at) recorded on drift; reset to None each cycle; old identity preserved | 4 tests (test_evidence_collector) + 2 refresh-path regression (test_freshness_engine) | R1b PASS | RESOLVED |
+| F5 Progress Correctness | truncated roadmap → false % | truncation gate (`content_length > 500` → UNKNOWN); finditer fallback for newline-stripped excerpts; unsupported methods stay UNKNOWN | 14 tests (test_progress_engine) | R3 PASS | RESOLVED |
+| F6 Atomic Onboarding | sequential writes; `'w'` mode; state-only idempotency | `_atomic_write_registry` (temp+os.replace); completeness-aware idempotency (state+registry+overview); `_repair_onboarding`; stable-repo-id duplicate prevention | 5 tests (test_discovery) | R2 PASS | RESOLVED |
+| F7 Git Automation Safety | `git add -A` in Automation A/B | explicit path staging flow; `git add .`/`git add -A` forbidden; Git Safety section added | WO-040 doc corrections | R3 PASS | RESOLVED |
+
+Expected findings: 7
+Resolved: 7
+Unresolved: 0
+
+## 12. Final Acceptance
+
+- [x] Project title alone cannot verify Mission
+- [x] repository name alone cannot verify Mission
+- [x] Current Work cannot become Project Mission
+- [x] knowledge_state=verified requires semantic evidence
+- [x] failed evidence refresh cannot produce semantic FRESH
+- [x] aggregate FRESH requires required freshness gates
+- [x] known-good identity survives failed refresh
+- [x] mission drift preserves old identity
+- [x] candidate mission + provenance inspectable
+- [x] incomplete denominator cannot generate percentage
+- [x] unsupported progress methods become UNKNOWN
+- [x] onboarding cannot silently leave broken partial registration
+- [x] rerun can repair interrupted onboarding
+- [x] successful onboarding is idempotent
+- [x] no broad git staging in Automation A/B
+- [x] WO-036–040 claims match implementation
+- [x] schema validation PASS (11/11 VALID)
+- [x] renderer validation PASS
+- [x] render idempotency PASS (zero diff on second render)
+- [x] full tests PASS (109 passed, 0 failed)
+- [x] diff-check PASS
+- [x] no source repository mutation
+- [x] no secrets
+- [x] no out-of-scope changes
+- [x] all independent reviewers resolved
+
+## 13. Delivery
+
+- Branch: `wo-041-truth-correctness-hardening`
+- Branch HEAD SHA: `17b813c14be03c1777cd082811a547f50ab57b73`
+- origin/main baseline SHA: `26caeaefca03aa61f030c5c6d277b9616332c1c9`
+- PR: #3 (https://github.com/expellirmud-dot/Obsidian/pull/3)
+- Commit: `fix: harden project truth correctness (WO-041)`
+- DO NOT MERGE — awaiting independent owner review
+
+## 14. Sub-Agent Execution Evidence
+
+Wave 1 — Parallel Read-Only Audit (5 agents):
+- Agent A (Mission/Identity/Evidence): confirmed F1/F4 root causes
+- Agent B (Freshness/Publication): confirmed F2 root cause
+- Agent C (Progress): confirmed F5 root cause + truncation
+- Agent D (Discovery/Onboarding): confirmed F6 root cause
+- Agent E (Governance/Claims): confirmed F3/F7 overclaims
+
+Wave 2 — Parallel Implementation (5 agents):
+- Implementer A: F1 + identity-F3 + F4 in evidence_collector.py (8 new tests)
+- Implementer B: F2 in freshness_engine.py (6 new tests)
+- Implementer C: F5 in progress_engine.py (14 new tests)
+- Implementer D: F6 in discovery.py (5 new tests)
+- Implementer E: F3/F7 documentation patch proposals (applied by Main Agent)
+
+Wave 4 — Parallel Independent Review (3 agents):
+- Reviewer 1 (Semantic Correctness): found 2 bugs → FIXED + 3 regression tests → Re-review PASS
+- Reviewer 2 (Failure/Safety): PASS
+- Reviewer 3 (Acceptance/Diff): PASS
+
+## 15. Validation Results
+
+- Schema: 11/11 VALID
+- Renderer: all VALID
+- Render idempotency: PASS (zero diff on second render)
+- Tests: 109 passed, 0 failed (baseline 73; +36 regression tests)
+- diff-check: clean
+- No source repository mutation (GET-only)
+- No secrets
+- No out-of-scope changes
+
+Status: ACTIVE (awaiting independent owner review; DO NOT MERGE)
