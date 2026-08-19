@@ -1,166 +1,225 @@
-# Project Adapter Registry — Live Project Wall
-#
-# Created by WO-OBSIDIAN-031 (Live Project Wall Foundation).
-# WO-OBSIDIAN-032 expanded adapter coverage to all 11 imported projects.
-# All 11 imported projects are enabled_for_wall: true / pilot_status: adapted.
-# No discovered-not-imported repository may be Wall-eligible.
-#
-# Field meanings:
-#   enabled_for_wall: whether the project appears on the Live Project Wall
-#   pilot_status: adaptation status (adapted once an adapter produces normalized state)
-#   adapter_id: adapter implementation (null when not-yet-adapted)
-
 registry_version: 1
 source_of_truth: 01 Projects/Project Registry.md
 created_by: WO-OBSIDIAN-031
-
 projects:
-  # --- Pilots (enabled + adapted) ---
-  - project_id: thai_stt_app
-    project_name: Thai STT App
-    source_path: D:\thai_stt_app
-    repository: https://github.com/expellirmud-dot/thai_stt_app.git
-    enabled_for_wall: true
-    pilot_status: adapted
-    adapter_id: generic-git-plus-authority-files
-    authority_candidates:
-      - AGENTS.md
-      - WORK_ORDER.md
-      - INDEX.md
-      - CHANGELOG.md
-    github:
-      prs: true
-      ci: true
-    github_repository_id: 1327192726
-
-  - project_id: lumina-studio
-    project_name: LUMINA Studio
-    source_path: D:\lumina-studio
-    repository: https://github.com/expellirmud-dot/LUMINA-Studio.git
-    enabled_for_wall: true
-    pilot_status: adapted
-    adapter_id: generic-git-plus-authority-files
-    authority_candidates:
-      - AGENTS.md
-      - AI_HANDOFF.md
-      - PROJECT_RULES.md
-      - README.md
-    github:
-      prs: true
-      ci: true
-    github_repository_id: 1253367642
-
-  # --- Remaining 9 imported projects (adapted by WO-OBSIDIAN-032) ---
-  - project_id: llm-agents
-    project_name: llm-agents
-    source_path: D:\llm-agents
-    repository: https://github.com/expellirmud-dot/llm-agents.git
-    enabled_for_wall: true
-    pilot_status: adapted
-    adapter_id: generic-git-plus-authority-files
-    authority_candidates:
-      - AGENTS.md
-      - work_orders/CURRENT_WORK_ORDER.md
-      - README.md
-    github_repository_id: 1312662022
-
-  - project_id: STT-Typing
-    project_name: STT Typing
-    source_path: D:\stt_typing
-    repository: https://github.com/expellirmud-dot/stt_typing.git
-    enabled_for_wall: true
-    pilot_status: adapted
-    adapter_id: generic-git-plus-authority-files
-    authority_candidates:
-      - AGENTS.md
-      - .tasks/CURRENT_TASK.md
-      - README.md
-    github_repository_id: 1305539299
-
-  - project_id: AI-Worker-Harness
-    project_name: AI Worker Harness
-    source_path: D:\ai-tools\ai-worker-harness
-    repository: https://github.com/expellirmud-dot/ai-worker-harness.git
-    enabled_for_wall: true
-    pilot_status: adapted
-    adapter_id: generic-git-plus-authority-files
-    authority_candidates:
-      - AGENTS.md
-      - work-order/CURRENT_WORK_ORDER.md
-      - README.md
-    github_repository_id: 1306269881
-
-  - project_id: Utility-Disbursement-App
-    project_name: Utility Disbursement App
-    source_path: D:\project_backups\utility-disbursement-app
-    repository: https://github.com/expellirmud-dot/utility-disbursement-app.git
-    enabled_for_wall: true
-    pilot_status: adapted
-    adapter_id: generic-git-plus-authority-files
-    authority_candidates:
-      - AGENTS.md
-      - README.md
-    github_repository_id: 1252869333
-
-  - project_id: Adobe-Stock-Upload-Assistant
-    project_name: Adobe Stock Upload Assistant
-    source_path: D:\adobe-stock-upload
-    repository: ""
-    enabled_for_wall: true
-    pilot_status: adapted
-    adapter_id: generic-git-plus-authority-files
-    authority_candidates:
-      - AGENTS.md
-      - PROJECT_RULES.md
-      - README.md
-
-  - project_id: lightroom-ai-exposure
-    project_name: Lightroom AI Exposure
-    source_path: D:\ai-tools\lightroom-ai-exposure
-    repository: https://github.com/expellirmud-dot/Lightroom-AI-Workflow-.git
-    enabled_for_wall: true
-    pilot_status: adapted
-    adapter_id: generic-git-plus-authority-files
-    authority_candidates:
-      - AGENTS.md
-      - Work-Order/CURRENT_WORK_ORDER.md
-      - README.md
-    github_repository_id: 1314588912
-
-  - project_id: citizen_portal
-    project_name: Citizen Portal
-    source_path: D:\citizen_portal
-    repository: https://github.com/expellirmud-dot/citizen-portal.git
-    enabled_for_wall: true
-    pilot_status: adapted
-    adapter_id: generic-git-plus-authority-files
-    authority_candidates:
-      - PROJECT_RULES.md
-      - AGENTS.md
-      - README.md
-    github_repository_id: 1237490934
-
-  - project_id: TalkToClibord
-    project_name: TalkToClibord
-    source_path: D:\TalkToClibord
-    repository: https://github.com/expellirmud-dot/TalkToClibord.git
-    enabled_for_wall: true
-    pilot_status: adapted
-    adapter_id: generic-git-plus-authority-files
-    authority_candidates:
-      - README.md
-      - JAVIS.md
-    github_repository_id: 1237311855
-
-  - project_id: AI-Workspace
-    project_name: AI-Workspace
-    source_path: D:\ai-tools\AI-Workspace
-    repository: https://github.com/expellirmud-dot/Expellirmud-AI-Workspace.git
-    enabled_for_wall: true
-    pilot_status: adapted
-    adapter_id: generic-git-plus-authority-files
-    authority_candidates:
-      - AGENTS.md
-      - README.md
-      - WORKSPACE.md
-    github_repository_id: 1256075991
+- project_id: thai_stt_app
+  project_name: Thai STT App
+  source_path: D:\thai_stt_app
+  repository: https://github.com/expellirmud-dot/thai_stt_app.git
+  enabled_for_wall: true
+  pilot_status: adapted
+  adapter_id: generic-git-plus-authority-files
+  authority_candidates:
+  - AGENTS.md
+  - WORK_ORDER.md
+  - INDEX.md
+  - CHANGELOG.md
+  github:
+    prs: true
+    ci: true
+  github_repository_id: 1327192726
+- project_id: lumina-studio
+  project_name: LUMINA Studio
+  source_path: D:\lumina-studio
+  repository: https://github.com/expellirmud-dot/LUMINA-Studio.git
+  enabled_for_wall: true
+  pilot_status: adapted
+  adapter_id: generic-git-plus-authority-files
+  authority_candidates:
+  - AGENTS.md
+  - AI_HANDOFF.md
+  - PROJECT_RULES.md
+  - README.md
+  github:
+    prs: true
+    ci: true
+  github_repository_id: 1253367642
+- project_id: llm-agents
+  project_name: llm-agents
+  source_path: D:\llm-agents
+  repository: https://github.com/expellirmud-dot/llm-agents.git
+  enabled_for_wall: true
+  pilot_status: adapted
+  adapter_id: generic-git-plus-authority-files
+  authority_candidates:
+  - AGENTS.md
+  - work_orders/CURRENT_WORK_ORDER.md
+  - README.md
+  github_repository_id: 1312662022
+- project_id: STT-Typing
+  project_name: STT Typing
+  source_path: D:\stt_typing
+  repository: https://github.com/expellirmud-dot/stt_typing.git
+  enabled_for_wall: true
+  pilot_status: adapted
+  adapter_id: generic-git-plus-authority-files
+  authority_candidates:
+  - AGENTS.md
+  - .tasks/CURRENT_TASK.md
+  - README.md
+  github_repository_id: 1305539299
+- project_id: AI-Worker-Harness
+  project_name: AI Worker Harness
+  source_path: D:\ai-tools\ai-worker-harness
+  repository: https://github.com/expellirmud-dot/ai-worker-harness.git
+  enabled_for_wall: true
+  pilot_status: adapted
+  adapter_id: generic-git-plus-authority-files
+  authority_candidates:
+  - AGENTS.md
+  - work-order/CURRENT_WORK_ORDER.md
+  - README.md
+  github_repository_id: 1306269881
+- project_id: Utility-Disbursement-App
+  project_name: Utility Disbursement App
+  source_path: D:\project_backups\utility-disbursement-app
+  repository: https://github.com/expellirmud-dot/utility-disbursement-app.git
+  enabled_for_wall: true
+  pilot_status: adapted
+  adapter_id: generic-git-plus-authority-files
+  authority_candidates:
+  - AGENTS.md
+  - README.md
+  github_repository_id: 1252869333
+- project_id: Adobe-Stock-Upload-Assistant
+  project_name: Adobe Stock Upload Assistant
+  source_path: D:\adobe-stock-upload
+  repository: ''
+  enabled_for_wall: true
+  pilot_status: adapted
+  adapter_id: generic-git-plus-authority-files
+  authority_candidates:
+  - AGENTS.md
+  - PROJECT_RULES.md
+  - README.md
+- project_id: lightroom-ai-exposure
+  project_name: Lightroom AI Exposure
+  source_path: D:\ai-tools\lightroom-ai-exposure
+  repository: https://github.com/expellirmud-dot/Lightroom-AI-Workflow-.git
+  enabled_for_wall: true
+  pilot_status: adapted
+  adapter_id: generic-git-plus-authority-files
+  authority_candidates:
+  - AGENTS.md
+  - Work-Order/CURRENT_WORK_ORDER.md
+  - README.md
+  github_repository_id: 1314588912
+- project_id: citizen_portal
+  project_name: Citizen Portal
+  source_path: D:\citizen_portal
+  repository: https://github.com/expellirmud-dot/citizen-portal.git
+  enabled_for_wall: true
+  pilot_status: adapted
+  adapter_id: generic-git-plus-authority-files
+  authority_candidates:
+  - PROJECT_RULES.md
+  - AGENTS.md
+  - README.md
+  github_repository_id: 1237490934
+- project_id: TalkToClibord
+  project_name: TalkToClibord
+  source_path: D:\TalkToClibord
+  repository: https://github.com/expellirmud-dot/TalkToClibord.git
+  enabled_for_wall: true
+  pilot_status: adapted
+  adapter_id: generic-git-plus-authority-files
+  authority_candidates:
+  - README.md
+  - JAVIS.md
+  github_repository_id: 1237311855
+- project_id: AI-Workspace
+  project_name: AI-Workspace
+  source_path: D:\ai-tools\AI-Workspace
+  repository: https://github.com/expellirmud-dot/Expellirmud-AI-Workspace.git
+  enabled_for_wall: true
+  pilot_status: adapted
+  adapter_id: generic-git-plus-authority-files
+  authority_candidates:
+  - AGENTS.md
+  - README.md
+  - WORKSPACE.md
+  github_repository_id: 1256075991
+- project_id: agentic-framework-mcp
+  project_name: Agentic Framework Mcp
+  source_path: null
+  repository: https://github.com/expellirmud-dot/agentic-framework-mcp.git
+  github_repository_id: 1254538335
+  enabled_for_wall: true
+  pilot_status: discovered
+  adapter_id: discovery-onboard-v1
+  authority_candidates:
+  - AGENTS.md
+  - README.md
+  - PROJECT_RULES.md
+- project_id: ai-ops-registry
+  project_name: Ai Ops Registry
+  source_path: null
+  repository: https://github.com/expellirmud-dot/ai-ops-registry.git
+  github_repository_id: 1256661628
+  enabled_for_wall: true
+  pilot_status: discovered
+  adapter_id: discovery-onboard-v1
+  authority_candidates:
+  - AGENTS.md
+  - README.md
+  - PROJECT_RULES.md
+- project_id: ai-pr-review-controller
+  project_name: Ai Pr Review Controller
+  source_path: null
+  repository: https://github.com/expellirmud-dot/ai-pr-review-controller.git
+  github_repository_id: 1333942204
+  enabled_for_wall: true
+  pilot_status: discovered
+  adapter_id: discovery-onboard-v1
+  authority_candidates:
+  - AGENTS.md
+  - README.md
+  - PROJECT_RULES.md
+- project_id: ai-pr-review-sandbox
+  project_name: Ai Pr Review Sandbox
+  source_path: null
+  repository: https://github.com/expellirmud-dot/ai-pr-review-sandbox.git
+  github_repository_id: 1333989994
+  enabled_for_wall: true
+  pilot_status: discovered
+  adapter_id: discovery-onboard-v1
+  authority_candidates:
+  - AGENTS.md
+  - README.md
+  - PROJECT_RULES.md
+- project_id: Jamie-Phone
+  project_name: Jamie Phone
+  source_path: null
+  repository: https://github.com/expellirmud-dot/Jamie-Phone.git
+  github_repository_id: 1222303523
+  enabled_for_wall: true
+  pilot_status: discovered
+  adapter_id: discovery-onboard-v1
+  authority_candidates:
+  - AGENTS.md
+  - README.md
+  - PROJECT_RULES.md
+- project_id: SR-400-Virtual-Tuning-Lab
+  project_name: Sr 400 Virtual Tuning Lab
+  source_path: null
+  repository: https://github.com/expellirmud-dot/SR-400-Virtual-Tuning-Lab.git
+  github_repository_id: 1335719476
+  enabled_for_wall: true
+  pilot_status: discovered
+  adapter_id: discovery-onboard-v1
+  authority_candidates:
+  - AGENTS.md
+  - README.md
+  - PROJECT_RULES.md
+- project_id: utility_automation_v2
+  project_name: Utility Automation V2
+  source_path: null
+  repository: https://github.com/expellirmud-dot/utility_automation_v2.git
+  github_repository_id: 1236874948
+  enabled_for_wall: true
+  pilot_status: discovered
+  adapter_id: discovery-onboard-v1
+  authority_candidates:
+  - AGENTS.md
+  - README.md
+  - PROJECT_RULES.md

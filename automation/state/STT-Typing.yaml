@@ -12,7 +12,7 @@ github_repository_id: 1305539299
 source_path: D:\stt_typing
 repository: https://github.com/expellirmud-dot/stt_typing.git
 branch: main
-head: af10254774766425b735e63632eb9a11f9056002
+head: 5b188cdf8c4b526d04efe5dca5b1826f194bb584
 knowledge_state: needs-verification
 project_identity:
   purpose: null
@@ -29,25 +29,25 @@ project_identity:
 current_execution:
   lifecycle_phase: superseded-pending-roadmap
   current_goal: null
-  current_work: TASK-STT-LEGACY-TK-CLEANUP-067 — SUPERSEDED-PENDING-ROADMAP (no active executable task)
+  current_work: CURRENT WORK ORDER
   current_work_authority:
-    path: .tasks/TASK-STT-LEGACY-TK-CLEANUP-067
-    kind: current-task
+    path: work-order/CURRENT_WORK_ORDER.md
+    kind: work-order
   current_work_evidence: verified
   last_completed: null
   blockers: STAGE_11_PRODUCTION_QT_ARCHITECTURE_INCOMPLETE
   next_action: 'Resolve blocker: STAGE_11_PRODUCTION_QT_ARCHITECTURE_INCOMPLETE'
 freshness:
-  status: fresh
+  status: stale
   tracked_ref: main
-  remote_head: af10254774766425b735e63632eb9a11f9056002
-  truth_built_from_head: af10254774766425b735e63632eb9a11f9056002
-  source_checked_at: '2026-08-17T10:33:05Z'
-  truth_built_at: '2026-08-12T07:10:00Z'
+  remote_head: 5b188cdf8c4b526d04efe5dca5b1826f194bb584
+  truth_built_from_head: 5b188cdf8c4b526d04efe5dca5b1826f194bb584
+  source_checked_at: '2026-08-19T01:08:41Z'
+  truth_built_at: '2026-08-19T01:06:49Z'
   stale_since: null
-  reason: null
+  reason: 'sub-gates: source=fresh semantic=stale progress=fresh'
   source_freshness: fresh
-  semantic_freshness: fresh
+  semantic_freshness: stale
   progress_freshness: fresh
 progress:
   scope: null
@@ -62,10 +62,10 @@ progress:
   basis: no denominator (roadmap/milestone evidence not found)
 github:
   ci_state: unknown
-  open_pr: null
-  open_pr_count: null
-  observed_at: '2026-08-17T10:33:05Z'
-last_change: '2026-07-28'
+  open_pr: 84
+  open_pr_count: 3
+  observed_at: '2026-08-19T01:08:41Z'
+last_change: '2026-08-15'
 evidence_classification: verified
-verified_at: '2026-08-12T07:10:00Z'
-adapter_id: generic-git-plus-authority-files
+verified_at: '2026-08-19T01:06:47Z'
+adapter_id: freshness-refresh-v1

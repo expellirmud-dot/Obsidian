@@ -1,0 +1,68 @@
+# Normalized project state (v2) -- ai-pr-review-sandbox
+# Onboarded by WO-OBSIDIAN-037 (Repository Discovery + Safe Auto-Onboarding).
+# Source repository is READ-ONLY; no source files were modified.
+# knowledge_state=needs-verification: Mission not yet verified against source evidence.
+schema_version: 2
+project_id: ai-pr-review-sandbox
+project_name: Ai Pr Review Sandbox
+github_repository_id: 1333989994
+source_path: null
+repository: https://github.com/expellirmud-dot/ai-pr-review-sandbox.git
+branch: main
+head: 4131d299a8187bda2dd1c79a509f65648e93436b
+knowledge_state: needs-verification
+project_identity:
+  purpose: null
+  problem_statement: null
+  intended_outcome: null
+  primary_users: null
+  success_definition: null
+  scope: null
+  non_goals: null
+  identity_drift_detected: false
+  previous_identity: null
+  candidate_identity: null
+  candidate_identity_provenance: null
+current_execution:
+  lifecycle_phase: null
+  current_goal: null
+  current_work: null
+  current_work_authority:
+    path: null
+    kind: null
+  current_work_evidence: unknown
+  last_completed: null
+  blockers: null
+  next_action: null
+freshness:
+  status: fresh
+  tracked_ref: main
+  remote_head: 4131d299a8187bda2dd1c79a509f65648e93436b
+  truth_built_from_head: 4131d299a8187bda2dd1c79a509f65648e93436b
+  source_checked_at: '2026-08-19T01:08:41Z'
+  truth_built_at: '2026-08-19T01:05:42Z'
+  stale_since: null
+  reason: null
+  source_freshness: fresh
+  semantic_freshness: fresh
+  progress_freshness: fresh
+progress:
+  scope: null
+  method: null
+  estimate: null
+  range_min: null
+  range_max: null
+  confidence: unknown
+  completed: null
+  active: null
+  remaining: null
+  basis: null
+github:
+  ci_state: unknown
+  open_pr: null
+  open_pr_count: 0
+  observed_at: '2026-08-19T01:08:41Z'
+last_change: '2026-08-16'
+evidence_classification: unknown
+verified_at: '2026-08-19T01:05:42Z'
+adapter_id: discovery-onboard-v1

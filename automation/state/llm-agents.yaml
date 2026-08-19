@@ -12,7 +12,7 @@ github_repository_id: 1312662022
 source_path: D:\llm-agents
 repository: https://github.com/expellirmud-dot/llm-agents.git
 branch: integration/wave1-foundation
-head: 099e516b2cf504d664d9cf12a40b722900ba7dde
+head: 7388dd8861b9d985f3e63e48cef04423bd49d50e
 knowledge_state: needs-verification
 project_identity:
   purpose: null
@@ -38,16 +38,16 @@ current_execution:
   blockers: Owner Go required — credential ready, single live run pending
   next_action: Owner Go → Execute WO-03 live run (single invocation, strict gate)
 freshness:
-  status: fresh
-  tracked_ref: integration/wave1-foundation
-  remote_head: 099e516b2cf504d664d9cf12a40b722900ba7dde
-  truth_built_from_head: 099e516b2cf504d664d9cf12a40b722900ba7dde
-  source_checked_at: '2026-08-17T10:33:05Z'
-  truth_built_at: '2026-08-12T07:10:00Z'
+  status: stale
+  tracked_ref: main
+  remote_head: 7388dd8861b9d985f3e63e48cef04423bd49d50e
+  truth_built_from_head: 7388dd8861b9d985f3e63e48cef04423bd49d50e
+  source_checked_at: '2026-08-19T01:08:41Z'
+  truth_built_at: '2026-08-19T01:06:47Z'
   stale_since: null
-  reason: null
+  reason: 'sub-gates: source=fresh semantic=stale progress=fresh'
   source_freshness: fresh
-  semantic_freshness: fresh
+  semantic_freshness: stale
   progress_freshness: fresh
 progress:
   scope: null
@@ -62,10 +62,10 @@ progress:
   basis: no denominator (roadmap/milestone evidence not found)
 github:
   ci_state: unknown
-  open_pr: null
-  open_pr_count: null
-  observed_at: '2026-08-17T10:33:05Z'
-last_change: '2026-07-28'
+  open_pr: 68
+  open_pr_count: 3
+  observed_at: '2026-08-19T01:08:41Z'
+last_change: '2026-08-17'
 evidence_classification: verified
-verified_at: '2026-08-12T07:10:00Z'
-adapter_id: generic-git-plus-authority-files
+verified_at: '2026-08-19T01:06:44Z'
+adapter_id: freshness-refresh-v1

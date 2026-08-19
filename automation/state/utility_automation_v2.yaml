@@ -1,0 +1,68 @@
+# Normalized project state (v2) -- utility_automation_v2
+# Onboarded by WO-OBSIDIAN-037 (Repository Discovery + Safe Auto-Onboarding).
+# Source repository is READ-ONLY; no source files were modified.
+# knowledge_state=needs-verification: Mission not yet verified against source evidence.
+schema_version: 2
+project_id: utility_automation_v2
+project_name: Utility Automation V2
+github_repository_id: 1236874948
+source_path: null
+repository: https://github.com/expellirmud-dot/utility_automation_v2.git
+branch: main
+head: a0f5fbfd5d92e973be07b3f73cab055b47207475
+knowledge_state: needs-verification
+project_identity:
+  purpose: null
+  problem_statement: null
+  intended_outcome: null
+  primary_users: null
+  success_definition: null
+  scope: null
+  non_goals: null
+  identity_drift_detected: false
+  previous_identity: null
+  candidate_identity: null
+  candidate_identity_provenance: null
+current_execution:
+  lifecycle_phase: null
+  current_goal: null
+  current_work: null
+  current_work_authority:
+    path: null
+    kind: null
+  current_work_evidence: unknown
+  last_completed: null
+  blockers: null
+  next_action: null
+freshness:
+  status: fresh
+  tracked_ref: main
+  remote_head: a0f5fbfd5d92e973be07b3f73cab055b47207475
+  truth_built_from_head: a0f5fbfd5d92e973be07b3f73cab055b47207475
+  source_checked_at: '2026-08-19T01:08:41Z'
+  truth_built_at: '2026-08-19T01:05:44Z'
+  stale_since: null
+  reason: null
+  source_freshness: fresh
+  semantic_freshness: fresh
+  progress_freshness: fresh
+progress:
+  scope: null
+  method: null
+  estimate: null
+  range_min: null
+  range_max: null
+  confidence: unknown
+  completed: null
+  active: null
+  remaining: null
+  basis: null
+github:
+  ci_state: pending
+  open_pr: 41
+  open_pr_count: 8
+  observed_at: '2026-08-19T01:08:41Z'
+last_change: '2026-05-14'
+evidence_classification: unknown
+verified_at: '2026-08-19T01:05:44Z'
+adapter_id: discovery-onboard-v1

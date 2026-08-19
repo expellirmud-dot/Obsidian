@@ -1,0 +1,68 @@
+# Normalized project state (v2) -- ai-ops-registry
+# Onboarded by WO-OBSIDIAN-037 (Repository Discovery + Safe Auto-Onboarding).
+# Source repository is READ-ONLY; no source files were modified.
+# knowledge_state=needs-verification: Mission not yet verified against source evidence.
+schema_version: 2
+project_id: ai-ops-registry
+project_name: Ai Ops Registry
+github_repository_id: 1256661628
+source_path: null
+repository: https://github.com/expellirmud-dot/ai-ops-registry.git
+branch: main
+head: 518ddce3abc19c77c4749c426ea236253f6a8481
+knowledge_state: needs-verification
+project_identity:
+  purpose: null
+  problem_statement: null
+  intended_outcome: null
+  primary_users: null
+  success_definition: null
+  scope: null
+  non_goals: null
+  identity_drift_detected: false
+  previous_identity: null
+  candidate_identity: null
+  candidate_identity_provenance: null
+current_execution:
+  lifecycle_phase: null
+  current_goal: null
+  current_work: null
+  current_work_authority:
+    path: null
+    kind: null
+  current_work_evidence: unknown
+  last_completed: null
+  blockers: null
+  next_action: null
+freshness:
+  status: fresh
+  tracked_ref: main
+  remote_head: 518ddce3abc19c77c4749c426ea236253f6a8481
+  truth_built_from_head: 518ddce3abc19c77c4749c426ea236253f6a8481
+  source_checked_at: '2026-08-19T01:08:41Z'
+  truth_built_at: '2026-08-19T01:05:41Z'
+  stale_since: null
+  reason: null
+  source_freshness: fresh
+  semantic_freshness: fresh
+  progress_freshness: fresh
+progress:
+  scope: null
+  method: null
+  estimate: null
+  range_min: null
+  range_max: null
+  confidence: unknown
+  completed: null
+  active: null
+  remaining: null
+  basis: null
+github:
+  ci_state: unknown
+  open_pr: null
+  open_pr_count: 0
+  observed_at: '2026-08-19T01:08:41Z'
+last_change: '2026-06-02'
+evidence_classification: unknown
+verified_at: '2026-08-19T01:05:41Z'
+adapter_id: discovery-onboard-v1

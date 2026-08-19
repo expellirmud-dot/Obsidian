@@ -1,0 +1,68 @@
+# Normalized project state (v2) -- Jamie-Phone
+# Onboarded by WO-OBSIDIAN-037 (Repository Discovery + Safe Auto-Onboarding).
+# Source repository is READ-ONLY; no source files were modified.
+# knowledge_state=needs-verification: Mission not yet verified against source evidence.
+schema_version: 2
+project_id: Jamie-Phone
+project_name: Jamie Phone
+github_repository_id: 1222303523
+source_path: null
+repository: https://github.com/expellirmud-dot/Jamie-Phone.git
+branch: main
+head: eb3125962bf3afeeb89c4a1b209998b655e6a705
+knowledge_state: needs-verification
+project_identity:
+  purpose: null
+  problem_statement: null
+  intended_outcome: null
+  primary_users: null
+  success_definition: null
+  scope: null
+  non_goals: null
+  identity_drift_detected: false
+  previous_identity: null
+  candidate_identity: null
+  candidate_identity_provenance: null
+current_execution:
+  lifecycle_phase: null
+  current_goal: null
+  current_work: null
+  current_work_authority:
+    path: null
+    kind: null
+  current_work_evidence: unknown
+  last_completed: null
+  blockers: null
+  next_action: null
+freshness:
+  status: fresh
+  tracked_ref: main
+  remote_head: eb3125962bf3afeeb89c4a1b209998b655e6a705
+  truth_built_from_head: eb3125962bf3afeeb89c4a1b209998b655e6a705
+  source_checked_at: '2026-08-19T01:08:41Z'
+  truth_built_at: '2026-08-19T01:05:42Z'
+  stale_since: null
+  reason: null
+  source_freshness: fresh
+  semantic_freshness: fresh
+  progress_freshness: fresh
+progress:
+  scope: null
+  method: null
+  estimate: null
+  range_min: null
+  range_max: null
+  confidence: unknown
+  completed: null
+  active: null
+  remaining: null
+  basis: null
+github:
+  ci_state: pending
+  open_pr: null
+  open_pr_count: 0
+  observed_at: '2026-08-19T01:08:41Z'
+last_change: '2026-04-27'
+evidence_classification: unknown
+verified_at: '2026-08-19T01:05:42Z'
+adapter_id: discovery-onboard-v1

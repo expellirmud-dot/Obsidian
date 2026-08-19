@@ -13,7 +13,7 @@ github_repository_id: 1256075991
 source_path: D:\ai-tools\AI-Workspace
 repository: https://github.com/expellirmud-dot/Expellirmud-AI-Workspace.git
 branch: main
-head: 69340677fb61af3e7d2b7f840363632f3211f5fd
+head: 0be07242e2bfd7e27f9d8bcd71a7527b6c0d1d60
 knowledge_state: needs-verification
 project_identity:
   purpose: null
@@ -39,16 +39,16 @@ current_execution:
   blockers: null
   next_action: null
 freshness:
-  status: fresh
+  status: stale
   tracked_ref: main
-  remote_head: 69340677fb61af3e7d2b7f840363632f3211f5fd
-  truth_built_from_head: 69340677fb61af3e7d2b7f840363632f3211f5fd
-  source_checked_at: '2026-08-17T10:33:05Z'
-  truth_built_at: '2026-08-12T07:10:00Z'
+  remote_head: 0be07242e2bfd7e27f9d8bcd71a7527b6c0d1d60
+  truth_built_from_head: 0be07242e2bfd7e27f9d8bcd71a7527b6c0d1d60
+  source_checked_at: '2026-08-19T01:08:41Z'
+  truth_built_at: '2026-08-19T01:06:58Z'
   stale_since: null
-  reason: null
+  reason: 'sub-gates: source=fresh semantic=stale progress=fresh'
   source_freshness: fresh
-  semantic_freshness: fresh
+  semantic_freshness: stale
   progress_freshness: fresh
 progress:
   scope: null
@@ -62,11 +62,11 @@ progress:
   remaining: null
   basis: no denominator (roadmap/milestone evidence not found)
 github:
-  ci_state: unknown
+  ci_state: pending
   open_pr: null
-  open_pr_count: null
-  observed_at: '2026-08-17T10:33:05Z'
-last_change: '2026-06-30'
+  open_pr_count: 0
+  observed_at: '2026-08-19T01:08:41Z'
+last_change: '2026-06-02'
 evidence_classification: verified
-verified_at: '2026-08-12T07:10:00Z'
-adapter_id: generic-git-plus-authority-files
+verified_at: '2026-08-19T01:06:57Z'
+adapter_id: freshness-refresh-v1

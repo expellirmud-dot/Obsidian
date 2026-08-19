@@ -43,7 +43,7 @@ freshness:
   tracked_ref: main
   remote_head: f8ae9fb428641da6101cab3ff76b1e5d20e43203
   truth_built_from_head: f8ae9fb428641da6101cab3ff76b1e5d20e43203
-  source_checked_at: '2026-08-17T10:33:05Z'
+  source_checked_at: '2026-08-19T01:08:41Z'
   truth_built_at: '2026-08-12T07:10:00Z'
   stale_since: null
   reason: null
@@ -62,10 +62,10 @@ progress:
   remaining: null
   basis: no denominator (roadmap/milestone evidence not found)
 github:
-  ci_state: unknown
+  ci_state: success
   open_pr: null
-  open_pr_count: null
-  observed_at: '2026-08-17T10:33:05Z'
+  open_pr_count: 0
+  observed_at: '2026-08-19T01:08:41Z'
 last_change: '2026-06-24'
 evidence_classification: verified
 verified_at: '2026-08-12T07:10:00Z'

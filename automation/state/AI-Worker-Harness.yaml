@@ -12,7 +12,7 @@ github_repository_id: 1306269881
 source_path: D:\ai-tools\ai-worker-harness
 repository: https://github.com/expellirmud-dot/ai-worker-harness.git
 branch: main
-head: 7096991892cead77a40c0178c57c9589839b1518
+head: ee4abc5ef0dea4ab7b16f51eb8e52097944d3b6a
 knowledge_state: needs-verification
 project_identity:
   purpose: null
@@ -29,7 +29,7 @@ project_identity:
 current_execution:
   lifecycle_phase: verified
   current_goal: Goal-09 — Runtime Observability, Information Sufficiency, and Model Evaluation
-  current_work: WO-G9-R07-TASK-CLASS-EVALUATION-ROBUSTNESS (R07 live campaign, ACTIVE)
+  current_work: Current Work Order
   current_work_authority:
     path: work-order/CURRENT_WORK_ORDER.md
     kind: work-order
@@ -38,16 +38,16 @@ current_execution:
   blockers: null
   next_action: Validate fresh route health for google-gemma-main; run sentinel batch TC-01 + TC-07
 freshness:
-  status: fresh
+  status: stale
   tracked_ref: main
-  remote_head: 7096991892cead77a40c0178c57c9589839b1518
-  truth_built_from_head: 7096991892cead77a40c0178c57c9589839b1518
-  source_checked_at: '2026-08-17T10:33:05Z'
-  truth_built_at: '2026-08-12T07:10:00Z'
+  remote_head: ee4abc5ef0dea4ab7b16f51eb8e52097944d3b6a
+  truth_built_from_head: ee4abc5ef0dea4ab7b16f51eb8e52097944d3b6a
+  source_checked_at: '2026-08-19T01:08:41Z'
+  truth_built_at: '2026-08-19T01:06:51Z'
   stale_since: null
-  reason: null
+  reason: 'sub-gates: source=fresh semantic=stale progress=fresh'
   source_freshness: fresh
-  semantic_freshness: fresh
+  semantic_freshness: stale
   progress_freshness: fresh
 progress:
   scope: null
@@ -63,9 +63,9 @@ progress:
 github:
   ci_state: unknown
   open_pr: null
-  open_pr_count: null
-  observed_at: '2026-08-17T10:33:05Z'
-last_change: '2026-07-28'
+  open_pr_count: 0
+  observed_at: '2026-08-19T01:08:41Z'
+last_change: '2026-07-26'
 evidence_classification: verified
-verified_at: '2026-08-12T07:10:00Z'
-adapter_id: generic-git-plus-authority-files
+verified_at: '2026-08-19T01:06:50Z'
+adapter_id: freshness-refresh-v1

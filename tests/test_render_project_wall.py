@@ -4,7 +4,7 @@ Covers the renderer (scripts/render_project_wall.py). The GitHub adapter
 tests live in tests/test_github_adapter.py. All 9 renderer test cases:
 
   1.  test_schema_validation
-  2.  test_all_11_registered_project_states
+  2.  test_all_registered_project_states
   3.  test_validate_all
   4.  test_render_success
   5.  test_render_idempotency
@@ -122,17 +122,17 @@ def test_schema_validation(schema):
 
 
 # ---------------------------------------------------------------------------
-# 2. Exactly 11 registered project states
+# 2. Registered project states
 # ---------------------------------------------------------------------------
 
-def test_all_11_registered_project_states(registry, state_dir):
-    """Exactly 11 state files exist, matching the enabled projects in projects.yaml."""
+def test_all_registered_project_states(registry, state_dir):
+    """One state file per enabled project in projects.yaml (count is registry-driven)."""
     enabled = [
         p["project_id"]
         for p in registry.get("projects", [])
         if p.get("enabled_for_wall") is True
     ]
-    assert len(enabled) == 11, f"expected 11 enabled projects, got {len(enabled)}"
+    assert enabled, "expected at least one enabled project"
 
     state_files = {
         f.stem for f in state_dir.glob("*.yaml") if f.is_file()
@@ -141,18 +141,18 @@ def test_all_11_registered_project_states(registry, state_dir):
         f"state files {sorted(state_files)} != enabled ids {sorted(enabled)}"
     )
     # No extra/missing files.
-    assert len(state_files) == 11
+    assert len(state_files) == len(enabled)
 
 
 # ---------------------------------------------------------------------------
-# 3. validate-all returns 0 errors for all 11
+# 3. validate-all returns 0 errors for all registered states
 # ---------------------------------------------------------------------------
 
 def test_validate_all(renderer_module, registry, state_dir):
-    """Running the validate-all logic returns 0 errors for all 11 states."""
+    """Running the validate-all logic returns 0 errors for all registered states."""
     schema = renderer_module.load_schema()
     ids = renderer_module.enabled_project_ids(registry)
-    assert len(ids) == 11
+    assert ids, "expected at least one enabled project"
 
     total_errors = 0
     for pid in ids:
@@ -164,11 +164,11 @@ def test_validate_all(renderer_module, registry, state_dir):
 
 
 # ---------------------------------------------------------------------------
-# 4. Render success: non-empty wall with header + separator + 11 rows
+# 4. Render success: non-empty wall with header + separator + one row per project
 # ---------------------------------------------------------------------------
 
 def test_render_success(renderer_module, registry):
-    """render_wall produces non-empty content with header + separator + 11 rows."""
+    """render_wall produces header + separator + one data row per enabled project."""
     schema = renderer_module.load_schema()
     ids = renderer_module.enabled_project_ids(registry)
     states = [renderer_module.load_state(pid) for pid in ids]
@@ -178,8 +178,10 @@ def test_render_success(renderer_module, registry):
     wall = renderer_module.render_wall(states)
     assert wall, "wall content must be non-empty"
     lines = wall.splitlines()
-    # header + separator + 11 data rows
-    assert len(lines) == 2 + 11, f"expected 13 lines, got {len(lines)}"
+    # header + separator + one data row per enabled project
+    assert len(lines) == 2 + len(ids), (
+        f"expected {2 + len(ids)} lines, got {len(lines)}"
+    )
 
     header = lines[0]
     separator = lines[1]
