@@ -1,6 +1,6 @@
 ---
 type: index
-last_reviewed: 2026-07-29
+last_reviewed: 2026-08-19
 ---
 
 # Project Index
@@ -22,6 +22,13 @@ last_reviewed: 2026-07-29
 | [[citizen_portal]] | Online citizen-request management system for ด่านทับตะโก municipality (Next.js 16 + Prisma + Supabase + Auth.js), research prototype, MVP flows working | `D:\citizen_portal` | **verified** (onboarded WO-OBSIDIAN-028; HEAD f8ae9fb; research prototype, no active task) | 2026-08-11 (WO-OBSIDIAN-028: Repository truth verified, HEAD f8ae9fb) |
 | [[TalkToClibord]] | J.A.V.I.S desktop AI assistant (Python Tkinter GUI + vision_*.py backend + Gemini API + MemoryVault + pygame TTS, Thai-language), active dev / Test Sprint | `D:\TalkToClibord` | **verified** (onboarded WO-OBSIDIAN-029; HEAD 40b565e; pre-existing dirty + untracked artifacts) | 2026-08-11 (WO-OBSIDIAN-029: Repository truth verified, HEAD 40b565e) |
 | [[AI-Workspace]] | System-level AI ops workspace (multi-app/multi-model/multi-project orchestration, manual-safe V1, ai-ops-registry) | `D:\ai-tools\AI-Workspace` | **verified** (onboarded WO-OBSIDIAN-030; HEAD 6934067; pre-existing dirty .serena/project.yml + src/App.jsx) | 2026-08-11 (WO-OBSIDIAN-030: Repository truth verified, HEAD 6934067) |
+| [[Agentic Framework Mcp]] | unknown — รอ evidence-based truth rebuild (knowledge_state: needs-verification) | unknown (GitHub-onboarded) | **needs-verification** (auto-onboarded WO-OBSIDIAN-037; remote_head null — ไม่พบ commit) | 2026-08-19 (GitHub adapter: repo 1254538335 verified, remote_head null) |
+| [[Ai Ops Registry]] | unknown — รอ evidence-based truth rebuild (knowledge_state: needs-verification) | unknown (GitHub-onboarded) | **needs-verification** (auto-onboarded WO-OBSIDIAN-037) | 2026-08-19 (GitHub adapter: remote HEAD 518ddce) |
+| [[Ai Pr Review Controller]] | unknown — รอ evidence-based truth rebuild (knowledge_state: needs-verification) | unknown (GitHub-onboarded) | **needs-verification** (auto-onboarded WO-OBSIDIAN-037) | 2026-08-19 (GitHub adapter: remote HEAD 72c5ffd) |
+| [[Ai Pr Review Sandbox]] | unknown — รอ evidence-based truth rebuild (knowledge_state: needs-verification) | unknown (GitHub-onboarded) | **needs-verification** (auto-onboarded WO-OBSIDIAN-037) | 2026-08-19 (GitHub adapter: remote HEAD 4131d29) |
+| [[Jamie Phone]] | unknown — รอ evidence-based truth rebuild (knowledge_state: needs-verification) | unknown (GitHub-onboarded) | **needs-verification** (auto-onboarded WO-OBSIDIAN-037) | 2026-08-19 (GitHub adapter: remote HEAD eb31259) |
+| [[Sr 400 Virtual Tuning Lab]] | unknown — รอ evidence-based truth rebuild (knowledge_state: needs-verification) | unknown (GitHub-onboarded) | **needs-verification** (auto-onboarded WO-OBSIDIAN-037) | 2026-08-19 (GitHub adapter: remote HEAD 48c9413) |
+| [[Utility Automation V2]] | unknown — รอ evidence-based truth rebuild (knowledge_state: needs-verification) | unknown (GitHub-onboarded) | **needs-verification** (auto-onboarded WO-OBSIDIAN-037) | 2026-08-19 (GitHub adapter: remote HEAD a0f5fbf) |
 
 หมายเหตุ: `Last Verified` ในแต่ละรอบขึ้นอยู่กับขอบเขตของ Work Order นั้น
 

@@ -1,0 +1,37 @@
+name: Vault Validation
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: python3 -m pip install -r requirements.txt
+
+      - name: Schema validation (all state files must be VALID)
+        run: |
+          python3 automation/migrate_state_v2.py --validate
+          python3 scripts/render_project_wall.py --validate-all
+
+      - name: Render idempotency (second run must produce zero diff)
+        run: |
+          python3 scripts/render_project_wall.py
+          python3 scripts/render_project_wall.py
+          git diff --exit-code -- "00 Dashboard/Project Dashboard.md"
+
+      - name: Regression tests
+        run: python3 -m pytest tests/ -q
