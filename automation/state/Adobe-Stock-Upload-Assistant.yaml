@@ -39,17 +39,17 @@ current_execution:
   blockers: null
   next_action: null
 freshness:
-  status: refresh_failed
+  status: unknown
   tracked_ref: main
   remote_head: null
   truth_built_from_head: 0e5f9fc53f58592ca9e5e3c37bb2b0ef1ced977a
-  source_checked_at: '2026-08-19T14:03:59Z'
+  source_checked_at: '2026-08-19T14:11:46Z'
   truth_built_at: '2026-08-12T07:10:00Z'
   stale_since: null
-  reason: 'exception: KeyError: ''checked_at'''
-  source_freshness: fresh
-  semantic_freshness: refresh_failed
-  progress_freshness: refresh_failed
+  reason: 'evidence unavailable: manifest status=no_remote'
+  source_freshness: unknown
+  semantic_freshness: unknown
+  progress_freshness: unknown
 progress:
   scope: null
   method: null
