@@ -1,6 +1,6 @@
 ---
 type: index
-last_reviewed: 2026-08-15
+last_reviewed: 2026-08-18
 ---
 
 # Work Order Index
@@ -26,7 +26,7 @@ last_reviewed: 2026-08-15
 
 ## Current Work Order
 - [[CURRENT_WORK_ORDER]]
-- **LATEST CLOSED:** [[WO-OBSIDIAN-032-EXPAND-PROJECT-WALL-ADAPTERS]] (no active Work Order)
+- **LATEST CLOSED:** [[WO-OBSIDIAN-041-TRUTH-CORRECTNESS-HARDENING]] (no active Work Order)
 
 ## Planned Sequence
 
