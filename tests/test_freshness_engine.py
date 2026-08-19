@@ -1044,3 +1044,51 @@ def test_aggregate_not_fresh_when_progress_unknown():
     manifest = {"status": "no_evidence"}
     progress = {"estimate": None, "confidence": "unknown"}
     assert fe.progress_freshness_for(manifest, progress) == "unknown"
+
+
+# ===========================================================================
+# Local-only (no remote) refresh regression (health-check 2026-08-19)
+# ===========================================================================
+
+def test_probe_local_only_includes_checked_at(monkeypatch, tmp_path):
+    """probe_project's no-remote early return must include checked_at.
+
+    The return previously omitted checked_at/default_branch, while
+    refresh_project reads probe["checked_at"] unconditionally -> permanent
+    refresh_failed (KeyError: 'checked_at') for every local-only project
+    (observed on Adobe-Stock-Upload-Assistant).
+    """
+    monkeypatch.setattr(fe, "STATE_DIR", tmp_path / "state")
+    (tmp_path / "state").mkdir()
+    _seed_state(tmp_path, "localproj", _v2_state(pid="localproj"))
+
+    probe = fe.probe_project({"project_id": "localproj", "repository": ""},
+                             token=None)
+    assert probe["status"] == "unknown"
+    assert probe["reason"] == "no remote repository"
+    assert probe["checked_at"]
+    assert probe["remote_head"] is None
+    assert probe["default_branch"] is None
+
+
+def test_refresh_local_only_no_keyerror(monkeypatch, tmp_path):
+    """Local-only refresh must fail gracefully (evidence unavailable /
+    unknown), never crash with KeyError -> refresh_failed."""
+    monkeypatch.setattr(fe, "STATE_DIR", tmp_path / "state")
+    monkeypatch.setattr(fe, "PROJECTS_YAML", tmp_path / "projects.yaml")
+    monkeypatch.setattr(fe, "EVIDENCE_DIR", tmp_path / "evidence")
+    (tmp_path / "state").mkdir()
+    (tmp_path / "evidence").mkdir()
+    (tmp_path / "projects.yaml").write_text(
+        yaml.safe_dump({"projects": [{"project_id": "localproj",
+                                      "repository": ""}]}),
+        encoding="utf-8")
+    _seed_state(tmp_path, "localproj", _v2_state(pid="localproj"))
+
+    res = fe.refresh_project({"project_id": "localproj", "repository": ""},
+                             token=None, dry_run=False)
+    assert res["status"] != "refresh_failed"
+    assert "KeyError" not in str(res)
+    # The original state content must be preserved (no partial truth written).
+    state = yaml.safe_load((tmp_path / "state" / "localproj.yaml").read_text("utf-8"))
+    assert state["project_id"] == "localproj"
