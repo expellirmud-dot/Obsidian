@@ -53,7 +53,7 @@ Project-Knowledge-Vault
 # 1. ติดตั้ง dependencies
 python3 -m pip install -r requirements.txt
 
-# 2. Validate ทุก state file (ต้อง 11/11 VALID)
+# 2. Validate ทุก state file (ต้อง 18/18 VALID)
 python3 scripts/render_project_wall.py --validate-all
 
 # 3. Render Live Project Wall (idempotent — รอบที่สองต้อง zero diff)

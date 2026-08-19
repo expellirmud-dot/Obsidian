@@ -239,8 +239,10 @@ def probe_project(project: dict, token: str | None) -> dict:
     owner_repo = parse_owner_repo(repo_url)
     if not owner_repo:
         # Local-only project (no remote) -> freshness unknown (cannot compare).
+        # checked_at/default_branch must be present: refresh_project reads
+        # probe["checked_at"] unconditionally (KeyError otherwise).
         return {"project_id": pid, "status": "unknown", "reason": "no remote repository",
-                "remote_head": None}
+                "remote_head": None, "default_branch": None, "checked_at": now_iso()}
     owner, repo = owner_repo
     head_info = fetch_remote_head(owner, repo, token)
     fr = state.get("freshness") or {}
