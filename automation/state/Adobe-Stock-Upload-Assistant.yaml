@@ -43,7 +43,7 @@ freshness:
   tracked_ref: main
   remote_head: null
   truth_built_from_head: 0e5f9fc53f58592ca9e5e3c37bb2b0ef1ced977a
-  source_checked_at: '2026-08-19T14:11:46Z'
+  source_checked_at: '2026-08-20T07:08:18Z'
   truth_built_at: '2026-08-12T07:10:00Z'
   stale_since: null
   reason: 'evidence unavailable: manifest status=no_remote'
@@ -65,7 +65,7 @@ github:
   ci_state: unknown
   open_pr: null
   open_pr_count: null
-  observed_at: '2026-08-19T14:03:59Z'
+  observed_at: '2026-08-20T07:08:18Z'
 last_change: '2026-07-28'
 evidence_classification: verified
 verified_at: '2026-08-12T07:10:00Z'

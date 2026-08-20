@@ -9,7 +9,7 @@ github_repository_id: 1335719476
 source_path: null
 repository: https://github.com/expellirmud-dot/SR-400-Virtual-Tuning-Lab.git
 branch: main
-head: 48c94135c70e52c5fc19f35bf4806801e66da1ab
+head: b9143fbead6ca76f9278f7cd10e6818011234a23
 knowledge_state: needs-verification
 project_identity:
   purpose: null
@@ -35,16 +35,16 @@ current_execution:
   blockers: null
   next_action: null
 freshness:
-  status: fresh
+  status: stale
   tracked_ref: main
-  remote_head: 48c94135c70e52c5fc19f35bf4806801e66da1ab
-  truth_built_from_head: 48c94135c70e52c5fc19f35bf4806801e66da1ab
-  source_checked_at: '2026-08-19T14:03:59Z'
-  truth_built_at: '2026-08-19T01:05:43Z'
+  remote_head: b9143fbead6ca76f9278f7cd10e6818011234a23
+  truth_built_from_head: b9143fbead6ca76f9278f7cd10e6818011234a23
+  source_checked_at: '2026-08-20T07:08:18Z'
+  truth_built_at: '2026-08-20T07:05:47Z'
   stale_since: null
-  reason: null
+  reason: 'sub-gates: source=fresh semantic=stale progress=fresh'
   source_freshness: fresh
-  semantic_freshness: fresh
+  semantic_freshness: stale
   progress_freshness: fresh
 progress:
   scope: null
@@ -56,13 +56,13 @@ progress:
   completed: null
   active: null
   remaining: null
-  basis: null
+  basis: roadmap evidence truncated (incomplete denominator; cannot compute a reliable percentage)
 github:
   ci_state: unknown
-  open_pr: 3
-  open_pr_count: 1
-  observed_at: '2026-08-19T14:03:59Z'
-last_change: '2026-08-18'
+  open_pr: null
+  open_pr_count: 0
+  observed_at: '2026-08-20T07:08:18Z'
+last_change: '2026-08-19'
 evidence_classification: unknown
-verified_at: '2026-08-19T01:05:43Z'
-adapter_id: discovery-onboard-v1
+verified_at: '2026-08-20T07:05:45Z'
+adapter_id: freshness-refresh-v1

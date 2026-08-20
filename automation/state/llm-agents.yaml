@@ -12,7 +12,7 @@ github_repository_id: 1312662022
 source_path: D:\llm-agents
 repository: https://github.com/expellirmud-dot/llm-agents.git
 branch: integration/wave1-foundation
-head: 7388dd8861b9d985f3e63e48cef04423bd49d50e
+head: d060ff2d6f61d376f4834c77ebc9a5c9a071273a
 knowledge_state: needs-verification
 project_identity:
   purpose: null
@@ -40,10 +40,10 @@ current_execution:
 freshness:
   status: stale
   tracked_ref: main
-  remote_head: 7388dd8861b9d985f3e63e48cef04423bd49d50e
-  truth_built_from_head: 7388dd8861b9d985f3e63e48cef04423bd49d50e
-  source_checked_at: '2026-08-19T14:03:59Z'
-  truth_built_at: '2026-08-19T01:06:47Z'
+  remote_head: d060ff2d6f61d376f4834c77ebc9a5c9a071273a
+  truth_built_from_head: d060ff2d6f61d376f4834c77ebc9a5c9a071273a
+  source_checked_at: '2026-08-20T07:08:18Z'
+  truth_built_at: '2026-08-20T07:05:35Z'
   stale_since: null
   reason: 'sub-gates: source=fresh semantic=stale progress=fresh'
   source_freshness: fresh
@@ -62,10 +62,10 @@ progress:
   basis: no denominator (roadmap/milestone evidence not found)
 github:
   ci_state: unknown
-  open_pr: 71
-  open_pr_count: 4
-  observed_at: '2026-08-19T14:03:59Z'
-last_change: '2026-08-17'
+  open_pr: null
+  open_pr_count: 0
+  observed_at: '2026-08-20T07:08:18Z'
+last_change: '2026-08-20'
 evidence_classification: verified
-verified_at: '2026-08-19T01:06:44Z'
+verified_at: '2026-08-20T07:05:32Z'
 adapter_id: freshness-refresh-v1
