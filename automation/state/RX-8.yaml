@@ -9,7 +9,7 @@ github_repository_id: 1340829388
 source_path: null
 repository: https://github.com/expellirmud-dot/RX-8.git
 branch: main
-head: 3706b1f2a237b55a7f5ba86f7e9fc5a96cccdb87
+head: e8130173baf4017219f5d251a0fd058b12c8d66f
 knowledge_state: needs-verification
 project_identity:
   purpose: null
@@ -26,25 +26,25 @@ project_identity:
 current_execution:
   lifecycle_phase: null
   current_goal: null
-  current_work: null
+  current_work: CURRENT WORK ORDER
   current_work_authority:
-    path: null
-    kind: null
-  current_work_evidence: unknown
+    path: work-order/CURRENT_WORK_ORDER.md
+    kind: work-order
+  current_work_evidence: verified
   last_completed: null
   blockers: null
   next_action: null
 freshness:
-  status: fresh
+  status: stale
   tracked_ref: main
-  remote_head: 3706b1f2a237b55a7f5ba86f7e9fc5a96cccdb87
-  truth_built_from_head: 3706b1f2a237b55a7f5ba86f7e9fc5a96cccdb87
-  source_checked_at: '2026-08-21T07:07:12Z'
-  truth_built_at: '2026-08-21T01:05:43Z'
+  remote_head: e8130173baf4017219f5d251a0fd058b12c8d66f
+  truth_built_from_head: e8130173baf4017219f5d251a0fd058b12c8d66f
+  source_checked_at: '2026-08-21T13:07:45Z'
+  truth_built_at: '2026-08-21T13:04:54Z'
   stale_since: null
-  reason: null
+  reason: 'sub-gates: source=fresh semantic=stale progress=fresh'
   source_freshness: fresh
-  semantic_freshness: fresh
+  semantic_freshness: stale
   progress_freshness: fresh
 progress:
   scope: null
@@ -61,8 +61,8 @@ github:
   ci_state: unknown
   open_pr: null
   open_pr_count: 0
-  observed_at: '2026-08-21T01:11:33Z'
-last_change: '2026-08-20'
+  observed_at: '2026-08-21T13:07:45Z'
+last_change: '2026-08-21'
 evidence_classification: unknown
-verified_at: '2026-08-21T01:10:04Z'
-adapter_id: evidence-truth-builder-v1
+verified_at: '2026-08-21T13:04:52Z'
+adapter_id: freshness-refresh-v1
