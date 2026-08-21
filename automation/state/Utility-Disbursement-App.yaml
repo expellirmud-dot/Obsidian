@@ -43,7 +43,7 @@ freshness:
   tracked_ref: main
   remote_head: db9eb649f3a29ad6453ff94ed8317f59f4d99401
   truth_built_from_head: db9eb649f3a29ad6453ff94ed8317f59f4d99401
-  source_checked_at: '2026-08-21T01:11:33Z'
+  source_checked_at: '2026-08-21T07:07:04Z'
   truth_built_at: '2026-08-19T01:06:53Z'
   stale_since: null
   reason: null
