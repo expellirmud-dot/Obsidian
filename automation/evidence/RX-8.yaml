@@ -1,0 +1,45 @@
+# Evidence manifest -- RX-8
+# Produced by WO-OBSIDIAN-038 (Evidence-Backed Project Truth Ingestion).
+# Source repository is READ-ONLY; no source files were modified.
+# Every claim traces to repository + ref + commit SHA + path + classification.
+project_id: RX-8
+repository: https://github.com/expellirmud-dot/RX-8.git
+tracked_ref: main
+commit_sha: null
+observed_at: '2026-08-21T01:10:04Z'
+status: ok
+error: null
+evidence:
+- path: README.md
+  category: identity
+  kind: readme
+  classification: verified
+  commit_sha: null
+  blob_sha: a53941a0bbe71e4d84a85dc931ae59213664e0ed
+  ref: main
+  observed_at: '2026-08-21T01:10:04Z'
+  heading: RX-8 Wiring Assistant
+  content_excerpt: '# RX-8 Wiring Assistant
+
+
+    Mobile-first wiring and pin-reference assistant for the Mazda RX-8 project.
+
+
+    ## Product goal
+
+
+    Use one Android phone beside the vehicle to answer quickly:
+
+
+    > ขานี้คืออะไร อยู่ตรงไหน ต้องต่อไปที่ไหน ขาปลายทางอยู่ตรงไหน และตอนนี้เราได้ต่อจุดนี้แล้วหรือยัง?
+
+
+    The core field workflow is:
+
+
+    `open/resume -> tap pin -> see detail -> jump to destination -> return -> update status -> switch context`
+
+
+    The application must reduce the need to switch between multiple photos, pinout shee'
+  content_length: 2919
+  truncated: true
