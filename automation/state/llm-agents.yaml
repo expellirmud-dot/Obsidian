@@ -12,7 +12,7 @@ github_repository_id: 1312662022
 source_path: D:\llm-agents
 repository: https://github.com/expellirmud-dot/llm-agents.git
 branch: integration/wave1-foundation
-head: d060ff2d6f61d376f4834c77ebc9a5c9a071273a
+head: bc689ce62755b7b938a4ea2a11b79e984a4025ed
 knowledge_state: needs-verification
 project_identity:
   purpose: null
@@ -40,12 +40,12 @@ current_execution:
 freshness:
   status: stale
   tracked_ref: main
-  remote_head: d060ff2d6f61d376f4834c77ebc9a5c9a071273a
-  truth_built_from_head: d060ff2d6f61d376f4834c77ebc9a5c9a071273a
-  source_checked_at: '2026-08-23T01:02:20Z'
-  truth_built_at: '2026-08-20T07:05:35Z'
+  remote_head: bc689ce62755b7b938a4ea2a11b79e984a4025ed
+  truth_built_from_head: bc689ce62755b7b938a4ea2a11b79e984a4025ed
+  source_checked_at: '2026-08-23T13:02:42Z'
+  truth_built_at: '2026-08-23T13:02:45Z'
   stale_since: null
-  reason: null
+  reason: 'sub-gates: source=fresh semantic=stale progress=fresh'
   source_freshness: fresh
   semantic_freshness: stale
   progress_freshness: fresh
@@ -67,5 +67,5 @@ github:
   observed_at: '2026-08-23T01:02:20Z'
 last_change: '2026-08-20'
 evidence_classification: verified
-verified_at: '2026-08-20T07:05:32Z'
+verified_at: '2026-08-23T13:02:43Z'
 adapter_id: freshness-refresh-v1
