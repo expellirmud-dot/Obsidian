@@ -37,7 +37,7 @@ last_reviewed: 2026-08-19
 <!-- LIVE_PROJECT_WALL:START -->
 | Project | Mission | Phase | Current Goal | Current Work | Progress | Confidence | Freshness | Vault HEAD | Remote HEAD | Last Truth Refresh | Next Action | Blocker |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| Thai STT App | UNKNOWN | active | WO-Skill-Audit (skill audit + install for repository) | WO-Skill-Audit IN_PROGRESS — audit, fix, and install skills (project-read-first, windows-ui-review-runtime, impeccable, gridgeist) | UNKNOWN | unknown | STALE — source HEAD changed after last semantic truth build | e013370 | e013370 | 2026-08-23T01:01:59Z | Complete WO-Skill-Audit; then WO-OCR-09D (Real Thai OCR Provider, DRAFT) and WO-UI-08E (Final Compact Liquid Glass, DRAFT) | null |
+| Thai STT App | UNKNOWN | active | WO-Skill-Audit (skill audit + install for repository) | WO-Skill-Audit IN_PROGRESS — audit, fix, and install skills (project-read-first, windows-ui-review-runtime, impeccable, gridgeist) | UNKNOWN | unknown | STALE — source HEAD changed after last semantic truth build | 7aba533 | 7aba533 | 2026-08-25T13:04:21Z | Complete WO-Skill-Audit; then WO-OCR-09D (Real Thai OCR Provider, DRAFT) and WO-UI-08E (Final Compact Liquid Glass, DRAFT) | null |
 | LUMINA Studio | UNKNOWN | ready-for-deploy | Phase 1 — Premium Photography Landing Page (complete; ready for Vercel production deploy) | TASK-030 (Micro Lock Polish) COMPLETE — Overall Status PASSED / READY FOR DEPLOY | UNKNOWN | unknown | FRESH | e98c9f6 | e98c9f6 | 2026-08-12T04:33:00Z | Vercel production deploy (owner action); then Phase 2 scoping | null |
 | llm-agents | UNKNOWN | active | Wave 1 — Live provider test (1 bounded run, credential ready) | WO-03 G3 Clean Live Retest — DRAFTED, NOT EXECUTED (awaiting Owner Go) | UNKNOWN | unknown | STALE — source HEAD changed after last semantic truth build | bc689ce | bc689ce | 2026-08-23T13:02:45Z | Owner Go → Execute WO-03 live run (single invocation, strict gate) | Owner Go required — credential ready, single live run pending |
 | STT Typing | UNKNOWN | superseded-pending-roadmap | null | CURRENT WORK ORDER | UNKNOWN | unknown | STALE — source HEAD changed after last semantic truth build | c5dbcdf | c5dbcdf | 2026-08-23T13:02:48Z | Resolve blocker: STAGE_11_PRODUCTION_QT_ARCHITECTURE_INCOMPLETE | STAGE_11_PRODUCTION_QT_ARCHITECTURE_INCOMPLETE |
@@ -55,7 +55,8 @@ last_reviewed: 2026-08-19
 | Jamie Phone | UNKNOWN | null | null | null | UNKNOWN | unknown | FRESH | eb31259 | eb31259 | 2026-08-19T01:05:42Z | null | null |
 | Sr 400 Virtual Tuning Lab | UNKNOWN | null | null | null | UNKNOWN | unknown | STALE — source HEAD changed after last semantic truth build | b9143fb | b9143fb | 2026-08-20T07:05:47Z | null | null |
 | Utility Automation V2 | UNKNOWN | null | null | null | UNKNOWN | unknown | FRESH | a0f5fbf | a0f5fbf | 2026-08-19T01:05:44Z | null | null |
-| Rx 8 | UNKNOWN | null | null | CURRENT WORK ORDER | UNKNOWN | unknown | STALE — source HEAD changed after last semantic truth build | ac52cac | ac52cac | 2026-08-25T07:13:24Z | null | null |
+| Rx 8 | UNKNOWN | null | null | CURRENT WORK ORDER | UNKNOWN | unknown | STALE — source HEAD changed after last semantic truth build | 2d01fc9 | 2d01fc9 | 2026-08-25T13:04:27Z | null | null |
+| Online Job Factory | UNKNOWN | null | null | null | UNKNOWN | unknown | FRESH | 06fe246 | 06fe246 | 2026-08-25T13:03:22Z | null | null |
 <!-- LIVE_PROJECT_WALL:END -->
 
 ## Discovered — Not Imported
