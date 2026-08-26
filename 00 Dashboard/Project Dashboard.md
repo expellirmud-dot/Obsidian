@@ -55,8 +55,8 @@ last_reviewed: 2026-08-19
 | Jamie Phone | UNKNOWN | null | null | null | UNKNOWN | unknown | FRESH | eb31259 | eb31259 | 2026-08-19T01:05:42Z | null | null |
 | Sr 400 Virtual Tuning Lab | UNKNOWN | null | null | null | UNKNOWN | unknown | STALE — source HEAD changed after last semantic truth build | b9143fb | b9143fb | 2026-08-20T07:05:47Z | null | null |
 | Utility Automation V2 | UNKNOWN | null | null | null | UNKNOWN | unknown | FRESH | a0f5fbf | a0f5fbf | 2026-08-19T01:05:44Z | null | null |
-| Rx 8 | UNKNOWN | null | null | CURRENT WORK ORDER | UNKNOWN | unknown | STALE — source HEAD changed after last semantic truth build | c5c3692 | c5c3692 | 2026-08-26T01:04:22Z | null | null |
-| Online Job Factory | Online Job Factory มีหน้าที่ช่วยค้นหา ประเมิน เตรียมสมัคร ผลิต ตรวจ และติดตาม... | null | null | null | UNKNOWN | unknown | FRESH | 9ece513 | 9ece513 | 2026-08-26T01:04:24Z | null | null |
+| Rx 8 | UNKNOWN | null | null | CURRENT WORK ORDER | UNKNOWN | unknown | STALE — source HEAD changed after last semantic truth build | 63d7778 | 63d7778 | 2026-08-26T07:03:57Z | null | null |
+| Online Job Factory | Online Job Factory มีหน้าที่ช่วยค้นหา ประเมิน เตรียมสมัคร ผลิต ตรวจ และติดตาม... | null | null | null | UNKNOWN | unknown | FRESH | 3294142 | 3294142 | 2026-08-26T07:04:04Z | null | null |
 <!-- LIVE_PROJECT_WALL:END -->
 
 ## Discovered — Not Imported
