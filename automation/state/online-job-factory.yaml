@@ -9,10 +9,10 @@ github_repository_id: 1346000620
 source_path: null
 repository: https://github.com/expellirmud-dot/online-job-factory.git
 branch: main
-head: 06fe246456460c941b5f5fd032a747aab783df63
-knowledge_state: needs-verification
+head: 9ece513098ef3c8e0fda2b325c6ed40f46ceafc7
+knowledge_state: verified
 project_identity:
-  purpose: null
+  purpose: Online Job Factory มีหน้าที่ช่วยค้นหา ประเมิน เตรียมสมัคร ผลิต ตรวจ และติดตามงานออนไลน์ขนาดเล็กที่มีโอกาสปิดงานได้จริงและคุ้มต้นทุน
   problem_statement: null
   intended_outcome: null
   primary_users: null
@@ -37,10 +37,10 @@ current_execution:
 freshness:
   status: fresh
   tracked_ref: main
-  remote_head: 06fe246456460c941b5f5fd032a747aab783df63
-  truth_built_from_head: 06fe246456460c941b5f5fd032a747aab783df63
-  source_checked_at: '2026-08-25T13:05:37Z'
-  truth_built_at: '2026-08-25T13:03:22Z'
+  remote_head: 9ece513098ef3c8e0fda2b325c6ed40f46ceafc7
+  truth_built_from_head: 9ece513098ef3c8e0fda2b325c6ed40f46ceafc7
+  source_checked_at: '2026-08-26T01:04:22Z'
+  truth_built_at: '2026-08-26T01:04:24Z'
   stale_since: null
   reason: null
   source_freshness: fresh
@@ -56,7 +56,7 @@ progress:
   completed: null
   active: null
   remaining: null
-  basis: null
+  basis: no denominator (roadmap/milestone evidence not found)
 github:
   ci_state: unknown
   open_pr: null
@@ -64,5 +64,5 @@ github:
   observed_at: '2026-08-25T13:05:37Z'
 last_change: '2026-08-25'
 evidence_classification: unknown
-verified_at: '2026-08-25T13:03:22Z'
-adapter_id: discovery-onboard-v1
+verified_at: '2026-08-26T01:04:23Z'
+adapter_id: freshness-refresh-v1
