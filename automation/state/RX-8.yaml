@@ -9,7 +9,7 @@ github_repository_id: 1340829388
 source_path: null
 repository: https://github.com/expellirmud-dot/RX-8.git
 branch: main
-head: 157860c435176939b4fb315d40a45dfcb24a7190
+head: 03179401fd7fe279a051f880c959c6d585051cab
 knowledge_state: needs-verification
 project_identity:
   purpose: null
@@ -37,10 +37,10 @@ current_execution:
 freshness:
   status: stale
   tracked_ref: main
-  remote_head: 157860c435176939b4fb315d40a45dfcb24a7190
-  truth_built_from_head: 157860c435176939b4fb315d40a45dfcb24a7190
-  source_checked_at: '2026-08-28T07:08:26Z'
-  truth_built_at: '2026-08-28T07:08:28Z'
+  remote_head: 03179401fd7fe279a051f880c959c6d585051cab
+  truth_built_from_head: 03179401fd7fe279a051f880c959c6d585051cab
+  source_checked_at: '2026-08-28T13:05:14Z'
+  truth_built_at: '2026-08-28T13:05:16Z'
   stale_since: null
   reason: 'sub-gates: source=fresh semantic=stale progress=fresh'
   source_freshness: fresh
@@ -64,5 +64,5 @@ github:
   observed_at: '2026-08-26T07:04:29Z'
 last_change: '2026-08-26'
 evidence_classification: unknown
-verified_at: '2026-08-28T07:08:27Z'
+verified_at: '2026-08-28T13:05:15Z'
 adapter_id: freshness-refresh-v1
