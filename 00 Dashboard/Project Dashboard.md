@@ -44,7 +44,7 @@ last_reviewed: 2026-08-19
 | AI Worker Harness | UNKNOWN | verified | Goal-09 — Runtime Observability, Information Sufficiency, and Model Evaluation | Current Work Order | UNKNOWN | unknown | STALE — source HEAD changed after last semantic truth build | ee4abc5 | ee4abc5 | 2026-08-19T01:06:51Z | Validate fresh route health for google-gemma-main; run sentinel batch TC-01 + TC-07 | null |
 | Utility Disbursement App | UNKNOWN | paused | null | null | UNKNOWN | unknown | STALE — source HEAD changed after last semantic truth build | db9eb64 | db9eb64 | 2026-08-19T01:06:53Z | null | null |
 | Adobe Stock Upload Assistant | UNKNOWN | verified | null | TASK-ADOBE-STOCK-SAFETY-TERMS-CORE-001 (completed — no active executable task) | UNKNOWN | unknown | UNKNOWN | 0e5f9fc | null | 2026-08-12T07:10:00Z | null | null |
-| Lightroom AI Exposure | UNKNOWN | stable | null | null | UNKNOWN | unknown | STALE — source HEAD changed after last semantic truth build | 68a020a | 68a020a | 2026-08-19T01:06:55Z | null | null |
+| Lightroom AI Exposure | UNKNOWN | stable | null | null | UNKNOWN | unknown | STALE — source HEAD changed after last semantic truth build | 5575a45 | 5575a45 | 2026-08-30T13:04:01Z | null | null |
 | Citizen Portal | UNKNOWN | research-prototype | null | null | UNKNOWN | unknown | FRESH | f8ae9fb | f8ae9fb | 2026-08-12T07:10:00Z | null | null |
 | TalkToClibord | UNKNOWN | active | null | Test Sprint (JAVIS.md Sprint Status, updated 2026-04-18) | UNKNOWN | unknown | FRESH | 40b565e | 40b565e | 2026-08-12T07:10:00Z | null | null |
 | AI-Workspace | UNKNOWN | stable | null | null | UNKNOWN | unknown | STALE — source HEAD changed after last semantic truth build | 0be0724 | 0be0724 | 2026-08-19T01:06:58Z | null | null |
