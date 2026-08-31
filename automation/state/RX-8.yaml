@@ -9,7 +9,7 @@ github_repository_id: 1340829388
 source_path: null
 repository: https://github.com/expellirmud-dot/RX-8.git
 branch: main
-head: 93d2e3aa846e400b6d845f0aa8a3fac506bd4eb1
+head: 4010322bc344e46a692c01cac939c1f78d6e8d4a
 knowledge_state: needs-verification
 project_identity:
   purpose: null
@@ -37,10 +37,10 @@ current_execution:
 freshness:
   status: stale
   tracked_ref: main
-  remote_head: 93d2e3aa846e400b6d845f0aa8a3fac506bd4eb1
-  truth_built_from_head: 93d2e3aa846e400b6d845f0aa8a3fac506bd4eb1
-  source_checked_at: '2026-08-30T07:05:21Z'
-  truth_built_at: '2026-08-30T07:05:23Z'
+  remote_head: 4010322bc344e46a692c01cac939c1f78d6e8d4a
+  truth_built_from_head: 4010322bc344e46a692c01cac939c1f78d6e8d4a
+  source_checked_at: '2026-08-31T01:04:42Z'
+  truth_built_at: '2026-08-31T01:04:34Z'
   stale_since: null
   reason: 'sub-gates: source=fresh semantic=stale progress=fresh'
   source_freshness: fresh
@@ -59,10 +59,10 @@ progress:
   basis: no denominator (roadmap/milestone evidence not found)
 github:
   ci_state: unknown
-  open_pr: null
-  open_pr_count: 0
-  observed_at: '2026-08-26T07:04:29Z'
-last_change: '2026-08-26'
+  open_pr: 53
+  open_pr_count: 2
+  observed_at: '2026-08-31T01:04:42Z'
+last_change: '2026-08-30'
 evidence_classification: unknown
-verified_at: '2026-08-30T07:05:22Z'
+verified_at: '2026-08-31T01:04:33Z'
 adapter_id: freshness-refresh-v1
