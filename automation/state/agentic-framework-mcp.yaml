@@ -39,7 +39,7 @@ freshness:
   tracked_ref: main
   remote_head: null
   truth_built_from_head: null
-  source_checked_at: '2026-08-31T01:04:42Z'
+  source_checked_at: '2026-08-31T07:07:15Z'
   truth_built_at: null
   stale_since: null
   reason: 'evidence unavailable: manifest status=tree_unavailable'
