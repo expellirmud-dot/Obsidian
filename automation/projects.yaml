@@ -247,3 +247,15 @@ projects:
   - AGENTS.md
   - README.md
   - PROJECT_RULES.md
+- project_id: nexus-xau-engine
+  project_name: Nexus Xau Engine
+  source_path: null
+  repository: https://github.com/expellirmud-dot/nexus-xau-engine.git
+  github_repository_id: 1353371152
+  enabled_for_wall: true
+  pilot_status: discovered
+  adapter_id: discovery-onboard-v1
+  authority_candidates:
+  - AGENTS.md
+  - README.md
+  - PROJECT_RULES.md
