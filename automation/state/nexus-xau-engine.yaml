@@ -9,10 +9,10 @@ github_repository_id: 1353371152
 source_path: null
 repository: https://github.com/expellirmud-dot/nexus-xau-engine.git
 branch: main
-head: 210e64c1dfb21d55e5a214d0bd2acfa60f9ec5f3
-knowledge_state: needs-verification
+head: df291c3b7c5b1f6f795f7174c4d3677adfcc3c57
+knowledge_state: verified
 project_identity:
-  purpose: null
+  purpose: 'This repository is the durable project record for the current research. The immediate goal is **not** live auto-trading. The goal is to convert the teaching into reproducible, testable rules for: 1. historical-data research, 2. rule detection, 3. replay testing, 4. backtesting, 5. only later, execut'
   problem_statement: null
   intended_outcome: null
   primary_users: null
@@ -37,10 +37,10 @@ current_execution:
 freshness:
   status: fresh
   tracked_ref: main
-  remote_head: 210e64c1dfb21d55e5a214d0bd2acfa60f9ec5f3
-  truth_built_from_head: 210e64c1dfb21d55e5a214d0bd2acfa60f9ec5f3
-  source_checked_at: '2026-09-01T13:13:15Z'
-  truth_built_at: '2026-09-01T13:09:28Z'
+  remote_head: df291c3b7c5b1f6f795f7174c4d3677adfcc3c57
+  truth_built_from_head: df291c3b7c5b1f6f795f7174c4d3677adfcc3c57
+  source_checked_at: '2026-09-02T13:04:32Z'
+  truth_built_at: '2026-09-02T13:04:33Z'
   stale_since: null
   reason: null
   source_freshness: fresh
@@ -56,7 +56,7 @@ progress:
   completed: null
   active: null
   remaining: null
-  basis: null
+  basis: no denominator (roadmap/milestone evidence not found)
 github:
   ci_state: unknown
   open_pr: null
@@ -64,5 +64,5 @@ github:
   observed_at: '2026-09-01T13:09:28Z'
 last_change: '2026-09-01'
 evidence_classification: unknown
-verified_at: '2026-09-01T13:09:28Z'
-adapter_id: discovery-onboard-v1
+verified_at: '2026-09-02T13:04:33Z'
+adapter_id: freshness-refresh-v1

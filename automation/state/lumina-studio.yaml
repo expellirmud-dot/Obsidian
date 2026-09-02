@@ -11,7 +11,7 @@ github_repository_id: 1253367642
 source_path: D:\lumina-studio
 repository: https://github.com/expellirmud-dot/LUMINA-Studio.git
 branch: main
-head: e98c9f627c50830c74cf76956abb15770690702d
+head: 193e6412e09e0881ca7ca29cb98031db60c364bc
 knowledge_state: needs-verification
 project_identity:
   purpose: null
@@ -37,16 +37,16 @@ current_execution:
   blockers: null
   next_action: Vercel production deploy (owner action); then Phase 2 scoping
 freshness:
-  status: fresh
+  status: stale
   tracked_ref: main
-  remote_head: e98c9f627c50830c74cf76956abb15770690702d
-  truth_built_from_head: e98c9f627c50830c74cf76956abb15770690702d
-  source_checked_at: '2026-09-01T13:13:02Z'
-  truth_built_at: '2026-08-12T04:33:00Z'
+  remote_head: 193e6412e09e0881ca7ca29cb98031db60c364bc
+  truth_built_from_head: 193e6412e09e0881ca7ca29cb98031db60c364bc
+  source_checked_at: '2026-09-02T13:04:15Z'
+  truth_built_at: '2026-09-02T13:04:17Z'
   stale_since: null
-  reason: null
+  reason: 'sub-gates: source=fresh semantic=stale progress=fresh'
   source_freshness: fresh
-  semantic_freshness: fresh
+  semantic_freshness: stale
   progress_freshness: fresh
 progress:
   scope: null
@@ -66,5 +66,5 @@ github:
   observed_at: '2026-09-01T07:03:24Z'
 last_change: '2026-08-06'
 evidence_classification: verified
-verified_at: '2026-08-12T04:33:00Z'
-adapter_id: generic-git-plus-authority-files
+verified_at: '2026-09-02T13:04:16Z'
+adapter_id: freshness-refresh-v1
