@@ -41,10 +41,10 @@ freshness:
   tracked_ref: main
   remote_head: 193e6412e09e0881ca7ca29cb98031db60c364bc
   truth_built_from_head: 193e6412e09e0881ca7ca29cb98031db60c364bc
-  source_checked_at: '2026-09-02T13:04:15Z'
+  source_checked_at: '2026-09-03T07:06:58Z'
   truth_built_at: '2026-09-02T13:04:17Z'
   stale_since: null
-  reason: 'sub-gates: source=fresh semantic=stale progress=fresh'
+  reason: null
   source_freshness: fresh
   semantic_freshness: stale
   progress_freshness: fresh
@@ -63,8 +63,8 @@ github:
   ci_state: success
   open_pr: null
   open_pr_count: 0
-  observed_at: '2026-09-01T07:03:24Z'
-last_change: '2026-08-06'
+  observed_at: '2026-09-03T07:06:58Z'
+last_change: '2026-09-02'
 evidence_classification: verified
 verified_at: '2026-09-02T13:04:16Z'
 adapter_id: freshness-refresh-v1

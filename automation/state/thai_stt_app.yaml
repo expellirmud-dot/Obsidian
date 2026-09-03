@@ -41,10 +41,10 @@ freshness:
   tracked_ref: main
   remote_head: 3a87978f33d218ff0cdc7e427f4bc47bc07e1659
   truth_built_from_head: 3a87978f33d218ff0cdc7e427f4bc47bc07e1659
-  source_checked_at: '2026-09-02T13:04:12Z'
+  source_checked_at: '2026-09-03T07:06:58Z'
   truth_built_at: '2026-09-02T13:04:15Z'
   stale_since: null
-  reason: 'sub-gates: source=fresh semantic=stale progress=fresh'
+  reason: null
   source_freshness: fresh
   semantic_freshness: stale
   progress_freshness: fresh
@@ -61,10 +61,10 @@ progress:
   basis: roadmap evidence truncated (incomplete denominator; cannot compute a reliable percentage)
 github:
   ci_state: unknown
-  open_pr: 12
-  open_pr_count: 1
-  observed_at: '2026-09-01T07:03:24Z'
-last_change: '2026-08-31'
+  open_pr: 13
+  open_pr_count: 2
+  observed_at: '2026-09-03T07:06:58Z'
+last_change: '2026-09-02'
 evidence_classification: verified
 verified_at: '2026-09-02T13:04:13Z'
 adapter_id: freshness-refresh-v1
