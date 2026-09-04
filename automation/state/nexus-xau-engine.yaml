@@ -39,7 +39,7 @@ freshness:
   tracked_ref: main
   remote_head: df291c3b7c5b1f6f795f7174c4d3677adfcc3c57
   truth_built_from_head: df291c3b7c5b1f6f795f7174c4d3677adfcc3c57
-  source_checked_at: '2026-09-03T07:06:58Z'
+  source_checked_at: '2026-09-04T07:04:11Z'
   truth_built_at: '2026-09-02T13:04:33Z'
   stale_since: null
   reason: null
@@ -61,7 +61,7 @@ github:
   ci_state: pending
   open_pr: null
   open_pr_count: 0
-  observed_at: '2026-09-03T07:06:58Z'
+  observed_at: '2026-09-04T07:04:11Z'
 last_change: '2026-09-01'
 evidence_classification: unknown
 verified_at: '2026-09-02T13:04:33Z'
