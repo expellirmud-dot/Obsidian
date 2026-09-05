@@ -1,15 +1,15 @@
-# Normalized project state (v2) -- ai-ops-registry
+# Normalized project state (v2) -- samud-lukrai
 # Onboarded by WO-OBSIDIAN-037 (Repository Discovery + Safe Auto-Onboarding).
 # Source repository is READ-ONLY; no source files were modified.
 # knowledge_state=needs-verification: Mission not yet verified against source evidence.
 schema_version: 2
-project_id: ai-ops-registry
-project_name: Ai Ops Registry
-github_repository_id: 1256661628
+project_id: samud-lukrai
+project_name: Samud Lukrai
+github_repository_id: 1358037083
 source_path: null
-repository: https://github.com/expellirmud-dot/ai-ops-registry.git
+repository: https://github.com/expellirmud-dot/samud-lukrai.git
 branch: main
-head: 518ddce3abc19c77c4749c426ea236253f6a8481
+head: null
 knowledge_state: needs-verification
 project_identity:
   purpose: null
@@ -35,17 +35,17 @@ current_execution:
   blockers: null
   next_action: null
 freshness:
-  status: fresh
+  status: unknown
   tracked_ref: main
-  remote_head: 518ddce3abc19c77c4749c426ea236253f6a8481
-  truth_built_from_head: 518ddce3abc19c77c4749c426ea236253f6a8481
-  source_checked_at: '2026-09-05T13:03:14Z'
-  truth_built_at: '2026-08-19T01:05:41Z'
+  remote_head: null
+  truth_built_from_head: null
+  source_checked_at: '2026-09-05T13:03:19Z'
+  truth_built_at: null
   stale_since: null
-  reason: null
-  source_freshness: fresh
-  semantic_freshness: fresh
-  progress_freshness: fresh
+  reason: 'evidence unavailable: manifest status=tree_unavailable'
+  source_freshness: unknown
+  semantic_freshness: unknown
+  progress_freshness: unknown
 progress:
   scope: null
   method: null
@@ -60,9 +60,9 @@ progress:
 github:
   ci_state: unknown
   open_pr: null
-  open_pr_count: 0
-  observed_at: '2026-09-04T07:04:11Z'
-last_change: '2026-06-02'
+  open_pr_count: null
+  observed_at: '2026-09-05T13:02:21Z'
+last_change: null
 evidence_classification: unknown
-verified_at: '2026-08-19T01:05:41Z'
+verified_at: '2026-09-05T13:02:21Z'
 adapter_id: discovery-onboard-v1

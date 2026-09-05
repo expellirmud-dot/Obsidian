@@ -259,3 +259,15 @@ projects:
   - AGENTS.md
   - README.md
   - PROJECT_RULES.md
+- project_id: samud-lukrai
+  project_name: Samud Lukrai
+  source_path: null
+  repository: https://github.com/expellirmud-dot/samud-lukrai.git
+  github_repository_id: 1358037083
+  enabled_for_wall: true
+  pilot_status: discovered
+  adapter_id: discovery-onboard-v1
+  authority_candidates:
+  - AGENTS.md
+  - README.md
+  - PROJECT_RULES.md
