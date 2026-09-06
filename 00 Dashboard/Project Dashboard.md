@@ -44,7 +44,7 @@ last_reviewed: 2026-08-19
 | AI Worker Harness | UNKNOWN | verified | Goal-09 — Runtime Observability, Information Sufficiency, and Model Evaluation | Current Work Order | UNKNOWN | unknown | STALE — source HEAD changed after last semantic truth build | ee4abc5 | ee4abc5 | 2026-08-19T01:06:51Z | Validate fresh route health for google-gemma-main; run sentinel batch TC-01 + TC-07 | null |
 | Utility Disbursement App | UNKNOWN | paused | null | null | UNKNOWN | unknown | STALE — source HEAD changed after last semantic truth build | db9eb64 | db9eb64 | 2026-08-19T01:06:53Z | null | null |
 | Adobe Stock Upload Assistant | UNKNOWN | verified | null | TASK-ADOBE-STOCK-SAFETY-TERMS-CORE-001 (completed — no active executable task) | UNKNOWN | unknown | UNKNOWN | 0e5f9fc | null | 2026-08-12T07:10:00Z | null | null |
-| Lightroom AI Exposure | UNKNOWN | stable | null | null | UNKNOWN | unknown | STALE — source HEAD changed after last semantic truth build | d266bf6 | d266bf6 | 2026-08-31T07:06:23Z | null | null |
+| Lightroom AI Exposure | UNKNOWN | stable | null | null | UNKNOWN | unknown | STALE — source HEAD changed after last semantic truth build | f6e1380 | f6e1380 | 2026-09-06T13:05:07Z | null | null |
 | Citizen Portal | UNKNOWN | research-prototype | null | null | UNKNOWN | unknown | FRESH | f8ae9fb | f8ae9fb | 2026-08-12T07:10:00Z | null | null |
 | TalkToClibord | UNKNOWN | active | null | Test Sprint (JAVIS.md Sprint Status, updated 2026-04-18) | UNKNOWN | unknown | FRESH | 40b565e | 40b565e | 2026-08-12T07:10:00Z | null | null |
 | AI-Workspace | UNKNOWN | stable | null | null | UNKNOWN | unknown | STALE — source HEAD changed after last semantic truth build | 0be0724 | 0be0724 | 2026-08-19T01:06:58Z | null | null |
@@ -55,10 +55,10 @@ last_reviewed: 2026-08-19
 | Jamie Phone | UNKNOWN | null | null | null | UNKNOWN | unknown | FRESH | eb31259 | eb31259 | 2026-08-19T01:05:42Z | null | null |
 | Sr 400 Virtual Tuning Lab | UNKNOWN | null | null | null | UNKNOWN | unknown | STALE — source HEAD changed after last semantic truth build | b9143fb | b9143fb | 2026-08-20T07:05:47Z | null | null |
 | Utility Automation V2 | UNKNOWN | null | null | null | UNKNOWN | unknown | FRESH | a0f5fbf | a0f5fbf | 2026-08-19T01:05:44Z | null | null |
-| Rx 8 | UNKNOWN | null | null | CURRENT WORK ORDER | UNKNOWN | unknown | STALE — source HEAD changed after last semantic truth build | f33fe3f | f33fe3f | 2026-09-05T01:04:43Z | null | null |
-| Online Job Factory | Online Job Factory มีหน้าที่ช่วยค้นหา ประเมิน เตรียมสมัคร ผลิต ตรวจ และติดตาม... | null | null | null | UNKNOWN | unknown | FRESH | 4f67956 | 4f67956 | 2026-09-04T07:04:06Z | null | null |
+| Rx 8 | UNKNOWN | null | null | CURRENT WORK ORDER | UNKNOWN | unknown | STALE — source HEAD changed after last semantic truth build | 3184a5c | 3184a5c | 2026-09-06T13:05:15Z | null | null |
+| Online Job Factory | Online Job Factory มีหน้าที่ช่วยค้นหา ประเมิน เตรียมสมัคร ผลิต ตรวจ และติดตาม... | null | null | null | UNKNOWN | unknown | FRESH | 5a53925 | 5a53925 | 2026-09-06T13:05:16Z | null | null |
 | Nexus Xau Engine | This repository is the durable project record for the current research. The i... | null | null | null | UNKNOWN | unknown | FRESH | df291c3 | df291c3 | 2026-09-02T13:04:33Z | null | null |
-| Samud Lukrai | UNKNOWN | null | null | null | UNKNOWN | unknown | UNKNOWN | null | null | null | null | null |
+| Samud Lukrai | UNKNOWN | null | null | null | UNKNOWN | unknown | STALE — source HEAD changed after last semantic truth build | 58f7f96 | 58f7f96 | 2026-09-06T13:05:18Z | null | null |
 <!-- LIVE_PROJECT_WALL:END -->
 
 ## Discovered — Not Imported

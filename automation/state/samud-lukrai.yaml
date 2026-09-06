@@ -9,7 +9,7 @@ github_repository_id: 1358037083
 source_path: null
 repository: https://github.com/expellirmud-dot/samud-lukrai.git
 branch: main
-head: null
+head: 58f7f96ba4b0a17e555400c4ff30b5cbf974088f
 knowledge_state: needs-verification
 project_identity:
   purpose: null
@@ -35,17 +35,17 @@ current_execution:
   blockers: null
   next_action: null
 freshness:
-  status: unknown
+  status: stale
   tracked_ref: main
-  remote_head: null
-  truth_built_from_head: null
-  source_checked_at: '2026-09-05T13:03:19Z'
-  truth_built_at: null
+  remote_head: 58f7f96ba4b0a17e555400c4ff30b5cbf974088f
+  truth_built_from_head: 58f7f96ba4b0a17e555400c4ff30b5cbf974088f
+  source_checked_at: '2026-09-06T13:05:17Z'
+  truth_built_at: '2026-09-06T13:05:18Z'
   stale_since: null
-  reason: 'evidence unavailable: manifest status=tree_unavailable'
-  source_freshness: unknown
-  semantic_freshness: unknown
-  progress_freshness: unknown
+  reason: 'sub-gates: source=fresh semantic=stale progress=fresh'
+  source_freshness: fresh
+  semantic_freshness: stale
+  progress_freshness: fresh
 progress:
   scope: null
   method: null
@@ -56,7 +56,7 @@ progress:
   completed: null
   active: null
   remaining: null
-  basis: null
+  basis: no denominator (roadmap/milestone evidence not found)
 github:
   ci_state: unknown
   open_pr: null
@@ -64,5 +64,5 @@ github:
   observed_at: '2026-09-05T13:02:21Z'
 last_change: null
 evidence_classification: unknown
-verified_at: '2026-09-05T13:02:21Z'
-adapter_id: discovery-onboard-v1
+verified_at: '2026-09-06T13:05:18Z'
+adapter_id: freshness-refresh-v1

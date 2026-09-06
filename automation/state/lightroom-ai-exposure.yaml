@@ -13,7 +13,7 @@ github_repository_id: 1314588912
 source_path: D:\ai-tools\lightroom-ai-exposure
 repository: https://github.com/expellirmud-dot/Lightroom-AI-Workflow-.git
 branch: main
-head: d266bf6f61ad807f05306e6853016107a08ee19e
+head: f6e1380c7e4e3fd826c439846656720818e16ff8
 knowledge_state: needs-verification
 project_identity:
   purpose: null
@@ -41,12 +41,12 @@ current_execution:
 freshness:
   status: stale
   tracked_ref: main
-  remote_head: d266bf6f61ad807f05306e6853016107a08ee19e
-  truth_built_from_head: d266bf6f61ad807f05306e6853016107a08ee19e
-  source_checked_at: '2026-09-05T13:03:10Z'
-  truth_built_at: '2026-08-31T07:06:23Z'
+  remote_head: f6e1380c7e4e3fd826c439846656720818e16ff8
+  truth_built_from_head: f6e1380c7e4e3fd826c439846656720818e16ff8
+  source_checked_at: '2026-09-06T13:05:05Z'
+  truth_built_at: '2026-09-06T13:05:07Z'
   stale_since: null
-  reason: null
+  reason: 'sub-gates: source=fresh semantic=stale progress=fresh'
   source_freshness: fresh
   semantic_freshness: stale
   progress_freshness: fresh
@@ -68,5 +68,5 @@ github:
   observed_at: '2026-09-04T07:04:11Z'
 last_change: '2026-08-31'
 evidence_classification: verified
-verified_at: '2026-08-31T07:06:22Z'
+verified_at: '2026-09-06T13:05:05Z'
 adapter_id: freshness-refresh-v1
