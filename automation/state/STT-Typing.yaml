@@ -42,7 +42,7 @@ freshness:
   tracked_ref: main
   remote_head: 738717995e7112fd129722b0da6c3dc36f5acb37
   truth_built_from_head: 738717995e7112fd129722b0da6c3dc36f5acb37
-  source_checked_at: '2026-09-08T01:03:31Z'
+  source_checked_at: '2026-09-08T07:04:18Z'
   truth_built_at: '2026-09-07T13:04:27Z'
   stale_since: null
   reason: null
@@ -62,10 +62,10 @@ progress:
   basis: no denominator (roadmap/milestone evidence not found)
 github:
   ci_state: unknown
-  open_pr: 110
+  open_pr: 111
   open_pr_count: 9
-  observed_at: '2026-09-04T07:04:11Z'
-last_change: '2026-09-02'
+  observed_at: '2026-09-08T07:04:18Z'
+last_change: '2026-09-06'
 evidence_classification: verified
 verified_at: '2026-09-07T13:04:25Z'
 adapter_id: freshness-refresh-v1
