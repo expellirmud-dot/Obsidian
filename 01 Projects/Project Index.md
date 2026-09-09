@@ -1,6 +1,6 @@
 ---
 type: index
-last_reviewed: 2026-08-19
+last_reviewed: 2026-09-09
 ---
 
 # Project Index
@@ -29,6 +29,10 @@ last_reviewed: 2026-08-19
 | [[Jamie Phone]] | unknown — รอ evidence-based truth rebuild (knowledge_state: needs-verification) | unknown (GitHub-onboarded) | **needs-verification** (auto-onboarded WO-OBSIDIAN-037) | 2026-08-19 (GitHub adapter: remote HEAD eb31259) |
 | [[Sr 400 Virtual Tuning Lab]] | unknown — รอ evidence-based truth rebuild (knowledge_state: needs-verification) | unknown (GitHub-onboarded) | **needs-verification** (auto-onboarded WO-OBSIDIAN-037) | 2026-08-19 (GitHub adapter: remote HEAD 48c9413) |
 | [[Utility Automation V2]] | unknown — รอ evidence-based truth rebuild (knowledge_state: needs-verification) | unknown (GitHub-onboarded) | **needs-verification** (auto-onboarded WO-OBSIDIAN-037) | 2026-08-19 (GitHub adapter: remote HEAD a0f5fbf) |
+| [[Rx 8]] | RX-8 project knowledge vault (auto-onboarded via WO-OBSIDIAN-037; state needs-verification)| [`expellirmud-dot/RX-8`](https://github.com/expellirmud-dot/RX-8)| **needs-verification** |  2026-09-09 (head `3184a5…`, read-only, no source mod)|
+| [[Online Job Factory]] | Online Job Factory project knowledge vault (auto-onboarded; state verified)| repo GitHub-onboarded| **verified** (auto-onboarded WO-OBSIDIAN-037)|  2026-09-09|
+| [[Nexus Xau Engine]] | Durable project record for current research (auto-onboarded; state FRESH)| repo GitHub-onboarded| **verified** (auto-onboarded WO-OBSIDIAN-037)|2026-09-09 (remote HEAD `df291c3`)|
+| [[Samud Lukrai]] | Samud Lukrai project knowledge vault (auto-onboarded; state needs-verification)| repo GitHub-onboarded| **needs-verification** |2026-09-09 (STALE — source HEAD changed after last semantic truth build)|
 
 หมายเหตุ: `Last Verified` ในแต่ละรอบขึ้นอยู่กับขอบเขตของ Work Order นั้น
 

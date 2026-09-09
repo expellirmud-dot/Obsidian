@@ -1,12 +1,12 @@
 ---
 type: dashboard
-last_reviewed: 2026-08-19
+last_reviewed: 2026-09-09
 ---
 
 # Project Dashboard
 
 > Canonical inventory ของโปรเจกต์ทั้งหมดที่ Vault รู้จักอยู่ที่ [[Project Registry]]
-> รายชื่อ Project Overview 18 รายการด้านล่างไม่ใช่ inventory ทั้งหมด (ดู [[Project Registry]])
+> รายชื่อ Project Overview 22 รายการด้านล่างไม่ใช่ inventory ทั้งหมด(ดู [[Project Registry]])
 
 ## Imported Projects
 
@@ -28,6 +28,10 @@ last_reviewed: 2026-08-19
 - [[Jamie Phone]]
 - [[Sr 400 Virtual Tuning Lab]]
 - [[Utility Automation V2]]
+- [[Rx 8]]
+- [[Online Job Factory]]
+- [[Nexus Xau Engine]]
+- [[Samud Lukrai]]
 
 ## Live Project Wall
 
@@ -63,7 +67,7 @@ last_reviewed: 2026-08-19
 
 ## Discovered — Not Imported
 
-GitHub discovery ล่าสุด (2026-08-19, `automation/discovery.py`): พบ 18 repositories — ทุก repo ที่ eligible (17) ถูก import ครบแล้ว เหลือ 0 discovered-not-imported ฝั่ง GitHub (ยกเว้น `Obsidian` ที่ตั้งใจ exclude ด้วย denylist)
+GitHub discovery/reconcile ล่าสุด(2026-09-09, `automation/discovery.py`): known repos=21, new(eligible-not-in-registry)=0, inaccessible=0 — discovered-not-imported=0 ฝั่ง GitHub (ยกเว้น `Obsidian` ที่ตั้งใจ exclude ด้วย denylist)
 ประวัติ local-disk triage เดิม (24 discovered, WO-023/024 เมื่อ 2026-08-11) เก็บไว้ใน [[Project Registry]]
 
 > สถานะทั้งหมด = `needs-verification` — ต้อง on-board ทีละโปรเจกต์ก่อนระบุ lifecycle
