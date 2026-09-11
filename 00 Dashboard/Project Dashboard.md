@@ -6,7 +6,7 @@ last_reviewed: 2026-08-19
 # Project Dashboard
 
 > Canonical inventory ของโปรเจกต์ทั้งหมดที่ Vault รู้จักอยู่ที่ [[Project Registry]]
-> รายชื่อ Project Overview 18 รายการด้านล่างไม่ใช่ inventory ทั้งหมด (ดู [[Project Registry]])
+> รายชื่อ Project Overview 20 รายการด้านล่างไม่ใช่ inventory ทั้งหมด (ดู [[Project Registry]])
 
 ## Imported Projects
 
@@ -28,6 +28,8 @@ last_reviewed: 2026-08-19
 - [[Jamie Phone]]
 - [[Sr 400 Virtual Tuning Lab]]
 - [[Utility Automation V2]]
+- [[Rx 8]]
+- [[Online Job Factory]]
 
 ## Live Project Wall
 
