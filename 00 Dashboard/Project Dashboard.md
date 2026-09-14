@@ -57,7 +57,7 @@ last_reviewed: 2026-08-19
 | Utility Automation V2 | UNKNOWN | null | null | null | UNKNOWN | unknown | FRESH | a0f5fbf | a0f5fbf | 2026-08-19T01:05:44Z | null | null |
 | Rx 8 | UNKNOWN | null | null | CURRENT WORK ORDER | UNKNOWN | unknown | STALE — source HEAD changed after last semantic truth build | 3184a5c | 3184a5c | 2026-09-06T13:05:15Z | null | null |
 | Online Job Factory | Online Job Factory มีหน้าที่ช่วยค้นหา ประเมิน เตรียมสมัคร ผลิต ตรวจ และติดตาม... | null | null | null | UNKNOWN | unknown | FRESH | 03d3205 | 03d3205 | 2026-09-13T01:06:58Z | null | null |
-| Nexus Xau Engine | This repository is the durable project record for the current research. The i... | null | null | null | UNKNOWN | unknown | FRESH | 4d3b130 | 4d3b130 | 2026-09-13T13:03:59Z | null | null |
+| Nexus Xau Engine | This repository is the durable project record for the current research. The i... | null | null | null | UNKNOWN | unknown | FRESH | f997c6d | f997c6d | 2026-09-14T01:04:56Z | null | null |
 | Samud Lukrai | UNKNOWN | null | null | null | UNKNOWN | unknown | STALE — source HEAD changed after last semantic truth build | 58f7f96 | 58f7f96 | 2026-09-06T13:05:18Z | null | null |
 <!-- LIVE_PROJECT_WALL:END -->
 
