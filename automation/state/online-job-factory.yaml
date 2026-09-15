@@ -9,7 +9,7 @@ github_repository_id: 1346000620
 source_path: null
 repository: https://github.com/expellirmud-dot/online-job-factory.git
 branch: main
-head: ee8b7c5033dcd39737f7c73d83c221d2404a8299
+head: 608fc5b0a70fee8c84d06722b1ad10bb41a17ed6
 knowledge_state: verified
 project_identity:
   purpose: Online Job Factory มีหน้าที่ช่วยค้นหา ประเมิน เตรียมสมัคร ผลิต ตรวจ และติดตามงานออนไลน์ขนาดเล็กที่มีโอกาสปิดงานได้จริงและคุ้มต้นทุน
@@ -37,10 +37,10 @@ current_execution:
 freshness:
   status: fresh
   tracked_ref: main
-  remote_head: ee8b7c5033dcd39737f7c73d83c221d2404a8299
-  truth_built_from_head: ee8b7c5033dcd39737f7c73d83c221d2404a8299
-  source_checked_at: '2026-09-15T01:05:51Z'
-  truth_built_at: '2026-09-15T01:05:52Z'
+  remote_head: 608fc5b0a70fee8c84d06722b1ad10bb41a17ed6
+  truth_built_from_head: 608fc5b0a70fee8c84d06722b1ad10bb41a17ed6
+  source_checked_at: '2026-09-15T07:06:28Z'
+  truth_built_at: '2026-09-15T07:06:30Z'
   stale_since: null
   reason: null
   source_freshness: fresh
@@ -64,5 +64,5 @@ github:
   observed_at: '2026-09-14T01:06:15Z'
 last_change: '2026-09-12'
 evidence_classification: unknown
-verified_at: '2026-09-15T01:05:51Z'
+verified_at: '2026-09-15T07:06:29Z'
 adapter_id: freshness-refresh-v1
