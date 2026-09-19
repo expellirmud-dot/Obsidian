@@ -12,7 +12,7 @@ github_repository_id: 1305539299
 source_path: D:\stt_typing
 repository: https://github.com/expellirmud-dot/stt_typing.git
 branch: main
-head: 32e041e4c1afc94c38ff1aa82eb10caf0e43cee9
+head: e4b35303bff2240d639817bca83ac36f838183bf
 knowledge_state: needs-verification
 project_identity:
   purpose: null
@@ -40,12 +40,12 @@ current_execution:
 freshness:
   status: stale
   tracked_ref: main
-  remote_head: 32e041e4c1afc94c38ff1aa82eb10caf0e43cee9
-  truth_built_from_head: 32e041e4c1afc94c38ff1aa82eb10caf0e43cee9
-  source_checked_at: '2026-09-18T13:13:31Z'
-  truth_built_at: '2026-09-16T01:04:52Z'
+  remote_head: e4b35303bff2240d639817bca83ac36f838183bf
+  truth_built_from_head: e4b35303bff2240d639817bca83ac36f838183bf
+  source_checked_at: '2026-09-19T13:03:03Z'
+  truth_built_at: '2026-09-19T13:03:06Z'
   stale_since: null
-  reason: null
+  reason: 'sub-gates: source=fresh semantic=stale progress=fresh'
   source_freshness: fresh
   semantic_freshness: stale
   progress_freshness: fresh
@@ -67,5 +67,5 @@ github:
   observed_at: '2026-09-18T13:13:31Z'
 last_change: '2026-09-15'
 evidence_classification: verified
-verified_at: '2026-09-16T01:04:50Z'
+verified_at: '2026-09-19T13:03:04Z'
 adapter_id: freshness-refresh-v1
