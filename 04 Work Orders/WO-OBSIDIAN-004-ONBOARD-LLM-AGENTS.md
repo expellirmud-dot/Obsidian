@@ -2,7 +2,7 @@
 
 Work Order ID: WO-OBSIDIAN-004  
 Title: Onboard llm-agents into Project Knowledge Vault  
-Status: PLANNED  
+Status: CLOSED  
 Task Classification: EXTERNAL_PROJECT_DISCOVERY_AND_VAULT_UPDATE  
 Risk Level: MEDIUM  
 Execution Mode: One Repository, One Bounded Seam
