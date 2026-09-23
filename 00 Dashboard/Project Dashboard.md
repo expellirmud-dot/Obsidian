@@ -56,7 +56,7 @@ last_reviewed: 2026-08-19
 | Sr 400 Virtual Tuning Lab | UNKNOWN | null | null | null | UNKNOWN | unknown | STALE — source HEAD changed after last semantic truth build | b9143fb | b9143fb | 2026-08-20T07:05:47Z | null | null |
 | Utility Automation V2 | UNKNOWN | null | null | null | UNKNOWN | unknown | FRESH | a0f5fbf | a0f5fbf | 2026-08-19T01:05:44Z | null | null |
 | Rx 8 | UNKNOWN | null | null | CURRENT WORK ORDER | UNKNOWN | unknown | STALE — source HEAD changed after last semantic truth build | 3184a5c | 3184a5c | 2026-09-06T13:05:15Z | null | null |
-| Online Job Factory | Online Job Factory มีหน้าที่ช่วยค้นหา ประเมิน เตรียมสมัคร ผลิต ตรวจ และติดตาม... | null | null | null | UNKNOWN | unknown | FRESH | e2ae2e6 | e2ae2e6 | 2026-09-23T01:05:46Z | null | null |
+| Online Job Factory | Online Job Factory มีหน้าที่ช่วยค้นหา ประเมิน เตรียมสมัคร ผลิต ตรวจ และติดตาม... | null | null | null | UNKNOWN | unknown | FRESH | dacb70a | dacb70a | 2026-09-23T07:07:36Z | null | null |
 | Nexus Xau Engine | This repository is the durable project record for the current research. The i... | null | null | null | UNKNOWN | unknown | FRESH | c0fd686 | c0fd686 | 2026-09-17T01:07:41Z | null | null |
 | Samud Lukrai | UNKNOWN | null | null | null | UNKNOWN | unknown | STALE — source HEAD changed after last semantic truth build | 58f7f96 | 58f7f96 | 2026-09-06T13:05:18Z | null | null |
 <!-- LIVE_PROJECT_WALL:END -->
