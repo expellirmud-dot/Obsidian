@@ -29,6 +29,7 @@ last_reviewed: 2026-08-19
 | [[Jamie Phone]] | unknown — รอ evidence-based truth rebuild (knowledge_state: needs-verification) | unknown (GitHub-onboarded) | **needs-verification** (auto-onboarded WO-OBSIDIAN-037) | 2026-08-19 (GitHub adapter: remote HEAD eb31259) |
 | [[Sr 400 Virtual Tuning Lab]] | unknown — รอ evidence-based truth rebuild (knowledge_state: needs-verification) | unknown (GitHub-onboarded) | **needs-verification** (auto-onboarded WO-OBSIDIAN-037) | 2026-08-19 (GitHub adapter: remote HEAD 48c9413) |
 | [[Utility Automation V2]] | unknown — รอ evidence-based truth rebuild (knowledge_state: needs-verification) | unknown (GitHub-onboarded) | **needs-verification** (auto-onboarded WO-OBSIDIAN-037) | 2026-08-19 (GitHub adapter: remote HEAD a0f5fbf) |
+| [[Rx 8]] | unknown — รอ evidence-based truth rebuild (knowledge_state: needs-verification) | unknown (GitHub-onboarded) | **needs-verification** (auto-onboarded WO-OBSIDIAN-037) | 2026-08-23 (GitHub adapter: remote HEAD 2dd0adc) |
 
 หมายเหตุ: `Last Verified` ในแต่ละรอบขึ้นอยู่กับขอบเขตของ Work Order นั้น
 
