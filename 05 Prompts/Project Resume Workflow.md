@@ -231,3 +231,30 @@ NEXT_RECOMMENDED_ACTION:
 - Verified by: AI (WO-OBSIDIAN-011)
 - Verification date: 2026-07-29
 - Evidence classification: VERIFIED_REPOSITORY_FACT / OWNER_CONFIRMED_FACT / SUPPORTED_INFERENCE / NEEDS_VERIFICATION
+
+## 12. Nexus Controller Workflow — WO-042 (2026-10-09)
+
+This section extends the existing Project Resume Workflow; it is NOT a competing policy or a substitute for AGENTS.md / active Work Order / project-read-first. If an earlier historical example conflicts, active Work Order and safety gates prevail.
+
+### Nine-stage routine (risk-scaled)
+1. **Resume and repository truth:** Resolve exact repo root, branch, HEAD, upstream, origin, worktrees, dirty/untracked; check Kernel/Continuity currentness. Never guess a project key.
+2. **Goal, scope and time:** State Owner outcome, exclusions, baseline, owner of truth, definition of done, stop conditions and actual Bangkok start time.
+3. **Discover existing Skills & Tools:** Project `.agents/skills`, installed skills, `D:\tools\TOOLS.md`, live capabilities and tool contracts. Prefer reuse to duplication.
+4. **Plan and worker routing:** Define input/preconditions/actions/output/pass-fail/retry; assign bounded tasks. Readers can run in parallel; exactly one writer per collision domain. Verify provider/model/CLI live; no silent paid API fallback.
+5. **Execute within scope:** Allowed Files and safe reversible changes only. Preserve original Owner files, shared tools and evidence. Do not turn a task into the project's mission.
+6. **Validate and review (risk-based):** Review actual diff, links, state/schema checks and tests relevant to the change. CI only when applicable, especially required PR checks. Worker reports are not acceptance evidence.
+7. **Git / Merge / Deploy gate (as applicable):** Owner grants standing routine review, commit, push, PR and merge authority within approved scope and safety gates. Explicit selective staging only, no blanket `git add .`, no shared-history rewrite. Deploy only to previously approved existing targets; new DNS, spend, secrets or external commitments remain Owner-gated. Confirm candidate HEAD, relevant checks, blocking reviews and target.
+8. **Canonical reconciliation and safe cleanup:** Update the proper Vault/Work Order authority, not duplicate truth. After verified merge, check disposable branches/worktrees/task folders for dirty/untracked Owner data, processes, dependencies and path identity. Remove only clean disposable items; otherwise `CLEANUP_BLOCKED`. Never recursively force-delete unknowns, source roots, shared `D:\tools`, critical logs or historical evidence.
+9. **Final report and finish time:** Provide status, actual start/end time (or NOT_RECORDED), actions, tests, exact HEAD/PR/deploy state, cleanup, risks and one bounded next action.
+
+### Remote divergence and dirty-state recovery
+If local working tree is dirty or behind remote, inspect provenance first. Do not stash, reset, clean or pull over owner work. Where the current Skill blocks mutation, keep that workspace read-only; an isolated clean clone may be used as a separate task workspace only after verifying its root, remote, branch, HEAD and clean state and ensuring no existing work is overwritten. The original workspace remains Owner-owned. Reconcile owner differences separately; never silently discard them.
+
+### Explicit side-effect tracking
+External operations transition `INTENDED → EXECUTED_UNVERIFIED → VERIFIED / FAILED / AMBIGUOUS`. Never repeat ambiguous merge/deploy/delete operations until live state is reconciled.
+
+### Completion contract
+`Input → Baseline → Change → Validation → Evidence → Reconcile → Cleanup → Final`. A committed file alone does not prove project progress or closure. Only report COMPLETED when the verified result and closeout evidence support it.
+
+### Standing delegation clarification for earlier examples
+The examples in section 8 and the older Controller/Owner responsibility table describe historical authorization at their example dates. The current Owner's standing Git/PR/Deploy delegation applies to in-scope routine actions after gates pass; it does not bypass mandatory preflight or authorize unrestricted deletion, payment, DNS, credentials, or novel production targets.
