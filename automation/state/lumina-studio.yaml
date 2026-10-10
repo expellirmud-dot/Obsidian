@@ -11,7 +11,7 @@ github_repository_id: 1253367642
 source_path: D:\lumina-studio
 repository: https://github.com/expellirmud-dot/LUMINA-Studio.git
 branch: main
-head: 0408de52c5deec26197de286100636feed49fe1b
+head: d0e98e9aa18c0db1381abc1187c92bbec1489786
 knowledge_state: needs-verification
 project_identity:
   purpose: null
@@ -39,10 +39,10 @@ current_execution:
 freshness:
   status: stale
   tracked_ref: main
-  remote_head: 0408de52c5deec26197de286100636feed49fe1b
-  truth_built_from_head: 0408de52c5deec26197de286100636feed49fe1b
-  source_checked_at: '2026-10-09T13:03:29Z'
-  truth_built_at: '2026-10-09T13:03:32Z'
+  remote_head: d0e98e9aa18c0db1381abc1187c92bbec1489786
+  truth_built_from_head: d0e98e9aa18c0db1381abc1187c92bbec1489786
+  source_checked_at: '2026-10-10T01:05:49Z'
+  truth_built_at: '2026-10-10T01:05:51Z'
   stale_since: null
   reason: 'sub-gates: source=fresh semantic=stale progress=fresh'
   source_freshness: fresh
@@ -66,5 +66,5 @@ github:
   observed_at: '2026-10-09T01:10:11Z'
 last_change: '2026-10-08'
 evidence_classification: verified
-verified_at: '2026-10-09T13:03:30Z'
+verified_at: '2026-10-10T01:05:50Z'
 adapter_id: freshness-refresh-v1
