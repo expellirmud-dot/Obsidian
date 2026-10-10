@@ -1092,3 +1092,38 @@ def test_refresh_local_only_no_keyerror(monkeypatch, tmp_path):
     # The original state content must be preserved (no partial truth written).
     state = yaml.safe_load((tmp_path / "state" / "localproj.yaml").read_text("utf-8"))
     assert state["project_id"] == "localproj"
+
+# WO-OBSIDIAN-043 — End-to-end: late explicit mission reaches normalized state.
+def test_late_explicit_purpose_reaches_fresh_state(monkeypatch, tmp_path):
+    monkeypatch.setattr(fe, "STATE_DIR", tmp_path / "state")
+    (tmp_path / "state").mkdir()
+    original = _v2_state(pid="demo", purpose=None, truth_head="h1", status="stale")
+    _seed_state(tmp_path, "demo", original)
+
+    mission = "Provide safe automation grounded in project source evidence."
+    agents_md = "# Demo\n\n" + ("Operational notes. " * 39) + (
+        "\n## Mission\n" + mission + "\n"
+    )
+    assert agents_md.index("## Mission") > 500
+    responses = {
+        "/repos/owner/demo": (200, {"default_branch": "main"}, {}),
+        "/repos/owner/demo/commits/main": (200, {"sha": "h2"}, {}),
+        "/repos/owner/demo/contents/?ref=main": (
+            200, [{"type": "file", "path": "AGENTS.md", "sha": "blob-a"}], {}),
+        "/repos/owner/demo/contents/AGENTS.md?ref=main": (
+            200, {"content": _b64(agents_md), "encoding": "base64", "sha": "blob-a"}, {}),
+    }
+    _patch_fe_github(monkeypatch, responses)
+    monkeypatch.setattr(ev, "github_request", fe.github_request)
+
+    result = fe.refresh_project(
+        {"project_id": "demo", "repository": "https://github.com/owner/demo.git"},
+        token="fake", dry_run=False,
+    )
+    assert result["published"] is True
+    assert result["status"] == "fresh"
+    state = yaml.safe_load((tmp_path / "state" / "demo.yaml").read_text("utf-8"))
+    assert state["knowledge_state"] == "verified"
+    assert state["project_identity"]["purpose"] == mission
+    assert state["freshness"]["semantic_freshness"] == "fresh"
+    assert state["freshness"]["truth_built_from_head"] == "h2"

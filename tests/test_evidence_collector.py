@@ -600,3 +600,43 @@ def test_mission_drift_does_not_silently_overwrite_verified_identity(monkeypatch
     assert new_state["project_identity"]["purpose"] == "Mission A"
     assert new_state["project_identity"]["identity_drift_detected"] is True
     assert res["drift"] is True
+
+# ---------------------------------------------------------------------------
+# WO-OBSIDIAN-043: full-source explicit purpose without unbounded manifest
+# ---------------------------------------------------------------------------
+
+def test_collects_explicit_purpose_after_excerpt_limit(monkeypatch, fake_contents_responses):
+    responses = dict(fake_contents_responses)
+    declared = "Provide evidence-backed lifecycle tracking for all managed projects."
+    full_text = "# Alpha\n\n" + ("Operational details and review policy. " * 23) + (
+        "\n## Purpose\n" + declared + "\n"
+    )
+    assert full_text.index("## Purpose") > 500
+    responses["/repos/owner/alpha/contents/AGENTS.md?ref=main"] = (
+        200, {"content": _b64(full_text), "encoding": "base64", "sha": "blob-agents"}, {}
+    )
+    _patch_gh(monkeypatch, responses)
+
+    manifest = ev.collect_evidence_for_project(
+        {"project_id": "alpha", "repository": "https://github.com/owner/alpha.git"},
+        token="fake",
+    )
+    agent = next(item for item in manifest["evidence"] if item["path"] == "AGENTS.md")
+    assert manifest["status"] == "ok"
+    assert len(agent["content_excerpt"]) <= 500
+    assert "## Purpose" not in agent["content_excerpt"]
+    assert agent["explicit_purpose"] == declared
+    assert agent["blob_sha"] == "blob-agents"
+    assert ev.build_identity_from_evidence(manifest)["purpose"] == declared
+
+
+def test_thai_explicit_purpose_is_detected_without_title_fabrication():
+    declared = "ช่วยให้ตรวจสอบหลักฐานการพัฒนาของทุกโปรเจกต์ได้อย่างต่อเนื่อง"
+    full_text = "# คลังความรู้\n\n" + ("รายละเอียดการดำเนินงาน " * 45) + (
+        "\n## วัตถุประสงค์\n" + declared + "\n"
+    )
+    assert len(full_text[:full_text.index("## วัตถุประสงค์")]) > 500
+    assert ev._extract_explicit_purpose(full_text) == declared
+    assert ev._extract_explicit_purpose(
+        "# คลังความรู้\n\nรายละเอียดการดำเนินงานอย่างต่อเนื่อง"
+    ) is None
