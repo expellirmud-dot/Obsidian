@@ -286,6 +286,11 @@ def collect_evidence_for_project(project: dict, token: str | None) -> dict:
         if content is None:
             continue
         category, kind = classify_file(path, content)
+        # Extract from the full verified authority file BEFORE truncating its
+        # manifest excerpt. A plain heading or current task is not a purpose.
+        explicit_purpose = (
+            _extract_explicit_purpose(content) if category == "identity" else None
+        )
         # Preserve newlines so the truth builder can detect explicit
         # Purpose/Mission section headings (a flattened excerpt would hide the
         # heading structure). Capped at 500 chars to keep manifests compact.
@@ -310,6 +315,7 @@ def collect_evidence_for_project(project: dict, token: str | None) -> dict:
                 "observed_at": observed_at,
                 "heading": heading,
                 "content_excerpt": excerpt,
+                "explicit_purpose": explicit_purpose,
                 "content_length": content_length,
                 "truncated": truncated,
             }
@@ -388,6 +394,10 @@ _PURPOSE_HEADINGS = {
     "problem",
     "problem statement",
     "what this project does",
+    "วัตถุประสงค์",
+    "จุดประสงค์",
+    "พันธกิจ",
+    "เป้าหมายหลักของโปรเจกต์",
     "overview",
     "about",
 }
@@ -481,7 +491,9 @@ def _select_purpose_evidence(manifest: dict) -> tuple[dict | None, str | None]:
     for ev in manifest.get("evidence", []):
         if ev.get("category") != "identity":
             continue
-        purpose = _extract_explicit_purpose(ev.get("content_excerpt", ""))
+        purpose = ev.get("explicit_purpose") or _extract_explicit_purpose(
+            ev.get("content_excerpt", "")
+        )
         if purpose:
             return ev, purpose
     return None, None
