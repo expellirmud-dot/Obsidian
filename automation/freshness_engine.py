@@ -320,14 +320,21 @@ def refresh_project(project: dict, token: str | None, dry_run: bool = False) -> 
         fr = dict(state.get("freshness") or {})
         fr["source_checked_at"] = probe["checked_at"]
         fr["remote_head"] = probe["remote_head"]
-        fr["reason"] = None
-        fr["stale_since"] = None
         fr["source_freshness"] = "fresh"
         existing_semantic = fr.get("semantic_freshness") or "unknown"
         existing_progress = fr.get("progress_freshness") or "unknown"
         fr["semantic_freshness"] = existing_semantic
         fr["progress_freshness"] = existing_progress
-        fr["status"] = _aggregate_freshness("fresh", existing_semantic, existing_progress)
+        aggregate = _aggregate_freshness("fresh", existing_semantic, existing_progress)
+        fr["status"] = aggregate
+        # A source-fresh probe only proves the HEAD is unchanged; it must not
+        # erase the reason a sub-gate is still stale/unknown, nor clear the
+        # stale marker. Both are derived from the aggregate so the recorded
+        # reason always matches the recorded status.
+        fr["reason"] = None if aggregate == "fresh" else (
+            f"sub-gates: source=fresh semantic={existing_semantic} "
+            f"progress={existing_progress}")
+        fr["stale_since"] = None if aggregate == "fresh" else fr.get("stale_since")
         state["freshness"] = fr
         # Validate before writing (consistent with deep-refresh path).
         errors = _validate_state(state)

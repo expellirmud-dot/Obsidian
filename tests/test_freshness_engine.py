@@ -1127,3 +1127,67 @@ def test_late_explicit_purpose_reaches_fresh_state(monkeypatch, tmp_path):
     assert state["project_identity"]["purpose"] == mission
     assert state["freshness"]["semantic_freshness"] == "fresh"
     assert state["freshness"]["truth_built_from_head"] == "h2"
+
+
+# WO-OBSIDIAN-043 — Fresh path must not erase the recorded staleness reason.
+def test_fresh_path_preserves_stale_reason(monkeypatch, tmp_path):
+    """Source HEAD unchanged but semantic gate stale -> aggregate stale with a
+    reason. The fresh path previously hardcoded reason=null and stale_since=null,
+    which made the Project Wall render "STALE — source HEAD changed" for a
+    project whose HEAD had not changed, and left no audit reason in state.
+    """
+    monkeypatch.setattr(fe, "STATE_DIR", tmp_path / "state")
+    (tmp_path / "state").mkdir()
+    original = _v2_state(pid="demo", purpose=None, truth_head="h1",
+                         remote_head="h1", status="stale")
+    original["freshness"]["semantic_freshness"] = "stale"
+    original["freshness"]["progress_freshness"] = "fresh"
+    original["freshness"]["reason"] = "old reason"
+    original["freshness"]["stale_since"] = "2026-01-01T00:00:00Z"
+    _seed_state(tmp_path, "demo", original)
+
+    responses = {
+        "/repos/owner/demo": (200, {"default_branch": "main"}, {}),
+        "/repos/owner/demo/commits/main": (200, {"sha": "h1"}, {}),  # unchanged
+    }
+    _patch_fe_github(monkeypatch, responses)
+    monkeypatch.setattr(ev, "github_request", fe.github_request)
+
+    res = fe.refresh_project({"project_id": "demo",
+        "repository": "https://github.com/owner/demo.git"}, token="fake", dry_run=False)
+    assert res["deep_refresh"] is False
+    assert res["status"] == "stale"
+    state = yaml.safe_load((tmp_path / "state" / "demo.yaml").read_text("utf-8"))
+    fr = state["freshness"]
+    assert fr["status"] == "stale"
+    assert fr["source_freshness"] == "fresh"
+    assert fr["semantic_freshness"] == "stale"
+    assert fr["reason"] is not None
+    assert "semantic=stale" in fr["reason"]
+    # A stale state must keep a stale_since marker (not silently cleared).
+    assert fr["stale_since"] is not None
+
+
+def test_fresh_path_clears_reason_only_when_aggregate_fresh(monkeypatch, tmp_path):
+    """All three sub-gates fresh -> aggregate fresh -> reason and stale_since null."""
+    monkeypatch.setattr(fe, "STATE_DIR", tmp_path / "state")
+    (tmp_path / "state").mkdir()
+    original = _v2_state(pid="demo", purpose="Mission A", truth_head="h1",
+                         remote_head="h1", status="fresh")
+    _seed_state(tmp_path, "demo", original)
+
+    responses = {
+        "/repos/owner/demo": (200, {"default_branch": "main"}, {}),
+        "/repos/owner/demo/commits/main": (200, {"sha": "h1"}, {}),  # unchanged
+    }
+    _patch_fe_github(monkeypatch, responses)
+    monkeypatch.setattr(ev, "github_request", fe.github_request)
+
+    res = fe.refresh_project({"project_id": "demo",
+        "repository": "https://github.com/owner/demo.git"}, token="fake", dry_run=False)
+    assert res["status"] == "fresh"
+    state = yaml.safe_load((tmp_path / "state" / "demo.yaml").read_text("utf-8"))
+    fr = state["freshness"]
+    assert fr["status"] == "fresh"
+    assert fr["reason"] is None
+    assert fr["stale_since"] is None

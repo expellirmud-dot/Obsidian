@@ -154,7 +154,21 @@ def freshness_cell(freshness: dict) -> str:
         return "UNKNOWN"
     status = freshness.get("status") or "unknown"
     if status == "stale":
-        return "STALE — source HEAD changed after last semantic truth build"
+        # The stale cause is not always a moved HEAD: a source-fresh project
+        # can be stale because its semantic/progress sub-gate is stale. Label
+        # from the recorded reason so the wall never asserts a cause that the
+        # state does not support.
+        reason = freshness.get("reason")
+        if not reason:
+            source_f = freshness.get("source_freshness")
+            semantic_f = freshness.get("semantic_freshness")
+            progress_f = freshness.get("progress_freshness")
+            if source_f == "fresh" and (semantic_f != "fresh" or progress_f != "fresh"):
+                reason = (f"sub-gates: source={source_f} "
+                          f"semantic={semantic_f} progress={progress_f}")
+            else:
+                reason = "source HEAD changed after last semantic truth build"
+        return f"STALE — {reason}"
     if status == "refresh_failed":
         return f"REFRESH_FAILED — {freshness.get('reason') or 'reason unknown'}"
     if status == "unknown":

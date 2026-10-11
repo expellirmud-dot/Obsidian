@@ -46,7 +46,7 @@ freshness:
   source_checked_at: '2026-10-11T07:03:32Z'
   truth_built_at: '2026-09-11T07:02:51Z'
   stale_since: null
-  reason: null
+  reason: 'sub-gates: source=fresh semantic=stale progress=fresh'
   source_freshness: fresh
   semantic_freshness: stale
   progress_freshness: fresh

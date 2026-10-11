@@ -315,3 +315,39 @@ def test_unknown_project_exclusion(renderer_module, registry):
     # And only the enabled ids' project names should appear (11 rows).
     lines = wall.splitlines()
     assert len(lines) == 2 + len(enabled)
+
+
+# ---------------------------------------------------------------------------
+# Freshness cell: stale label must reflect the recorded cause, not a
+# hard-coded "HEAD changed" (WO-OBSIDIAN-043).
+# ---------------------------------------------------------------------------
+
+def test_freshness_cell_source_fresh_semantic_stale(renderer_module):
+    """A source-fresh project whose semantic gate is stale must NOT claim the
+    HEAD changed."""
+    cell = renderer_module.freshness_cell({
+        "status": "stale", "source_freshness": "fresh",
+        "semantic_freshness": "stale", "progress_freshness": "fresh",
+        "reason": None,
+    })
+    assert cell.startswith("STALE")
+    assert "HEAD changed" not in cell
+    assert "semantic=stale" in cell
+
+
+def test_freshness_cell_uses_recorded_reason(renderer_module):
+    cell = renderer_module.freshness_cell({
+        "status": "stale", "reason": "remote HEAD changed after last semantic truth build",
+        "source_freshness": "stale", "semantic_freshness": "fresh",
+        "progress_freshness": "fresh",
+    })
+    assert cell == "STALE — remote HEAD changed after last semantic truth build"
+
+
+def test_freshness_cell_head_changed_default(renderer_module):
+    """No reason and a stale source keeps the HEAD-changed wording."""
+    cell = renderer_module.freshness_cell({
+        "status": "stale", "reason": None, "source_freshness": "stale",
+        "semantic_freshness": "fresh", "progress_freshness": "fresh",
+    })
+    assert "HEAD changed" in cell
