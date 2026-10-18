@@ -10,9 +10,9 @@ source_path: null
 repository: https://github.com/expellirmud-dot/SR-400-Virtual-Tuning-Lab.git
 branch: main
 head: b9143fbead6ca76f9278f7cd10e6818011234a23
-knowledge_state: needs-verification
+knowledge_state: verified
 project_identity:
-  purpose: null
+  purpose: 'SR400 Virtual Tuning Lab is a Python-based tuning research and validation project built around two related areas: 1. **EFI Fuel-Map Simulation** — models an RPM × throttle-position map, correction math, interpolation, confidence scoring, safety evaluation, and replayable virtual tuning sessions. 2. '
   problem_statement: null
   intended_outcome: null
   primary_users: null
@@ -39,7 +39,7 @@ freshness:
   tracked_ref: main
   remote_head: b9143fbead6ca76f9278f7cd10e6818011234a23
   truth_built_from_head: b9143fbead6ca76f9278f7cd10e6818011234a23
-  source_checked_at: '2026-10-18T13:04:36Z'
+  source_checked_at: '2026-10-18T16:35:26Z'
   truth_built_at: '2026-08-20T07:05:47Z'
   stale_since: null
   reason: 'sub-gates: source=fresh semantic=stale progress=fresh'
@@ -58,11 +58,11 @@ progress:
   remaining: null
   basis: roadmap evidence truncated (incomplete denominator; cannot compute a reliable percentage)
 github:
-  ci_state: unknown
+  ci_state: pending
   open_pr: null
   open_pr_count: 0
-  observed_at: '2026-10-18T01:05:49Z'
+  observed_at: '2026-10-18T16:35:26Z'
 last_change: '2026-08-19'
 evidence_classification: unknown
-verified_at: '2026-08-20T07:05:45Z'
-adapter_id: freshness-refresh-v1
+verified_at: '2026-10-18T16:22:49Z'
+adapter_id: evidence-truth-builder-v1

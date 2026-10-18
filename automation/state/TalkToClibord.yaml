@@ -14,9 +14,9 @@ source_path: D:\TalkToClibord
 repository: https://github.com/expellirmud-dot/TalkToClibord.git
 branch: main
 head: 40b565e6c1dc34c6efa3640d79e2ada9083e74b0
-knowledge_state: needs-verification
+knowledge_state: verified
 project_identity:
-  purpose: null
+  purpose: The dependency smoke tests are designed to validate the **declared dependency contract** (what this project requires) while still running in minimal CI/local environments where not all optional or system-sensitive packages can be installed.
   problem_statement: null
   intended_outcome: null
   primary_users: null
@@ -43,7 +43,7 @@ freshness:
   tracked_ref: main
   remote_head: 40b565e6c1dc34c6efa3640d79e2ada9083e74b0
   truth_built_from_head: 40b565e6c1dc34c6efa3640d79e2ada9083e74b0
-  source_checked_at: '2026-10-18T13:04:32Z'
+  source_checked_at: '2026-10-18T16:35:26Z'
   truth_built_at: '2026-08-12T07:10:00Z'
   stale_since: null
   reason: null
@@ -65,8 +65,8 @@ github:
   ci_state: pending
   open_pr: 4
   open_pr_count: 1
-  observed_at: '2026-10-18T01:05:49Z'
+  observed_at: '2026-10-18T16:35:26Z'
 last_change: '2026-05-13'
 evidence_classification: verified
-verified_at: '2026-08-12T07:10:00Z'
-adapter_id: generic-git-plus-authority-files
+verified_at: '2026-10-18T16:22:36Z'
+adapter_id: evidence-truth-builder-v1

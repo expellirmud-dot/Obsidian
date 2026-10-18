@@ -26,11 +26,11 @@ project_identity:
 current_execution:
   lifecycle_phase: null
   current_goal: null
-  current_work: null
+  current_work: 'CURRENT WORK ORDER — PR #8 / Goal 3 & Goal 4'
   current_work_authority:
-    path: null
-    kind: null
-  current_work_evidence: unknown
+    path: CURRENT_WORK_ORDER.md
+    kind: work-order
+  current_work_evidence: verified
   last_completed: null
   blockers: null
   next_action: null
@@ -39,7 +39,7 @@ freshness:
   tracked_ref: main
   remote_head: 72c5ffdc64d288ec35efcc18c668c4f09692a819
   truth_built_from_head: 72c5ffdc64d288ec35efcc18c668c4f09692a819
-  source_checked_at: '2026-10-18T13:04:35Z'
+  source_checked_at: '2026-10-18T16:35:26Z'
   truth_built_at: '2026-08-19T01:05:41Z'
   stale_since: null
   reason: null
@@ -58,11 +58,11 @@ progress:
   remaining: null
   basis: null
 github:
-  ci_state: unknown
+  ci_state: pending
   open_pr: null
   open_pr_count: 0
-  observed_at: '2026-10-18T01:05:49Z'
+  observed_at: '2026-10-18T16:35:26Z'
 last_change: '2026-08-16'
 evidence_classification: unknown
-verified_at: '2026-08-19T01:05:41Z'
-adapter_id: discovery-onboard-v1
+verified_at: '2026-10-18T16:22:42Z'
+adapter_id: evidence-truth-builder-v1

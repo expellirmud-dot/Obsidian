@@ -41,7 +41,7 @@ freshness:
   tracked_ref: main
   remote_head: e42eca20ba708ce961f6bfa7f5dd2a7ef41741f0
   truth_built_from_head: e42eca20ba708ce961f6bfa7f5dd2a7ef41741f0
-  source_checked_at: '2026-10-18T13:04:27Z'
+  source_checked_at: '2026-10-18T16:35:26Z'
   truth_built_at: '2026-09-20T01:06:48Z'
   stale_since: null
   reason: 'sub-gates: source=fresh semantic=stale progress=fresh'
@@ -60,11 +60,11 @@ progress:
   remaining: null
   basis: roadmap evidence truncated (incomplete denominator; cannot compute a reliable percentage)
 github:
-  ci_state: unknown
+  ci_state: pending
   open_pr: 13
   open_pr_count: 2
-  observed_at: '2026-10-18T01:05:49Z'
+  observed_at: '2026-10-18T16:35:26Z'
 last_change: '2026-09-19'
 evidence_classification: verified
-verified_at: '2026-09-20T01:06:46Z'
-adapter_id: freshness-refresh-v1
+verified_at: '2026-10-18T16:22:05Z'
+adapter_id: evidence-truth-builder-v1

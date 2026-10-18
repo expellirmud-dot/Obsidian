@@ -46,14 +46,14 @@ last_reviewed: 2026-08-19
 | Adobe Stock Upload Assistant | UNKNOWN | verified | null | TASK-ADOBE-STOCK-SAFETY-TERMS-CORE-001 (completed — no active executable task) | UNKNOWN | unknown | UNKNOWN | 0e5f9fc | null | 2026-08-12T07:10:00Z | null | null |
 | Lightroom AI Exposure | UNKNOWN | stable | null | null | UNKNOWN | unknown | STALE — sub-gates: source=fresh semantic=stale progress=fresh | 1749192 | 1749192 | 2026-09-11T07:02:51Z | null | null |
 | Citizen Portal | UNKNOWN | research-prototype | null | null | UNKNOWN | unknown | FRESH | f8ae9fb | f8ae9fb | 2026-08-12T07:10:00Z | null | null |
-| TalkToClibord | UNKNOWN | active | null | Test Sprint (JAVIS.md Sprint Status, updated 2026-04-18) | UNKNOWN | unknown | FRESH | 40b565e | 40b565e | 2026-08-12T07:10:00Z | null | null |
+| TalkToClibord | The dependency smoke tests are designed to validate the **declared dependency... | active | null | Test Sprint (JAVIS.md Sprint Status, updated 2026-04-18) | UNKNOWN | unknown | FRESH | 40b565e | 40b565e | 2026-08-12T07:10:00Z | null | null |
 | AI-Workspace | UNKNOWN | stable | null | null | UNKNOWN | unknown | STALE — sub-gates: source=fresh semantic=stale progress=fresh | 0be0724 | 0be0724 | 2026-08-19T01:06:58Z | null | null |
 | Agentic Framework Mcp | UNKNOWN | null | null | null | UNKNOWN | unknown | UNKNOWN | null | null | null | null | null |
-| Ai Ops Registry | UNKNOWN | null | null | null | UNKNOWN | unknown | FRESH | 518ddce | 518ddce | 2026-08-19T01:05:41Z | null | null |
-| Ai Pr Review Controller | UNKNOWN | null | null | null | UNKNOWN | unknown | FRESH | 72c5ffd | 72c5ffd | 2026-08-19T01:05:41Z | null | null |
+| Ai Ops Registry | This repository is the central registry for multi-app, multi-model, multi-pro... | null | null | null | UNKNOWN | unknown | FRESH | 518ddce | 518ddce | 2026-08-19T01:05:41Z | null | null |
+| Ai Pr Review Controller | UNKNOWN | null | null | CURRENT WORK ORDER — PR #8 / Goal 3 & Goal 4 | UNKNOWN | unknown | FRESH | 72c5ffd | 72c5ffd | 2026-08-19T01:05:41Z | null | null |
 | Ai Pr Review Sandbox | UNKNOWN | null | null | null | UNKNOWN | unknown | FRESH | 4131d29 | 4131d29 | 2026-08-19T01:05:42Z | null | null |
 | Jamie Phone | UNKNOWN | null | null | null | UNKNOWN | unknown | FRESH | eb31259 | eb31259 | 2026-08-19T01:05:42Z | null | null |
-| Sr 400 Virtual Tuning Lab | UNKNOWN | null | null | null | UNKNOWN | unknown | STALE — sub-gates: source=fresh semantic=stale progress=fresh | b9143fb | b9143fb | 2026-08-20T07:05:47Z | null | null |
+| Sr 400 Virtual Tuning Lab | SR400 Virtual Tuning Lab is a Python-based tuning research and validation pro... | null | null | null | UNKNOWN | unknown | STALE — sub-gates: source=fresh semantic=stale progress=fresh | b9143fb | b9143fb | 2026-08-20T07:05:47Z | null | null |
 | Utility Automation V2 | UNKNOWN | null | null | null | UNKNOWN | unknown | FRESH | a0f5fbf | a0f5fbf | 2026-08-19T01:05:44Z | null | null |
 | Rx 8 | UNKNOWN | null | null | CURRENT WORK ORDER | UNKNOWN | unknown | STALE — sub-gates: source=fresh semantic=stale progress=fresh | 3184a5c | 3184a5c | 2026-09-06T13:05:15Z | null | null |
 | Online Job Factory | Online Job Factory มีหน้าที่ช่วยค้นหา ประเมิน เตรียมสมัคร ผลิต ตรวจ และติดตาม... | null | null | null | UNKNOWN | unknown | FRESH | 9d8b299 | 9d8b299 | 2026-10-10T01:05:56Z | null | null |
