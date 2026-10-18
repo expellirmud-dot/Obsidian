@@ -59,6 +59,7 @@ last_reviewed: 2026-08-19
 | Online Job Factory | Online Job Factory มีหน้าที่ช่วยค้นหา ประเมิน เตรียมสมัคร ผลิต ตรวจ และติดตาม... | null | null | null | UNKNOWN | unknown | FRESH | 9d8b299 | 9d8b299 | 2026-10-10T01:05:56Z | null | null |
 | Nexus Xau Engine | This repository is the durable project record for the current research. The i... | null | null | null | UNKNOWN | unknown | FRESH | f270eb5 | f270eb5 | 2026-10-08T01:07:24Z | null | null |
 | Samud Lukrai | UNKNOWN | null | null | null | UNKNOWN | unknown | STALE — sub-gates: source=fresh semantic=stale progress=fresh | 58f7f96 | 58f7f96 | 2026-09-06T13:05:18Z | null | null |
+| Nexus Control Center | UNKNOWN | null | null | null | UNKNOWN | unknown | UNKNOWN | null | null | null | null | null |
 <!-- LIVE_PROJECT_WALL:END -->
 
 ## Discovered — Not Imported
