@@ -1,0 +1,47 @@
+# Evidence manifest -- TalkToClibord
+# Produced by WO-OBSIDIAN-038 (Evidence-Backed Project Truth Ingestion).
+# Source repository is READ-ONLY; no source files were modified.
+# Every claim traces to repository + ref + commit SHA + path + classification.
+project_id: TalkToClibord
+repository: https://github.com/expellirmud-dot/TalkToClibord.git
+tracked_ref: main
+commit_sha: null
+observed_at: '2026-10-18T16:22:36Z'
+status: ok
+error: null
+evidence:
+- path: README.md
+  category: identity
+  kind: readme
+  classification: verified
+  commit_sha: null
+  blob_sha: 135563bf41a40b5f29a67c4db7599d62c618f406
+  ref: main
+  observed_at: '2026-10-18T16:22:36Z'
+  heading: J.A.V.I.S
+  content_excerpt: '# J.A.V.I.S
+
+
+    ## Dependency setup and CI smoke tests
+
+
+    Install runtime dependencies before running full validation:
+
+
+    ```bash
+
+    pip install -r requirements.txt
+
+    ```
+
+
+    ### Why smoke tests may skip packages in minimal environments
+
+
+    The dependency smoke tests are designed to validate the **declared dependency contract** (what this project requires) while still running in minimal CI/local environments where not all optional or system-sensitive packages can be installed.
+
+
+    In those environments, smoke checks'
+  explicit_purpose: The dependency smoke tests are designed to validate the **declared dependency contract** (what this project requires) while still running in minimal CI/local environments where not all optional or system-sensitive packages can be installed.
+  content_length: 1472
+  truncated: true

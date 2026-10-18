@@ -1,0 +1,130 @@
+# Evidence manifest -- AI-Workspace
+# Produced by WO-OBSIDIAN-038 (Evidence-Backed Project Truth Ingestion).
+# Source repository is READ-ONLY; no source files were modified.
+# Every claim traces to repository + ref + commit SHA + path + classification.
+project_id: AI-Workspace
+repository: https://github.com/expellirmud-dot/Expellirmud-AI-Workspace.git
+tracked_ref: main
+commit_sha: null
+observed_at: '2026-10-18T16:22:37Z'
+status: ok
+error: null
+evidence:
+- path: AGENTS.md
+  category: identity
+  kind: agents
+  classification: verified
+  commit_sha: null
+  blob_sha: 35bbdd9931d4df1ebcde0b5f9843021925fa9eb3
+  ref: main
+  observed_at: '2026-10-18T16:22:37Z'
+  heading: Expellirmud AI-Workspace Agent Instructions
+  content_excerpt: '# Expellirmud AI-Workspace Agent Instructions
+
+
+    ## Workspace Root
+
+
+    ```text
+
+    D:\ai-tools\AI-Workspace
+
+    ```
+
+
+    Treat this directory as the primary workspace. Do not treat a module directory
+
+    or product repository as the system root.
+
+
+    ## Module Boundary
+
+
+    `ai-ops-registry/` owns registry data, project profiles, templates, snapshots,
+
+    task records, and reports.
+
+
+    Product repositories remain external. Read or edit them only when an approved
+
+    task card explicitly allows it.
+
+
+    ## Required Read Order
+
+
+    > **CRITICAL'
+  explicit_purpose: null
+  content_length: 1246
+  truncated: true
+- path: README.md
+  category: identity
+  kind: readme
+  classification: verified
+  commit_sha: null
+  blob_sha: 99bfb7c17958af1f164caf8f14575019d89c0606
+  ref: main
+  observed_at: '2026-10-18T16:22:37Z'
+  heading: Expellirmud AI-Workspace
+  content_excerpt: '# Expellirmud AI-Workspace
+
+
+    Central workspace for coordinating AI-assisted work across multiple
+
+    applications, models, and product projects.
+
+
+    Use this directory as the primary Codex project:
+
+
+    ```text
+
+    D:\ai-tools\AI-Workspace
+
+    ```
+
+
+    ## Modules
+
+
+    ```text
+
+    AI-Workspace/
+
+    ├─ ai-ops-registry/   Central registry, project profiles, templates, and reports
+
+    └─ README.md
+
+    ```
+
+
+    Product repositories remain outside this workspace. For example:
+
+
+    ```text
+
+    D:\lumina-studio
+
+    ```
+
+
+    ## Current Mode
+
+
+    Version 1 is manual-safe.'
+  explicit_purpose: null
+  content_length: 865
+  truncated: true
+- path: package.json
+  category: manifest
+  kind: manifest
+  classification: verified
+  commit_sha: null
+  blob_sha: 55d6dac1610d8871becc7aa60a2246cf1e3355e9
+  ref: main
+  observed_at: '2026-10-18T16:22:37Z'
+  heading: null
+  content_excerpt: "{\n  \"name\": \"expellirmud-ai-workspace-dashboard\",\n  \"private\": true,\n  \"version\": \"1.0.0\",\n  \"type\": \"module\",\n  \"scripts\": {\n    \"dev\": \"vite --host 127.0.0.1\",\n    \"build\": \"vite build\",\n    \"preview\": \"vite preview --host 127.0.0.1\",\n    \"connector:gateway\": \"node scripts/connector-gateway.mjs\"\n  },\n  \"dependencies\": {\n    \"@vitejs/plugin-react\": \"^4.3.4\",\n    \"react\": \"^18.3.1\",\n    \"react-dom\": \"^18.3.1\",\n    \"yaml\": \"^2.5.1\",\n    \"vite\": \"^5.4.10\"\n  }\n}"
+  explicit_purpose: null
+  content_length: 464
+  truncated: false

@@ -6,23 +6,67 @@ project_id: RX-8
 repository: https://github.com/expellirmud-dot/RX-8.git
 tracked_ref: main
 commit_sha: null
-observed_at: '2026-08-21T01:10:04Z'
+observed_at: '2026-10-18T16:22:56Z'
 status: ok
 error: null
 evidence:
+- path: AGENTS.md
+  category: identity
+  kind: agents
+  classification: verified
+  commit_sha: null
+  blob_sha: e9772c8be3a39472f2f02be388df584f6edc88cc
+  ref: main
+  observed_at: '2026-10-18T16:22:56Z'
+  heading: RX-8 Wiring Assistant — Development Controller
+  content_excerpt: '# RX-8 Wiring Assistant — Development Controller
+
+
+    ROLE: DEVELOPMENT CONTROLLER
+
+
+    ## Core behavior
+
+
+    Always:
+
+    - inspect before assuming
+
+    - verify exact repository state
+
+    - read project authority before planning
+
+    - use repository truth over chat memory
+
+    - create bounded Work Orders
+
+    - delegate implementation when suitable
+
+    - require validation evidence
+
+    - review exact commit/HEAD, not reports alone
+
+    - fail closed on contradictions or missing authority
+
+    - never translate failure into success
+
+    - never invent pro'
+  explicit_purpose: null
+  content_length: 15027
+  truncated: true
 - path: README.md
   category: identity
   kind: readme
   classification: verified
   commit_sha: null
-  blob_sha: a53941a0bbe71e4d84a85dc931ae59213664e0ed
+  blob_sha: 9bfaea707e87953592f0750182ca0afdd1558b64
   ref: main
-  observed_at: '2026-08-21T01:10:04Z'
+  observed_at: '2026-10-18T16:22:56Z'
   heading: RX-8 Wiring Assistant
   content_excerpt: '# RX-8 Wiring Assistant
 
 
-    Mobile-first wiring and pin-reference assistant for the Mazda RX-8 project.
+    Mobile-first wiring and pin-reference assistant for the Mazda RX-8 / Renesis 13B-MSP / N3H1 research project.
 
 
     ## Product goal
@@ -34,12 +78,52 @@ evidence:
     > ขานี้คืออะไร อยู่ตรงไหน ต้องต่อไปที่ไหน ขาปลายทางอยู่ตรงไหน และตอนนี้เราได้ต่อจุดนี้แล้วหรือยัง?
 
 
-    The core field workflow is:
+    Core field workflow:
 
 
-    `open/resume -> tap pin -> see detail -> jump to destination -> return -> update status -> switch context`
+    `open/resume -> select connector -> tap visual pin or logical terminal -> see detail -> jump to destination -> return -> update status -> switch context`
 
 
-    The application must reduce the need to switch between multiple photos, pinout shee'
-  content_length: 2919
+    ## Start'
+  explicit_purpose: null
+  content_length: 3889
+  truncated: true
+- path: work-order/CURRENT_WORK_ORDER.md
+  category: current_execution
+  kind: work-order
+  classification: verified
+  commit_sha: null
+  blob_sha: d45bd8111e65cb1aa2265187d1ad1f05fcaecb8f
+  ref: main
+  observed_at: '2026-10-18T16:22:56Z'
+  heading: CURRENT WORK ORDER
+  content_excerpt: '# CURRENT WORK ORDER
+
+
+    STATUS: ACTIVE
+
+    EXECUTION_MODE: CONTROLLER_DIRECT
+
+    EXECUTION_LANE: LOCAL_CONTROLLER_DIRECT
+
+
+    ACTIVE_GOAL: GOAL-RX8-VOICE-PERSISTENCE-FOLLOWUP
+
+    GOAL_STATUS: IN_PROGRESS
+
+    ACTIVE_WORK_ORDER: WO-RX8-UX-21-VOICE-PERSISTENCE-FOLLOWUP
+
+    WORK_ORDER_PATH: work-order/WO-RX8-UX-21-VOICE-PERSISTENCE-FOLLOWUP.md
+
+
+    THIS_FILE_ROLE: CANONICAL_EXECUTION_POINTER
+
+
+    LAST_COMPLETED_GOAL: GOAL-RX8-QUICK-LOOKUP-VOICE-STT-V1
+
+    LAST_COMPLETED_WORK_ORDER: WO-RX8-UX-21-QUICK-LOOKUP-VOICE-STT
+
+    LAST_COMPLETED_PATH'
+  explicit_purpose: null
+  content_length: 2050
   truncated: true

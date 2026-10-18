@@ -1,0 +1,95 @@
+# Evidence manifest -- ai-ops-registry
+# Produced by WO-OBSIDIAN-038 (Evidence-Backed Project Truth Ingestion).
+# Source repository is READ-ONLY; no source files were modified.
+# Every claim traces to repository + ref + commit SHA + path + classification.
+project_id: ai-ops-registry
+repository: https://github.com/expellirmud-dot/ai-ops-registry.git
+tracked_ref: main
+commit_sha: null
+observed_at: '2026-10-18T16:22:40Z'
+status: ok
+error: null
+evidence:
+- path: AGENTS.md
+  category: identity
+  kind: agents
+  classification: verified
+  commit_sha: null
+  blob_sha: 7643be7b21a38c766e441519253f809117347141
+  ref: main
+  observed_at: '2026-10-18T16:22:40Z'
+  heading: AI-Workspace Agent Instructions
+  content_excerpt: '# AI-Workspace Agent Instructions
+
+
+    ## Purpose
+
+
+    This repository is the central registry for multi-app, multi-model,
+
+    multi-project AI operations.
+
+
+    > **READ-FIRST POLICY ENFORCED**: Agents must read `docs/READ_FIRST_POLICY.md`
+
+    > and the root `AGENTS.md` before making any changes here.
+
+
+    ## Required Boundaries
+
+
+    - Keep registry files separate from product repositories.
+
+    - Treat product repositories as read-only unless a task card explicitly allows edits.
+
+    - Attach an active-project context snapshot to e'
+  explicit_purpose: 'This repository is the central registry for multi-app, multi-model, multi-project AI operations. > **READ-FIRST POLICY ENFORCED**: Agents must read `docs/READ_FIRST_POLICY.md` > and the root `AGENTS.md` before making any changes here.'
+  content_length: 1062
+  truncated: true
+- path: README.md
+  category: identity
+  kind: readme
+  classification: verified
+  commit_sha: null
+  blob_sha: c2917a5fab55b6eacb0d82ec307073f72e2ce552
+  ref: main
+  observed_at: '2026-10-18T16:22:40Z'
+  heading: Expellirmud AI-Workspace Registry Module
+  content_excerpt: '# Expellirmud AI-Workspace Registry Module
+
+
+    Registry module inside:
+
+
+    ```text
+
+    D:\ai-tools\AI-Workspace
+
+    ```
+
+
+    This module stores project-independent registry data for coordinating
+
+    AI-assisted work. It is not the AI-Workspace root.
+
+
+    The registry is intentionally manual-safe in v1. It prepares context, task
+
+    cards, dispatch instructions, and reports. It does not auto-send prompts,
+
+    control browser sessions, invoke subagents, or trigger CI pipelines.
+
+
+    ## Core Flow
+
+
+    ```text
+
+    Owner
+
+    -> Controller
+
+    -> Registr'
+  explicit_purpose: null
+  content_length: 1135
+  truncated: true

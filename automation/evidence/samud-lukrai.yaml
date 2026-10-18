@@ -1,0 +1,87 @@
+# Evidence manifest -- samud-lukrai
+# Produced by WO-OBSIDIAN-038 (Evidence-Backed Project Truth Ingestion).
+# Source repository is READ-ONLY; no source files were modified.
+# Every claim traces to repository + ref + commit SHA + path + classification.
+project_id: samud-lukrai
+repository: https://github.com/expellirmud-dot/samud-lukrai.git
+tracked_ref: main
+commit_sha: null
+observed_at: '2026-10-18T16:23:04Z'
+status: ok
+error: null
+evidence:
+- path: README.md
+  category: identity
+  kind: readme
+  classification: verified
+  commit_sha: null
+  blob_sha: 46e4f87435e708980a4c14648c1d3f992d01fc1b
+  ref: main
+  observed_at: '2026-10-18T16:23:04Z'
+  heading: สมุดลูกไร่
+  content_excerpt: '# สมุดลูกไร่
+
+
+    Mobile-first web app สำหรับจัดการลูกไร่ รอบปลูก รายการเบิก และการปิดรอบรับซื้อข้าวโพด
+
+
+    ## Stack
+
+
+    - Next.js (App Router)
+
+    - TypeScript
+
+    - Supabase (integration task T004)
+
+    - Vercel Free tier
+
+
+    ## Local development
+
+
+    ```bash
+
+    npm install
+
+    npm run dev
+
+    ```
+
+
+    ก่อนเชื่อม Supabase ให้คัดลอก `.env.example` เป็น `.env.local` แล้วกรอกค่าของ project เมื่อถึงงาน T004
+
+
+    ## Quality checks
+
+
+    ```bash
+
+    npm run lint
+
+    npm run typecheck
+
+    npm run build
+
+    npm run format:check
+
+    ```
+
+
+    สถานะและ Roadmap ของโปรเจกต์อยู่ที่ ['
+  explicit_purpose: null
+  content_length: 526
+  truncated: true
+- path: package.json
+  category: manifest
+  kind: manifest
+  classification: verified
+  commit_sha: null
+  blob_sha: ba2cce2cb4e4e6b3f9559387ecf09ed586eadf81
+  ref: main
+  observed_at: '2026-10-18T16:23:04Z'
+  heading: null
+  content_excerpt: "{\n  \"name\": \"samud-lukrai\",\n  \"version\": \"0.1.0\",\n  \"private\": true,\n  \"scripts\": {\n    \"dev\": \"next dev\",\n    \"build\": \"next build\",\n    \"start\": \"next start\",\n    \"lint\": \"eslint .\",\n    \"format\": \"prettier --write .\",\n    \"format:check\": \"prettier --check .\",\n    \"typecheck\": \"tsc --noEmit\"\n  },\n  \"dependencies\": {\n    \"next\": \"15.5.3\",\n    \"react\": \"19.1.1\",\n    \"react-dom\": \"19.1.1\"\n  },\n  \"devDependencies\": {\n    \"@eslint/eslintrc\": \"^3.3.1\",\n    \"@types/node\": \"^22.0.0\",\n    \"@types/react"
+  explicit_purpose: null
+  content_length: 668
+  truncated: true

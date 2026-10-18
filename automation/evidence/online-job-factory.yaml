@@ -1,0 +1,100 @@
+# Evidence manifest -- online-job-factory
+# Produced by WO-OBSIDIAN-038 (Evidence-Backed Project Truth Ingestion).
+# Source repository is READ-ONLY; no source files were modified.
+# Every claim traces to repository + ref + commit SHA + path + classification.
+project_id: online-job-factory
+repository: https://github.com/expellirmud-dot/online-job-factory.git
+tracked_ref: main
+commit_sha: null
+observed_at: '2026-10-18T16:22:59Z'
+status: ok
+error: null
+evidence:
+- path: AGENTS.md
+  category: identity
+  kind: agents
+  classification: verified
+  commit_sha: null
+  blob_sha: ae1d95ff14db7336d31ec937ef95046a3ae51f12
+  ref: main
+  observed_at: '2026-10-18T16:22:59Z'
+  heading: Online Job Factory — Agent Rules
+  content_excerpt: '# Online Job Factory — Agent Rules
+
+
+    This file is mandatory read-first guidance for every Controller, Development Agent, Runtime Worker, sub-agent, CLI agent, or automation operating in this repository.
+
+
+    ## Durable To-do first (Owner directive 2026-10-09)
+
+
+    Before each substantive task, Nexus opens or updates a short actionable checklist in the **existing canonical task owner** (active Development Work Order, active Factory job card/contract or applicable current task record). Mark steps `[ ] / [x'
+  explicit_purpose: null
+  content_length: 23350
+  truncated: true
+- path: PROJECT_RULES.md
+  category: identity
+  kind: project-rules
+  classification: verified
+  commit_sha: null
+  blob_sha: 91c0095b4fdda9be566dafa1ce1872e5fb483515
+  ref: main
+  observed_at: '2026-10-18T16:22:59Z'
+  heading: Project Rules
+  content_excerpt: '# Project Rules
+
+
+    ## Mission
+
+
+    Online Job Factory มีหน้าที่ช่วยค้นหา ประเมิน เตรียมสมัคร ผลิต ตรวจ และติดตามงานออนไลน์ขนาดเล็กที่มีโอกาสปิดงานได้จริงและคุ้มต้นทุน
+
+
+    ## Phase 1 Guardrails
+
+
+    - รับงาน active พร้อมกันสูงสุด 1 งาน
+
+    - งานใหม่ต้องมี scope, input, output และ deadline ชัดเจนก่อนรับ
+
+    - งานที่ต้องวางระบบใหม่ขนาดใหญ่ให้ `NO-GO` หรือ `NEEDS_REPLAN`
+
+    - ต้องมี Owner approval ก่อน submit application
+
+    - ต้องมี Owner approval ก่อนส่ง deliverable ให้ลูกค้า
+
+    - ห้ามระบบสร้าง commitment กับลูกค้าเอง เช่น ราคา'
+  explicit_purpose: Online Job Factory มีหน้าที่ช่วยค้นหา ประเมิน เตรียมสมัคร ผลิต ตรวจ และติดตามงานออนไลน์ขนาดเล็กที่มีโอกาสปิดงานได้จริงและคุ้มต้นทุน
+  content_length: 1532
+  truncated: true
+- path: README.md
+  category: identity
+  kind: readme
+  classification: verified
+  commit_sha: null
+  blob_sha: 35617fe6f82d3cfec9de3bfac961375ab5e53aa7
+  ref: main
+  observed_at: '2026-10-18T16:22:59Z'
+  heading: Online Job Factory
+  content_excerpt: '# Online Job Factory
+
+
+    ระบบสำหรับค้นหา คัดกรอง รับ และปิดงานออนไลน์ขนาดเล็กอย่างเป็นขั้นตอน โดยใช้ AI, automation, local tools และ human review เท่าที่จำเป็น
+
+
+    ## สถานะปัจจุบัน
+
+
+    Phase 1 = Product/UX + Workflow Contract + Offline UX Mock
+
+
+    ยังไม่เปิดรับงานจริง, auto-apply, auto-delivery, GitHub Actions runner หรือ paid AI execution
+
+
+    UX Simulation 001 (`Research -> Excel`) เดินครบวงจรแล้ว และข้อค้นพบถูกยกระดับเป็น contract
+
+
+    Simulation 002 เปลี่ยนมาใช้ **AI UX Stress Testing** หลังพบว่าการบังคับให้มี'
+  explicit_purpose: null
+  content_length: 5767
+  truncated: true

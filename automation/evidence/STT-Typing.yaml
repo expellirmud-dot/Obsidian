@@ -1,0 +1,179 @@
+# Evidence manifest -- STT-Typing
+# Produced by WO-OBSIDIAN-038 (Evidence-Backed Project Truth Ingestion).
+# Source repository is READ-ONLY; no source files were modified.
+# Every claim traces to repository + ref + commit SHA + path + classification.
+project_id: STT-Typing
+repository: https://github.com/expellirmud-dot/stt_typing.git
+tracked_ref: main
+commit_sha: null
+observed_at: '2026-10-18T16:22:19Z'
+status: ok
+error: null
+evidence:
+- path: AGENTS.md
+  category: identity
+  kind: agents
+  classification: verified
+  commit_sha: null
+  blob_sha: eadd85af4d4372a2d98dd1d7558d73bb293f7283
+  ref: main
+  observed_at: '2026-10-18T16:22:19Z'
+  heading: AGENTS.md
+  content_excerpt: '# AGENTS.md
+
+
+    ## Repository bootstrap
+
+
+    - Repository: `D:\stt_typing`.
+
+    - Repository truth is the current committed repo state, `work-order\CURRENT_WORK_ORDER.md`, the pointed active packet, and canonical policy docs.
+
+    - Start at `work-order\CURRENT_WORK_ORDER.md`; do not infer executable work from roadmap/history files.
+
+    - Documentation navigation map: `docs\DOCS_INDEX.md`. It helps locate references but is not execution authority.
+
+    - Load project skills on demand from `.agents\skills`.
+
+    - For GitHub/'
+  explicit_purpose: null
+  content_length: 5384
+  truncated: true
+- path: PROJECT_RULES.md
+  category: identity
+  kind: project-rules
+  classification: verified
+  commit_sha: null
+  blob_sha: 5bc94e9bbc2677da4841680fbe1a6fd24b017a9c
+  ref: main
+  observed_at: '2026-10-18T16:22:19Z'
+  heading: Project Rules
+  content_excerpt: '# Project Rules
+
+
+    This is the canonical detailed governance document for `D:\stt_typing`.
+
+
+    ## Repository truth and authority
+
+
+    Use the live committed repository state, `work-order\CURRENT_WORK_ORDER.md`, the pointed active packet, and canonical docs as execution truth. `.tasks\` is historical reference only.
+
+
+    Authority order:
+
+
+    1. Current Owner instruction.
+
+    2. Current active Goal/Work Order packet pointed to by `work-order\CURRENT_WORK_ORDER.md`.
+
+    3. `docs\REVIEW_ROUTING_AND_CI_POLICY.md` for review'
+  explicit_purpose: null
+  content_length: 8562
+  truncated: true
+- path: README.md
+  category: identity
+  kind: readme
+  classification: verified
+  commit_sha: null
+  blob_sha: 49b225e33b653e54484ea280ea4fea62c74dd6a1
+  ref: main
+  observed_at: '2026-10-18T16:22:19Z'
+  heading: STT Typing Helper
+  content_excerpt: '# STT Typing Helper
+
+
+    Project path: `D:\stt_typing`
+
+
+    Thai STT typing helper evolving into a production-oriented voice/text assistant with deterministic fast paths plus bounded AI planning.
+
+
+    ## Product target
+
+
+    The canonical product direction is:
+
+
+    ```text
+
+    Voice / Text
+
+    -> STT / normalized input
+
+    -> Intent
+
+    -> optional Planner
+
+    -> bounded Tool Plan
+
+    -> Policy / Validation
+
+    -> Executor
+
+    -> Result / Feedback
+
+    ```
+
+
+    Core product rules:
+
+
+    - common deterministic commands stay fast and do not require an LLM round-t'
+  explicit_purpose: null
+  content_length: 7602
+  truncated: true
+- path: pyproject.toml
+  category: manifest
+  kind: manifest
+  classification: verified
+  commit_sha: null
+  blob_sha: 7763a061f6564509c790173c57052d6073eb0d75
+  ref: main
+  observed_at: '2026-10-18T16:22:19Z'
+  heading: null
+  content_excerpt: "[project]\nname = \"stt-typing\"\nversion = \"0.1.0\"\ndescription = \"STT Typing Helper — Windows speech-to-text typing and command automation.\"\nrequires-python = \">=3.12\"\nreadme = \"README.md\"\nlicense = { text = \"Proprietary\" }\nauthors = [{ name = \"stt_typing\" }]\ndependencies = [\n    \"comtypes==1.4.16\",\n    \"PySide6==6.11.2\",\n    \"uiautomation==2.0.29\",\n    \"SpeechRecognition>=3.17.0,<4.0\",\n    \"PyAudio>=0.2.14,<0.3\",\n    \"pyautogui>=0.9.54,<1.0\",\n    \"pygetwindow>=0.0.9\",\n    \"pyperclip>=1.8.2\",\n    \""
+  explicit_purpose: null
+  content_length: 1154
+  truncated: true
+- path: work-order/CURRENT_WORK_ORDER.md
+  category: current_execution
+  kind: work-order
+  classification: verified
+  commit_sha: null
+  blob_sha: 82f7e8ec17935598e629e4fe6270c8028faf5b65
+  ref: main
+  observed_at: '2026-10-18T16:22:19Z'
+  heading: CURRENT WORK ORDER
+  content_excerpt: '# CURRENT WORK ORDER
+
+    # ACTIVE command-first accepted; no successor activated.
+
+    STATUS: NONE
+
+    ACTIVE_GOAL: NONE
+
+    GOAL_STATUS: COMPLETE
+
+    EXECUTION_MODE: GOAL_LOOP
+
+    ACTIVE_WORK_ORDER: NONE
+
+    WORK_ORDER_PATH: NONE
+
+    HISTORICAL_TIMEOUT_ROOT_CAUSE: UNKNOWN
+
+    PREDECESSOR_GOAL: GOAL-STT-ACTIVE-SAFE-DAILY-USE
+
+    PREDECESSOR_STATUS: COMPLETE
+
+    PRE_PREDECESSOR_GOAL: GOAL-STT-ORBIT-DESK-A-001
+
+    PRE_PREDECESSOR_STATUS: BLOCKED_LOCAL_CANDIDATE
+
+    LAST_COMPLETED_WORK_ORDER: GOAL-STT-ACTIVE-COMMAND-FIRST-20261011
+
+    LAST_COMPLETED_PAC'
+  explicit_purpose: null
+  content_length: 3644
+  truncated: true

@@ -1,0 +1,136 @@
+# Evidence manifest -- SR-400-Virtual-Tuning-Lab
+# Produced by WO-OBSIDIAN-038 (Evidence-Backed Project Truth Ingestion).
+# Source repository is READ-ONLY; no source files were modified.
+# Every claim traces to repository + ref + commit SHA + path + classification.
+project_id: SR-400-Virtual-Tuning-Lab
+repository: https://github.com/expellirmud-dot/SR-400-Virtual-Tuning-Lab.git
+tracked_ref: main
+commit_sha: null
+observed_at: '2026-10-18T16:22:49Z'
+status: ok
+error: null
+evidence:
+- path: AGENTS.md
+  category: identity
+  kind: agents
+  classification: verified
+  commit_sha: null
+  blob_sha: 9785a5f83556a0d9aac36d0b2c03c1ff811bc925
+  ref: main
+  observed_at: '2026-10-18T16:22:49Z'
+  heading: AGENTS.md — SR400 Virtual Tuning Lab
+  content_excerpt: '# AGENTS.md — SR400 Virtual Tuning Lab
+
+
+    Persistent memory for this repository. Loaded every session.
+
+
+    ## Operating Model — Loop Engineering (Iterative AI Development)
+
+
+    This repo is worked under a **Lead Software Engineer & Automated Refactoring Engine**
+
+    role. Every change is produced through an iterative improvement loop until it
+
+    meets the Definition of Done. No unrelated code is ever truncated.
+
+
+    ### Loop Workflow (every task)
+
+    1. **Analyze** — identify root cause of the error / requirement preci'
+  explicit_purpose: null
+  content_length: 22799
+  truncated: true
+- path: CHANGELOG.md
+  category: completed_work
+  kind: changelog
+  classification: verified
+  commit_sha: null
+  blob_sha: 6983c51d48ce7e439003d73cbef65f1ac2daff11
+  ref: main
+  observed_at: '2026-10-18T16:22:49Z'
+  heading: Changelog
+  content_excerpt: "# Changelog\n\nAll notable changes to the SR400 Virtual Tuning Lab project.\n\n## [Phase 7] — 2026-08-19 — PySide6 Migration + ECU=SHOP Integration Foundation\n\n### Added\n\n- `src/tuning_lab/qt_app/` — PySide6 production application (ONLY supported\n  UI). Qt-native `MainWindow` (nav list + stacked pages), `AppServices` hub\n  (write gate + device boundary + headless controller), QThread workers,\n  QSettings persistence, permanent safety banner. Pages: Dashboard,\n  Live Data, Tuning, Maps, Simulation, E"
+  explicit_purpose: null
+  content_length: 39608
+  truncated: true
+- path: README.md
+  category: identity
+  kind: readme
+  classification: verified
+  commit_sha: null
+  blob_sha: 8aba08a3b0150b394402c5aca3920281bb889ff7
+  ref: main
+  observed_at: '2026-10-18T16:22:49Z'
+  heading: SR400 Virtual Tuning Lab
+  content_excerpt: '# SR400 Virtual Tuning Lab
+
+
+    **Yamaha SR400 EFI / Dynojet Power Commander 6 — Simulation, Thai Localization, and Validation Toolkit**
+
+
+    ## Current Release Baseline
+
+
+    - Release candidate: `v0.1.0-rc1`
+
+    - Mainline baseline before this documentation sync: `9b7ab7e`
+
+    - Test suite: **77/77 PASS** (RC closeout); **707 passed, 3 skipped** after Phase 6 (Linux host); **773 passed, 4 skipped** after the post-Phase-6 truth-sync (Linux host); **1030 passed, 3 skipped** current regression with Phase 6.1 merged ('
+  explicit_purpose: 'SR400 Virtual Tuning Lab is a Python-based tuning research and validation project built around two related areas: 1. **EFI Fuel-Map Simulation** — models an RPM × throttle-position map, correction math, interpolation, confidence scoring, safety evaluation, and replayable virtual tuning sessions. 2. '
+  content_length: 17428
+  truncated: true
+- path: ROADMAP.md
+  category: roadmap
+  kind: roadmap
+  classification: verified
+  commit_sha: null
+  blob_sha: 3056849c2395f1c21e1eabf7837f935094dfe07a
+  ref: main
+  observed_at: '2026-10-18T16:22:49Z'
+  heading: ROADMAP — SR400 Virtual Tuning Lab
+  content_excerpt: '# ROADMAP — SR400 Virtual Tuning Lab
+
+
+    ## Phase 1 — Simulation Foundation
+
+
+    | Goal | Title | Status |
+
+    |------|-------|--------|
+
+    | 1 | Project Foundation | **Complete** |
+
+    | 2 | Map Interpolation & Advanced Correction | **Complete** |
+
+    | 3 | Virtual Session Analytics | **Complete** |
+
+    | 4 | Thai Pack Expansion | **Complete** |
+
+    | 5 | Integration & Polish | **Complete** |
+
+
+    ## Phase 2 — Real Power Core Compatibility & Release Candidate
+
+
+    | Goal | Title | Status |
+
+    |------|-------|--------|
+
+    | 6 | Power Core'
+  explicit_purpose: null
+  content_length: 13092
+  truncated: true
+- path: pyproject.toml
+  category: manifest
+  kind: manifest
+  classification: verified
+  commit_sha: null
+  blob_sha: 02cbddfaff708ad4172439dfc13160e59c3f4e67
+  ref: main
+  observed_at: '2026-10-18T16:22:49Z'
+  heading: null
+  content_excerpt: "[build-system]\nrequires = [\"setuptools>=61.0\"]\nbuild-backend = \"setuptools.build_meta\"\n\n[project]\nname = \"tuning-lab\"\nversion = \"0.1.0\"\nrequires-python = \">=3.8\"\ndependencies = [\n    \"PyYAML>=5.0\",\n    \"PySide6>=6.4\",\n]\n\n[project.scripts]\nsr400-lab = \"tuning_lab.qt_app.main:main\"\n\n[tool.setuptools.packages.find]\nwhere = [\"src\"]\n\n[tool.pytest.ini_options]\npythonpath = [\"src\"]\ntestpaths = [\"tests\"]"
+  explicit_purpose: null
+  content_length: 399
+  truncated: false

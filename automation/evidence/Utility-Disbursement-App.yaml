@@ -1,0 +1,157 @@
+# Evidence manifest -- Utility-Disbursement-App
+# Produced by WO-OBSIDIAN-038 (Evidence-Backed Project Truth Ingestion).
+# Source repository is READ-ONLY; no source files were modified.
+# Every claim traces to repository + ref + commit SHA + path + classification.
+project_id: Utility-Disbursement-App
+repository: https://github.com/expellirmud-dot/utility-disbursement-app.git
+tracked_ref: main
+commit_sha: null
+observed_at: '2026-10-18T16:22:26Z'
+status: ok
+error: null
+evidence:
+- path: AGENTS.md
+  category: identity
+  kind: agents
+  classification: verified
+  commit_sha: null
+  blob_sha: 67985794c7f933e57fb9c80441515569339460fe
+  ref: main
+  observed_at: '2026-10-18T16:22:26Z'
+  heading: AGENTS
+  content_excerpt: '# AGENTS
+
+
+    ## Required Read Order
+
+    Before implementation, read:
+
+    1. PROJECT_RULES.md
+
+    2. docs/NEW_PROJECT_BRIEF.md
+
+    3. relevant files under docs/legacy-memory
+
+    4. relevant files under docs/legacy-product-reports
+
+
+    ## Scope Discipline
+
+    This is a new standalone app.
+
+
+    Do not import or recreate the old ai_runtime governance system.
+
+
+    Use legacy docs as reference only.
+
+
+    ## Implementation Style
+
+    - Small steps
+
+    - Minimal files
+
+    - Mock-first
+
+    - Human-review-first
+
+    - No full e-LAAS automation in V1
+
+
+    ## Completion Evid'
+  explicit_purpose: null
+  content_length: 2333
+  truncated: true
+- path: PROJECT_RULES.md
+  category: identity
+  kind: project-rules
+  classification: verified
+  commit_sha: null
+  blob_sha: 9dabde7db7d834c422b68f99d236fda421f9a0d4
+  ref: main
+  observed_at: '2026-10-18T16:22:26Z'
+  heading: PROJECT_RULES
+  content_excerpt: '# PROJECT_RULES
+
+
+    ## Project Identity
+
+    This is a standalone Thai municipal utility disbursement application.
+
+
+    It is not the old governance/runtime platform.
+
+
+    ## Core Goal
+
+    Help officers prepare utility expense disbursement documents by:
+
+    - reading utility bills
+
+    - extracting bill details
+
+    - reviewing and correcting extracted data
+
+    - calculating withholding tax and net payable amount
+
+    - generating memo previews
+
+    - preparing e-LAAS entry data
+
+
+    ## Primary Workflow
+
+    Upload bill
+
+    -> Extract bill details
+
+    -> Huma'
+  explicit_purpose: null
+  content_length: 2743
+  truncated: true
+- path: README.md
+  category: identity
+  kind: readme
+  classification: verified
+  commit_sha: null
+  blob_sha: 067a230cc00872bb7a5548ad02f9865d323d0d29
+  ref: main
+  observed_at: '2026-10-18T16:22:26Z'
+  heading: Thai Municipal Utility Disbursement App
+  content_excerpt: '# Thai Municipal Utility Disbursement App
+
+
+    ## Project Goal
+
+    Help municipal officers efficiently prepare utility expense disbursement documents by automating bill data extraction, ensuring tax compliance, and preparing data for e-LAAS.
+
+
+    ## Primary Workflow
+
+    Upload bill -> Extract bill details -> Human review -> Calculate tax/net payable -> Memo preview -> e-LAAS copy helper
+
+
+    ## V1 Scope
+
+    - Next.js App Router, React, TypeScript, Tailwind CSS.
+
+    - Mock OCR and data extraction flow.
+
+    - Manual data correct'
+  explicit_purpose: null
+  content_length: 1391
+  truncated: true
+- path: package.json
+  category: manifest
+  kind: manifest
+  classification: verified
+  commit_sha: null
+  blob_sha: 8a3316114ad3cb798df98aa6ee6bf8abbe5e1675
+  ref: main
+  observed_at: '2026-10-18T16:22:26Z'
+  heading: null
+  content_excerpt: "{\n  \"name\": \"utility-disbursement-app\",\n  \"version\": \"0.1.0\",\n  \"private\": true,\n  \"scripts\": {\n    \"dev\": \"next dev\",\n    \"build\": \"next build\",\n    \"start\": \"next start\",\n    \"lint\": \"eslint\",\n    \"test:extraction\": \"tsx scripts/extraction-parser-smoke.ts\",\n    \"postinstall\": \"prisma generate\",\n    \"db:migrate\": \"prisma migrate dev\",\n    \"db:seed\": \"prisma db seed\",\n    \"db:studio\": \"prisma studio\"\n  },\n  \"prisma\": {\n    \"seed\": \"tsx prisma/seed.ts\"\n  },\n  \"dependencies\": {\n    \"@google/genera"
+  explicit_purpose: null
+  content_length: 1122
+  truncated: true

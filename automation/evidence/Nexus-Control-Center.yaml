@@ -1,0 +1,12 @@
+# Evidence manifest -- Nexus-Control-Center
+# Produced by WO-OBSIDIAN-038 (Evidence-Backed Project Truth Ingestion).
+# Source repository is READ-ONLY; no source files were modified.
+# Every claim traces to repository + ref + commit SHA + path + classification.
+project_id: Nexus-Control-Center
+repository: https://github.com/expellirmud-dot/Nexus-Control-Center.git
+tracked_ref: main
+commit_sha: null
+observed_at: '2026-10-18T16:23:06Z'
+status: tree_unavailable
+error: could not list repository contents
+evidence: []

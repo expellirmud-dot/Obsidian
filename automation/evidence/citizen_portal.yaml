@@ -1,0 +1,167 @@
+# Evidence manifest -- citizen_portal
+# Produced by WO-OBSIDIAN-038 (Evidence-Backed Project Truth Ingestion).
+# Source repository is READ-ONLY; no source files were modified.
+# Every claim traces to repository + ref + commit SHA + path + classification.
+project_id: citizen_portal
+repository: https://github.com/expellirmud-dot/citizen-portal.git
+tracked_ref: main
+commit_sha: null
+observed_at: '2026-10-18T16:22:32Z'
+status: ok
+error: null
+evidence:
+- path: AGENTS.md
+  category: identity
+  kind: agents
+  classification: verified
+  commit_sha: null
+  blob_sha: 8bd0e39085d5260e7f8faffcad2fdc45e10aef33
+  ref: main
+  observed_at: '2026-10-18T16:22:32Z'
+  heading: This is NOT the Next.js you know
+  content_excerpt: '<!-- BEGIN:nextjs-agent-rules -->
+
+    # This is NOT the Next.js you know
+
+
+    This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing any code. Heed deprecation notices.
+
+    <!-- END:nextjs-agent-rules -->'
+  explicit_purpose: null
+  content_length: 325
+  truncated: false
+- path: PROJECT_RULES.md
+  category: identity
+  kind: project-rules
+  classification: verified
+  commit_sha: null
+  blob_sha: 770b630673bc5cd789792f1b5116f9f1e1f92b71
+  ref: main
+  observed_at: '2026-10-18T16:22:32Z'
+  heading: citizen-portal project rules
+  content_excerpt: '# citizen-portal project rules
+
+
+    ## Goal
+
+    สร้างระบบบริหารจัดการคำร้องออนไลน์สำหรับเทศบาลตำบลด่านทับตะโก
+
+
+    ## MVP scope
+
+    Citizen:
+
+    - submit request
+
+    - attach image
+
+    - track status
+
+
+    Staff:
+
+    - login
+
+    - view queue
+
+    - update status
+
+    - add resolution note
+
+
+    Admin:
+
+    - dashboard basic stats
+
+
+    ## Explicit non-goals
+
+    NOT in MVP:
+
+    - AI image classification
+
+    - chatbot
+
+    - mobile app
+
+    - microservices
+
+    - realtime socket
+
+    - predictive analytics
+
+
+    ## Architecture constraints
+
+    - Next.js App Router
+
+    - TypeScript
+
+    - Tailwind
+
+    - shadcn/ui
+
+    -'
+  explicit_purpose: null
+  content_length: 704
+  truncated: true
+- path: README.md
+  category: identity
+  kind: readme
+  classification: verified
+  commit_sha: null
+  blob_sha: e215bc4ccf138bbc38ad58ad57e92135484b3c0f
+  ref: main
+  observed_at: '2026-10-18T16:22:32Z'
+  heading: Getting Started
+  content_excerpt: 'This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+
+
+    ## Getting Started
+
+
+    First, run the development server:
+
+
+    ```bash
+
+    npm run dev
+
+    # or
+
+    yarn dev
+
+    # or
+
+    pnpm dev
+
+    # or
+
+    bun dev
+
+    ```
+
+
+    Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+
+    You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+
+
+    This project uses [`next/font`]('
+  explicit_purpose: null
+  content_length: 1450
+  truncated: true
+- path: package.json
+  category: manifest
+  kind: manifest
+  classification: verified
+  commit_sha: null
+  blob_sha: a21ed5e8266849be4a505fc46cf9394d5df4c92a
+  ref: main
+  observed_at: '2026-10-18T16:22:32Z'
+  heading: null
+  content_excerpt: "{\n  \"name\": \"citizen-app\",\n  \"version\": \"0.1.0\",\n  \"private\": true,\n  \"scripts\": {\n    \"dev\": \"next dev\",\n    \"build\": \"prisma generate && next build\",\n    \"start\": \"next start\",\n    \"lint\": \"eslint\",\n    \"test:smoke\": \"tsx scripts/smoke-test.ts\"\n  },\n  \"dependencies\": {\n    \"@hookform/resolvers\": \"^5.4.0\",\n    \"@prisma/adapter-better-sqlite3\": \"^7.8.0\",\n    \"@prisma/adapter-pg\": \"^7.8.0\",\n    \"@prisma/client\": \"^7.8.0\",\n    \"@supabase/supabase-js\": \"^2.108.2\",\n    \"@types/pg\": \"^8.20.0\",\n    \"b"
+  explicit_purpose: null
+  content_length: 1252
+  truncated: true

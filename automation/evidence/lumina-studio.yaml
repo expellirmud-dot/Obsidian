@@ -1,0 +1,193 @@
+# Evidence manifest -- lumina-studio
+# Produced by WO-OBSIDIAN-038 (Evidence-Backed Project Truth Ingestion).
+# Source repository is READ-ONLY; no source files were modified.
+# Every claim traces to repository + ref + commit SHA + path + classification.
+project_id: lumina-studio
+repository: https://github.com/expellirmud-dot/LUMINA-Studio.git
+tracked_ref: main
+commit_sha: null
+observed_at: '2026-10-18T16:22:11Z'
+status: ok
+error: null
+evidence:
+- path: AGENTS.md
+  category: identity
+  kind: agents
+  classification: verified
+  commit_sha: null
+  blob_sha: 891b4d01d16105995be707772343af2ce2a10891
+  ref: main
+  observed_at: '2026-10-18T16:22:11Z'
+  heading: LUMINA Studio Agent Instructions
+  content_excerpt: '# LUMINA Studio Agent Instructions
+
+
+    Before any work, read:
+
+
+    - PROJECT_RULES.md
+
+    - LUMINA_CONFIG_SYSTEM.md
+
+    - AI_HANDOFF.md
+
+    - reports/implementation_report.md
+
+    - reports/visual_audit.md
+
+    - .agents/skills/LUMINA_STARTUP/SKILL.md
+
+    - .mcp/serena.md
+
+    - .mcp/codegraph.md
+
+
+    Rules & Governance Architecture:
+
+
+    - `docs/CONTEXT_INDEX.md` is the context map.
+
+    - `docs/CLI_WORKER_ROUTING_REFERENCE.md` preserves the Owner-approved local Hermes/OpenCode CLI routing reference and cross-project STT source pointers; live p'
+  explicit_purpose: null
+  content_length: 5022
+  truncated: true
+- path: PROJECT_RULES.md
+  category: identity
+  kind: project-rules
+  classification: verified
+  commit_sha: null
+  blob_sha: f5daa1c94f1055bc2834cab37dc91a6d3f979173
+  ref: main
+  observed_at: '2026-10-18T16:22:11Z'
+  heading: PROJECT RULES
+  content_excerpt: '# PROJECT RULES
+
+
+    ## Active Skill
+
+
+    Activation phrase:
+
+
+    Activate LUMINA_BOOTSTRAP
+
+
+    ## Current Phase
+
+
+    Phase 1 — Premium Photography Landing Page
+
+
+    ## Scope
+
+
+    Allowed:
+
+    - Single landing page
+
+    - Hero section
+
+    - Scroll storytelling
+
+    - Mini gallery
+
+    - Services section
+
+    - About section
+
+    - Contact CTA
+
+    - Footer
+
+    - SEO metadata
+
+    - Responsive layout
+
+    - Performance optimization
+
+
+    Not allowed in Phase 1:
+
+    - Backend
+
+    - Database
+
+    - Authentication
+
+    - Booking system
+
+    - CMS
+
+    - Admin dashboard
+
+    - Payment
+
+    - Client gallery system
+
+    - Comp'
+  explicit_purpose: null
+  content_length: 1665
+  truncated: true
+- path: README.md
+  category: identity
+  kind: readme
+  classification: verified
+  commit_sha: null
+  blob_sha: 1da99b15ee8dbcfc481951541f3b731157268040
+  ref: main
+  observed_at: '2026-10-18T16:22:11Z'
+  heading: LUMINA Studio
+  content_excerpt: '# LUMINA Studio
+
+
+    Premium photography landing page project.
+
+
+    ## Vision
+
+
+    LUMINA Studio is a premium photography and creative portfolio project.
+
+
+    The project starts as a deploy-test landing page and may evolve into:
+
+
+    - Photography portfolio
+
+    - Graphic design portfolio
+
+    - Creative studio website
+
+    - Personal brand platform
+
+
+    ## Current Goal
+
+
+    - Single-page landing page
+
+    - Deploy test
+
+    - Future foundation for photography / graphic design business website
+
+
+    ## Current Phase
+
+
+    Phase 1 — Landing Page only'
+  explicit_purpose: null
+  content_length: 493
+  truncated: false
+- path: package.json
+  category: manifest
+  kind: manifest
+  classification: verified
+  commit_sha: null
+  blob_sha: 11dc66fef49324a39cfc6e882242e48fbaaa147e
+  ref: main
+  observed_at: '2026-10-18T16:22:11Z'
+  heading: null
+  content_excerpt: "{\n  \"name\": \"lumina-studio\",\n  \"version\": \"0.1.0\",\n  \"private\": true,\n  \"scripts\": {\n    \"dev\": \"next dev\",\n    \"build\": \"next build\",\n    \"start\": \"next start\",\n    \"lint\": \"eslint app src scripts\",\n    \"capture:review\": \"node scripts/capture_review.js --target production --type full --viewport all\",\n    \"capture:hero\": \"node scripts/capture_review.js --target production --type hero --viewport all\",\n    \"capture:sections\": \"node scripts/capture_review.js --target production --type sections --vi"
+  explicit_purpose: null
+  content_length: 1182
+  truncated: true

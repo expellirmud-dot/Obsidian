@@ -1,0 +1,34 @@
+# Evidence manifest -- ai-pr-review-sandbox
+# Produced by WO-OBSIDIAN-038 (Evidence-Backed Project Truth Ingestion).
+# Source repository is READ-ONLY; no source files were modified.
+# Every claim traces to repository + ref + commit SHA + path + classification.
+project_id: ai-pr-review-sandbox
+repository: https://github.com/expellirmud-dot/ai-pr-review-sandbox.git
+tracked_ref: main
+commit_sha: null
+observed_at: '2026-10-18T16:22:46Z'
+status: ok
+error: null
+evidence:
+- path: README.md
+  category: identity
+  kind: readme
+  classification: verified
+  commit_sha: null
+  blob_sha: c4453b8feaa366be63f947d953f13e1c4e036d4e
+  ref: main
+  observed_at: '2026-10-18T16:22:46Z'
+  heading: ai-pr-review-sandbox
+  content_excerpt: '# ai-pr-review-sandbox
+
+
+    Tiny disposable canary repo for Phase 2A.5 read-only PR proof.
+
+
+    Canary PR for Phase 2A.5 proof.
+
+
+    CANARY_STATE=FIXED'
+  explicit_purpose: null
+  content_length: 140
+  truncated: false

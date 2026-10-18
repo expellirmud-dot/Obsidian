@@ -1,0 +1,91 @@
+# Evidence manifest -- utility_automation_v2
+# Produced by WO-OBSIDIAN-038 (Evidence-Backed Project Truth Ingestion).
+# Source repository is READ-ONLY; no source files were modified.
+# Every claim traces to repository + ref + commit SHA + path + classification.
+project_id: utility_automation_v2
+repository: https://github.com/expellirmud-dot/utility_automation_v2.git
+tracked_ref: main
+commit_sha: null
+observed_at: '2026-10-18T16:22:54Z'
+status: ok
+error: null
+evidence:
+- path: PROJECT_RULES.md
+  category: identity
+  kind: project-rules
+  classification: verified
+  commit_sha: null
+  blob_sha: f75cee65b71308db59a341291d57af74881100da
+  ref: main
+  observed_at: '2026-10-18T16:22:54Z'
+  heading: Utility Automation V2 — AI Work Rules
+  content_excerpt: '# Utility Automation V2 — AI Work Rules
+
+
+    ## Current Platform State
+
+
+    This repository is a deterministic governance operating platform.
+
+
+    Completed baselines:
+
+    - TASK 036: Certified deterministic distributed mesh
+
+    - TASK 037: Policy graph, rollback, persistence, time-travel audit
+
+    - TASK 038-S1: Advisory governance simulation
+
+    - TASK 038-S2: Simulation scenario engine
+
+    - TASK 039-S1/S2/S3/S4/S5: Deterministic recovery governance visibility plane
+
+
+    ## Non-Negotiable Architecture Rules
+
+
+    1. Ledger is the on'
+  explicit_purpose: null
+  content_length: 2117
+  truncated: true
+- path: README.md
+  category: identity
+  kind: readme
+  classification: verified
+  commit_sha: null
+  blob_sha: 69707807a2b8f3dc5abd86d6c86e6034fe053d1c
+  ref: main
+  observed_at: '2026-10-18T16:22:54Z'
+  heading: Utility Automation V2
+  content_excerpt: '# Utility Automation V2
+
+
+    ## TASK 036 Status
+
+
+    TASK 036 -- Deterministic Distributed Mesh is functionally complete and locally certified.
+
+
+    Use "locally certified" until the evidence pack also includes:
+
+
+    - git diff
+
+    - CI pipeline result
+
+    - production deployment runbook
+
+    - external environment validation
+
+
+    ## TASK 036 Certification Commands
+
+
+    ```powershell
+
+    python -m pytest tests\validation\test_ledger_integrity.py tests\integration\test_replay_determinism.py -q
+
+    python -m src.tests.certification.determini'
+  explicit_purpose: null
+  content_length: 520
+  truncated: true

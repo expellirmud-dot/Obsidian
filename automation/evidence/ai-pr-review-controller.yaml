@@ -1,0 +1,195 @@
+# Evidence manifest -- ai-pr-review-controller
+# Produced by WO-OBSIDIAN-038 (Evidence-Backed Project Truth Ingestion).
+# Source repository is READ-ONLY; no source files were modified.
+# Every claim traces to repository + ref + commit SHA + path + classification.
+project_id: ai-pr-review-controller
+repository: https://github.com/expellirmud-dot/ai-pr-review-controller.git
+tracked_ref: main
+commit_sha: null
+observed_at: '2026-10-18T16:22:42Z'
+status: ok
+error: null
+evidence:
+- path: AGENTS.md
+  category: identity
+  kind: agents
+  classification: verified
+  commit_sha: null
+  blob_sha: 3866a7136e2a22154d29dca023949b9824b894bc
+  ref: main
+  observed_at: '2026-10-18T16:22:42Z'
+  heading: AGENTS.md — AI PR REVIEW CONTROLLER OPERATING CONTRACT
+  content_excerpt: '# AGENTS.md — AI PR REVIEW CONTROLLER OPERATING CONTRACT
+
+
+    This repository is a multi-agent control plane. Agents, sessions, models, and execution surfaces may change. The repository must remain self-navigating and fail closed.
+
+
+    ## Project identity and runtime hints
+
+
+    Canonical repository:
+
+    `expellirmud-dot/ai-pr-review-controller`
+
+
+    Repository URL:
+
+    `https://github.com/expellirmud-dot/ai-pr-review-controller`
+
+
+    Canonical project skills:
+
+    `.agents/skills/`
+
+
+    Expected development capabilities:
+
+    - Serena M'
+  explicit_purpose: null
+  content_length: 4975
+  truncated: true
+- path: CURRENT_WORK_ORDER.md
+  category: current_execution
+  kind: work-order
+  classification: verified
+  commit_sha: null
+  blob_sha: 128c6d6d678f456519c9484c22c2a6e11bf8da97
+  ref: main
+  observed_at: '2026-10-18T16:22:42Z'
+  heading: 'CURRENT WORK ORDER — PR #8 / Goal 3 & Goal 4'
+  content_excerpt: '# CURRENT WORK ORDER — PR #8 / Goal 3 & Goal 4
+
+
+    > **STATUS — HISTORICAL / SUPERSEDED.**
+
+    > This Work Order is CLOSED and is retained for historical context only. The
+
+    > current work plan is `docs/CODE_REVIEW_ROADMAP.md` (the 10-goal roadmap for
+
+    > the `code_review` era). Do not treat the scope, mode, or "next authorized
+
+    > work" below as current.
+
+    >
+
+    > **Stale claims to disregard as current:**
+
+    > - This Work Order was written when the controller validation mode was
+
+    >   `execution_surface`. The mode is'
+  explicit_purpose: null
+  content_length: 5144
+  truncated: true
+- path: INDEX.md
+  category: completed_work
+  kind: index
+  classification: verified
+  commit_sha: null
+  blob_sha: 987e9e84910e7d8f21076162aa420c04ea1b04da
+  ref: main
+  observed_at: '2026-10-18T16:22:42Z'
+  heading: AI PR REVIEW CONTROLLER — NAVIGATION INDEX
+  content_excerpt: '# AI PR REVIEW CONTROLLER — NAVIGATION INDEX
+
+
+    ## Current system direction
+
+
+    ```text
+
+    Code Review Surface (OpenHands Cloud or Local Controller)
+
+    → Surface Validation (code review PASS bound to exact HEAD)
+
+    → Commit / Push Feature Branch
+
+    → Open / Update Pull Request
+
+    → GitHub PR Event
+
+    → Controller re-fetches GitHub truth
+
+    → Exact-HEAD AI Review
+
+    → FAIL: Remediation → New HEAD → Re-review
+
+    → PASS: Controller Final Verification
+
+    → Merge
+
+    → Closeout
+
+    → Project Knowledge Capture
+
+    → Next Authorized Work
+
+    ```
+
+
+    ## Re'
+  explicit_purpose: null
+  content_length: 1392
+  truncated: true
+- path: README.md
+  category: identity
+  kind: readme
+  classification: verified
+  commit_sha: null
+  blob_sha: 1b814eae965e9604a3922fb0a10b1a70a8595e2c
+  ref: main
+  observed_at: '2026-10-18T16:22:42Z'
+  heading: AI PR Review Controller
+  content_excerpt: "# AI PR Review Controller\n\nCentral review/decision engine that gates Pull Requests before merge and\nverifies them after merge — without duplicating the engine across every project.\n\n## Status\n\n- **Bootstrap**: done (gate engine + models + tests).\n- **System loop**: implemented and merged on `main` — dispatch → re-review →\n  guarded merge → post-merge verification → closeout, all event-driven.\n- **Validation mode**: `code_review` (default and canonical). A code review\n  PASS bound to the exact PR"
+  explicit_purpose: null
+  content_length: 2834
+  truncated: true
+- path: pyproject.toml
+  category: manifest
+  kind: manifest
+  classification: verified
+  commit_sha: null
+  blob_sha: 8d494cb537905d4c3016dc5741abb74420799c18
+  ref: main
+  observed_at: '2026-10-18T16:22:42Z'
+  heading: null
+  content_excerpt: '[build-system]
+
+    requires = ["setuptools>=68"]
+
+    build-backend = "setuptools.build_meta"
+
+
+    [project]
+
+    name = "ai-pr-review-controller"
+
+    version = "0.1.0"
+
+    description = "Central AI PR review/decision controller (bootstrap, no real API)."
+
+    readme = "README.md"
+
+    requires-python = ">=3.10"
+
+    dependencies = ["pyyaml>=6", "requests>=2.28"]
+
+
+    [project.optional-dependencies]
+
+    test = ["pytest>=7"]
+
+
+    [tool.setuptools.packages.find]
+
+    where = ["src"]
+
+
+    [tool.pytest.ini_options]
+
+    testpaths = ["tests"]
+
+    pythonpath = ["src"]'
+  explicit_purpose: null
+  content_length: 498
+  truncated: false

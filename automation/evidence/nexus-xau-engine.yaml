@@ -1,0 +1,81 @@
+# Evidence manifest -- nexus-xau-engine
+# Produced by WO-OBSIDIAN-038 (Evidence-Backed Project Truth Ingestion).
+# Source repository is READ-ONLY; no source files were modified.
+# Every claim traces to repository + ref + commit SHA + path + classification.
+project_id: nexus-xau-engine
+repository: https://github.com/expellirmud-dot/nexus-xau-engine.git
+tracked_ref: main
+commit_sha: null
+observed_at: '2026-10-18T16:23:01Z'
+status: ok
+error: null
+evidence:
+- path: AGENTS.md
+  category: identity
+  kind: agents
+  classification: verified
+  commit_sha: null
+  blob_sha: 5a0e3545f56095272f28df6e553a43b1ae8796d5
+  ref: main
+  observed_at: '2026-10-18T16:23:01Z'
+  heading: NEXUS XAU Engine — Agent Operating Instructions
+  content_excerpt: '# NEXUS XAU Engine — Agent Operating Instructions
+
+
+    Scope: this file applies to the entire repository.
+
+
+    This repository is a durable evidence-first research record. Agents must preserve research history, provenance, unresolved questions, and checkpoint continuity. Do not treat each session as a fresh start.
+
+
+    ## 1. Session bootstrap: compact first, deep only when needed
+
+
+    ### Tier 0 — reconnect / resume / status
+
+
+    On every reconnect, new chat, refresh, or Bridge recovery, **do not bulk-load project'
+  explicit_purpose: null
+  content_length: 15055
+  truncated: true
+- path: README.md
+  category: identity
+  kind: readme
+  classification: verified
+  commit_sha: null
+  blob_sha: b13ab7220c4f7a208e49d3a8fcab865dc8a8bae3
+  ref: main
+  observed_at: '2026-10-18T16:23:01Z'
+  heading: NEXUS XAU Engine
+  content_excerpt: '# NEXUS XAU Engine
+
+
+    ## AI / agent entry point
+
+
+    A zero-context agent must start with `AGENTS.md` and `PROJECT_BOOTSTRAP.md`, then run `.venv\Scripts\python.exe scripts\research_preflight.py` before new substantive work. Current knowledge lives in the canonical claim register; reviewed source windows live in `docs/SOURCE_COVERAGE_LEDGER.json`.
+
+
+    Research-first reverse engineering of the Mae Pla Green Pen trading framework for XAUUSD on MetaTrader 5 / Exness.
+
+
+    ## Purpose
+
+
+    This repository is the dura'
+  explicit_purpose: 'This repository is the durable project record for the current research. The immediate goal is **not** live auto-trading. The goal is to convert the teaching into reproducible, testable rules for: 1. historical-data research, 2. rule detection, 3. replay testing, 4. backtesting, 5. only later, execut'
+  content_length: 2802
+  truncated: true
+- path: pyproject.toml
+  category: manifest
+  kind: manifest
+  classification: verified
+  commit_sha: null
+  blob_sha: af95ac354c589af462843d63b0a30d08495cd8b3
+  ref: main
+  observed_at: '2026-10-18T16:23:01Z'
+  heading: null
+  content_excerpt: "[build-system]\nrequires = [\"setuptools>=75\", \"wheel\"]\nbuild-backend = \"setuptools.build_meta\"\n\n[project]\nname = \"nexus-xau-engine\"\nversion = \"0.1.0\"\ndescription = \"Evidence-first XAUUSD replay and research engine\"\nrequires-python = \">=3.12\"\ndependencies = [\n  \"pandas>=2.2,<3.0\",\n]\n\n[project.optional-dependencies]\ndev = [\n  \"pytest>=8.3,<9.0\",\n  \"ruff>=0.9,<1.0\",\n]\nmt5 = [\n  \"MetaTrader5>=5.0\",\n]\n\n[project.scripts]\nnexus-xau = \"nexus_xau.cli:main\"\n\n[tool.setuptools.packages.find]\nwhere = [\"src\"]"
+  explicit_purpose: null
+  content_length: 619
+  truncated: true

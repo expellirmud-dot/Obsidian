@@ -1,0 +1,12 @@
+# Evidence manifest -- Adobe-Stock-Upload-Assistant
+# Produced by WO-OBSIDIAN-038 (Evidence-Backed Project Truth Ingestion).
+# Source repository is READ-ONLY; no source files were modified.
+# Every claim traces to repository + ref + commit SHA + path + classification.
+project_id: Adobe-Stock-Upload-Assistant
+repository: ''
+tracked_ref: null
+commit_sha: null
+observed_at: '2026-10-18T16:22:28Z'
+status: no_remote
+error: no remote repository configured
+evidence: []

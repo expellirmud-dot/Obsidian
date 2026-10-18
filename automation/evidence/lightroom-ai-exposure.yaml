@@ -1,0 +1,120 @@
+# Evidence manifest -- lightroom-ai-exposure
+# Produced by WO-OBSIDIAN-038 (Evidence-Backed Project Truth Ingestion).
+# Source repository is READ-ONLY; no source files were modified.
+# Every claim traces to repository + ref + commit SHA + path + classification.
+project_id: lightroom-ai-exposure
+repository: https://github.com/expellirmud-dot/Lightroom-AI-Workflow-.git
+tracked_ref: main
+commit_sha: null
+observed_at: '2026-10-18T16:22:28Z'
+status: ok
+error: null
+evidence:
+- path: AGENTS.md
+  category: identity
+  kind: agents
+  classification: verified
+  commit_sha: null
+  blob_sha: 65447ea0240674bc0d17feb1b6433d10abc90abc
+  ref: main
+  observed_at: '2026-10-18T16:22:28Z'
+  heading: AGENTS.md
+  content_excerpt: '# AGENTS.md
+
+
+    ## Project Mission
+
+
+    Build a Windows-first Lightroom Classic exposure assistant whose canonical MVP
+
+    workflow is:
+
+
+    ```text
+
+    diagnose one Lightroom source-folder scope
+
+    → Prepare AI Package
+
+    → capture an immutable Lightroom-rendered preview pass
+
+    → external vision AI returns provider-neutral exposure decisions
+
+    → deterministic Python validates identity, lineage, bounds and convergence
+
+    → Import / Apply AI Results
+
+    → Lightroom applies only guarded absolute Exposure2012 targets
+
+    → verify the com'
+  explicit_purpose: null
+  content_length: 13527
+  truncated: true
+- path: README.md
+  category: identity
+  kind: readme
+  classification: verified
+  commit_sha: null
+  blob_sha: ceec733bf5870f441477db14d791ff53c90ec40a
+  ref: main
+  observed_at: '2026-10-18T16:22:28Z'
+  heading: Lightroom AI Exposure Assist
+  content_excerpt: '# Lightroom AI Exposure Assist
+
+
+    A Windows-first Lightroom Classic exposure assistant. Lightroom remains the
+
+    authoritative renderer and Catalog-visible Develop state. The canonical
+
+    iterative workflow is provider-agnostic and separates Lightroom capture/apply
+
+    from external AI execution.
+
+
+    ## Current status
+
+
+    The technical Exposure-only MVP is closed. The project is in **post-MVP product improvement**.
+
+
+    Completed post-MVP evidence upgrades include:
+
+
+    - WO-040: Lightroom preview orientation correctness'
+  explicit_purpose: null
+  content_length: 6093
+  truncated: true
+- path: Work-Order/CURRENT_WORK_ORDER.md
+  category: current_execution
+  kind: work-order
+  classification: verified
+  commit_sha: null
+  blob_sha: 378380bea0a226cc4bb9faa347001642e076a444
+  ref: main
+  observed_at: '2026-10-18T16:22:28Z'
+  heading: null
+  content_excerpt: 'STATUS: AWAITING_OWNER_VALIDATION
+
+    ACTIVE_WORK_ORDER: Work-Order/WO-041-SCENE-COMPLETE-EXPOSURE-ITERATION.md
+
+    LATEST_COMPLETED_WORK_ORDER: Work-Order/WO-043-DEVELOPMENT-HISTORY-AND-DOC-ARCHIVE.md
+
+    BLOCK_REASON: OWNER_LIGHTROOM_LIVE_VALIDATION_REQUIRED
+
+    NOTE: WO-041 diagnostic remediation is integrated: canonical readiness now uses existing Standard Preview tiers >=1440 and legacy RootPixels/XMP/metadata-sync no longer falsely block. Read-only recheck of the captured 393-image request found 359 ready'
+  explicit_purpose: null
+  content_length: 702
+  truncated: true
+- path: pyproject.toml
+  category: manifest
+  kind: manifest
+  classification: verified
+  commit_sha: null
+  blob_sha: 1c8ae125520d268f29d47e4c522d3b5517477021
+  ref: main
+  observed_at: '2026-10-18T16:22:28Z'
+  heading: null
+  content_excerpt: "[build-system]\nrequires = [\"setuptools>=68.0\"]\nbuild-backend = \"setuptools.build_meta\"\n\n[project]\nname = \"lr-ai-exposure\"\nversion = \"0.1.0\"\ndescription = \"Lightroom Classic exposure assistant — MVP scaffold\"\nrequires-python = \">=3.11\"\ndependencies = [\n    \"google-genai>=2.14.0\",\n    \"pillow>=12.3.0\",\n    \"pydantic>=2.13.4\",\n]\n\n[project.optional-dependencies]\ndev = [\"pytest>=7.0\"]\nall-extras = [\"pytest>=7.0\"]\n\n[project.scripts]\nlr-ai-exposure = \"lr_ai_exposure.main:main\"\n\n[tool.pytest.ini_options"
+  explicit_purpose: null
+  content_length: 579
+  truncated: true
