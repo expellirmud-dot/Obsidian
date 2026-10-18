@@ -664,3 +664,52 @@ def test_no_token_run_does_not_destroy_existing_manifest(monkeypatch, tmp_path):
     # A project with no prior manifest still records the fail-safe status.
     ev.write_manifest({"project_id": "beta", "status": "no_token", "evidence": []})
     assert ev.load_manifest("beta")["status"] == "no_token"
+
+
+def test_project_mission_heading_is_recognised_as_mission(monkeypatch, tmp_path):
+    """A qualified `## Project Mission` heading carries the same explicit
+    statement intent as `## Mission`, so it must verify the Mission (F1)."""
+    _seed_state(tmp_path, monkeypatch, knowledge_state="needs-verification")
+    _patch_gh(monkeypatch, _identity_only_responses(
+        "# Lightroom AI Exposure Assist\n\n"
+        "## Project Mission\n\n"
+        "Build a Windows-first Lightroom Classic exposure assistant.\n"
+    ))
+
+    manifest = ev.collect_evidence_for_project(
+        {"project_id": "alpha", "repository": "https://github.com/owner/alpha.git"},
+        token="fake",
+    )
+
+    assert ev.build_identity_from_evidence(manifest)["purpose"] == (
+        "Build a Windows-first Lightroom Classic exposure assistant."
+    )
+    res = ev.apply_truth_to_state("alpha", manifest, dry_run=False)
+    assert res["applied"] is True
+    assert res["has_identity_evidence"] is True
+
+
+def test_project_identity_section_is_not_a_mission(monkeypatch, tmp_path):
+    """A `## Project identity` section documents how the project is identified,
+    not what it is for, so it must NOT verify the Mission (F1).
+
+    Regression: this heading was briefly accepted and produced a false
+    mission for a repository whose section describes repo path resolution.
+    """
+    _seed_state(tmp_path, monkeypatch, knowledge_state="needs-verification")
+    _patch_gh(monkeypatch, _identity_only_responses(
+        "# AI PR Review Controller\n\n"
+        "## Project identity\n\n"
+        "Project identity is GitHub `owner/repo`, never the directory basename.\n"
+    ))
+
+    manifest = ev.collect_evidence_for_project(
+        {"project_id": "alpha", "repository": "https://github.com/owner/alpha.git"},
+        token="fake",
+    )
+
+    assert ev.build_identity_from_evidence(manifest)["purpose"] is None
+    res = ev.apply_truth_to_state("alpha", manifest, dry_run=False)
+    assert res["has_identity_evidence"] is False
+    state = yaml.safe_load((tmp_path / "state" / "alpha.yaml").read_text(encoding="utf-8"))
+    assert state["knowledge_state"] == "needs-verification"

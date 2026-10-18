@@ -407,6 +407,20 @@ _PURPOSE_HEADINGS = {
     "เป้าหมายหลักของโปรเจกต์",
     "overview",
     "about",
+    # Same explicit-statement intent as the labels above; these qualified
+    # forms were missing, so a real `## Project Mission` / `## Goal` /
+    # `## Vision` section was not recognised and the project stayed
+    # needs-verification despite carrying an explicit mission.
+    #
+    # Deliberately NOT included: "project identity". That section usually
+    # documents how the project is *identified* (repo path resolution), not
+    # what it is *for* -- matching it produced a false mission.
+    "project mission",
+    "project goal",
+    "goal",
+    "vision",
+    "เป้าหมาย",
+    "วิสัยทัศน์",
 }
 
 # Explicit purpose phrases that, appearing in a leading paragraph, indicate the
