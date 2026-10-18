@@ -83,13 +83,13 @@ GitHub discovery ล่าสุด (2026-08-19, `automation/discovery.py`): พ
 
 ## Recently Reviewed
 
-| Project | Last Reviewed |
-| ------- | ------------- |
-| [[llm-agents]] | 2026-07-28 (WO-OBSIDIAN-004: Repository truth verified, HEAD 099e516) |
-| [[STT Typing]] | 2026-07-28 (WO-OBSIDIAN-005: Repository truth verified, HEAD af10254; status: active/superseded-pending-roadmap) |
-| [[AI Worker Harness]] | 2026-07-28 (WO-OBSIDIAN-006: Repository truth verified, HEAD 7096991; status: verified, Goal-09 R07 ACTIVE) |
-| [[Utility Disbursement App]] | 2026-07-29 (WO-OBSIDIAN-008: Repository truth verified, HEAD 429cb91; status: paused/owner-confirmed) |
-| [[Adobe Stock Upload Assistant]] | 2026-07-28 (WO-OBSIDIAN-007: Repository truth verified, HEAD 0e5f9fc; status: verified, no active task) |
+| Project                          | Last Reviewed                                                                                                    |
+| -------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| [[llm-agents]]                   | 2026-07-28 (WO-OBSIDIAN-004: Repository truth verified, HEAD 099e516)                                            |
+| [[STT Typing]]                   | 2026-07-28 (WO-OBSIDIAN-005: Repository truth verified, HEAD af10254; status: active/superseded-pending-roadmap) |
+| [[AI Worker Harness]]            | 2026-07-28 (WO-OBSIDIAN-006: Repository truth verified, HEAD 7096991; status: verified, Goal-09 R07 ACTIVE)      |
+| [[Utility Disbursement App]]     | 2026-07-29 (WO-OBSIDIAN-008: Repository truth verified, HEAD 429cb91; status: paused/owner-confirmed)            |
+| [[Adobe Stock Upload Assistant]] | 2026-07-28 (WO-OBSIDIAN-007: Repository truth verified, HEAD 0e5f9fc; status: verified, no active task)          |
 
 ## Completed Projects
 

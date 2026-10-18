@@ -1,13 +1,10 @@
 # AGENTS.md
 
 ## Purpose
-
 Obsidian Vault นี้เป็นคลังความรู้กลางของโปรเจกต์ ใช้เก็บภาพรวม บริบท การตัดสินใจ บทเรียน และข้อมูลสำหรับกลับมาทำงานต่อ
-
 Vault ไม่ใช่แหล่งความจริงแทน Git repository หรือ Current Work Order
 
 ## Authority Order
-
 เมื่อข้อมูลขัดแย้งกัน ให้ยึดตามลำดับ:
 
 1. Git repository และไฟล์จริงของโปรเจกต์
@@ -18,7 +15,6 @@ Vault ไม่ใช่แหล่งความจริงแทน Git rep
 6. Conversation และความจำของ AI
 
 ## Mandatory Read First
-
 ก่อนแก้ไขข้อมูลโปรเจกต์ใด ให้ AI อ่าน:
 
 1. `AGENTS.md`
