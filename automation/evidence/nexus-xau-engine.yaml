@@ -6,7 +6,7 @@ project_id: nexus-xau-engine
 repository: https://github.com/expellirmud-dot/nexus-xau-engine.git
 tracked_ref: main
 commit_sha: null
-observed_at: '2026-10-18T17:09:33Z'
+observed_at: '2026-10-18T17:47:04Z'
 status: ok
 error: null
 evidence:
@@ -17,7 +17,7 @@ evidence:
   commit_sha: null
   blob_sha: 5a0e3545f56095272f28df6e553a43b1ae8796d5
   ref: main
-  observed_at: '2026-10-18T17:09:33Z'
+  observed_at: '2026-10-18T17:47:04Z'
   heading: NEXUS XAU Engine — Agent Operating Instructions
   content_excerpt: '# NEXUS XAU Engine — Agent Operating Instructions
 
@@ -45,7 +45,7 @@ evidence:
   commit_sha: null
   blob_sha: b13ab7220c4f7a208e49d3a8fcab865dc8a8bae3
   ref: main
-  observed_at: '2026-10-18T17:09:33Z'
+  observed_at: '2026-10-18T17:47:04Z'
   heading: NEXUS XAU Engine
   content_excerpt: '# NEXUS XAU Engine
 
@@ -73,7 +73,7 @@ evidence:
   commit_sha: null
   blob_sha: af95ac354c589af462843d63b0a30d08495cd8b3
   ref: main
-  observed_at: '2026-10-18T17:09:33Z'
+  observed_at: '2026-10-18T17:47:04Z'
   heading: null
   content_excerpt: "[build-system]\nrequires = [\"setuptools>=75\", \"wheel\"]\nbuild-backend = \"setuptools.build_meta\"\n\n[project]\nname = \"nexus-xau-engine\"\nversion = \"0.1.0\"\ndescription = \"Evidence-first XAUUSD replay and research engine\"\nrequires-python = \">=3.12\"\ndependencies = [\n  \"pandas>=2.2,<3.0\",\n]\n\n[project.optional-dependencies]\ndev = [\n  \"pytest>=8.3,<9.0\",\n  \"ruff>=0.9,<1.0\",\n]\nmt5 = [\n  \"MetaTrader5>=5.0\",\n]\n\n[project.scripts]\nnexus-xau = \"nexus_xau.cli:main\"\n\n[tool.setuptools.packages.find]\nwhere = [\"src\"]"
   explicit_purpose: null

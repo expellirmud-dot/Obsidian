@@ -6,7 +6,7 @@ project_id: lightroom-ai-exposure
 repository: https://github.com/expellirmud-dot/Lightroom-AI-Workflow-.git
 tracked_ref: main
 commit_sha: null
-observed_at: '2026-10-18T17:09:02Z'
+observed_at: '2026-10-18T17:46:32Z'
 status: ok
 error: null
 evidence:
@@ -17,7 +17,7 @@ evidence:
   commit_sha: null
   blob_sha: 65447ea0240674bc0d17feb1b6433d10abc90abc
   ref: main
-  observed_at: '2026-10-18T17:09:02Z'
+  observed_at: '2026-10-18T17:46:32Z'
   heading: AGENTS.md
   content_excerpt: '# AGENTS.md
 
@@ -57,7 +57,7 @@ evidence:
   commit_sha: null
   blob_sha: ceec733bf5870f441477db14d791ff53c90ec40a
   ref: main
-  observed_at: '2026-10-18T17:09:02Z'
+  observed_at: '2026-10-18T17:46:32Z'
   heading: Lightroom AI Exposure Assist
   content_excerpt: '# Lightroom AI Exposure Assist
 
@@ -91,7 +91,7 @@ evidence:
   commit_sha: null
   blob_sha: 378380bea0a226cc4bb9faa347001642e076a444
   ref: main
-  observed_at: '2026-10-18T17:09:02Z'
+  observed_at: '2026-10-18T17:46:32Z'
   heading: null
   content_excerpt: 'STATUS: AWAITING_OWNER_VALIDATION
 
@@ -112,7 +112,7 @@ evidence:
   commit_sha: null
   blob_sha: 1c8ae125520d268f29d47e4c522d3b5517477021
   ref: main
-  observed_at: '2026-10-18T17:09:02Z'
+  observed_at: '2026-10-18T17:46:32Z'
   heading: null
   content_excerpt: "[build-system]\nrequires = [\"setuptools>=68.0\"]\nbuild-backend = \"setuptools.build_meta\"\n\n[project]\nname = \"lr-ai-exposure\"\nversion = \"0.1.0\"\ndescription = \"Lightroom Classic exposure assistant — MVP scaffold\"\nrequires-python = \">=3.11\"\ndependencies = [\n    \"google-genai>=2.14.0\",\n    \"pillow>=12.3.0\",\n    \"pydantic>=2.13.4\",\n]\n\n[project.optional-dependencies]\ndev = [\"pytest>=7.0\"]\nall-extras = [\"pytest>=7.0\"]\n\n[project.scripts]\nlr-ai-exposure = \"lr_ai_exposure.main:main\"\n\n[tool.pytest.ini_options"
   explicit_purpose: null

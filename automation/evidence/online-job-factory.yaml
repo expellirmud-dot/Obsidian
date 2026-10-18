@@ -6,7 +6,7 @@ project_id: online-job-factory
 repository: https://github.com/expellirmud-dot/online-job-factory.git
 tracked_ref: main
 commit_sha: null
-observed_at: '2026-10-18T17:09:31Z'
+observed_at: '2026-10-18T17:47:01Z'
 status: ok
 error: null
 evidence:
@@ -17,7 +17,7 @@ evidence:
   commit_sha: null
   blob_sha: ae1d95ff14db7336d31ec937ef95046a3ae51f12
   ref: main
-  observed_at: '2026-10-18T17:09:31Z'
+  observed_at: '2026-10-18T17:47:01Z'
   heading: Online Job Factory — Agent Rules
   content_excerpt: '# Online Job Factory — Agent Rules
 
@@ -39,7 +39,7 @@ evidence:
   commit_sha: null
   blob_sha: 91c0095b4fdda9be566dafa1ce1872e5fb483515
   ref: main
-  observed_at: '2026-10-18T17:09:31Z'
+  observed_at: '2026-10-18T17:47:01Z'
   heading: Project Rules
   content_excerpt: '# Project Rules
 
@@ -74,7 +74,7 @@ evidence:
   commit_sha: null
   blob_sha: 35617fe6f82d3cfec9de3bfac961375ab5e53aa7
   ref: main
-  observed_at: '2026-10-18T17:09:31Z'
+  observed_at: '2026-10-18T17:47:01Z'
   heading: Online Job Factory
   content_excerpt: '# Online Job Factory
 

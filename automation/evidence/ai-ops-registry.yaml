@@ -6,7 +6,7 @@ project_id: ai-ops-registry
 repository: https://github.com/expellirmud-dot/ai-ops-registry.git
 tracked_ref: main
 commit_sha: null
-observed_at: '2026-10-18T17:09:13Z'
+observed_at: '2026-10-18T17:46:42Z'
 status: ok
 error: null
 evidence:
@@ -17,7 +17,7 @@ evidence:
   commit_sha: null
   blob_sha: 7643be7b21a38c766e441519253f809117347141
   ref: main
-  observed_at: '2026-10-18T17:09:13Z'
+  observed_at: '2026-10-18T17:46:42Z'
   heading: AI-Workspace Agent Instructions
   content_excerpt: '# AI-Workspace Agent Instructions
 
@@ -53,7 +53,7 @@ evidence:
   commit_sha: null
   blob_sha: c2917a5fab55b6eacb0d82ec307073f72e2ce552
   ref: main
-  observed_at: '2026-10-18T17:09:13Z'
+  observed_at: '2026-10-18T17:46:42Z'
   heading: Expellirmud AI-Workspace Registry Module
   content_excerpt: '# Expellirmud AI-Workspace Registry Module
 
