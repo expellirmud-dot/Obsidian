@@ -26,7 +26,7 @@ last_reviewed: 2026-08-18
 
 ## Current Work Order
 - [[CURRENT_WORK_ORDER]]
-- **LATEST CLOSED:** [[WO-OBSIDIAN-043-RESTORE-AUTOMATED-TRUTH-REFRESH]]
+- **LATEST CLOSED:** [[WO-OBSIDIAN-044-CURRENT-AND-RECURRING-PROJECT-TRUTH]]
 - **ACTIVE:** none
 
 ## Planned Sequence
@@ -54,11 +54,13 @@ last_reviewed: 2026-08-18
 | 041 | [[WO-OBSIDIAN-041-TRUTH-CORRECTNESS-HARDENING]] | corrective hardening of WO-036–040 truth plane: F1–F14 (mission verification, freshness publication, acceptance overclaim, mission drift provenance, progress correctness, atomic onboarding, git safety, dry-run read-only, complete partial repair, progress value ≠ freshness, backward-safe v2 migration, state validity, migration freshness fabrication, repair transaction safety) | CLOSED |
 | 042 | [[WO-OBSIDIAN-042-WORKFLOW-GOVERNANCE-AND-SAFE-CLEANUP]] | workflow-first Nexus orchestration and safe recovery/cleanup | CLOSED |
 | 043 | [[WO-OBSIDIAN-043-RESTORE-AUTOMATED-TRUTH-REFRESH]] | restore evidence-backed truth refresh and verify post-merge publisher continuity | CLOSED |
+| 044 | [[WO-OBSIDIAN-044-CURRENT-AND-RECURRING-PROJECT-TRUTH]] | make Vault project truth current and keep evidence-backed refresh recurring | CLOSED |
 
 ลำดับนี้เป็น sequential gate: ห้ามเริ่ม Work Order ถัดไปก่อนงานก่อนหน้าปิด `CLOSED` และ Validation ผ่านครบ
 
 ## Closed Work Orders
 
+- [[WO-OBSIDIAN-044-CURRENT-AND-RECURRING-PROJECT-TRUTH]] — CLOSED
 - [[WO-OBSIDIAN-043-RESTORE-AUTOMATED-TRUTH-REFRESH]] — CLOSED
 - [[WO-OBSIDIAN-032-EXPAND-PROJECT-WALL-ADAPTERS]] — CLOSED
 - [[WO-OBSIDIAN-011-PROJECT-RESUME-WORKFLOW]] — CLOSED
