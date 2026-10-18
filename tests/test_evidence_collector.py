@@ -640,3 +640,27 @@ def test_thai_explicit_purpose_is_detected_without_title_fabrication():
     assert ev._extract_explicit_purpose(
         "# คลังความรู้\n\nรายละเอียดการดำเนินงานอย่างต่อเนื่อง"
     ) is None
+
+
+def test_no_token_run_does_not_destroy_existing_manifest(monkeypatch, tmp_path):
+    """A token-less run must NOT overwrite a previously-collected manifest.
+
+    Without this guard a scheduled refresh running without GITHUB_TOKEN would
+    replace every good manifest with status=no_token, destroying the evidence
+    the next token-gated run needs to build truth from (silent data loss).
+    """
+    ev_dir = tmp_path / "evidence"
+    monkeypatch.setattr(ev, "EVIDENCE_DIR", ev_dir)
+
+    ev.write_manifest({"project_id": "alpha", "status": "ok", "evidence": []})
+    path = ev_dir / "alpha.yaml"
+    before = path.read_text(encoding="utf-8")
+
+    ev.write_manifest({"project_id": "alpha", "status": "no_token", "evidence": []})
+
+    assert path.read_text(encoding="utf-8") == before
+    assert ev.load_manifest("alpha")["status"] == "ok"
+
+    # A project with no prior manifest still records the fail-safe status.
+    ev.write_manifest({"project_id": "beta", "status": "no_token", "evidence": []})
+    assert ev.load_manifest("beta")["status"] == "no_token"

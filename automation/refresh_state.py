@@ -4,8 +4,8 @@
 Orchestrates the full refresh flow and only publishes when ALL local gates
 PASS:
 
-    discover/read -> refresh project state -> validate -> render
-        -> regression tests -> publish only if all local gates PASS
+    discover/read -> refresh project state -> collect evidence + build truth
+        -> validate -> render -> regression tests -> publish if all gates PASS
 
 Gates (publish requires AND of all):
   1. validate-all  : `render_project_wall.py --validate-all` exit 0 (11/11 VALID)
@@ -46,6 +46,8 @@ TESTS_DIR = REPO_ROOT / "tests"
 STATE_DIR = AUTOMATION_DIR / "state"
 RENDERER = SCRIPTS_DIR / "render_project_wall.py"
 ADAPTER = AUTOMATION_DIR / "github_adapter.py"
+COLLECTOR = AUTOMATION_DIR / "evidence_collector.py"
+EVIDENCE_DIR = AUTOMATION_DIR / "evidence"
 DASHBOARD = REPO_ROOT / "00 Dashboard" / "Project Dashboard.md"
 
 
@@ -61,6 +63,9 @@ def snapshot_state() -> dict[Path, bytes]:
     snapshot: dict[Path, bytes] = {
         p: p.read_bytes() for p in STATE_DIR.glob("*.yaml") if p.is_file()
     }
+    for p in EVIDENCE_DIR.glob("*.yaml"):
+        if p.is_file():
+            snapshot[p] = p.read_bytes()
     if DASHBOARD.exists():
         snapshot[DASHBOARD] = DASHBOARD.read_bytes()
     return snapshot
@@ -145,6 +150,29 @@ def refresh_project_state() -> tuple[bool, str]:
     return ok, f"exit code {proc.returncode}"
 
 
+def refresh_evidence() -> tuple[bool, str]:
+    """Collect read-only GitHub evidence + build truth from it (WO-038).
+
+    Non-gating by design: a project may legitimately have no extractable
+    mission evidence (it then stays needs-verification), so an evidence
+    failure must not block the mechanical GitHub truth refresh. This step is
+    what keeps Mission truth refreshable alongside HEAD/CI/PR truth.
+    """
+    c = run(
+        [sys.executable, str(COLLECTOR), "collect", "--all"],
+        "collect evidence manifests (read-only GitHub, WO-038)",
+    )
+    if c.returncode != 0:
+        return False, f"collect exit code {c.returncode}"
+    b = run(
+        [sys.executable, str(COLLECTOR), "build-truth", "--all"],
+        "build truth from evidence (WO-038)",
+    )
+    if b.returncode != 0:
+        return False, f"build-truth exit code {b.returncode}"
+    return True, "evidence collected + truth built"
+
+
 def publish() -> bool:
     """Publish the refreshed state + Dashboard.
 
@@ -156,7 +184,7 @@ def publish() -> bool:
     """
     print("\n=== PUBLISH ===")
     # Stage state YAMLs and the Dashboard only (no source repos, no secrets).
-    stage_cmd = ["git", "add", "automation/state/", "00 Dashboard/Project Dashboard.md"]
+    stage_cmd = ["git", "add", "automation/state/", "automation/evidence/", "00 Dashboard/Project Dashboard.md"]
     subprocess.run(stage_cmd, cwd=str(REPO_ROOT))
     # Only commit if there is something staged.
     diff = subprocess.run(
@@ -204,6 +232,13 @@ def main(argv: list[str]) -> int:
         print("Aborting before gates: adapter returned non-zero. NOT publishing.")
         restore_state(state_snapshot)
         return 2
+
+    # Evidence-backed truth (WO-038) is independent of the GitHub adapter's
+    # mechanical truth and is NOT a publish gate -- see refresh_evidence.
+    ev_ok, ev_msg = refresh_evidence()
+    if not ev_ok:
+        print(f"\n[INFO] evidence truth step did not complete: {ev_msg}")
+        print("Continuing: GitHub truth refresh is independent of evidence truth.")
 
     gates: list[tuple[str, bool, str]] = []
 

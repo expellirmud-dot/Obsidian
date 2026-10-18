@@ -331,6 +331,13 @@ def write_manifest(manifest: dict) -> Path:
     EVIDENCE_DIR.mkdir(parents=True, exist_ok=True)
     pid = manifest["project_id"]
     path = EVIDENCE_DIR / f"{pid}.yaml"
+    # A missing token is TRANSIENT. Never let a token-less run destroy a
+    # previously-collected manifest: otherwise the next token-gated run would
+    # find nothing to build truth from (silent evidence loss).
+    if manifest.get("status") == "no_token":
+        existing = load_manifest(pid)
+        if existing is not None and existing.get("status") == "ok":
+            return path
     body = yaml.safe_dump(
         manifest, sort_keys=False, default_flow_style=False, allow_unicode=True, width=1000
     )
@@ -736,7 +743,7 @@ def cmd_build_truth(token: str | None, project_id: str | None, all_projects: boo
         res = apply_truth_to_state(pid, manifest, dry_run=dry_run)
         if res.get("applied"):
             print(f"  {pid}: applied (drift={res.get('drift')} "
-                  f"has_evidence={res.get('has_evidence')} dry_run={res.get('dry_run')})")
+                  f"has_identity_evidence={res.get('has_identity_evidence')} dry_run={res.get('dry_run')})")
         else:
             print(f"  {pid}: not applied ({res.get('reason')})")
     return 0
