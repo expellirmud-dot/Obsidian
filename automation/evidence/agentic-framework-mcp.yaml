@@ -6,7 +6,7 @@ project_id: agentic-framework-mcp
 repository: https://github.com/expellirmud-dot/agentic-framework-mcp.git
 tracked_ref: main
 commit_sha: null
-observed_at: '2026-10-18T16:22:39Z'
+observed_at: '2026-10-18T17:09:13Z'
 status: tree_unavailable
 error: could not list repository contents
 evidence: []

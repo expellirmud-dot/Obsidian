@@ -6,7 +6,7 @@ project_id: thai_stt_app
 repository: https://github.com/expellirmud-dot/thai_stt_app.git
 tracked_ref: main
 commit_sha: null
-observed_at: '2026-10-18T16:22:05Z'
+observed_at: '2026-10-18T17:08:38Z'
 status: ok
 error: null
 evidence:
@@ -17,7 +17,7 @@ evidence:
   commit_sha: null
   blob_sha: 19fb9b52300e16334b5fa0326989abf5c2e42b02
   ref: main
-  observed_at: '2026-10-18T16:22:05Z'
+  observed_at: '2026-10-18T17:08:38Z'
   heading: Thai STT App - Repository Knowledge
   content_excerpt: '# Thai STT App - Repository Knowledge
 
@@ -47,7 +47,7 @@ evidence:
   commit_sha: null
   blob_sha: 16ecd697538b962bc6c36844b6f4d833e97af81f
   ref: main
-  observed_at: '2026-10-18T16:22:05Z'
+  observed_at: '2026-10-18T17:08:38Z'
   heading: 📜 Changelog
   content_excerpt: '# 📜 Changelog
 
@@ -76,7 +76,7 @@ evidence:
   commit_sha: null
   blob_sha: 310ee1d1785cb76817bd1dc03947010e26dcfb2b
   ref: main
-  observed_at: '2026-10-18T16:22:05Z'
+  observed_at: '2026-10-18T17:08:38Z'
   heading: 📑 Thai STT App - Documentation Index
   content_excerpt: '# 📑 Thai STT App - Documentation Index
 
@@ -111,7 +111,7 @@ evidence:
   commit_sha: null
   blob_sha: 5326fd20f6c8c032e896a2a256f3a614307219b6
   ref: main
-  observed_at: '2026-10-18T16:22:05Z'
+  observed_at: '2026-10-18T17:08:38Z'
   heading: Thai STT
   content_excerpt: '# Thai STT
 
@@ -149,7 +149,7 @@ evidence:
   commit_sha: null
   blob_sha: 0b06f48d07246ff208f83ce44c310ac566eefdb1
   ref: main
-  observed_at: '2026-10-18T16:22:05Z'
+  observed_at: '2026-10-18T17:08:38Z'
   heading: 🗺️ Roadmap — Audit Fix Program (2026-08-31)
   content_excerpt: '# 🗺️ Roadmap — Audit Fix Program (2026-08-31)
 
@@ -178,7 +178,7 @@ evidence:
   commit_sha: null
   blob_sha: e64f7d44e2cc44b94692939b5645b70a0cadad3e
   ref: main
-  observed_at: '2026-10-18T16:22:05Z'
+  observed_at: '2026-10-18T17:08:38Z'
   heading: null
   content_excerpt: "[build-system]\nrequires = [\"setuptools>=68.0\", \"wheel\"]\nbuild-backend = \"setuptools.build_meta\"\n\n[project]\nname = \"thai-stt\"\nversion = \"0.2.0\"\ndescription = \"Thai Speech-to-Text app with Silero VAD and Groq Whisper\"\nreadme = \"README.md\"\nrequires-python = \">=3.12\"\nlicense = \"MIT\"\nauthors = [{ name = \"expellirmud-dot\" }]\nkeywords = [\"thai\", \"stt\", \"whisper\", \"groq\", \"vad\", \"silero\"]\n\ndependencies = [\n    \"SpeechRecognition>=3.17\",\n    \"pyaudio>=0.2.14\",\n    \"pyperclip>=1.11\",\n    \"keyboard>=0.13\","
   explicit_purpose: null

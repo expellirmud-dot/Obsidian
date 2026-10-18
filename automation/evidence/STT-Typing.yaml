@@ -6,7 +6,7 @@ project_id: STT-Typing
 repository: https://github.com/expellirmud-dot/stt_typing.git
 tracked_ref: main
 commit_sha: null
-observed_at: '2026-10-18T16:22:19Z'
+observed_at: '2026-10-18T17:08:50Z'
 status: ok
 error: null
 evidence:
@@ -17,7 +17,7 @@ evidence:
   commit_sha: null
   blob_sha: eadd85af4d4372a2d98dd1d7558d73bb293f7283
   ref: main
-  observed_at: '2026-10-18T16:22:19Z'
+  observed_at: '2026-10-18T17:08:50Z'
   heading: AGENTS.md
   content_excerpt: '# AGENTS.md
 
@@ -46,7 +46,7 @@ evidence:
   commit_sha: null
   blob_sha: 5bc94e9bbc2677da4841680fbe1a6fd24b017a9c
   ref: main
-  observed_at: '2026-10-18T16:22:19Z'
+  observed_at: '2026-10-18T17:08:50Z'
   heading: Project Rules
   content_excerpt: '# Project Rules
 
@@ -78,7 +78,7 @@ evidence:
   commit_sha: null
   blob_sha: 49b225e33b653e54484ea280ea4fea62c74dd6a1
   ref: main
-  observed_at: '2026-10-18T16:22:19Z'
+  observed_at: '2026-10-18T17:08:50Z'
   heading: STT Typing Helper
   content_excerpt: '# STT Typing Helper
 
@@ -130,7 +130,7 @@ evidence:
   commit_sha: null
   blob_sha: 7763a061f6564509c790173c57052d6073eb0d75
   ref: main
-  observed_at: '2026-10-18T16:22:19Z'
+  observed_at: '2026-10-18T17:08:50Z'
   heading: null
   content_excerpt: "[project]\nname = \"stt-typing\"\nversion = \"0.1.0\"\ndescription = \"STT Typing Helper — Windows speech-to-text typing and command automation.\"\nrequires-python = \">=3.12\"\nreadme = \"README.md\"\nlicense = { text = \"Proprietary\" }\nauthors = [{ name = \"stt_typing\" }]\ndependencies = [\n    \"comtypes==1.4.16\",\n    \"PySide6==6.11.2\",\n    \"uiautomation==2.0.29\",\n    \"SpeechRecognition>=3.17.0,<4.0\",\n    \"PyAudio>=0.2.14,<0.3\",\n    \"pyautogui>=0.9.54,<1.0\",\n    \"pygetwindow>=0.0.9\",\n    \"pyperclip>=1.8.2\",\n    \""
   explicit_purpose: null
@@ -143,7 +143,7 @@ evidence:
   commit_sha: null
   blob_sha: 82f7e8ec17935598e629e4fe6270c8028faf5b65
   ref: main
-  observed_at: '2026-10-18T16:22:19Z'
+  observed_at: '2026-10-18T17:08:50Z'
   heading: CURRENT WORK ORDER
   content_excerpt: '# CURRENT WORK ORDER
 

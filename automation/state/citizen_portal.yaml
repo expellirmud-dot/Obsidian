@@ -14,9 +14,9 @@ source_path: D:\citizen_portal
 repository: https://github.com/expellirmud-dot/citizen-portal.git
 branch: main
 head: f8ae9fb428641da6101cab3ff76b1e5d20e43203
-knowledge_state: needs-verification
+knowledge_state: verified
 project_identity:
-  purpose: null
+  purpose: สร้างระบบบริหารจัดการคำร้องออนไลน์สำหรับเทศบาลตำบลด่านทับตะโก
   problem_statement: null
   intended_outcome: null
   primary_users: null
@@ -43,7 +43,7 @@ freshness:
   tracked_ref: main
   remote_head: f8ae9fb428641da6101cab3ff76b1e5d20e43203
   truth_built_from_head: f8ae9fb428641da6101cab3ff76b1e5d20e43203
-  source_checked_at: '2026-10-18T16:35:26Z'
+  source_checked_at: '2026-10-18T17:07:41Z'
   truth_built_at: '2026-08-12T07:10:00Z'
   stale_since: null
   reason: null
@@ -65,8 +65,8 @@ github:
   ci_state: success
   open_pr: null
   open_pr_count: 0
-  observed_at: '2026-10-18T16:35:26Z'
+  observed_at: '2026-10-18T17:07:41Z'
 last_change: '2026-06-24'
 evidence_classification: verified
-verified_at: '2026-10-18T16:22:32Z'
+verified_at: '2026-10-18T17:09:06Z'
 adapter_id: evidence-truth-builder-v1

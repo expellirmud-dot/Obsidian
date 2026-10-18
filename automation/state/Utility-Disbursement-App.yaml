@@ -14,9 +14,9 @@ source_path: D:\project_backups\utility-disbursement-app
 repository: https://github.com/expellirmud-dot/utility-disbursement-app.git
 branch: main
 head: db9eb649f3a29ad6453ff94ed8317f59f4d99401
-knowledge_state: needs-verification
+knowledge_state: verified
 project_identity:
-  purpose: null
+  purpose: Help municipal officers efficiently prepare utility expense disbursement documents by automating bill data extraction, ensuring tax compliance, and preparing data for e-LAAS.
   problem_statement: null
   intended_outcome: null
   primary_users: null
@@ -43,7 +43,7 @@ freshness:
   tracked_ref: main
   remote_head: db9eb649f3a29ad6453ff94ed8317f59f4d99401
   truth_built_from_head: db9eb649f3a29ad6453ff94ed8317f59f4d99401
-  source_checked_at: '2026-10-18T16:35:26Z'
+  source_checked_at: '2026-10-18T17:07:41Z'
   truth_built_at: '2026-08-19T01:06:53Z'
   stale_since: null
   reason: 'sub-gates: source=fresh semantic=stale progress=fresh'
@@ -65,8 +65,8 @@ github:
   ci_state: pending
   open_pr: null
   open_pr_count: 0
-  observed_at: '2026-10-18T16:35:26Z'
+  observed_at: '2026-10-18T17:07:41Z'
 last_change: '2026-06-09'
 evidence_classification: owner-confirmed
-verified_at: '2026-10-18T16:22:26Z'
+verified_at: '2026-10-18T17:08:59Z'
 adapter_id: evidence-truth-builder-v1

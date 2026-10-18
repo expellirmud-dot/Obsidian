@@ -14,9 +14,9 @@ source_path: D:\ai-tools\lightroom-ai-exposure
 repository: https://github.com/expellirmud-dot/Lightroom-AI-Workflow-.git
 branch: main
 head: 17491925a52262802b7fc9bbd2670021a68b6a74
-knowledge_state: needs-verification
+knowledge_state: verified
 project_identity:
-  purpose: null
+  purpose: 'Build a Windows-first Lightroom Classic exposure assistant whose canonical MVP workflow is: ```text diagnose one Lightroom source-folder scope → Prepare AI Package → capture an immutable Lightroom-rendered preview pass → external vision AI returns provider-neutral exposure decisions → deterministic '
   problem_statement: null
   intended_outcome: null
   primary_users: null
@@ -43,7 +43,7 @@ freshness:
   tracked_ref: main
   remote_head: 17491925a52262802b7fc9bbd2670021a68b6a74
   truth_built_from_head: 17491925a52262802b7fc9bbd2670021a68b6a74
-  source_checked_at: '2026-10-18T16:35:26Z'
+  source_checked_at: '2026-10-18T17:07:41Z'
   truth_built_at: '2026-09-11T07:02:51Z'
   stale_since: null
   reason: 'sub-gates: source=fresh semantic=stale progress=fresh'
@@ -65,8 +65,8 @@ github:
   ci_state: failure
   open_pr: null
   open_pr_count: 0
-  observed_at: '2026-10-18T16:35:26Z'
+  observed_at: '2026-10-18T17:07:41Z'
 last_change: '2026-09-11'
 evidence_classification: verified
-verified_at: '2026-10-18T16:22:28Z'
+verified_at: '2026-10-18T17:09:02Z'
 adapter_id: evidence-truth-builder-v1
