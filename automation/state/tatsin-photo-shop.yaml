@@ -9,7 +9,7 @@ github_repository_id: 1424951557
 source_path: null
 repository: https://github.com/expellirmud-dot/tatsin-photo-shop.git
 branch: main
-head: 9e433d471c2b8b2038d5b72979b37f424b90c630
+head: 1c6dbbb7bfb7f06d9ac914a9e11f7b7911bf14be
 knowledge_state: needs-verification
 project_identity:
   purpose: null
@@ -26,25 +26,25 @@ project_identity:
 current_execution:
   lifecycle_phase: null
   current_goal: null
-  current_work: null
+  current_work: Current Work Order
   current_work_authority:
-    path: null
-    kind: null
-  current_work_evidence: unknown
+    path: work-orders/CURRENT_WORK_ORDER.md
+    kind: work-order
+  current_work_evidence: verified
   last_completed: null
   blockers: null
   next_action: null
 freshness:
-  status: fresh
+  status: stale
   tracked_ref: main
-  remote_head: 9e433d471c2b8b2038d5b72979b37f424b90c630
-  truth_built_from_head: 9e433d471c2b8b2038d5b72979b37f424b90c630
-  source_checked_at: '2026-10-19T01:04:36Z'
-  truth_built_at: '2026-10-19T01:03:02Z'
+  remote_head: 1c6dbbb7bfb7f06d9ac914a9e11f7b7911bf14be
+  truth_built_from_head: 1c6dbbb7bfb7f06d9ac914a9e11f7b7911bf14be
+  source_checked_at: '2026-10-19T13:04:58Z'
+  truth_built_at: '2026-10-19T13:04:34Z'
   stale_since: null
-  reason: null
+  reason: 'sub-gates: source=fresh semantic=stale progress=fresh'
   source_freshness: fresh
-  semantic_freshness: fresh
+  semantic_freshness: stale
   progress_freshness: fresh
 progress:
   scope: null
@@ -56,13 +56,13 @@ progress:
   completed: null
   active: null
   remaining: null
-  basis: null
+  basis: no denominator (roadmap/milestone evidence not found)
 github:
   ci_state: unknown
-  open_pr: null
-  open_pr_count: null
-  observed_at: '2026-10-19T01:03:02Z'
+  open_pr: 7
+  open_pr_count: 5
+  observed_at: '2026-10-19T13:04:58Z'
 last_change: '2026-10-19'
 evidence_classification: unknown
-verified_at: '2026-10-19T01:03:02Z'
-adapter_id: discovery-onboard-v1
+verified_at: '2026-10-19T13:04:33Z'
+adapter_id: freshness-refresh-v1
