@@ -11,7 +11,7 @@ github_repository_id: 1327192726
 source_path: D:\thai_stt_app
 repository: https://github.com/expellirmud-dot/thai_stt_app.git
 branch: main
-head: e42eca20ba708ce961f6bfa7f5dd2a7ef41741f0
+head: 926245902e3464246a65552af5cb5aca88db6e54
 knowledge_state: verified
 project_identity:
   purpose: null
@@ -39,10 +39,10 @@ current_execution:
 freshness:
   status: stale
   tracked_ref: main
-  remote_head: e42eca20ba708ce961f6bfa7f5dd2a7ef41741f0
-  truth_built_from_head: e42eca20ba708ce961f6bfa7f5dd2a7ef41741f0
-  source_checked_at: '2026-10-18T17:45:18Z'
-  truth_built_at: '2026-09-20T01:06:48Z'
+  remote_head: 926245902e3464246a65552af5cb5aca88db6e54
+  truth_built_from_head: 926245902e3464246a65552af5cb5aca88db6e54
+  source_checked_at: '2026-10-19T01:04:20Z'
+  truth_built_at: '2026-10-19T01:04:23Z'
   stale_since: null
   reason: 'sub-gates: source=fresh semantic=stale progress=fresh'
   source_freshness: fresh
@@ -66,5 +66,5 @@ github:
   observed_at: '2026-10-18T17:45:18Z'
 last_change: '2026-09-19'
 evidence_classification: verified
-verified_at: '2026-10-18T17:46:12Z'
-adapter_id: evidence-truth-builder-v1
+verified_at: '2026-10-19T01:04:20Z'
+adapter_id: freshness-refresh-v1

@@ -37,7 +37,7 @@ last_reviewed: 2026-08-19
 <!-- LIVE_PROJECT_WALL:START -->
 | Project | Mission | Phase | Current Goal | Current Work | Progress | Confidence | Freshness | Vault HEAD | Remote HEAD | Last Truth Refresh | Next Action | Blocker |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| Thai STT App | UNKNOWN | active | WO-Skill-Audit (skill audit + install for repository) | WO-Skill-Audit IN_PROGRESS — audit, fix, and install skills (project-read-first, windows-ui-review-runtime, impeccable, gridgeist) | UNKNOWN | unknown | STALE — sub-gates: source=fresh semantic=stale progress=fresh | e42eca2 | e42eca2 | 2026-09-20T01:06:48Z | Complete WO-Skill-Audit; then WO-OCR-09D (Real Thai OCR Provider, DRAFT) and WO-UI-08E (Final Compact Liquid Glass, DRAFT) | null |
+| Thai STT App | UNKNOWN | active | WO-Skill-Audit (skill audit + install for repository) | WO-Skill-Audit IN_PROGRESS — audit, fix, and install skills (project-read-first, windows-ui-review-runtime, impeccable, gridgeist) | UNKNOWN | unknown | STALE — sub-gates: source=fresh semantic=stale progress=fresh | 9262459 | 9262459 | 2026-10-19T01:04:23Z | Complete WO-Skill-Audit; then WO-OCR-09D (Real Thai OCR Provider, DRAFT) and WO-UI-08E (Final Compact Liquid Glass, DRAFT) | null |
 | LUMINA Studio | LUMINA Studio is a premium photography and creative portfolio project. The pr... | ready-for-deploy | Phase 1 — Premium Photography Landing Page (complete; ready for Vercel production deploy) | TASK-030 (Micro Lock Polish) COMPLETE — Overall Status PASSED / READY FOR DEPLOY | UNKNOWN | unknown | STALE — sub-gates: source=fresh semantic=stale progress=fresh | 086d8b9 | 086d8b9 | 2026-10-12T13:04:00Z | Vercel production deploy (owner action); then Phase 2 scoping | null |
 | llm-agents | UNKNOWN | active | Wave 1 — Live provider test (1 bounded run, credential ready) | WO-03 G3 Clean Live Retest — DRAFTED, NOT EXECUTED (awaiting Owner Go) | UNKNOWN | unknown | STALE — sub-gates: source=fresh semantic=stale progress=fresh | bc689ce | bc689ce | 2026-08-23T13:02:45Z | Owner Go → Execute WO-03 live run (single invocation, strict gate) | Owner Go required — credential ready, single live run pending |
 | STT Typing | UNKNOWN | superseded-pending-roadmap | null | CURRENT WORK ORDER | UNKNOWN | unknown | STALE — sub-gates: source=fresh semantic=stale progress=fresh | e61e2fa | e61e2fa | 2026-10-11T07:03:31Z | Resolve blocker: STAGE_11_PRODUCTION_QT_ARCHITECTURE_INCOMPLETE | STAGE_11_PRODUCTION_QT_ARCHITECTURE_INCOMPLETE |
@@ -60,6 +60,7 @@ last_reviewed: 2026-08-19
 | Nexus Xau Engine | This repository is the durable project record for the current research. The i... | null | null | null | UNKNOWN | unknown | FRESH | f270eb5 | f270eb5 | 2026-10-08T01:07:24Z | null | null |
 | Samud Lukrai | UNKNOWN | null | null | null | UNKNOWN | unknown | STALE — sub-gates: source=fresh semantic=stale progress=fresh | 58f7f96 | 58f7f96 | 2026-09-06T13:05:18Z | null | null |
 | Nexus Control Center | UNKNOWN | null | null | null | UNKNOWN | unknown | UNKNOWN | null | null | null | null | null |
+| Tatsin Photo Shop | UNKNOWN | null | null | null | UNKNOWN | unknown | FRESH | 9e433d4 | 9e433d4 | 2026-10-19T01:03:02Z | null | null |
 <!-- LIVE_PROJECT_WALL:END -->
 
 ## Discovered — Not Imported

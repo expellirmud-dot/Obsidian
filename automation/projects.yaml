@@ -283,3 +283,15 @@ projects:
   - AGENTS.md
   - README.md
   - PROJECT_RULES.md
+- project_id: tatsin-photo-shop
+  project_name: Tatsin Photo Shop
+  source_path: null
+  repository: https://github.com/expellirmud-dot/tatsin-photo-shop.git
+  github_repository_id: 1424951557
+  enabled_for_wall: true
+  pilot_status: discovered
+  adapter_id: discovery-onboard-v1
+  authority_candidates:
+  - AGENTS.md
+  - README.md
+  - PROJECT_RULES.md
