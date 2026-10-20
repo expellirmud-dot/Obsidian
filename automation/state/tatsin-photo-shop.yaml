@@ -39,7 +39,7 @@ freshness:
   tracked_ref: main
   remote_head: 1c6dbbb7bfb7f06d9ac914a9e11f7b7911bf14be
   truth_built_from_head: 1c6dbbb7bfb7f06d9ac914a9e11f7b7911bf14be
-  source_checked_at: '2026-10-20T07:07:21Z'
+  source_checked_at: '2026-10-20T13:02:33Z'
   truth_built_at: '2026-10-19T13:04:34Z'
   stale_since: null
   reason: 'sub-gates: source=fresh semantic=stale progress=fresh'
