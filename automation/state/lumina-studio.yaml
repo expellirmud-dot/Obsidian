@@ -11,7 +11,7 @@ github_repository_id: 1253367642
 source_path: D:\lumina-studio
 repository: https://github.com/expellirmud-dot/LUMINA-Studio.git
 branch: main
-head: 086d8b96719e5619495b76cbfd2c595c4c4183da
+head: 2fc64176ae3a65622274cff867dad645a857ee4e
 knowledge_state: verified
 project_identity:
   purpose: 'LUMINA Studio is a premium photography and creative portfolio project. The project starts as a deploy-test landing page and may evolve into: - Photography portfolio - Graphic design portfolio - Creative studio website - Personal brand platform'
@@ -37,16 +37,16 @@ current_execution:
   blockers: null
   next_action: Vercel production deploy (owner action); then Phase 2 scoping
 freshness:
-  status: stale
+  status: fresh
   tracked_ref: main
-  remote_head: 086d8b96719e5619495b76cbfd2c595c4c4183da
-  truth_built_from_head: 086d8b96719e5619495b76cbfd2c595c4c4183da
-  source_checked_at: '2026-10-21T07:08:22Z'
-  truth_built_at: '2026-10-12T13:04:00Z'
+  remote_head: 2fc64176ae3a65622274cff867dad645a857ee4e
+  truth_built_from_head: 2fc64176ae3a65622274cff867dad645a857ee4e
+  source_checked_at: '2026-10-22T01:04:11Z'
+  truth_built_at: '2026-10-22T01:04:13Z'
   stale_since: null
-  reason: 'sub-gates: source=fresh semantic=stale progress=fresh'
+  reason: null
   source_freshness: fresh
-  semantic_freshness: stale
+  semantic_freshness: fresh
   progress_freshness: fresh
 progress:
   scope: null
@@ -66,5 +66,5 @@ github:
   observed_at: '2026-10-21T07:07:03Z'
 last_change: '2026-10-12'
 evidence_classification: verified
-verified_at: '2026-10-18T17:46:16Z'
-adapter_id: evidence-truth-builder-v1
+verified_at: '2026-10-22T01:04:12Z'
+adapter_id: freshness-refresh-v1
