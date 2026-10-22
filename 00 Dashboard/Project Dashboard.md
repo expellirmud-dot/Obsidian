@@ -60,7 +60,7 @@ last_reviewed: 2026-08-19
 | Nexus Xau Engine | This repository is the durable project record for the current research. The i... | null | null | null | UNKNOWN | unknown | FRESH | f270eb5 | f270eb5 | 2026-10-08T01:07:24Z | null | null |
 | Samud Lukrai | UNKNOWN | null | null | null | UNKNOWN | unknown | STALE — sub-gates: source=fresh semantic=stale progress=fresh | 58f7f96 | 58f7f96 | 2026-09-06T13:05:18Z | null | null |
 | Nexus Control Center | UNKNOWN | null | null | null | UNKNOWN | unknown | UNKNOWN | null | null | null | null | null |
-| Tatsin Photo Shop | UNKNOWN | null | null | Current Work Order | UNKNOWN | unknown | STALE — sub-gates: source=fresh semantic=stale progress=fresh | 1c6dbbb | 1c6dbbb | 2026-10-19T13:04:34Z | null | null |
+| Tatsin Photo Shop | UNKNOWN | null | null | Current Work Order | UNKNOWN | unknown | STALE — sub-gates: source=fresh semantic=stale progress=fresh | cd70516 | cd70516 | 2026-10-22T13:04:03Z | null | null |
 <!-- LIVE_PROJECT_WALL:END -->
 
 ## Discovered — Not Imported
