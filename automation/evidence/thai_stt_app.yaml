@@ -6,7 +6,7 @@ project_id: thai_stt_app
 repository: https://github.com/expellirmud-dot/thai_stt_app.git
 tracked_ref: main
 commit_sha: null
-observed_at: '2026-10-18T17:46:12Z'
+observed_at: '2026-10-23T07:07:56Z'
 status: ok
 error: null
 evidence:
@@ -15,9 +15,9 @@ evidence:
   kind: agents
   classification: verified
   commit_sha: null
-  blob_sha: 19fb9b52300e16334b5fa0326989abf5c2e42b02
+  blob_sha: ac9dda3c7d3f07ec6955e1fa9c8b0ba7f889ea22
   ref: main
-  observed_at: '2026-10-18T17:46:12Z'
+  observed_at: '2026-10-23T07:07:56Z'
   heading: Thai STT App - Repository Knowledge
   content_excerpt: '# Thai STT App - Repository Knowledge
 
@@ -38,45 +38,29 @@ evidence:
 
     2'
   explicit_purpose: null
-  content_length: 11663
+  content_length: 13186
   truncated: true
 - path: CHANGELOG.md
   category: completed_work
   kind: changelog
   classification: verified
   commit_sha: null
-  blob_sha: 16ecd697538b962bc6c36844b6f4d833e97af81f
+  blob_sha: 0c317a0796d231a70a5a1e535bbef21bc7717d42
   ref: main
-  observed_at: '2026-10-18T17:46:12Z'
+  observed_at: '2026-10-23T07:07:56Z'
   heading: 📜 Changelog
-  content_excerpt: '# 📜 Changelog
-
-
-    รูปแบบอ้างอิง [Keep a Changelog](https://keepachangelog.com/), และ [Semantic Versioning](https://semver.org/).
-
-
-    ---
-
-
-    ## [0.4.0] - 2026-08-22
-
-
-    ### เพิ่ม (Added)
-
-    - WO-UX-10A: Collapsed Mini HUD — `MiniHudWindow` + ปุ่ม `–` ย่อหน้าต่างหลักเป็น HUD มุมล่างขวา (frameless/topmost/no-focus) แสดงข้อความล่าสุด (elided) + status dot ขณะ recognition ทำงานต่อ คลิกเพื่อขยายกลับ
-
-    - WO-CMD-10B: Voice formatting commands — "เว้นวรรค"/"เว้นช่อง"/"ช่องว่าง"/"สเปซ"/"space"/"กดสเปซ" → กด Space, "ขึ้นบ'
+  content_excerpt: "# \U0001F4DC Changelog\n\nรูปแบบอ้างอิง [Keep a Changelog](https://keepachangelog.com/), และ [Semantic Versioning](https://semver.org/).\n\n---\n\n## [0.5.0] - 2026-10-19\n\n### เพิ่ม (Added)\n- **Goal 11 & 12 (Orbit Desk / Nexus UI Redesign)**:\n  - Compact HUD layout พร้อม Glowing Mic Orb และ Waveform visualization widget\n  - Minimized Pill (Mini HUD) พร้อม `Alt+M` hotkey และคำสั่งเสียงเปิด/ปิด HUD\n  - SoundFX synthesized non-blocking audio cues (`winsound` async PCM WAV)\n  - Customizable hotkeys ผ่าน `user_sett"
   explicit_purpose: null
-  content_length: 5572
+  content_length: 9133
   truncated: true
 - path: INDEX.md
   category: completed_work
   kind: index
   classification: verified
   commit_sha: null
-  blob_sha: 310ee1d1785cb76817bd1dc03947010e26dcfb2b
+  blob_sha: 57c3352622d13a89b93f53676d6c17673620ac4f
   ref: main
-  observed_at: '2026-10-18T17:46:12Z'
+  observed_at: '2026-10-23T07:07:56Z'
   heading: 📑 Thai STT App - Documentation Index
   content_excerpt: '# 📑 Thai STT App - Documentation Index
 
@@ -102,18 +86,21 @@ evidence:
 
     | [CHANGELOG.md](./CHANGELOG.md)'
   explicit_purpose: null
-  content_length: 16741
+  content_length: 17650
   truncated: true
 - path: README.md
   category: identity
   kind: readme
   classification: verified
   commit_sha: null
-  blob_sha: 5326fd20f6c8c032e896a2a256f3a614307219b6
+  blob_sha: ae2c317a6ee39974e86d5e0cc5ad82fd6a3639a7
   ref: main
-  observed_at: '2026-10-18T17:46:12Z'
+  observed_at: '2026-10-23T07:07:56Z'
   heading: Thai STT
   content_excerpt: '# Thai STT
+
+
+    [![CI](https://github.com/expellirmud-dot/thai_stt_app/actions/workflows/ci.yml/badge.svg)](https://github.com/expellirmud-dot/thai_stt_app/actions/workflows/ci.yml)
 
 
     Thai speech-to-text desktop app with Silero VAD, Google Web Speech / Groq Whisper engines, screen-region OCR (Tesseract / Gemini), and a PySide6 liquid-glass control surface.
@@ -135,12 +122,9 @@ evidence:
     ### Development / tests (recommended)
 
 
-    The repository pins the canonical development interpreter to Python 3.12 via `.python-version` and tracks `uv.lock` for a reproducible dependency snapshot. On Windows:
-
-
-    ```powersh'
+    The reposito'
   explicit_purpose: null
-  content_length: 1317
+  content_length: 4150
   truncated: true
 - path: ROADMAP_AUDIT.md
   category: roadmap
@@ -149,7 +133,7 @@ evidence:
   commit_sha: null
   blob_sha: 0b06f48d07246ff208f83ce44c310ac566eefdb1
   ref: main
-  observed_at: '2026-10-18T17:46:12Z'
+  observed_at: '2026-10-23T07:07:56Z'
   heading: 🗺️ Roadmap — Audit Fix Program (2026-08-31)
   content_excerpt: '# 🗺️ Roadmap — Audit Fix Program (2026-08-31)
 
@@ -176,11 +160,11 @@ evidence:
   kind: manifest
   classification: verified
   commit_sha: null
-  blob_sha: e64f7d44e2cc44b94692939b5645b70a0cadad3e
+  blob_sha: 90fb6c6279add4bd8dbd99b941fbd9eac6ef6c0b
   ref: main
-  observed_at: '2026-10-18T17:46:12Z'
+  observed_at: '2026-10-23T07:07:56Z'
   heading: null
-  content_excerpt: "[build-system]\nrequires = [\"setuptools>=68.0\", \"wheel\"]\nbuild-backend = \"setuptools.build_meta\"\n\n[project]\nname = \"thai-stt\"\nversion = \"0.2.0\"\ndescription = \"Thai Speech-to-Text app with Silero VAD and Groq Whisper\"\nreadme = \"README.md\"\nrequires-python = \">=3.12\"\nlicense = \"MIT\"\nauthors = [{ name = \"expellirmud-dot\" }]\nkeywords = [\"thai\", \"stt\", \"whisper\", \"groq\", \"vad\", \"silero\"]\n\ndependencies = [\n    \"SpeechRecognition>=3.17\",\n    \"pyaudio>=0.2.14\",\n    \"pyperclip>=1.11\",\n    \"keyboard>=0.13\","
+  content_excerpt: "[build-system]\nrequires = [\"setuptools>=68.0\", \"wheel\"]\nbuild-backend = \"setuptools.build_meta\"\n\n[project]\nname = \"thai-stt\"\nversion = \"0.5.0\"\ndescription = \"Thai Speech-to-Text app with Silero VAD and Groq Whisper\"\nreadme = \"README.md\"\nrequires-python = \">=3.12\"\nlicense = \"MIT\"\nauthors = [{ name = \"expellirmud-dot\" }]\nkeywords = [\"thai\", \"stt\", \"whisper\", \"groq\", \"vad\", \"silero\"]\n\ndependencies = [\n    \"SpeechRecognition>=3.17\",\n    \"pyaudio>=0.2.14\",\n    \"pyperclip>=1.11\",\n    \"keyboard>=0.13\","
   explicit_purpose: null
-  content_length: 1007
+  content_length: 1549
   truncated: true

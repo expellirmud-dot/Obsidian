@@ -9,7 +9,7 @@ github_repository_id: 1424951557
 source_path: null
 repository: https://github.com/expellirmud-dot/tatsin-photo-shop.git
 branch: main
-head: cd70516c5b04ecfec74c25ad119ac5b6082c8e79
+head: 7bc7579862757c8c83b9c8424e47c6b43684d69c
 knowledge_state: needs-verification
 project_identity:
   purpose: null
@@ -37,10 +37,10 @@ current_execution:
 freshness:
   status: stale
   tracked_ref: main
-  remote_head: cd70516c5b04ecfec74c25ad119ac5b6082c8e79
-  truth_built_from_head: cd70516c5b04ecfec74c25ad119ac5b6082c8e79
-  source_checked_at: '2026-10-22T13:05:51Z'
-  truth_built_at: '2026-10-22T13:04:03Z'
+  remote_head: 7bc7579862757c8c83b9c8424e47c6b43684d69c
+  truth_built_from_head: 7bc7579862757c8c83b9c8424e47c6b43684d69c
+  source_checked_at: '2026-10-23T07:09:14Z'
+  truth_built_at: '2026-10-23T07:09:17Z'
   stale_since: null
   reason: 'sub-gates: source=fresh semantic=stale progress=fresh'
   source_freshness: fresh
@@ -61,8 +61,8 @@ github:
   ci_state: unknown
   open_pr: 7
   open_pr_count: 5
-  observed_at: '2026-10-22T13:05:51Z'
+  observed_at: '2026-10-23T07:06:19Z'
 last_change: '2026-10-22'
 evidence_classification: unknown
-verified_at: '2026-10-22T13:04:01Z'
+verified_at: '2026-10-23T07:09:15Z'
 adapter_id: freshness-refresh-v1

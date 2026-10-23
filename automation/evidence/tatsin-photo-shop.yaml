@@ -1,0 +1,125 @@
+# Evidence manifest -- tatsin-photo-shop
+# Produced by WO-OBSIDIAN-038 (Evidence-Backed Project Truth Ingestion).
+# Source repository is READ-ONLY; no source files were modified.
+# Every claim traces to repository + ref + commit SHA + path + classification.
+project_id: tatsin-photo-shop
+repository: https://github.com/expellirmud-dot/tatsin-photo-shop.git
+tracked_ref: main
+commit_sha: null
+observed_at: '2026-10-23T07:08:27Z'
+status: ok
+error: null
+evidence:
+- path: AGENTS.md
+  category: identity
+  kind: agents
+  classification: verified
+  commit_sha: null
+  blob_sha: 41988d8e2c5ebd24c35c44e5d575b823b5997f8f
+  ref: main
+  observed_at: '2026-10-23T07:08:27Z'
+  heading: AGENTS.md — ห้องภาพทัศน์ศิลป์
+  content_excerpt: '# AGENTS.md — ห้องภาพทัศน์ศิลป์
+
+
+    ## Authority model
+
+
+    This project uses a single-orchestrator workflow.
+
+
+    - Owner defines the Goal, business requirements, constraints, and approves important product/business decisions.
+
+    - Nexus is the only Orchestrator. Nexus plans, decomposes work, selects tools/workers, assigns bounded scopes, reviews evidence, integrates results, validates, and closes the Goal.
+
+    - Owner delegates routine repository/project administration to Nexus within the approved Goal. Nexus m'
+  explicit_purpose: null
+  content_length: 8080
+  truncated: true
+- path: README.md
+  category: identity
+  kind: readme
+  classification: verified
+  commit_sha: null
+  blob_sha: 32fbaaeda7d1603c043dba3847dd3065e53373db
+  ref: main
+  observed_at: '2026-10-23T07:08:27Z'
+  heading: ห้องภาพทัศน์ศิลป์ Shop App
+  content_excerpt: '# ห้องภาพทัศน์ศิลป์ Shop App
+
+
+    Internal shop application for ห้องภาพทัศน์ศิลป์.
+
+
+    ## Current status
+
+
+    Phase 1 print core is implemented:
+
+    - local JPG/JPEG/PNG selection
+
+    - thumbnail preview
+
+    - photo size and quantity
+
+    - A4 layout calculation
+
+    - multi-page layout
+
+    - A4 preview
+
+    - PDF generation
+
+    - download / print flow
+
+
+    Current product Goal:
+
+    - Shop Shell
+
+    - Home / Service Launcher
+
+    - redesigned Quick Print Workbench
+
+
+    See:
+
+    - `AGENTS.md`
+
+    - `docs/PROJECT_CHARTER.md`
+
+    - `docs/WORKFLOW.md`
+
+    - `docs/ARCHITECTURE.md`'
+  explicit_purpose: null
+  content_length: 887
+  truncated: true
+- path: package.json
+  category: manifest
+  kind: manifest
+  classification: verified
+  commit_sha: null
+  blob_sha: 7ed6203f5e22b664fc7d072315d7e2fc8d8abf40
+  ref: main
+  observed_at: '2026-10-23T07:08:27Z'
+  heading: null
+  content_excerpt: "{\n  \"name\": \"tatsin-photo-shop\",\n  \"private\": true,\n  \"version\": \"0.1.0\",\n  \"type\": \"module\",\n  \"scripts\": {\n    \"dev\": \"vite\",\n    \"build\": \"tsc -b && vite build && vite build --mode print && vite build --mode login && vite build --mode staff\",\n    \"build:public-standalone\": \"tsc -b && vite build --mode standalone-public && node tools/package-public-standalone.mjs\",\n    \"build:intake-demo\": \"tsc -b && vite build --mode intake-demo && node tools/verify-intake-demo-artifact.mjs\",\n    \"build:intak"
+  explicit_purpose: null
+  content_length: 1669
+  truncated: true
+- path: work-orders/CURRENT_WORK_ORDER.md
+  category: current_execution
+  kind: work-order
+  classification: verified
+  commit_sha: null
+  blob_sha: 6ca6ab0cc1117986ea6a7df0e06e241078ea9c8a
+  ref: main
+  observed_at: '2026-10-23T07:08:27Z'
+  heading: Current Work Order
+  content_excerpt: '# Current Work Order
+
+
+    > **2026-10-22 GH-05/SR1 STAFF SECURITY REGRESSION — LOCAL VERIFIED, HOSTED STOP:** Added encoded-path adversarial tests: initial RED revealed percent-encoded Staff route could pass the `public_staff` routing classifier into public `next()`; hardened middleware to reject ambiguous re-encoded/backslash/duplicate-slash path with HTTP 400/no-store. Existing shop-password Login/D1 session remains unchanged. Hardened a second Playwright Staff CAS assertion from broad `role=alert'
+  explicit_purpose: null
+  content_length: 21331
+  truncated: true

@@ -6,7 +6,7 @@ project_id: RX-8
 repository: https://github.com/expellirmud-dot/RX-8.git
 tracked_ref: main
 commit_sha: null
-observed_at: '2026-10-18T17:46:57Z'
+observed_at: '2026-10-23T07:08:21Z'
 status: ok
 error: null
 evidence:
@@ -17,7 +17,7 @@ evidence:
   commit_sha: null
   blob_sha: e9772c8be3a39472f2f02be388df584f6edc88cc
   ref: main
-  observed_at: '2026-10-18T17:46:57Z'
+  observed_at: '2026-10-23T07:08:21Z'
   heading: RX-8 Wiring Assistant — Development Controller
   content_excerpt: '# RX-8 Wiring Assistant — Development Controller
 
@@ -61,7 +61,7 @@ evidence:
   commit_sha: null
   blob_sha: 9bfaea707e87953592f0750182ca0afdd1558b64
   ref: main
-  observed_at: '2026-10-18T17:46:57Z'
+  observed_at: '2026-10-23T07:08:21Z'
   heading: RX-8 Wiring Assistant
   content_excerpt: '# RX-8 Wiring Assistant
 
@@ -95,7 +95,7 @@ evidence:
   commit_sha: null
   blob_sha: d45bd8111e65cb1aa2265187d1ad1f05fcaecb8f
   ref: main
-  observed_at: '2026-10-18T17:46:57Z'
+  observed_at: '2026-10-23T07:08:21Z'
   heading: CURRENT WORK ORDER
   content_excerpt: '# CURRENT WORK ORDER
 

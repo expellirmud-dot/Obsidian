@@ -6,7 +6,7 @@ project_id: AI-Workspace
 repository: https://github.com/expellirmud-dot/Expellirmud-AI-Workspace.git
 tracked_ref: main
 commit_sha: null
-observed_at: '2026-10-18T17:46:39Z'
+observed_at: '2026-10-23T07:08:12Z'
 status: ok
 error: null
 evidence:
@@ -17,7 +17,7 @@ evidence:
   commit_sha: null
   blob_sha: 35bbdd9931d4df1ebcde0b5f9843021925fa9eb3
   ref: main
-  observed_at: '2026-10-18T17:46:39Z'
+  observed_at: '2026-10-23T07:08:12Z'
   heading: Expellirmud AI-Workspace Agent Instructions
   content_excerpt: '# Expellirmud AI-Workspace Agent Instructions
 
@@ -64,7 +64,7 @@ evidence:
   commit_sha: null
   blob_sha: 99bfb7c17958af1f164caf8f14575019d89c0606
   ref: main
-  observed_at: '2026-10-18T17:46:39Z'
+  observed_at: '2026-10-23T07:08:12Z'
   heading: Expellirmud AI-Workspace
   content_excerpt: '# Expellirmud AI-Workspace
 
@@ -122,7 +122,7 @@ evidence:
   commit_sha: null
   blob_sha: 55d6dac1610d8871becc7aa60a2246cf1e3355e9
   ref: main
-  observed_at: '2026-10-18T17:46:39Z'
+  observed_at: '2026-10-23T07:08:12Z'
   heading: null
   content_excerpt: "{\n  \"name\": \"expellirmud-ai-workspace-dashboard\",\n  \"private\": true,\n  \"version\": \"1.0.0\",\n  \"type\": \"module\",\n  \"scripts\": {\n    \"dev\": \"vite --host 127.0.0.1\",\n    \"build\": \"vite build\",\n    \"preview\": \"vite preview --host 127.0.0.1\",\n    \"connector:gateway\": \"node scripts/connector-gateway.mjs\"\n  },\n  \"dependencies\": {\n    \"@vitejs/plugin-react\": \"^4.3.4\",\n    \"react\": \"^18.3.1\",\n    \"react-dom\": \"^18.3.1\",\n    \"yaml\": \"^2.5.1\",\n    \"vite\": \"^5.4.10\"\n  }\n}"
   explicit_purpose: null

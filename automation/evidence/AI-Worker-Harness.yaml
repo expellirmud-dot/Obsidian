@@ -6,7 +6,7 @@ project_id: AI-Worker-Harness
 repository: https://github.com/expellirmud-dot/ai-worker-harness.git
 tracked_ref: main
 commit_sha: null
-observed_at: '2026-10-18T17:46:27Z'
+observed_at: '2026-10-23T07:08:05Z'
 status: ok
 error: null
 evidence:
@@ -17,7 +17,7 @@ evidence:
   commit_sha: null
   blob_sha: 41d67a578ef41e1dac9cb0ac80fd4470b2a44a35
   ref: main
-  observed_at: '2026-10-18T17:46:27Z'
+  observed_at: '2026-10-23T07:08:05Z'
   heading: Repository Authority
   content_excerpt: "# Repository Authority\n\nThis file is the canonical authority for roles, safety, repository operation,\nand closeout boundaries in `D:\\ai-tools\\ai-worker-harness`.\n\n## Read-first sequence\n\nAfter verifying CWD and Git state, the Controller reads:\n\n1. `AGENTS.md`\n2. `work-order/CURRENT_WORK_ORDER.md`\n3. `docs/HARNESS_CURRENT_STATUS.md`\n4. `docs/GOAL_EXECUTION_CONTRACT.md`\n5. `docs/DOCS_INDEX.md`\n6. the active Goal and Work Order\n7. `README.md`, `AI_WORKER_HARNESS_OPERATION_GUIDE.md`, and\n   `.agents"
   explicit_purpose: null
@@ -30,7 +30,7 @@ evidence:
   commit_sha: null
   blob_sha: 7e299f2172e6918b4961a200f60d1664a1f0783a
   ref: main
-  observed_at: '2026-10-18T17:46:27Z'
+  observed_at: '2026-10-23T07:08:05Z'
   heading: AI Worker Harness
   content_excerpt: "# AI Worker Harness\n\nA bounded, evidence-driven control plane for running and evaluating CLI coding\nWorkers against explicit Work Orders.\n\n## Canonical entry points\n\n- Repository authority: [`AGENTS.md`](AGENTS.md)\n- Active Work Order pointer:\n  [`work-order/CURRENT_WORK_ORDER.md`](work-order/CURRENT_WORK_ORDER.md)\n- Current verified state:\n  [`docs/HARNESS_CURRENT_STATUS.md`](docs/HARNESS_CURRENT_STATUS.md)\n- Goal execution/completion:\n  [`docs/GOAL_EXECUTION_CONTRACT.md`](docs/GOAL_EXECUTION_C"
   explicit_purpose: null
@@ -43,7 +43,7 @@ evidence:
   commit_sha: null
   blob_sha: 674fd426b7654ef885dc56ec39669937fc7afe0e
   ref: main
-  observed_at: '2026-10-18T17:46:27Z'
+  observed_at: '2026-10-23T07:08:05Z'
   heading: Current Work Order
   content_excerpt: "# Current Work Order\n\nSTATUS: NONE\nActive: NONE\n\nACTIVE_GOAL: `work-order/Goal-09.md`\n\n`STATUS: NONE` means no Work Order is active. Because Goal-09 remains active,\nthe Controller must select the next bounded seam from the Goal and continue\nwithout routine Owner approval.\n\nRules:\n\n- This file owns active Work Order identity only.\n- Current readiness and baseline belong to\n  `docs/HARNESS_CURRENT_STATUS.md`.\n- Goal continuation and completion belong to\n  `docs/GOAL_EXECUTION_CONTRACT.md`.\n- Histo"
   explicit_purpose: null
