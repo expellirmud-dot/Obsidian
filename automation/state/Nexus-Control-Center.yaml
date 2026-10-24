@@ -9,10 +9,10 @@ github_repository_id: 1424315890
 source_path: null
 repository: https://github.com/expellirmud-dot/Nexus-Control-Center.git
 branch: main
-head: null
-knowledge_state: needs-verification
+head: 8c5d8a97500862e6e6118774005e44c12257c2e7
+knowledge_state: verified
 project_identity:
-  purpose: null
+  purpose: 'A governed control plane for supervising multi-project work: observe authoritative repository truth, recover project continuity, select bounded CLI workers, enforce owner-controlled permissions, verify outcomes, and publish evidence-backed status. Future UI and hybrid retrieval belong here **as inte'
   problem_statement: null
   intended_outcome: null
   primary_users: null
@@ -26,26 +26,26 @@ project_identity:
 current_execution:
   lifecycle_phase: null
   current_goal: null
-  current_work: null
+  current_work: Current NCC Work Order and Roadmap Focus
   current_work_authority:
-    path: null
-    kind: null
-  current_work_evidence: unknown
+    path: work-orders/CURRENT_WORK_ORDER.md
+    kind: work-order
+  current_work_evidence: verified
   last_completed: null
   blockers: null
   next_action: null
 freshness:
-  status: unknown
+  status: fresh
   tracked_ref: main
-  remote_head: null
-  truth_built_from_head: null
-  source_checked_at: '2026-10-23T13:08:20Z'
-  truth_built_at: null
+  remote_head: 8c5d8a97500862e6e6118774005e44c12257c2e7
+  truth_built_from_head: 8c5d8a97500862e6e6118774005e44c12257c2e7
+  source_checked_at: '2026-10-24T07:04:11Z'
+  truth_built_at: '2026-10-24T07:04:13Z'
   stale_since: null
-  reason: 'evidence unavailable: manifest status=tree_unavailable'
-  source_freshness: unknown
-  semantic_freshness: unknown
-  progress_freshness: unknown
+  reason: null
+  source_freshness: fresh
+  semantic_freshness: fresh
+  progress_freshness: fresh
 progress:
   scope: null
   method: null
@@ -56,7 +56,7 @@ progress:
   completed: null
   active: null
   remaining: null
-  basis: null
+  basis: no denominator (roadmap/milestone evidence not found)
 github:
   ci_state: unknown
   open_pr: null
@@ -64,5 +64,5 @@ github:
   observed_at: '2026-10-23T13:08:20Z'
 last_change: null
 evidence_classification: unknown
-verified_at: '2026-10-23T07:08:27Z'
-adapter_id: evidence-truth-builder-v1
+verified_at: '2026-10-24T07:04:11Z'
+adapter_id: freshness-refresh-v1

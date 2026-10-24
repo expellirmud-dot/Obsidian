@@ -56,11 +56,11 @@ last_reviewed: 2026-08-19
 | Sr 400 Virtual Tuning Lab | SR400 Virtual Tuning Lab is a Python-based tuning research and validation pro... | null | null | null | UNKNOWN | unknown | STALE — sub-gates: source=fresh semantic=stale progress=fresh | b9143fb | b9143fb | 2026-08-20T07:05:47Z | null | null |
 | Utility Automation V2 | UNKNOWN | null | null | null | UNKNOWN | unknown | FRESH | a0f5fbf | a0f5fbf | 2026-08-19T01:05:44Z | null | null |
 | Rx 8 | UNKNOWN | null | null | CURRENT WORK ORDER | UNKNOWN | unknown | STALE — sub-gates: source=fresh semantic=stale progress=fresh | 3184a5c | 3184a5c | 2026-09-06T13:05:15Z | null | null |
-| Online Job Factory | Online Job Factory มีหน้าที่ช่วยค้นหา ประเมิน เตรียมสมัคร ผลิต ตรวจ และติดตาม... | null | null | null | UNKNOWN | unknown | FRESH | 9d8b299 | 9d8b299 | 2026-10-10T01:05:56Z | null | null |
+| Online Job Factory | Online Job Factory มีหน้าที่ช่วยค้นหา ประเมิน เตรียมสมัคร ผลิต ตรวจ และติดตาม... | null | null | null | UNKNOWN | unknown | FRESH | 2bb5bf1 | 2bb5bf1 | 2026-10-24T07:04:09Z | null | null |
 | Nexus Xau Engine | This repository is the durable project record for the current research. The i... | null | null | null | UNKNOWN | unknown | FRESH | f270eb5 | f270eb5 | 2026-10-08T01:07:24Z | null | null |
 | Samud Lukrai | UNKNOWN | null | null | null | UNKNOWN | unknown | STALE — sub-gates: source=fresh semantic=stale progress=fresh | 58f7f96 | 58f7f96 | 2026-09-06T13:05:18Z | null | null |
-| Nexus Control Center | UNKNOWN | null | null | null | UNKNOWN | unknown | UNKNOWN | null | null | null | null | null |
-| Tatsin Photo Shop | UNKNOWN | null | null | Current Work Order | UNKNOWN | unknown | STALE — sub-gates: source=fresh semantic=stale progress=fresh | 7bc7579 | 7bc7579 | 2026-10-23T07:09:17Z | null | null |
+| Nexus Control Center | A governed control plane for supervising multi-project work: observe authorit... | null | null | Current NCC Work Order and Roadmap Focus | UNKNOWN | unknown | FRESH | 8c5d8a9 | 8c5d8a9 | 2026-10-24T07:04:13Z | null | null |
+| Tatsin Photo Shop | UNKNOWN | null | null | Current Work Order | UNKNOWN | unknown | STALE — sub-gates: source=fresh semantic=stale progress=fresh | 01ca562 | 01ca562 | 2026-10-24T07:04:15Z | null | null |
 <!-- LIVE_PROJECT_WALL:END -->
 
 ## Discovered — Not Imported
