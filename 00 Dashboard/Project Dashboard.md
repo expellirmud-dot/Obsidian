@@ -60,7 +60,7 @@ last_reviewed: 2026-08-19
 | Nexus Xau Engine | This repository is the durable project record for the current research. The i... | null | null | null | UNKNOWN | unknown | FRESH | f270eb5 | f270eb5 | 2026-10-08T01:07:24Z | null | null |
 | Samud Lukrai | UNKNOWN | null | null | null | UNKNOWN | unknown | STALE — sub-gates: source=fresh semantic=stale progress=fresh | 58f7f96 | 58f7f96 | 2026-09-06T13:05:18Z | null | null |
 | Nexus Control Center | A governed control plane for supervising multi-project work: observe authorit... | null | null | Current NCC Work Order and Roadmap Focus | UNKNOWN | unknown | FRESH | 8c5d8a9 | 8c5d8a9 | 2026-10-24T07:04:13Z | null | null |
-| Tatsin Photo Shop | UNKNOWN | null | null | Current Work Order | UNKNOWN | unknown | STALE — sub-gates: source=fresh semantic=stale progress=fresh | c4b8c2b | c4b8c2b | 2026-10-25T07:03:08Z | null | null |
+| Tatsin Photo Shop | UNKNOWN | null | null | Current Work Order | UNKNOWN | unknown | STALE — sub-gates: source=fresh semantic=stale progress=fresh | 31a2fac | 31a2fac | 2026-10-26T01:06:02Z | null | null |
 <!-- LIVE_PROJECT_WALL:END -->
 
 ## Discovered — Not Imported
