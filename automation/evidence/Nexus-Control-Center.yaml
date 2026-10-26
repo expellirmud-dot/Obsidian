@@ -6,7 +6,68 @@ project_id: Nexus-Control-Center
 repository: https://github.com/expellirmud-dot/Nexus-Control-Center.git
 tracked_ref: main
 commit_sha: null
-observed_at: '2026-10-23T07:08:27Z'
-status: tree_unavailable
-error: could not list repository contents
-evidence: []
+observed_at: '2026-10-26T07:08:25Z'
+status: ok
+error: null
+evidence:
+- path: AGENTS.md
+  category: identity
+  kind: agents
+  classification: verified
+  commit_sha: null
+  blob_sha: 89594c1b7e5e7b0e41ffaf0f29b0f1958b7c8672
+  ref: main
+  observed_at: '2026-10-26T07:08:25Z'
+  heading: Nexus Control Center — Agent Operating Rules
+  content_excerpt: '# Nexus Control Center — Agent Operating Rules
+
+
+    ## Role and authority — Single Orchestrator
+
+    Nexus is the **one Single Project Orchestrator** across owner-authorized projects in **Nexus Control Center**, not just a software-development reviewer. Owner and Nexus jointly shape goals and constraints; Nexus owns plan, task decomposition, tool/worker/model selection, execution coordination, review, integration, verification, checkpoint and delivery. Scope includes **Development** and **real Operations'
+  explicit_purpose: null
+  content_length: 20113
+  truncated: true
+- path: README.md
+  category: identity
+  kind: readme
+  classification: verified
+  commit_sha: null
+  blob_sha: 4dc8dad62189784a166e234626618ecaeee7f6d5
+  ref: main
+  observed_at: '2026-10-26T07:08:25Z'
+  heading: Nexus Control Center (NCC)
+  content_excerpt: '# Nexus Control Center (NCC)
+
+
+    **Status:** NCC V0 local foundation verified (2026-10-18); F2 retrieval exit **NOT ACCEPTED** (latest current-work-order evidence). Shared Windows tools have separate, more recent live checks; see [Integration Currentness](docs/INTEGRATIONS.md).
+
+
+    **Owner:** ToTo
+
+
+    **Location:** `D:\nexus-control-center`
+
+
+    ## Mission
+
+    A governed control plane for supervising multi-project work: observe authoritative repository truth, recover project continuity, select bounded CLI worker'
+  explicit_purpose: 'A governed control plane for supervising multi-project work: observe authoritative repository truth, recover project continuity, select bounded CLI workers, enforce owner-controlled permissions, verify outcomes, and publish evidence-backed status. Future UI and hybrid retrieval belong here **as inte'
+  content_length: 8332
+  truncated: true
+- path: work-orders/CURRENT_WORK_ORDER.md
+  category: current_execution
+  kind: work-order
+  classification: verified
+  commit_sha: null
+  blob_sha: c3eac3af977da0935d1cc9bf098f05c63a4b8edc
+  ref: main
+  observed_at: '2026-10-26T07:08:25Z'
+  heading: Current NCC Work Order and Roadmap Focus
+  content_excerpt: '# Current NCC Work Order and Roadmap Focus
+
+
+    > **F2 FINAL DECISION (2026-10-24): NO-GO for automatic semantic answering.** The F2 P0.x review/testing queue is closed, not automatically re-enqueued. The independent P0.4 reviewer fields remained unfilled, so acceptance failed explicitly; the Owner directed us to stop producing new P0.x benchmark fixtures. Existing guarded local source candidate search and verbatim Git quote remain opt-in only. **Authoritative current pointer:** `docs/NCC-F2-FINAL-G'
+  explicit_purpose: null
+  content_length: 4059
+  truncated: true
