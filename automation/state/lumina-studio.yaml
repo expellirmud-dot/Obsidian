@@ -41,7 +41,7 @@ freshness:
   tracked_ref: main
   remote_head: 2fc64176ae3a65622274cff867dad645a857ee4e
   truth_built_from_head: 2fc64176ae3a65622274cff867dad645a857ee4e
-  source_checked_at: '2026-10-27T13:04:08Z'
+  source_checked_at: '2026-10-28T07:16:54Z'
   truth_built_at: '2026-10-22T01:04:13Z'
   stale_since: null
   reason: null
@@ -63,8 +63,8 @@ github:
   ci_state: success
   open_pr: 2
   open_pr_count: 1
-  observed_at: '2026-10-26T07:06:14Z'
+  observed_at: '2026-10-28T07:16:54Z'
 last_change: '2026-10-21'
 evidence_classification: verified
-verified_at: '2026-10-26T07:08:00Z'
+verified_at: '2026-10-28T07:17:33Z'
 adapter_id: evidence-truth-builder-v1

@@ -6,7 +6,7 @@ project_id: lumina-studio
 repository: https://github.com/expellirmud-dot/LUMINA-Studio.git
 tracked_ref: main
 commit_sha: null
-observed_at: '2026-10-26T07:08:00Z'
+observed_at: '2026-10-28T07:17:33Z'
 status: ok
 error: null
 evidence:
@@ -17,7 +17,7 @@ evidence:
   commit_sha: null
   blob_sha: 891b4d01d16105995be707772343af2ce2a10891
   ref: main
-  observed_at: '2026-10-26T07:08:00Z'
+  observed_at: '2026-10-28T07:17:33Z'
   heading: LUMINA Studio Agent Instructions
   content_excerpt: '# LUMINA Studio Agent Instructions
 
@@ -58,7 +58,7 @@ evidence:
   commit_sha: null
   blob_sha: f5daa1c94f1055bc2834cab37dc91a6d3f979173
   ref: main
-  observed_at: '2026-10-26T07:08:00Z'
+  observed_at: '2026-10-28T07:17:33Z'
   heading: PROJECT RULES
   content_excerpt: '# PROJECT RULES
 
@@ -135,7 +135,7 @@ evidence:
   commit_sha: null
   blob_sha: 1da99b15ee8dbcfc481951541f3b731157268040
   ref: main
-  observed_at: '2026-10-26T07:08:00Z'
+  observed_at: '2026-10-28T07:17:33Z'
   heading: LUMINA Studio
   content_excerpt: '# LUMINA Studio
 
@@ -185,7 +185,7 @@ evidence:
   commit_sha: null
   blob_sha: 11dc66fef49324a39cfc6e882242e48fbaaa147e
   ref: main
-  observed_at: '2026-10-26T07:08:00Z'
+  observed_at: '2026-10-28T07:17:33Z'
   heading: null
   content_excerpt: "{\n  \"name\": \"lumina-studio\",\n  \"version\": \"0.1.0\",\n  \"private\": true,\n  \"scripts\": {\n    \"dev\": \"next dev\",\n    \"build\": \"next build\",\n    \"start\": \"next start\",\n    \"lint\": \"eslint app src scripts\",\n    \"capture:review\": \"node scripts/capture_review.js --target production --type full --viewport all\",\n    \"capture:hero\": \"node scripts/capture_review.js --target production --type hero --viewport all\",\n    \"capture:sections\": \"node scripts/capture_review.js --target production --type sections --vi"
   explicit_purpose: null

@@ -6,7 +6,7 @@ project_id: Utility-Disbursement-App
 repository: https://github.com/expellirmud-dot/utility-disbursement-app.git
 tracked_ref: main
 commit_sha: null
-observed_at: '2026-10-26T07:08:07Z'
+observed_at: '2026-10-28T07:17:41Z'
 status: ok
 error: null
 evidence:
@@ -17,7 +17,7 @@ evidence:
   commit_sha: null
   blob_sha: 67985794c7f933e57fb9c80441515569339460fe
   ref: main
-  observed_at: '2026-10-26T07:08:07Z'
+  observed_at: '2026-10-28T07:17:41Z'
   heading: AGENTS
   content_excerpt: '# AGENTS
 
@@ -70,7 +70,7 @@ evidence:
   commit_sha: null
   blob_sha: 9dabde7db7d834c422b68f99d236fda421f9a0d4
   ref: main
-  observed_at: '2026-10-26T07:08:07Z'
+  observed_at: '2026-10-28T07:17:41Z'
   heading: PROJECT_RULES
   content_excerpt: '# PROJECT_RULES
 
@@ -117,7 +117,7 @@ evidence:
   commit_sha: null
   blob_sha: 067a230cc00872bb7a5548ad02f9865d323d0d29
   ref: main
-  observed_at: '2026-10-26T07:08:07Z'
+  observed_at: '2026-10-28T07:17:41Z'
   heading: Thai Municipal Utility Disbursement App
   content_excerpt: '# Thai Municipal Utility Disbursement App
 
@@ -149,7 +149,7 @@ evidence:
   commit_sha: null
   blob_sha: 8a3316114ad3cb798df98aa6ee6bf8abbe5e1675
   ref: main
-  observed_at: '2026-10-26T07:08:07Z'
+  observed_at: '2026-10-28T07:17:41Z'
   heading: null
   content_excerpt: "{\n  \"name\": \"utility-disbursement-app\",\n  \"version\": \"0.1.0\",\n  \"private\": true,\n  \"scripts\": {\n    \"dev\": \"next dev\",\n    \"build\": \"next build\",\n    \"start\": \"next start\",\n    \"lint\": \"eslint\",\n    \"test:extraction\": \"tsx scripts/extraction-parser-smoke.ts\",\n    \"postinstall\": \"prisma generate\",\n    \"db:migrate\": \"prisma migrate dev\",\n    \"db:seed\": \"prisma db seed\",\n    \"db:studio\": \"prisma studio\"\n  },\n  \"prisma\": {\n    \"seed\": \"tsx prisma/seed.ts\"\n  },\n  \"dependencies\": {\n    \"@google/genera"
   explicit_purpose: null
