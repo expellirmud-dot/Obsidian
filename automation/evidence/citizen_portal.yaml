@@ -6,7 +6,7 @@ project_id: citizen_portal
 repository: https://github.com/expellirmud-dot/citizen-portal.git
 tracked_ref: main
 commit_sha: null
-observed_at: '2026-10-28T07:17:44Z'
+observed_at: '2026-10-29T01:07:11Z'
 status: ok
 error: null
 evidence:
@@ -17,7 +17,7 @@ evidence:
   commit_sha: null
   blob_sha: 8bd0e39085d5260e7f8faffcad2fdc45e10aef33
   ref: main
-  observed_at: '2026-10-28T07:17:44Z'
+  observed_at: '2026-10-29T01:07:11Z'
   heading: This is NOT the Next.js you know
   content_excerpt: '<!-- BEGIN:nextjs-agent-rules -->
 
@@ -37,7 +37,7 @@ evidence:
   commit_sha: null
   blob_sha: 770b630673bc5cd789792f1b5116f9f1e1f92b71
   ref: main
-  observed_at: '2026-10-28T07:17:44Z'
+  observed_at: '2026-10-29T01:07:11Z'
   heading: citizen-portal project rules
   content_excerpt: '# citizen-portal project rules
 
@@ -112,7 +112,7 @@ evidence:
   commit_sha: null
   blob_sha: e215bc4ccf138bbc38ad58ad57e92135484b3c0f
   ref: main
-  observed_at: '2026-10-28T07:17:44Z'
+  observed_at: '2026-10-29T01:07:11Z'
   heading: Getting Started
   content_excerpt: 'This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
@@ -159,7 +159,7 @@ evidence:
   commit_sha: null
   blob_sha: a21ed5e8266849be4a505fc46cf9394d5df4c92a
   ref: main
-  observed_at: '2026-10-28T07:17:44Z'
+  observed_at: '2026-10-29T01:07:11Z'
   heading: null
   content_excerpt: "{\n  \"name\": \"citizen-app\",\n  \"version\": \"0.1.0\",\n  \"private\": true,\n  \"scripts\": {\n    \"dev\": \"next dev\",\n    \"build\": \"prisma generate && next build\",\n    \"start\": \"next start\",\n    \"lint\": \"eslint\",\n    \"test:smoke\": \"tsx scripts/smoke-test.ts\"\n  },\n  \"dependencies\": {\n    \"@hookform/resolvers\": \"^5.4.0\",\n    \"@prisma/adapter-better-sqlite3\": \"^7.8.0\",\n    \"@prisma/adapter-pg\": \"^7.8.0\",\n    \"@prisma/client\": \"^7.8.0\",\n    \"@supabase/supabase-js\": \"^2.108.2\",\n    \"@types/pg\": \"^8.20.0\",\n    \"b"
   explicit_purpose: null

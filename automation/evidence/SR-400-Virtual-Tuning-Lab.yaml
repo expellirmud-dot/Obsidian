@@ -6,7 +6,7 @@ project_id: SR-400-Virtual-Tuning-Lab
 repository: https://github.com/expellirmud-dot/SR-400-Virtual-Tuning-Lab.git
 tracked_ref: main
 commit_sha: null
-observed_at: '2026-10-28T07:17:53Z'
+observed_at: '2026-10-29T01:07:19Z'
 status: ok
 error: null
 evidence:
@@ -17,7 +17,7 @@ evidence:
   commit_sha: null
   blob_sha: 9785a5f83556a0d9aac36d0b2c03c1ff811bc925
   ref: main
-  observed_at: '2026-10-28T07:17:53Z'
+  observed_at: '2026-10-29T01:07:19Z'
   heading: AGENTS.md — SR400 Virtual Tuning Lab
   content_excerpt: '# AGENTS.md — SR400 Virtual Tuning Lab
 
@@ -48,7 +48,7 @@ evidence:
   commit_sha: null
   blob_sha: 6983c51d48ce7e439003d73cbef65f1ac2daff11
   ref: main
-  observed_at: '2026-10-28T07:17:53Z'
+  observed_at: '2026-10-29T01:07:19Z'
   heading: Changelog
   content_excerpt: "# Changelog\n\nAll notable changes to the SR400 Virtual Tuning Lab project.\n\n## [Phase 7] — 2026-08-19 — PySide6 Migration + ECU=SHOP Integration Foundation\n\n### Added\n\n- `src/tuning_lab/qt_app/` — PySide6 production application (ONLY supported\n  UI). Qt-native `MainWindow` (nav list + stacked pages), `AppServices` hub\n  (write gate + device boundary + headless controller), QThread workers,\n  QSettings persistence, permanent safety banner. Pages: Dashboard,\n  Live Data, Tuning, Maps, Simulation, E"
   explicit_purpose: null
@@ -61,7 +61,7 @@ evidence:
   commit_sha: null
   blob_sha: 8aba08a3b0150b394402c5aca3920281bb889ff7
   ref: main
-  observed_at: '2026-10-28T07:17:53Z'
+  observed_at: '2026-10-29T01:07:19Z'
   heading: SR400 Virtual Tuning Lab
   content_excerpt: '# SR400 Virtual Tuning Lab
 
@@ -87,7 +87,7 @@ evidence:
   commit_sha: null
   blob_sha: 3056849c2395f1c21e1eabf7837f935094dfe07a
   ref: main
-  observed_at: '2026-10-28T07:17:53Z'
+  observed_at: '2026-10-29T01:07:19Z'
   heading: ROADMAP — SR400 Virtual Tuning Lab
   content_excerpt: '# ROADMAP — SR400 Virtual Tuning Lab
 
@@ -128,7 +128,7 @@ evidence:
   commit_sha: null
   blob_sha: 02cbddfaff708ad4172439dfc13160e59c3f4e67
   ref: main
-  observed_at: '2026-10-28T07:17:53Z'
+  observed_at: '2026-10-29T01:07:19Z'
   heading: null
   content_excerpt: "[build-system]\nrequires = [\"setuptools>=61.0\"]\nbuild-backend = \"setuptools.build_meta\"\n\n[project]\nname = \"tuning-lab\"\nversion = \"0.1.0\"\nrequires-python = \">=3.8\"\ndependencies = [\n    \"PyYAML>=5.0\",\n    \"PySide6>=6.4\",\n]\n\n[project.scripts]\nsr400-lab = \"tuning_lab.qt_app.main:main\"\n\n[tool.setuptools.packages.find]\nwhere = [\"src\"]\n\n[tool.pytest.ini_options]\npythonpath = [\"src\"]\ntestpaths = [\"tests\"]"
   explicit_purpose: null
