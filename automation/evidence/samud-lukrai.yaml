@@ -6,7 +6,7 @@ project_id: samud-lukrai
 repository: https://github.com/expellirmud-dot/samud-lukrai.git
 tracked_ref: main
 commit_sha: null
-observed_at: '2026-10-29T01:07:25Z'
+observed_at: '2026-10-29T07:10:49Z'
 status: ok
 error: null
 evidence:
@@ -17,7 +17,7 @@ evidence:
   commit_sha: null
   blob_sha: 46e4f87435e708980a4c14648c1d3f992d01fc1b
   ref: main
-  observed_at: '2026-10-29T01:07:25Z'
+  observed_at: '2026-10-29T07:10:49Z'
   heading: สมุดลูกไร่
   content_excerpt: '# สมุดลูกไร่
 
@@ -79,7 +79,7 @@ evidence:
   commit_sha: null
   blob_sha: ba2cce2cb4e4e6b3f9559387ecf09ed586eadf81
   ref: main
-  observed_at: '2026-10-29T01:07:25Z'
+  observed_at: '2026-10-29T07:10:49Z'
   heading: null
   content_excerpt: "{\n  \"name\": \"samud-lukrai\",\n  \"version\": \"0.1.0\",\n  \"private\": true,\n  \"scripts\": {\n    \"dev\": \"next dev\",\n    \"build\": \"next build\",\n    \"start\": \"next start\",\n    \"lint\": \"eslint .\",\n    \"format\": \"prettier --write .\",\n    \"format:check\": \"prettier --check .\",\n    \"typecheck\": \"tsc --noEmit\"\n  },\n  \"dependencies\": {\n    \"next\": \"15.5.3\",\n    \"react\": \"19.1.1\",\n    \"react-dom\": \"19.1.1\"\n  },\n  \"devDependencies\": {\n    \"@eslint/eslintrc\": \"^3.3.1\",\n    \"@types/node\": \"^22.0.0\",\n    \"@types/react"
   explicit_purpose: null
