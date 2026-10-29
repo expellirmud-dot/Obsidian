@@ -6,7 +6,7 @@ project_id: thai_stt_app
 repository: https://github.com/expellirmud-dot/thai_stt_app.git
 tracked_ref: main
 commit_sha: null
-observed_at: '2026-10-29T07:10:16Z'
+observed_at: '2026-10-29T13:12:26Z'
 status: ok
 error: null
 evidence:
@@ -17,7 +17,7 @@ evidence:
   commit_sha: null
   blob_sha: ac9dda3c7d3f07ec6955e1fa9c8b0ba7f889ea22
   ref: main
-  observed_at: '2026-10-29T07:10:16Z'
+  observed_at: '2026-10-29T13:12:26Z'
   heading: Thai STT App - Repository Knowledge
   content_excerpt: '# Thai STT App - Repository Knowledge
 
@@ -47,7 +47,7 @@ evidence:
   commit_sha: null
   blob_sha: 0c317a0796d231a70a5a1e535bbef21bc7717d42
   ref: main
-  observed_at: '2026-10-29T07:10:16Z'
+  observed_at: '2026-10-29T13:12:26Z'
   heading: 📜 Changelog
   content_excerpt: "# \U0001F4DC Changelog\n\nรูปแบบอ้างอิง [Keep a Changelog](https://keepachangelog.com/), และ [Semantic Versioning](https://semver.org/).\n\n---\n\n## [0.5.0] - 2026-10-19\n\n### เพิ่ม (Added)\n- **Goal 11 & 12 (Orbit Desk / Nexus UI Redesign)**:\n  - Compact HUD layout พร้อม Glowing Mic Orb และ Waveform visualization widget\n  - Minimized Pill (Mini HUD) พร้อม `Alt+M` hotkey และคำสั่งเสียงเปิด/ปิด HUD\n  - SoundFX synthesized non-blocking audio cues (`winsound` async PCM WAV)\n  - Customizable hotkeys ผ่าน `user_sett"
   explicit_purpose: null
@@ -60,7 +60,7 @@ evidence:
   commit_sha: null
   blob_sha: 57c3352622d13a89b93f53676d6c17673620ac4f
   ref: main
-  observed_at: '2026-10-29T07:10:16Z'
+  observed_at: '2026-10-29T13:12:26Z'
   heading: 📑 Thai STT App - Documentation Index
   content_excerpt: '# 📑 Thai STT App - Documentation Index
 
@@ -95,7 +95,7 @@ evidence:
   commit_sha: null
   blob_sha: ae2c317a6ee39974e86d5e0cc5ad82fd6a3639a7
   ref: main
-  observed_at: '2026-10-29T07:10:16Z'
+  observed_at: '2026-10-29T13:12:26Z'
   heading: Thai STT
   content_excerpt: '# Thai STT
 
@@ -133,7 +133,7 @@ evidence:
   commit_sha: null
   blob_sha: 0b06f48d07246ff208f83ce44c310ac566eefdb1
   ref: main
-  observed_at: '2026-10-29T07:10:16Z'
+  observed_at: '2026-10-29T13:12:26Z'
   heading: 🗺️ Roadmap — Audit Fix Program (2026-08-31)
   content_excerpt: '# 🗺️ Roadmap — Audit Fix Program (2026-08-31)
 
@@ -162,7 +162,7 @@ evidence:
   commit_sha: null
   blob_sha: 90fb6c6279add4bd8dbd99b941fbd9eac6ef6c0b
   ref: main
-  observed_at: '2026-10-29T07:10:16Z'
+  observed_at: '2026-10-29T13:12:26Z'
   heading: null
   content_excerpt: "[build-system]\nrequires = [\"setuptools>=68.0\", \"wheel\"]\nbuild-backend = \"setuptools.build_meta\"\n\n[project]\nname = \"thai-stt\"\nversion = \"0.5.0\"\ndescription = \"Thai Speech-to-Text app with Silero VAD and Groq Whisper\"\nreadme = \"README.md\"\nrequires-python = \">=3.12\"\nlicense = \"MIT\"\nauthors = [{ name = \"expellirmud-dot\" }]\nkeywords = [\"thai\", \"stt\", \"whisper\", \"groq\", \"vad\", \"silero\"]\n\ndependencies = [\n    \"SpeechRecognition>=3.17\",\n    \"pyaudio>=0.2.14\",\n    \"pyperclip>=1.11\",\n    \"keyboard>=0.13\","
   explicit_purpose: null

@@ -6,7 +6,7 @@ project_id: tatsin-photo-shop
 repository: https://github.com/expellirmud-dot/tatsin-photo-shop.git
 tracked_ref: main
 commit_sha: null
-observed_at: '2026-10-29T07:10:52Z'
+observed_at: '2026-10-29T13:12:58Z'
 status: ok
 error: null
 evidence:
@@ -17,7 +17,7 @@ evidence:
   commit_sha: null
   blob_sha: 27993f1811549856ead452d633608d542d8db717
   ref: main
-  observed_at: '2026-10-29T07:10:52Z'
+  observed_at: '2026-10-29T13:12:58Z'
   heading: AGENTS.md — ห้องภาพทัศน์ศิลป์
   content_excerpt: '# AGENTS.md — ห้องภาพทัศน์ศิลป์
 
@@ -33,7 +33,7 @@ evidence:
   commit_sha: null
   blob_sha: 353b338ddf8eefc97977ccc2038556fed4c72514
   ref: main
-  observed_at: '2026-10-29T07:10:52Z'
+  observed_at: '2026-10-29T13:12:58Z'
   heading: ห้องภาพทัศน์ศิลป์ Shop App
   content_excerpt: '# ห้องภาพทัศน์ศิลป์ Shop App
 
@@ -55,7 +55,7 @@ evidence:
   commit_sha: null
   blob_sha: f2eda6c819b20badeba14ae47f075db47d4ba48a
   ref: main
-  observed_at: '2026-10-29T07:10:52Z'
+  observed_at: '2026-10-29T13:12:58Z'
   heading: null
   content_excerpt: "{\n  \"name\": \"tatsin-photo-shop\",\n  \"private\": true,\n  \"version\": \"0.1.0\",\n  \"type\": \"module\",\n  \"scripts\": {\n    \"dev\": \"vite\",\n    \"dev:staff-local\": \"vite build --mode login && vite build --mode staff && node tools/r8-staff-d1-local-server.mjs\",\n    \"build\": \"tsc -b && vite build && vite build --mode print && vite build --mode login && vite build --mode staff\",\n    \"build:public-standalone\": \"tsc -b && vite build --mode standalone-public && node tools/package-public-standalone.mjs\",\n    \"build"
   explicit_purpose: null
@@ -68,7 +68,7 @@ evidence:
   commit_sha: null
   blob_sha: 25c64e20b1a13fd2cace80e6e60e3f4c37520236
   ref: main
-  observed_at: '2026-10-29T07:10:52Z'
+  observed_at: '2026-10-29T13:12:58Z'
   heading: Current Work Order
   content_excerpt: '# Current Work Order
 
