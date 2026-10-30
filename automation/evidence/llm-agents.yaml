@@ -6,7 +6,7 @@ project_id: llm-agents
 repository: https://github.com/expellirmud-dot/llm-agents.git
 tracked_ref: main
 commit_sha: null
-observed_at: '2026-10-29T13:12:30Z'
+observed_at: '2026-10-30T13:06:19Z'
 status: ok
 error: null
 evidence:
@@ -17,7 +17,7 @@ evidence:
   commit_sha: null
   blob_sha: f1d6c13a8b0491eb4c3dc4071de7683f10c5dee8
   ref: main
-  observed_at: '2026-10-29T13:12:30Z'
+  observed_at: '2026-10-30T13:06:19Z'
   heading: AGENTS.md — Canonical Authority
   content_excerpt: '# AGENTS.md — Canonical Authority
 
@@ -55,7 +55,7 @@ evidence:
   commit_sha: null
   blob_sha: 505221660ed1d15e02726b5389355b4dc81f9234
   ref: main
-  observed_at: '2026-10-29T13:12:30Z'
+  observed_at: '2026-10-30T13:06:19Z'
   heading: Changelog
   content_excerpt: "# Changelog\n\nAll notable changes to this project are documented in this file.\nThe format is based on [Keep a Changelog](https://keepachangelog.com/).\n\n## [Unreleased] — Batch AUDIT-REMEDIATION-001\n\n### Fixed\n- **AR-01**: `run.py` work_order_hash computation no longer silently swallows\n  errors with an empty string; it now fails closed with an \"UNVERIFIED\"\n  sentinel and stderr warning.\n- **AR-01**: `run.py` checkpoint-write failures now surface in the result's\n  `failure` field instead of being"
   explicit_purpose: null
@@ -68,7 +68,7 @@ evidence:
   commit_sha: null
   blob_sha: d865ff06827b4885e6a53217e80563d1c47f06b7
   ref: main
-  observed_at: '2026-10-29T13:12:30Z'
+  observed_at: '2026-10-30T13:06:19Z'
   heading: Repository Index
   content_excerpt: "# Repository Index\n\n```text\nDOCUMENT_STATUS=CURRENT_INDEX_WITH_HISTORICAL_SECTION\nNOT_AUTHORITATIVE_FOR_RM_02_EXECUTION=YES\nCANONICAL_CLI_POLICY=docs/DEVELOPMENT_CLI_POLICY.md\n```\n\n## Canonical Global Command / CLI Authority\n\n- `AGENTS.md` — canonical authority (highest precedence)\n- `.openhands/RULES.md` — **OpenHands-specific development execution rules**\n  (Goal-Loop autonomy, read-first, baseline/scope checks, fail-closed\n  behavior, lifecycle closeout, CI/PR tracking). Established by Issue"
   explicit_purpose: null
@@ -81,7 +81,7 @@ evidence:
   commit_sha: null
   blob_sha: 62230ded706c12adcde46317c648ec25704db0e9
   ref: main
-  observed_at: '2026-10-29T13:12:30Z'
+  observed_at: '2026-10-30T13:06:19Z'
   heading: LLM Agents — Bounded Autonomous Worker
   content_excerpt: "# LLM Agents — Bounded Autonomous Worker\n\nA bounded autonomous agent that executes project-bound work orders against a\nfree-tier LLM provider (Gemini) or an offline stub provider. Designed for\nsingle-machine, single-worker operation with crash recovery, idempotency, and\nfail-closed security.\n\n## Architecture\n\n```text\nJob Contract -> Project Identity -> Provider -> Protocol -> Capability\n    -> PathPolicy -> Gate -> Tool -> Event -> Result\n```\n\n### Core flow\n\n1. **Job Contract** (`agent/job_contr"
   explicit_purpose: null
@@ -94,7 +94,7 @@ evidence:
   commit_sha: null
   blob_sha: 23534062f8a44a5efbfac0aa6430c73ccf0ed1e6
   ref: main
-  observed_at: '2026-10-29T13:12:30Z'
+  observed_at: '2026-10-30T13:06:19Z'
   heading: 'Minimal meaningful gate: pyflakes (unused imports/variables, undefined'
   content_excerpt: "[tool.ruff]\ntarget-version = \"py313\"\nline-length = 100\n\n[tool.ruff.lint]\n# Minimal meaningful gate: pyflakes (unused imports/variables, undefined\n# names) and pycodestyle errors. Style-upgrade rules (UP*, I, RUF) and\n# intentional fail-closed patterns (BLE001 blind-except, S110\n# try-except-pass for observability) are excluded to keep the gate focused\n# on real defects without a large formatting diff.\nselect = [\"E\", \"F\"]\nignore = [\n    \"E501\",   # line too long — not enforcing a formatter yet"
   explicit_purpose: null
@@ -107,7 +107,7 @@ evidence:
   commit_sha: null
   blob_sha: 3e0e670327cd4b0dcfc97c09a031a90e58ea6049
   ref: main
-  observed_at: '2026-10-29T13:12:30Z'
+  observed_at: '2026-10-30T13:06:19Z'
   heading: null
   content_excerpt: '```text
 
