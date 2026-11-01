@@ -1,0 +1,58 @@
+# Evidence manifest -- zp_darktable_trials
+# Produced by WO-OBSIDIAN-038 (Evidence-Backed Project Truth Ingestion).
+# Source repository is READ-ONLY; no source files were modified.
+# Every claim traces to repository + ref + commit SHA + path + classification.
+project_id: zp_darktable_trials
+repository: https://github.com/expellirmud-dot/zp_darktable_trials.git
+tracked_ref: main
+commit_sha: null
+observed_at: '2026-11-01T13:06:51Z'
+status: ok
+error: null
+evidence:
+- path: AGENTS.md
+  category: identity
+  kind: agents
+  classification: verified
+  commit_sha: null
+  blob_sha: d895cfb229f661c0343196e9ecd7085556ec3f99
+  ref: main
+  observed_at: '2026-11-01T13:06:51Z'
+  heading: Project Agent Instructions
+  content_excerpt: '# Project Agent Instructions
+
+
+    ## Scope
+
+    - Work only inside this new project folder unless a work-order item explicitly permits a read-only reference.
+
+    - Treat `..\DarktableXMPautomation`, `..\isolated_config`, `..\LR`, Lightroom presets, DCP/LCP profiles, and the installed Darktable tree as read-only source material.
+
+    - Never edit original RAW files, Lightroom/Darktable sidecars, source presets, DCP/LCP profiles, or the user''s primary Darktable configuration/database.
+
+    - Do not modify the shared `D:'
+  explicit_purpose: null
+  content_length: 3083
+  truncated: true
+- path: README.md
+  category: identity
+  kind: readme
+  classification: verified
+  commit_sha: null
+  blob_sha: 5af3d9607fadf2d8bd8823f77a57be5103bc8f5d
+  ref: main
+  observed_at: '2026-11-01T13:06:51Z'
+  heading: CLI-Anything Darktable — Windows Harness
+  content_excerpt: '# CLI-Anything Darktable — Windows Harness
+
+
+    A Windows-first command-line control surface for Darktable. It delegates all RAW processing and rendering to the installed Darktable CLI; Python handles orchestration, metadata inspection, safety checks, manifests, and receipts.
+
+
+    This is an experimental local harness, not a Lightroom-equivalent preset converter and not yet accepted for customer batch work.
+
+
+    See `Start-Here.md` for recovery order and `ACTIVE_WORK_ORDER.md` for scope and acceptance crite'
+  explicit_purpose: null
+  content_length: 505
+  truncated: true
