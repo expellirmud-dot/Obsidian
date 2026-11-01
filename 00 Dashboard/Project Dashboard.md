@@ -61,6 +61,7 @@ last_reviewed: 2026-08-19
 | Samud Lukrai | UNKNOWN | null | null | null | UNKNOWN | unknown | STALE — sub-gates: source=fresh semantic=stale progress=fresh | 58f7f96 | 58f7f96 | 2026-09-06T13:05:18Z | null | null |
 | Nexus Control Center | A governed control plane for supervising multi-project work: observe authorit... | null | null | Current NCC Work Order and Roadmap Focus | UNKNOWN | unknown | FRESH | 8c5d8a9 | 8c5d8a9 | 2026-10-24T07:04:13Z | null | null |
 | Tatsin Photo Shop | UNKNOWN | null | null | Current Work Order | UNKNOWN | unknown | STALE — sub-gates: source=fresh semantic=stale progress=fresh | 1391441 | 1391441 | 2026-10-27T01:04:24Z | null | null |
+| Zp Darktable Trials | UNKNOWN | null | null | null | UNKNOWN | unknown | FRESH | fe82b84 | fe82b84 | 2026-11-01T07:01:34Z | null | null |
 <!-- LIVE_PROJECT_WALL:END -->
 
 ## Discovered — Not Imported

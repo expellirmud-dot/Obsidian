@@ -295,3 +295,15 @@ projects:
   - AGENTS.md
   - README.md
   - PROJECT_RULES.md
+- project_id: zp_darktable_trials
+  project_name: Zp Darktable Trials
+  source_path: null
+  repository: https://github.com/expellirmud-dot/zp_darktable_trials.git
+  github_repository_id: 1441410377
+  enabled_for_wall: true
+  pilot_status: discovered
+  adapter_id: discovery-onboard-v1
+  authority_candidates:
+  - AGENTS.md
+  - README.md
+  - PROJECT_RULES.md
