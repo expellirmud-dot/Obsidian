@@ -39,7 +39,7 @@ freshness:
   tracked_ref: main
   remote_head: b4f817fef28b33eb3f10f9eb64d412af2457b95b
   truth_built_from_head: b4f817fef28b33eb3f10f9eb64d412af2457b95b
-  source_checked_at: '2026-11-06T07:11:02Z'
+  source_checked_at: '2026-11-06T13:10:28Z'
   truth_built_at: '2026-11-06T07:11:04Z'
   stale_since: null
   reason: null
@@ -61,8 +61,8 @@ github:
   ci_state: pending
   open_pr: null
   open_pr_count: 0
-  observed_at: '2026-11-06T07:10:11Z'
+  observed_at: '2026-11-06T13:10:28Z'
 last_change: '2026-11-06'
 evidence_classification: unknown
-verified_at: '2026-11-06T07:11:03Z'
-adapter_id: freshness-refresh-v1
+verified_at: '2026-11-06T13:13:46Z'
+adapter_id: evidence-truth-builder-v1
