@@ -9,7 +9,7 @@ github_repository_id: 1353371152
 source_path: null
 repository: https://github.com/expellirmud-dot/nexus-xau-engine.git
 branch: main
-head: 5d7ce98ef9466a14a969a9d6ab8da93cd8083e6a
+head: b4f817fef28b33eb3f10f9eb64d412af2457b95b
 knowledge_state: verified
 project_identity:
   purpose: 'This repository is the durable project record for the current research. The immediate goal is **not** live auto-trading. The goal is to convert the teaching into reproducible, testable rules for: 1. historical-data research, 2. rule detection, 3. replay testing, 4. backtesting, 5. only later, execut'
@@ -37,10 +37,10 @@ current_execution:
 freshness:
   status: fresh
   tracked_ref: main
-  remote_head: 5d7ce98ef9466a14a969a9d6ab8da93cd8083e6a
-  truth_built_from_head: 5d7ce98ef9466a14a969a9d6ab8da93cd8083e6a
-  source_checked_at: '2026-11-06T01:03:27Z'
-  truth_built_at: '2026-11-06T01:03:29Z'
+  remote_head: b4f817fef28b33eb3f10f9eb64d412af2457b95b
+  truth_built_from_head: b4f817fef28b33eb3f10f9eb64d412af2457b95b
+  source_checked_at: '2026-11-06T07:11:02Z'
+  truth_built_at: '2026-11-06T07:11:04Z'
   stale_since: null
   reason: null
   source_freshness: fresh
@@ -61,8 +61,8 @@ github:
   ci_state: pending
   open_pr: null
   open_pr_count: 0
-  observed_at: '2026-11-05T07:04:04Z'
-last_change: '2026-10-07'
+  observed_at: '2026-11-06T07:10:11Z'
+last_change: '2026-11-06'
 evidence_classification: unknown
-verified_at: '2026-11-06T01:03:28Z'
+verified_at: '2026-11-06T07:11:03Z'
 adapter_id: freshness-refresh-v1
