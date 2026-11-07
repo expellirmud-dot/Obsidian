@@ -39,7 +39,7 @@ freshness:
   tracked_ref: main
   remote_head: null
   truth_built_from_head: null
-  source_checked_at: '2026-11-07T01:12:26Z'
+  source_checked_at: '2026-11-07T13:10:30Z'
   truth_built_at: null
   stale_since: null
   reason: 'evidence unavailable: manifest status=tree_unavailable'
@@ -61,8 +61,8 @@ github:
   ci_state: unknown
   open_pr: null
   open_pr_count: null
-  observed_at: '2026-11-06T13:10:28Z'
+  observed_at: '2026-11-07T13:05:02Z'
 last_change: null
 evidence_classification: unknown
-verified_at: '2026-11-06T13:13:35Z'
+verified_at: '2026-11-07T13:05:50Z'
 adapter_id: evidence-truth-builder-v1

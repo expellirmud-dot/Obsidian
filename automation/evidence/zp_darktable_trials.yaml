@@ -6,7 +6,7 @@ project_id: zp_darktable_trials
 repository: https://github.com/expellirmud-dot/zp_darktable_trials.git
 tracked_ref: main
 commit_sha: null
-observed_at: '2026-11-06T13:13:52Z'
+observed_at: '2026-11-07T13:06:05Z'
 status: ok
 error: null
 evidence:
@@ -17,7 +17,7 @@ evidence:
   commit_sha: null
   blob_sha: d895cfb229f661c0343196e9ecd7085556ec3f99
   ref: main
-  observed_at: '2026-11-06T13:13:52Z'
+  observed_at: '2026-11-07T13:06:05Z'
   heading: Project Agent Instructions
   content_excerpt: '# Project Agent Instructions
 
@@ -41,7 +41,7 @@ evidence:
   commit_sha: null
   blob_sha: 5af3d9607fadf2d8bd8823f77a57be5103bc8f5d
   ref: main
-  observed_at: '2026-11-06T13:13:52Z'
+  observed_at: '2026-11-07T13:06:05Z'
   heading: CLI-Anything Darktable — Windows Harness
   content_excerpt: '# CLI-Anything Darktable — Windows Harness
 
