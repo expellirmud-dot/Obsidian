@@ -9,7 +9,7 @@ github_repository_id: 1353371152
 source_path: null
 repository: https://github.com/expellirmud-dot/nexus-xau-engine.git
 branch: main
-head: b4f817fef28b33eb3f10f9eb64d412af2457b95b
+head: 289e773f40a5673969ec530024f5bef557725424
 knowledge_state: verified
 project_identity:
   purpose: 'This repository is the durable project record for the current research. The immediate goal is **not** live auto-trading. The goal is to convert the teaching into reproducible, testable rules for: 1. historical-data research, 2. rule detection, 3. replay testing, 4. backtesting, 5. only later, execut'
@@ -37,10 +37,10 @@ current_execution:
 freshness:
   status: fresh
   tracked_ref: main
-  remote_head: b4f817fef28b33eb3f10f9eb64d412af2457b95b
-  truth_built_from_head: b4f817fef28b33eb3f10f9eb64d412af2457b95b
-  source_checked_at: '2026-11-07T01:12:32Z'
-  truth_built_at: '2026-11-06T07:11:04Z'
+  remote_head: 289e773f40a5673969ec530024f5bef557725424
+  truth_built_from_head: 289e773f40a5673969ec530024f5bef557725424
+  source_checked_at: '2026-11-07T07:02:53Z'
+  truth_built_at: '2026-11-07T07:02:54Z'
   stale_since: null
   reason: null
   source_freshness: fresh
@@ -64,5 +64,5 @@ github:
   observed_at: '2026-11-06T13:10:28Z'
 last_change: '2026-11-06'
 evidence_classification: unknown
-verified_at: '2026-11-06T13:13:46Z'
-adapter_id: evidence-truth-builder-v1
+verified_at: '2026-11-07T07:02:53Z'
+adapter_id: freshness-refresh-v1
