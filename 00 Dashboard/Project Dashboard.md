@@ -59,7 +59,7 @@ last_reviewed: 2026-08-19
 | Online Job Factory | Online Job Factory มีหน้าที่ช่วยค้นหา ประเมิน เตรียมสมัคร ผลิต ตรวจ และติดตาม... | null | null | null | UNKNOWN | unknown | FRESH | 2bb5bf1 | 2bb5bf1 | 2026-10-24T07:04:09Z | null | null |
 | Nexus Xau Engine | This repository is the durable project record for the current research. The i... | null | null | null | UNKNOWN | unknown | FRESH | d6c51f7 | d6c51f7 | 2026-11-07T13:10:38Z | null | null |
 | Samud Lukrai | UNKNOWN | null | null | null | UNKNOWN | unknown | STALE — sub-gates: source=fresh semantic=stale progress=fresh | 58f7f96 | 58f7f96 | 2026-09-06T13:05:18Z | null | null |
-| Nexus Control Center | A governed control plane for supervising multi-project work: observe authorit... | null | null | Current NCC Work Order and Roadmap Focus | UNKNOWN | unknown | FRESH | 8c5d8a9 | 8c5d8a9 | 2026-10-24T07:04:13Z | null | null |
+| Nexus Control Center | A governed control plane for supervising multi-project work: observe authorit... | null | null | Work Order Pointer | UNKNOWN | unknown | FRESH | 44a2af3 | 44a2af3 | 2026-11-08T01:03:59Z | null | null |
 | Tatsin Photo Shop | UNKNOWN | null | null | Current Work Order | UNKNOWN | unknown | STALE — sub-gates: source=fresh semantic=stale progress=fresh | 1391441 | 1391441 | 2026-10-27T01:04:24Z | null | null |
 | Zp Darktable Trials | UNKNOWN | null | null | null | UNKNOWN | unknown | FRESH | fe82b84 | fe82b84 | 2026-11-01T07:01:34Z | null | null |
 <!-- LIVE_PROJECT_WALL:END -->

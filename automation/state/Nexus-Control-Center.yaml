@@ -9,7 +9,7 @@ github_repository_id: 1424315890
 source_path: null
 repository: https://github.com/expellirmud-dot/Nexus-Control-Center.git
 branch: main
-head: 8c5d8a97500862e6e6118774005e44c12257c2e7
+head: 44a2af3d2a0cd1d3bae67ca1ef5beee5eb960896
 knowledge_state: verified
 project_identity:
   purpose: 'A governed control plane for supervising multi-project work: observe authoritative repository truth, recover project continuity, select bounded CLI workers, enforce owner-controlled permissions, verify outcomes, and publish evidence-backed status. Future UI and hybrid retrieval belong here **as inte'
@@ -19,14 +19,30 @@ project_identity:
   success_definition: null
   scope: null
   non_goals: null
-  identity_drift_detected: false
-  previous_identity: null
-  candidate_identity: null
-  candidate_identity_provenance: null
+  identity_drift_detected: true
+  previous_identity:
+  - purpose: 'A governed control plane for supervising multi-project work: observe authoritative repository truth, recover project continuity, select bounded CLI workers, enforce owner-controlled permissions, verify outcomes, and publish evidence-backed status. Future UI and hybrid retrieval belong here **as inte'
+    problem_statement: null
+    intended_outcome: null
+    primary_users: null
+    success_definition: null
+    scope: null
+    non_goals: null
+    identity_drift_detected: false
+    previous_identity: null
+    candidate_identity: null
+    candidate_identity_provenance: null
+  candidate_identity:
+    purpose: 'NCC is the local-first operating substrate for Nexus: project awareness, persistent work continuity, reusable automation and evidence-backed execution across software and non-software tasks. Nexus is the single Controller. Workers execute delegated tasks; they do not redefine goals or self-approve.'
+  candidate_identity_provenance:
+    path: AGENTS.md
+    ref: main
+    blob_sha: 69d148107bce5e71575635ae6c102a38817b651f
+    observed_at: '2026-11-08T01:03:58Z'
 current_execution:
   lifecycle_phase: null
   current_goal: null
-  current_work: Current NCC Work Order and Roadmap Focus
+  current_work: Work Order Pointer
   current_work_authority:
     path: work-orders/CURRENT_WORK_ORDER.md
     kind: work-order
@@ -37,10 +53,10 @@ current_execution:
 freshness:
   status: fresh
   tracked_ref: main
-  remote_head: 8c5d8a97500862e6e6118774005e44c12257c2e7
-  truth_built_from_head: 8c5d8a97500862e6e6118774005e44c12257c2e7
-  source_checked_at: '2026-11-07T13:10:38Z'
-  truth_built_at: '2026-10-24T07:04:13Z'
+  remote_head: 44a2af3d2a0cd1d3bae67ca1ef5beee5eb960896
+  truth_built_from_head: 44a2af3d2a0cd1d3bae67ca1ef5beee5eb960896
+  source_checked_at: '2026-11-08T01:03:57Z'
+  truth_built_at: '2026-11-08T01:03:59Z'
   stale_since: null
   reason: null
   source_freshness: fresh
@@ -64,5 +80,5 @@ github:
   observed_at: '2026-11-07T13:05:02Z'
 last_change: '2026-10-24'
 evidence_classification: unknown
-verified_at: '2026-11-07T13:06:02Z'
-adapter_id: evidence-truth-builder-v1
+verified_at: '2026-11-08T01:03:58Z'
+adapter_id: freshness-refresh-v1
